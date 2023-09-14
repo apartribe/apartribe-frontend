@@ -29,7 +29,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "npx prettier --write --cache .",
-    "lint": "npx eslint --fix --cahe ."
+    "lint": "npx eslint --fix --cahe .",
+    "deploy": "npm run build && aws s3 sync build/ s3://apartribe-frontend --delete"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +52,7 @@
   },
   "devDependencies": {
     "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3"
