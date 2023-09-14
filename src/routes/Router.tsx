@@ -9,16 +9,16 @@ import LoginPage from "pages/auth-pages/LoginPage";
 import ResetPwPage from "pages/auth-pages/ResetPwPage";
 import SignupLocalPage from "pages/auth-pages/SignupLocalPage";
 import SignupSelectPage from "pages/auth-pages/SignupSelectPage";
-import AddBoardPostPage from "pages/board-pages/AddBoardPostPage";
+import AddBoardPage from "pages/board-pages/AddBoardPage";
 import BoardPage from "pages/board-pages/BoardPage";
 import CommunityHomePage from "pages/board-pages/CommunityHomePage";
 import CreateAptCommunityPage from "pages/board-pages/CreateAptCommunityPage";
-import DetailBoardPostPage from "pages/board-pages/DetailBoardPostPage";
-import EditBoardPostPage from "pages/board-pages/EditBoardPostPage";
-import AddGatherPeoplePage from "pages/gether-people-pages/AddGatherPeoplePage";
-import DetailGatherPeoplePage from "pages/gether-people-pages/DetailGatherPeoplePage";
-import EditGatherPeoplePage from "pages/gether-people-pages/EditGatherPeoplePage";
-import GatherPeoplePage from "pages/gether-people-pages/GatherPeoplePage";
+import DetailBoardPage from "pages/board-pages/DetailBoardPage";
+import EditBoardPage from "pages/board-pages/EditBoardPage";
+import AddGatherPeoplePage from "pages/gather-people-pages/AddGatherPeoplePage";
+import DetailGatherPeoplePage from "pages/gather-people-pages/DetailGatherPeoplePage";
+import EditGatherPeoplePage from "pages/gather-people-pages/EditGatherPeoplePage";
+import GatherPeoplePage from "pages/gather-people-pages/GatherPeoplePage";
 import AboutUsPage from "pages/intro-pages/AboutUsPage";
 import ContactPage from "pages/intro-pages/ContactPage";
 import LandingPage from "pages/intro-pages/LandingPage";
@@ -113,7 +113,7 @@ const Router = createBrowserRouter([
                 element: <CreateAptCommunityPage/>
             },
             {
-                path: '/community/:aptId',
+                path: '/community/:aptId', // bbs를 붙이는게 일관성이 있으나, nest 구조상 불가
                 element: <CommunityHomePage/>,
                 children: [
                     {
@@ -122,15 +122,15 @@ const Router = createBrowserRouter([
                     },
                     {
                          path: '/community/:aptId/bbs/add',
-                        element: <AddBoardPostPage/>,
+                        element: <AddBoardPage/>,
                     },
                     {
                          path: '/community/:aptId/bbs/:postId/detail',
-                        element: <DetailBoardPostPage/>,
+                        element: <DetailBoardPage/>,
                     },
                     {
                          path: '/community/:aptId/bbs/:postId/edit',
-                        element: <EditBoardPostPage/>,
+                        element: <EditBoardPage/>,
                     },
                     {
                          path: '/community/:aptId/announcements',
