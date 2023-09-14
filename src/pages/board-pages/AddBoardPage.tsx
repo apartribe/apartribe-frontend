@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const AddBoardPage = () => {
-  return (
-    <div>AddBoardPage</div>
-  )
-}
+  return <div>AddBoardPage</div>;
+};
 
-export default AddBoardPage
+export default AddBoardPage;

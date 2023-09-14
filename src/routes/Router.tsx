@@ -31,144 +31,143 @@ import SettingPage from "pages/setting-pages/SettingPage";
 import VerifyAptPage from "pages/setting-pages/VerifyAptPage";
 import VerifyManagerPage from "pages/setting-pages/VerifyManagerPage";
 import VerifyResidentPage from "pages/setting-pages/VerifyResidentPage";
-import { Children } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 const Router = createBrowserRouter([
-    {
-        path: '/',
-        element: <App/>,
-        errorElement:<NotFoundPage/>,
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
+      {
+        path: "/signup/select",
+        element: <SignupSelectPage />,
+      },
+      {
+        path: "/signup/local",
+        element: <SignupLocalPage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/find/id",
+        element: <FindIdPage />,
+      },
+      {
+        path: "/find/pw",
+        element: <FindPwPage />,
+      },
+      {
+        path: "/find/pw/reset",
+        element: <ResetPwPage />,
+      },
+      {
+        path: "/about",
+        element: <AboutUsPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
+      {
+        path: "/search-apartment",
+        element: <SearchAptPage />,
+      },
+      {
+        path: "/setting",
+        element: <SettingPage />,
+      },
+      {
+        path: "/setting/apartment-verification",
+        element: <VerifyAptPage />,
+      },
+      {
+        path: "/setting/apartment-verification/resident",
+        element: <VerifyResidentPage />,
+      },
+      {
+        path: "/setting/apartment-verification/manager",
+        element: <VerifyManagerPage />,
+      },
+      {
+        path: "/setting/pw/change",
+        element: <ChangePwPage />,
+      },
+      {
+        path: "/setting/nickname/change",
+        element: <ChangeNicknamePage />,
+      },
+      {
+        path: "/setting/image/change",
+        element: <ChangeImagePage />,
+      },
+      {
+        // 다시 보기
+        path: "/community/:aptId/create",
+        element: <CreateAptCommunityPage />,
+      },
+      {
+        path: "/community/:aptId", // bbs를 붙이는게 일관성이 있으나, nest 구조상 불가
+        element: <CommunityHomePage />,
         children: [
-            {
-                index: true,
-                element: <LandingPage/>
-            },
-            {
-                path: '/signup/select',
-                element: <SignupSelectPage/>
-            },
-            {
-                path: '/signup/local',
-                element: <SignupLocalPage/>
-            },
-            {
-                path: '/login',
-                element: <LoginPage/>
-            },
-            {
-                path: '/find/id',
-                element: <FindIdPage/>
-            },
-            {
-                path: '/find/pw',
-                element: <FindPwPage/>
-            },
-            {
-                path: '/find/pw/reset',
-                element: <ResetPwPage/>
-            },
-            {
-                path: '/about',
-                element: <AboutUsPage/>
-            },
-            {
-                path: '/contact',
-                element: <ContactPage/>
-            },
-            {
-                path: '/search-apartment',
-                element: <SearchAptPage/>
-            },
-            {
-                path: '/setting',
-                element: <SettingPage/>
-            },
-            {
-                path: '/setting/apartment-verification',
-                element: <VerifyAptPage/>
-            },
-            {
-                path: '/setting/apartment-verification/resident',
-                element: <VerifyResidentPage/>
-            },
-            {
-                path: '/setting/apartment-verification/manager',
-                element: <VerifyManagerPage/>
-            },
-            {
-                path: '/setting/pw/change',
-                element: <ChangePwPage/>
-            },
-            {
-                path: '/setting/nickname/change',
-                element: <ChangeNicknamePage/>
-            },
-            {
-                path: '/setting/image/change',
-                element: <ChangeImagePage/>
-            },
-            { // 다시 보기
-                path: '/community/:aptId/create',
-                element: <CreateAptCommunityPage/>
-            },
-            {
-                path: '/community/:aptId', // bbs를 붙이는게 일관성이 있으나, nest 구조상 불가
-                element: <CommunityHomePage/>,
-                children: [
-                    {
-                        index: true,
-                        element: <BoardPage/>,
-                    },
-                    {
-                         path: '/community/:aptId/bbs/add',
-                        element: <AddBoardPage/>,
-                    },
-                    {
-                         path: '/community/:aptId/bbs/:postId/detail',
-                        element: <DetailBoardPage/>,
-                    },
-                    {
-                         path: '/community/:aptId/bbs/:postId/edit',
-                        element: <EditBoardPage/>,
-                    },
-                    {
-                         path: '/community/:aptId/announcements',
-                        element: <AnnouncePage/>,
-                    },
-                    {
-                         path: '/community/:aptId/announcements/add',
-                        element: <AddAnnouncePage/>,
-                    },
-                    {
-                         path: '/community/:aptId/announcements/:postId/detail',
-                        element: <DetailAnnouncePage/>,
-                    },
-                    {
-                         path: '/community/:aptId/announcements/:postId/edit',
-                        element: <EditAnnouncePage/>,
-                    },
-                    {
-                         path: '/community/:aptId/gather-people',
-                        element: <GatherPeoplePage/>,
-                    },
-                    {
-                         path: '/community/:aptId/gather-people/add',
-                        element: <AddGatherPeoplePage/>,
-                    },
-                    {
-                         path: '/community/:aptId/gather-people/:postId/detail',
-                        element: <DetailGatherPeoplePage/>,
-                    },
-                     {
-                         path: '/community/:aptId/gather-people/:postId/edit',
-                        element: <EditGatherPeoplePage/>,
-                    }
-                ]
-            },
-
-        ]
-}
+          {
+            index: true,
+            element: <BoardPage />,
+          },
+          {
+            path: "/community/:aptId/bbs/add",
+            element: <AddBoardPage />,
+          },
+          {
+            path: "/community/:aptId/bbs/:postId/detail",
+            element: <DetailBoardPage />,
+          },
+          {
+            path: "/community/:aptId/bbs/:postId/edit",
+            element: <EditBoardPage />,
+          },
+          {
+            path: "/community/:aptId/announcements",
+            element: <AnnouncePage />,
+          },
+          {
+            path: "/community/:aptId/announcements/add",
+            element: <AddAnnouncePage />,
+          },
+          {
+            path: "/community/:aptId/announcements/:postId/detail",
+            element: <DetailAnnouncePage />,
+          },
+          {
+            path: "/community/:aptId/announcements/:postId/edit",
+            element: <EditAnnouncePage />,
+          },
+          {
+            path: "/community/:aptId/gather-people",
+            element: <GatherPeoplePage />,
+          },
+          {
+            path: "/community/:aptId/gather-people/add",
+            element: <AddGatherPeoplePage />,
+          },
+          {
+            path: "/community/:aptId/gather-people/:postId/detail",
+            element: <DetailGatherPeoplePage />,
+          },
+          {
+            path: "/community/:aptId/gather-people/:postId/edit",
+            element: <EditGatherPeoplePage />,
+          },
+        ],
+      },
+    ],
+  },
 ]);
 
 export default Router;
