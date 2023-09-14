@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function App() {
-  return (
-    <div>
-     init success
-    </div>
-  );
+  return <div>init success</div>;
 }
 
 export default App;
