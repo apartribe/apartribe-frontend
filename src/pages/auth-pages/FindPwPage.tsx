@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const FindPwPage = () => {
-  return (
-    <div>FindPwPage</div>
-  )
-}
+  return <div>FindPwPage</div>;
+};
 
-export default FindPwPage
+export default FindPwPage;

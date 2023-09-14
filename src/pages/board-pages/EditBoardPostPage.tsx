@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const EditBoardPostPage = () => {
-  return (
-    <div>EditBoardPostPage</div>
-  )
-}
+  return <div>EditBoardPostPage</div>;
+};
 
-export default EditBoardPostPage
+export default EditBoardPostPage;

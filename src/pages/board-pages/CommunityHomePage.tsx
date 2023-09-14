@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const CommunityHomePage = () => {
-  return (
-    <div>CommunityHomePage</div>
-  )
-}
+  return <div>CommunityHomePage</div>;
+};
 
-export default CommunityHomePage
+export default CommunityHomePage;

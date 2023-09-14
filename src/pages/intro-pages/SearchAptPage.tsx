@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const SearchAptPage = () => {
-  return (
-    <div>SearchAptPage</div>
-  )
-}
+  return <div>SearchAptPage</div>;
+};
 
-export default SearchAptPage
+export default SearchAptPage;

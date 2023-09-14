@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const ChangeNicknamePage = () => {
-  return (
-    <div>ChangeNicknamePage</div>
-  )
-}
+  return <div>ChangeNicknamePage</div>;
+};
 
-export default ChangeNicknamePage
+export default ChangeNicknamePage;
