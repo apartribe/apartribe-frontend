@@ -114,3 +114,20 @@ export const Img = styled.img<reusableStyleProps>`
   height: ${(props) => props.$height || '100%'};
   border-radius: ${(props) => props.$borderRadius || '0px'};
 `
+
+export const ArrowButton = styled.div<reusableStyleProps>`
+  background: #c1e2dd;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: ${(props) => props.$fontSize || '15px'};
+  font-weight: ${(props) => props.$fontWeight || '400'};
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+
+  &.disabled {
+    background: #eaf6f4;
+    cursor: auto;
+  }
+`
