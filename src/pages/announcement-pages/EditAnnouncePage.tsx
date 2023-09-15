@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const EditAnnouncePage = () => {
-  return <div>EditAnnouncePage</div>;
-};
+  return <div>EditAnnouncePage</div>
+}
 
-export default EditAnnouncePage;
+export default EditAnnouncePage

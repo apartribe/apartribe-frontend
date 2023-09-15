@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const VerifyResidentPage = () => {
-  return <div>VerifyResidentPage</div>;
-};
+  return <div>VerifyResidentPage</div>
+}
 
-export default VerifyResidentPage;
+export default VerifyResidentPage

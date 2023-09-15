@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const ResetPwPage = () => {
-  return <div>ResetPwPage</div>;
-};
+  return <div>ResetPwPage</div>
+}
 
-export default ResetPwPage;
+export default ResetPwPage

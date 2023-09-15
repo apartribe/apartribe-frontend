@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const SideSection = () => {
-  return <div>SideSection</div>;
-};
+  return <div>SideSection</div>
+}
 
-export default SideSection;
+export default SideSection

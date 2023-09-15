@@ -1,7 +1,7 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import Header from "components/common/Header";
-import Footer from "components/common/Footer";
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Header from 'components/common/Header'
+import Footer from 'components/common/Footer'
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Outlet />
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

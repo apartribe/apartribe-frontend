@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const SignupSelectPage = () => {
-  return <div>SignupSelectPage</div>;
-};
+  return <div>SignupSelectPage</div>
+}
 
-export default SignupSelectPage;
+export default SignupSelectPage

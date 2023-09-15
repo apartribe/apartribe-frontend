@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const VerifyAptPage = () => {
-  return <div>VerifyAptPage</div>;
-};
+  return <div>VerifyAptPage</div>
+}
 
-export default VerifyAptPage;
+export default VerifyAptPage
