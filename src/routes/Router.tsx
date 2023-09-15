@@ -112,59 +112,59 @@ const Router = createBrowserRouter([
         path: '/community/:aptId/create',
         element: <CreateAptCommunityPage />,
       },
+    ],
+  },
+  {
+    path: '/community/:aptId', // bbs를 붙이는게 일관성이 있으나, nest 구조상 불가
+    element: <CommunityHomePage />,
+    children: [
       {
-        path: '/community/:aptId', // bbs를 붙이는게 일관성이 있으나, nest 구조상 불가
-        element: <CommunityHomePage />,
-        children: [
-          {
-            index: true,
-            element: <BoardPage />,
-          },
-          {
-            path: '/community/:aptId/bbs/add',
-            element: <AddBoardPage />,
-          },
-          {
-            path: '/community/:aptId/bbs/:postId/detail',
-            element: <DetailBoardPage />,
-          },
-          {
-            path: '/community/:aptId/bbs/:postId/edit',
-            element: <EditBoardPage />,
-          },
-          {
-            path: '/community/:aptId/announcements',
-            element: <AnnouncePage />,
-          },
-          {
-            path: '/community/:aptId/announcements/add',
-            element: <AddAnnouncePage />,
-          },
-          {
-            path: '/community/:aptId/announcements/:postId/detail',
-            element: <DetailAnnouncePage />,
-          },
-          {
-            path: '/community/:aptId/announcements/:postId/edit',
-            element: <EditAnnouncePage />,
-          },
-          {
-            path: '/community/:aptId/gather-people',
-            element: <GatherPeoplePage />,
-          },
-          {
-            path: '/community/:aptId/gather-people/add',
-            element: <AddGatherPeoplePage />,
-          },
-          {
-            path: '/community/:aptId/gather-people/:postId/detail',
-            element: <DetailGatherPeoplePage />,
-          },
-          {
-            path: '/community/:aptId/gather-people/:postId/edit',
-            element: <EditGatherPeoplePage />,
-          },
-        ],
+        index: true,
+        element: <BoardPage />,
+      },
+      {
+        path: '/community/:aptId/bbs/add',
+        element: <AddBoardPage />,
+      },
+      {
+        path: '/community/:aptId/bbs/:postId/detail',
+        element: <DetailBoardPage />,
+      },
+      {
+        path: '/community/:aptId/bbs/:postId/edit',
+        element: <EditBoardPage />,
+      },
+      {
+        path: '/community/:aptId/announcements',
+        element: <AnnouncePage />,
+      },
+      {
+        path: '/community/:aptId/announcements/add',
+        element: <AddAnnouncePage />,
+      },
+      {
+        path: '/community/:aptId/announcements/:postId/detail',
+        element: <DetailAnnouncePage />,
+      },
+      {
+        path: '/community/:aptId/announcements/:postId/edit',
+        element: <EditAnnouncePage />,
+      },
+      {
+        path: '/community/:aptId/gather-people',
+        element: <GatherPeoplePage />,
+      },
+      {
+        path: '/community/:aptId/gather-people/add',
+        element: <AddGatherPeoplePage />,
+      },
+      {
+        path: '/community/:aptId/gather-people/:postId/detail',
+        element: <DetailGatherPeoplePage />,
+      },
+      {
+        path: '/community/:aptId/gather-people/:postId/edit',
+        element: <EditGatherPeoplePage />,
       },
     ],
   },
