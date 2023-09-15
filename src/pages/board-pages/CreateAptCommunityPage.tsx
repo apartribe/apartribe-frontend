@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const CreateAptCommunityPage = () => {
-  return <div>CreateAptCommunityPage</div>;
-};
+  return <div>CreateAptCommunityPage</div>
+}
 
-export default CreateAptCommunityPage;
+export default CreateAptCommunityPage

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const DetailGatherPeoplePage = () => {
-  return <div>DetailGatherPeoplePage</div>;
-};
+  return <div>DetailGatherPeoplePage</div>
+}
 
-export default DetailGatherPeoplePage;
+export default DetailGatherPeoplePage

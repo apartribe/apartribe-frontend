@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const VerifyManagerPage = () => {
-  return <div>VerifyManagerPage</div>;
-};
+  return <div>VerifyManagerPage</div>
+}
 
-export default VerifyManagerPage;
+export default VerifyManagerPage

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
 const ChangePwPage = () => {
-  return <div>ChangePwPage</div>;
-};
+  return <div>ChangePwPage</div>
+}
 
-export default ChangePwPage;
+export default ChangePwPage
