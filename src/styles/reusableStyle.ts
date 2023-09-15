@@ -108,3 +108,9 @@ export const Modal = styled.div<reusableStyleProps>`
   align-items: ${(props) => props.$alignItems || 'center'};
   gap: ${(props) => props.$gap || '0px'};
 `
+
+export const Img = styled.img<reusableStyleProps>`
+  width: ${(props) => props.$width || '100%'};
+  height: ${(props) => props.$height || '100%'};
+  border-radius: ${(props) => props.$borderRadius || '0px'};
+`
