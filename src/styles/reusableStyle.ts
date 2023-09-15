@@ -45,3 +45,33 @@ export const Input = styled.input<reusableStyleProps>`
     color: #b3b3b3;
   }
 `
+
+export const ShadowBox = styled.div<reusableStyleProps>`
+  box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  background: ${(props) => props.$background || '#FFFFFF'};
+  width: ${(props) => props.$width || '100%'};
+  height: ${(props) => props.$height || 'auto'};
+  margin: ${(props) => props.$margin || '0px'};
+  padding: ${(props) => props.$padding || '10px'};
+  display: ${(props) => props.$display || 'block'};
+  flex-direction: ${(props) => props.$flexDirection || 'column'};
+  justify-content: ${(props) => props.$justifyContent || 'none'};
+  align-items: ${(props) => props.$alignItems || 'none'};
+  gap: ${(props) => props.$gap || '0px'};
+  border-radius: ${(props) => props.$borderRadius || '10px'};
+  color: ${(props) => props.$color || '#303030'};
+  font-size: ${(props) => props.$fontSize || '15px'};
+  font-weight: ${(props) => props.$fontWeight || '400'};
+
+  &.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.noneShadow {
+    box-shadow: none;
+  }
+`
