@@ -75,3 +75,13 @@ export const ShadowBox = styled.div<reusableStyleProps>`
     box-shadow: none;
   }
 `
+
+export const ModalBackground = styled.div<reusableStyleProps>`
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: ${(props) => props.$width || '100vw'};
+  height: ${(props) => props.$height || '100vh'};
+`
