@@ -85,3 +85,26 @@ export const ModalBackground = styled.div<reusableStyleProps>`
   width: ${(props) => props.$width || '100vw'};
   height: ${(props) => props.$height || '100vh'};
 `
+
+export const Modal = styled.div<reusableStyleProps>`
+  z-index: 2;
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: ${(props) => props.$background || '#FFFFFF'};
+  border-radius: ${(props) => props.$borderRadius || '20px'};
+  width: ${(props) => props.$width || '350px'};
+  height: ${(props) => props.$height || '120px'};
+  color: ${(props) => props.$color || '#303030'};
+  margin: ${(props) => props.$margin || '0px'};
+  padding: ${(props) => props.$padding || '30px 0 10px 0'};
+  font-size: ${(props) => props.$fontSize || '15px'};
+  font-weight: ${(props) => props.$fontWeight || '700'};
+  display: ${(props) => props.$display || 'flex'};
+  flex-direction: ${(props) => props.$flexDirection || 'column'};
+  justify-content: ${(props) => props.$justifyContent || 'space-between'};
+  align-items: ${(props) => props.$alignItems || 'center'};
+  gap: ${(props) => props.$gap || '0px'};
+`
