@@ -131,3 +131,18 @@ export const ArrowButton = styled.div<reusableStyleProps>`
     cursor: auto;
   }
 `
+
+export const Badge = styled.div<reusableStyleProps>`
+  text-align: center;
+  position: absolute;
+  line-height: 20px;
+  background: ${(props) => props.$background || '#1A2A3A'};
+  margin: ${(props) => props.$margin || '0px'};
+  padding: ${(props) => props.$padding || '0 10px'};
+  color: ${(props) => props.$color || '#FFFFFF'};
+  width: ${(props) => props.$width || 'auto'};
+  height: ${(props) => props.$height || '20px'};
+  border-radius: ${(props) => props.$borderRadius || '30px'};
+  font-size: ${(props) => props.$fontSize || '10px'};
+  font-weight: ${(props) => props.$fontWeight || '400'};
+`
