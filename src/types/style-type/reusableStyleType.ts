@@ -1,0 +1,17 @@
+export interface reusableStyleProps {
+  $background?: string
+  $width?: string
+  $height?: string
+  $margin?: string
+  $padding?: string
+  $display?: string
+  $flexDirection?: string
+  $justifyContent?: string
+  $alignItems?: string
+  $gap?: string
+  $borderRadius?: string
+  $color?: string
+  $fontSize?: string
+  $fontWeight?: string
+  $letterSpacing?: string
+}
