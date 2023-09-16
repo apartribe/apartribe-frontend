@@ -1,5 +1,6 @@
 export interface reusableStyleProps {
   $background?: string
+  $boxShadow?: string
   $width?: string
   $height?: string
   $margin?: string
@@ -14,4 +15,5 @@ export interface reusableStyleProps {
   $fontSize?: string
   $fontWeight?: string
   $letterSpacing?: string
+  $lineHeight?: string
 }
