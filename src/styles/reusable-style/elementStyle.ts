@@ -1,6 +1,15 @@
 import { styled } from 'styled-components'
 import { reusableStyleProps } from 'types/style-type/reusableStyleType'
 
+export const P = styled.p<reusableStyleProps>`
+  margin: 0;
+  line-height: ${(props) => props.$lineHeight || '25px'};
+  font-size: ${(props) => props.$fontSize || '15px'};
+  font-weight: ${(props) => props.$fontWeight || '400'};
+  letter-spacing: ${(props) => props.$letterSpacing || '0px'};
+  color: ${(props) => props.$color || '#303030'};
+`
+
 export const Button = styled.button<reusableStyleProps>`
   border: none;
   box-sizing: border-box;
@@ -31,6 +40,7 @@ export const Input = styled.input<reusableStyleProps>`
   outline: none;
   box-sizing: border-box;
   background: ${(props) => props.$background || '#f2f2f2'};
+  box-shadow: ${(props) => props.$boxShadow || 'none'};
   width: ${(props) => props.$width || '100%'};
   height: ${(props) => props.$height || '55px'};
   margin: ${(props) => props.$margin || '0px'};
@@ -47,9 +57,9 @@ export const Input = styled.input<reusableStyleProps>`
 `
 
 export const ShadowBox = styled.div<reusableStyleProps>`
-  box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   background: ${(props) => props.$background || '#FFFFFF'};
+  box-shadow: ${(props) => props.$boxShadow || '5px 5px 4px -1px rgba(0, 0, 0, 0.25)'};
   width: ${(props) => props.$width || '100%'};
   height: ${(props) => props.$height || 'auto'};
   margin: ${(props) => props.$margin || '0px'};
@@ -123,7 +133,7 @@ export const ArrowButton = styled.div<reusableStyleProps>`
   font-size: ${(props) => props.$fontSize || '15px'};
   font-weight: ${(props) => props.$fontWeight || '400'};
   text-align: center;
-  line-height: 40px;
+  line-height: ${(props) => props.$lineHeight || '40px'};
   cursor: pointer;
 
   &.disabled {
