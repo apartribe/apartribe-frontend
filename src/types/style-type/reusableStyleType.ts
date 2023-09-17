@@ -10,6 +10,7 @@ export interface reusableStyleProps {
   $justifyContent?: string
   $alignItems?: string
   $gap?: string
+  $border?: string
   $borderRadius?: string
   $color?: string
   $fontSize?: string
