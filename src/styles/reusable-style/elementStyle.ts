@@ -19,6 +19,7 @@ export const Button = styled.button<reusableStyleProps>`
   height: ${(props) => props.$height || '55px'};
   margin: ${(props) => props.$margin || '0px'};
   padding: ${(props) => props.$padding || '0px'};
+  border: ${(props) => props.$border || 'none'};
   border-radius: ${(props) => props.$borderRadius || '10px'};
   color: ${(props) => props.$color || '#FFFFFF'};
   font-size: ${(props) => props.$fontSize || '15px'};
@@ -65,10 +66,11 @@ export const ShadowBox = styled.div<reusableStyleProps>`
   margin: ${(props) => props.$margin || '0px'};
   padding: ${(props) => props.$padding || '10px'};
   display: ${(props) => props.$display || 'block'};
-  flex-direction: ${(props) => props.$flexDirection || 'column'};
+  flex-direction: ${(props) => props.$flexDirection || 'row'};
   justify-content: ${(props) => props.$justifyContent || 'none'};
   align-items: ${(props) => props.$alignItems || 'none'};
   gap: ${(props) => props.$gap || '0px'};
+  border: ${(props) => props.$border || 'none'};
   border-radius: ${(props) => props.$borderRadius || '10px'};
   color: ${(props) => props.$color || '#303030'};
   font-size: ${(props) => props.$fontSize || '15px'};
@@ -113,7 +115,7 @@ export const Modal = styled.div<reusableStyleProps>`
   font-size: ${(props) => props.$fontSize || '15px'};
   font-weight: ${(props) => props.$fontWeight || '700'};
   display: ${(props) => props.$display || 'flex'};
-  flex-direction: ${(props) => props.$flexDirection || 'column'};
+  flex-direction: ${(props) => props.$flexDirection || 'row'};
   justify-content: ${(props) => props.$justifyContent || 'space-between'};
   align-items: ${(props) => props.$alignItems || 'center'};
   gap: ${(props) => props.$gap || '0px'};
@@ -123,21 +125,26 @@ export const Img = styled.img<reusableStyleProps>`
   width: ${(props) => props.$width || '100%'};
   height: ${(props) => props.$height || '100%'};
   border-radius: ${(props) => props.$borderRadius || '0px'};
+  margin: ${(props) => props.$margin || '0px'};
 `
 
 export const ArrowButton = styled.div<reusableStyleProps>`
   background: #c1e2dd;
   width: 40px;
   height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
   border-radius: 50%;
+  cursor: pointer;
   font-size: ${(props) => props.$fontSize || '15px'};
   font-weight: ${(props) => props.$fontWeight || '400'};
   text-align: center;
   line-height: ${(props) => props.$lineHeight || '40px'};
-  cursor: pointer;
 
   &.disabled {
-    background: #eaf6f4;
+    background: #f2f2f2;
     cursor: auto;
   }
 `
