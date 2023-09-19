@@ -153,13 +153,18 @@ export const ArrowButton = styled.div<reusableStyleProps>`
   text-align: center;
   line-height: ${(props) => props.$lineHeight || '40px'};
 
+  &:hover {
+    transform: scale(0.95);
+  }
+
   &.disabled {
     background: #f2f2f2;
     cursor: auto;
-  }
+    transform: scale(1);
 
-  &:hover {
-    transform: scale(0.95);
+    &:hover {
+      transform: none;
+    }
   }
 `
 
