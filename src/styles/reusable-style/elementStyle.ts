@@ -61,6 +61,11 @@ export const ShadowBox = styled.div<reusableStyleProps>`
   box-sizing: border-box;
   background: ${(props) => props.$background || '#FFFFFF'};
   box-shadow: ${(props) => props.$boxShadow || '5px 5px 4px -1px rgba(0, 0, 0, 0.25)'};
+  position: ${(props) => props.$position || 'relative'};
+  top: ${(props) => props.$top || 'none'};
+  bottom: ${(props) => props.$bottom || 'none'};
+  left: ${(props) => props.$left || 'none'};
+  right: ${(props) => props.$right || 'none'};
   width: ${(props) => props.$width || '100%'};
   height: ${(props) => props.$height || 'auto'};
   margin: ${(props) => props.$margin || '0px'};
@@ -129,15 +134,20 @@ export const Img = styled.img<reusableStyleProps>`
 `
 
 export const ArrowButton = styled.div<reusableStyleProps>`
-  background: #c1e2dd;
   width: 40px;
+  min-width: 40px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
   border-radius: 50%;
+  /* white-space: nowrap; */
   cursor: pointer;
+  background: ${(props) => props.$background || '#c1e2dd'};
+  margin: ${(props) => props.$margin || '0px'};
+  padding: ${(props) => props.$padding || '0px'};
+  border: ${(props) => props.$border || 'none'};
   font-size: ${(props) => props.$fontSize || '15px'};
   font-weight: ${(props) => props.$fontWeight || '400'};
   text-align: center;
@@ -147,12 +157,20 @@ export const ArrowButton = styled.div<reusableStyleProps>`
     background: #f2f2f2;
     cursor: auto;
   }
+
+  &:hover {
+    transform: scale(0.95);
+  }
 `
 
 export const Badge = styled.div<reusableStyleProps>`
   text-align: center;
-  position: absolute;
   line-height: 20px;
+  position: ${(props) => props.$position || 'relative'};
+  top: ${(props) => props.$top || 'none'};
+  bottom: ${(props) => props.$bottom || 'none'};
+  left: ${(props) => props.$left || 'none'};
+  right: ${(props) => props.$right || 'none'};
   background: ${(props) => props.$background || '#1A2A3A'};
   margin: ${(props) => props.$margin || '0px'};
   padding: ${(props) => props.$padding || '0 10px'};
