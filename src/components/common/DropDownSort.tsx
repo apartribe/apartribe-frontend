@@ -74,6 +74,7 @@ const StyledDiv = styled.div`
     left: 0;
     flex-direction: column;
     height: auto;
+    z-index: 1;
   }
 `
 
