@@ -7,17 +7,15 @@ import { FIXED_BUTTON_LISTS } from 'constants/fixedButtonList'
 import { Link } from 'react-router-dom'
 
 interface Props {
-  backToTopRef: React.MutableRefObject<HTMLElement | null>
+  isInViewport: boolean
 }
 
-export const FixedButtonList: FC<Props> = ({ backToTopRef }) => {
+export const FixedButtonList: FC<Props> = ({ isInViewport }) => {
   const clickBackToTop = () => {
-    if (backToTopRef.current) {
-      backToTopRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-      })
-    }
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   return (
@@ -33,9 +31,11 @@ export const FixedButtonList: FC<Props> = ({ backToTopRef }) => {
           <PiPencilSimpleLineDuotone />글 쓰기
         </StyledDiv>
       </StyledSubWrapper>
-      <ArrowButton onClick={clickBackToTop}>
-        <IoIosArrowUp />
-      </ArrowButton>
+      {!isInViewport && (
+        <ArrowButton onClick={clickBackToTop}>
+          <IoIosArrowUp />
+        </ArrowButton>
+      )}
     </StyledWrapper>
   )
 }
