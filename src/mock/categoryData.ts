@@ -9,7 +9,7 @@ export const BOARD_CATEGOTY_LIST_MOCK = [
   '비밀 게시판',
 ]
 
-export const ANNOUNCE_CATEGOTY_LIST_MOCK = ['일반', '긴급', '비상']
+export const ANNOUNCE_CATEGOTY_LIST_MOCK = ['전체', '일반', '긴급', '비상']
 
 export const GATHER_PEOPLE_CATEGOTY_LIST_MOCK = [
   '전체',
