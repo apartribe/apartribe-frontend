@@ -3,18 +3,19 @@ import { styled } from 'styled-components'
 import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import { KakaoLogin, NaverLogin, GoogleLogin } from 'components/auth/OauthLoginButton'
+import {
+  GOOGLE_AUTH_URL,
+  KAKAO_AUTH_URL,
+  NAVER_AUTH_URL,
+  PAGE_LOCAL_SIGNUP,
+  PAGE_LOGIN,
+} from 'constants/auth'
 
 const SignupSelectPage = () => {
-  //const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao`
-  const KAKAO_AUTH_URL = ''
-  const NAVER_AUTH_URL = ''
-  const GOOGLE_AUTH_URL = ''
-  const LOCAL_SIGNUP_PAGE_URL = '/signup/local'
-  const LOGIN_PAGE_URL = '/login'
-
   const navigate = useNavigate()
+
   const GoToLocalSignupPage = () => {
-    navigate(LOCAL_SIGNUP_PAGE_URL)
+    navigate(PAGE_LOCAL_SIGNUP)
   }
 
   return (
@@ -41,7 +42,7 @@ const SignupSelectPage = () => {
 
       <p>
         이미 계정이 있다면
-        <Link to={LOGIN_PAGE_URL}>
+        <Link to={PAGE_LOGIN}>
           <StyledSpan>&nbsp;로그인</StyledSpan>
         </Link>
       </p>
