@@ -12,6 +12,7 @@ import { ArrowButton } from 'styles/reusable-style/elementStyle'
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { useInView } from 'react-intersection-observer'
+import { useScrollButton } from 'hooks/useScrollButton'
 
 interface Props {
   selectedCategory: string
@@ -41,53 +42,7 @@ const CategorySection: FC<Props> = ({
     return undefined
   }
 
-  //=================================
-
-  const [scrollPosition, setScrollPosition] = useState(0) // 초기 스크롤 위치는 0
-
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
-
-  // 스크롤을 오른쪽으로 이동하는 함수
-  const scrollRight = () => {
-    if (!scrollContainerRef.current) return
-
-    const scrollContainer = scrollContainerRef.current
-
-    // 한 번에 이동할 거리
-    const scrollStep = 300
-
-    // 현재 스크롤 위치에 scrollStep을 더하여 오른쪽으로 이동
-    setScrollPosition(scrollPosition + scrollStep)
-
-    // 스크롤 컨테이너를 부드럽게 스크롤
-    scrollContainer.scrollTo({
-      left: scrollPosition + scrollStep,
-      behavior: 'smooth',
-    })
-  }
-
-  //=================================
-
-  // 스크롤을 왼쪽으로 이동하는 함수
-  const scrollLeft = () => {
-    if (!scrollContainerRef.current) return
-    const scrollContainer = scrollContainerRef.current
-
-    // 한 번에 이동할 거리 (예: 100px)
-    const scrollStep = 300
-
-    // 현재 스크롤 위치에서 scrollStep을 빼서 왼쪽으로 이동
-    const newScrollLeft = Math.max(scrollPosition - scrollStep, 0)
-    setScrollPosition(newScrollLeft)
-
-    // 스크롤 컨테이너를 부드럽게 스크롤
-    scrollContainer.scrollTo({
-      left: newScrollLeft,
-      behavior: 'smooth',
-    })
-  }
-
-  //=================================
+  const [scrollContainerRef, scrollRight, scrollLeft] = useScrollButton()
 
   const changeSeletedCategory = (e: MouseEvent<HTMLButtonElement>) => {
     setSelectedCategory(e.currentTarget.innerText)
