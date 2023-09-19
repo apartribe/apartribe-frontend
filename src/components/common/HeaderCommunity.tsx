@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { LogoHeaderGradation } from 'assets/logos'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { NavLink } from 'react-router-dom'
@@ -8,9 +8,13 @@ import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
 
 const APT_NAME_MOCK = '자이 힐스테이트 하남'
 
-const HeaderCommunity = () => {
+interface Props {
+  backToTopRef: (node?: Element | null | undefined) => void
+}
+
+const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
   return (
-    <Container $background="#FFFFFF">
+    <Container $background="#FFFFFF" ref={backToTopRef}>
       <Inner
         $height="50px"
         $background="#FFFFFF"
@@ -21,7 +25,7 @@ const HeaderCommunity = () => {
         <StyledDiv>
           <StyledNavLink to="/">
             <LogoHeaderGradation width="170px" height="30px" />
-          </StyledNavLink>{' '}
+          </StyledNavLink>
           {APT_NAME_MOCK}
         </StyledDiv>
         <StyledDiv className="interval">
