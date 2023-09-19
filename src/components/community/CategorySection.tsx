@@ -1,18 +1,18 @@
-import React, {
-  Dispatch,
-  FC,
-  LegacyRef,
-  MouseEvent,
-  MutableRefObject,
-  useRef,
-  useState,
-} from 'react'
+import React, { Dispatch, FC, LegacyRef, MouseEvent, useState } from 'react'
 import { styled } from 'styled-components'
-import { ArrowButton } from 'styles/reusable-style/elementStyle'
+import {
+  ArrowButton,
+  Button,
+  Input,
+  Modal,
+  ModalBackground,
+  P,
+} from 'styles/reusable-style/elementStyle'
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { useInView } from 'react-intersection-observer'
 import { useScrollButton } from 'hooks/useScrollButton'
+import AddCategoryModal from './AddCategoryModal'
 
 interface Props {
   selectedCategory: string
@@ -48,6 +48,8 @@ const CategorySection: FC<Props> = ({
     setSelectedCategory(e.currentTarget.innerText)
   }
 
+  const [addModalVisible, setAddModalVisible] = useState(false)
+
   return (
     <StyledWarpper>
       <StyledDiv>
@@ -69,6 +71,7 @@ const CategorySection: FC<Props> = ({
           ))}
           {canCreate && (
             <ArrowButton
+              onClick={() => setAddModalVisible(true)}
               $background="#FFFFFF"
               $border="1px dashed #c1e2dd"
               $margin="0 10px"
@@ -83,6 +86,11 @@ const CategorySection: FC<Props> = ({
         <ArrowButton onClick={scrollRight} className={lastInViewport ? 'disabled' : ''}>
           <IoIosArrowForward />
         </ArrowButton>
+      )}
+      {addModalVisible ? (
+        <AddCategoryModal setAddModalVisible={setAddModalVisible} />
+      ) : (
+        ''
       )}
     </StyledWarpper>
   )
