@@ -20,24 +20,24 @@ export const TERMS_AND_CONDITIONS_LIST = [
     id: 1,
     title: '저작권 안내를 확인했습니다.',
     isMandatory: '필수',
-    path: 'assets/terms_and_conditions/copyright_info.md',
+    fileName: 'copyright_info',
   },
   {
     id: 2,
     title: '서비스 이용약관에 동의합니다.',
     isMandatory: '필수',
-    path: 'assets/terms_and_conditions/terms_of_service.md',
+    fileName: 'terms_of_service',
   },
   {
     id: 3,
     title: '개인정보 수집 및 이용에 동의합니다.',
     isMandatory: '필수',
-    path: 'assets/terms_and_conditions/private_information_collection_and_use.md',
+    fileName: 'private_information_collection_and_use',
   },
   {
     id: 4,
     title: '홍보 및 마케팅 이용에 동의합니다.',
     isMandatory: '선택',
-    path: 'assets/terms_and_conditions/promotion_and_marketing_use.md',
+    fileName: 'promotion_and_marketing_use',
   },
 ]
