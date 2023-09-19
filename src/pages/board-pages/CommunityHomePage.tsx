@@ -37,7 +37,7 @@ const StyledLayout = styled.div`
     width: 900px;
   }
   &.widgetsSection {
-    min-width: 380px;
+    max-width: 380px;
     display: flex;
     flex-direction: column;
     gap: 10px;
