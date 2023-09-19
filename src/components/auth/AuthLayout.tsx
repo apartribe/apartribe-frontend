@@ -14,7 +14,6 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           $display="flex"
           $flexDirection="column"
           $alignItems="center"
-          $width="500px"
           $padding="30px 20px"
         >
           {children}
