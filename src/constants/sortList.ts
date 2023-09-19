@@ -1,1 +1,1 @@
-export const BOARD_SORT_DROPDOWN_LIST = ['최신순', '좋아요순', '댓글순', '조회순']
+export const SORT_DROPDOWN_LIST = ['최신순', '좋아요순', '댓글순', '조회순']
