@@ -1,11 +1,14 @@
-import { ChangeEvent, useState } from 'react'
+import { MouseEvent, ChangeEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { AiOutlineRight } from 'react-icons/ai'
 import { Input } from 'styles/reusable-style/elementStyle'
+import TermsAndConditionModal from './TermsAndConditionModal'
 import { TERMS_AND_CONDITIONS_LIST } from 'constants/auth'
 
 const TermsAndConditionArea = () => {
   const [checkList, setCheckList] = useState<number[]>([])
+  const [showDetail, setShowDetail] = useState<string>('')
+  const [modal, setModal] = useState<boolean>(false)
 
   const checkAll = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.checked) {
@@ -23,6 +26,12 @@ const TermsAndConditionArea = () => {
     }
   }
 
+  const openModal = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setShowDetail(e.currentTarget.value)
+    setModal((prev) => !prev)
+  }
+
   return (
     <>
       <StyledLabel>
@@ -36,7 +45,7 @@ const TermsAndConditionArea = () => {
         전체 동의
       </StyledLabel>
 
-      {TERMS_AND_CONDITIONS_LIST.map(({ id, isMandatory, title, path }) => (
+      {TERMS_AND_CONDITIONS_LIST.map(({ id, isMandatory, title, fileName }) => (
         <StyledLabel key={id}>
           <Input
             type="checkbox"
@@ -48,11 +57,13 @@ const TermsAndConditionArea = () => {
           />
           <StyledSpan>{isMandatory}</StyledSpan>
           {title}
-          <StyledButton value={path}>
+          <StyledButton value={fileName} onClick={openModal}>
             <StyledIcon />
           </StyledButton>
         </StyledLabel>
       ))}
+
+      {modal && <TermsAndConditionModal fileName={showDetail} />}
     </>
   )
 }
