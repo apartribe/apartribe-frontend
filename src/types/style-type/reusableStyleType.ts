@@ -22,4 +22,5 @@ export interface reusableStyleProps {
   $fontWeight?: string
   $letterSpacing?: string
   $lineHeight?: string
+  $whiteSpace?: string
 }

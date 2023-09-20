@@ -8,6 +8,7 @@ export const P = styled.p<reusableStyleProps>`
   font-weight: ${(props) => props.$fontWeight || '400'};
   letter-spacing: ${(props) => props.$letterSpacing || '0px'};
   color: ${(props) => props.$color || '#303030'};
+  white-space: ${(props) => props.$whiteSpace || 'none'};
 `
 
 export const Button = styled.button<reusableStyleProps>`
