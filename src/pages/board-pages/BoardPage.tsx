@@ -4,8 +4,8 @@ import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import CategorySection from 'components/community/CategorySection'
-import DropDownSort from 'components/common/DropDownSort'
 import { BOARD_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
+import DropdownSort from 'components/ui/DropdownSort'
 
 const BoardPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(BOARD_CATEGOTY_LIST_MOCK[0])
@@ -21,9 +21,9 @@ const BoardPage = () => {
           useArrow
           canCreate
         />
-        <DropDownSort
-          selectedSort={selectedSort}
-          setSelectedSort={setSelectedSort}
+        <DropdownSort
+          selectedValue={selectedSort}
+          setSelectedValue={setSelectedSort}
           dropdownList={SORT_DROPDOWN_LIST}
         />
       </StyledDiv>
