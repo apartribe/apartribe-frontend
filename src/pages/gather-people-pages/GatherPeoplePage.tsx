@@ -4,9 +4,9 @@ import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import CategorySection from 'components/community/CategorySection'
-import DropDownSort from 'components/common/DropDownSort'
 import { GATHER_PEOPLE_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import GatherPeopleListSection from 'components/community/gather-people-page/GatherPeopleListSection'
+import DropdownSort from 'components/ui/DropdownSort'
 
 const GatherPeoplePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(
@@ -25,9 +25,9 @@ const GatherPeoplePage = () => {
             useArrow
             canCreate
           />
-          <DropDownSort
-            selectedSort={selectedSort}
-            setSelectedSort={setSelectedSort}
+          <DropdownSort
+            selectedValue={selectedSort}
+            setSelectedValue={setSelectedSort}
             dropdownList={SORT_DROPDOWN_LIST}
           />
         </StyledDiv>
