@@ -27,7 +27,7 @@ export const Button = styled.button<reusableStyleProps>`
   letter-spacing: ${(props) => props.$letterSpacing || '2px'};
 
   &:hover {
-    filter: brightness(1.1);
+    filter: brightness(0.9);
   }
 
   &.disabled {
@@ -37,15 +37,15 @@ export const Button = styled.button<reusableStyleProps>`
 `
 
 export const Input = styled.input<reusableStyleProps>`
-  border: none;
   outline: none;
   box-sizing: border-box;
   background: ${(props) => props.$background || '#f2f2f2'};
   box-shadow: ${(props) => props.$boxShadow || 'none'};
   width: ${(props) => props.$width || '100%'};
-  height: ${(props) => props.$height || '55px'};
+  height: ${(props) => props.$height || '50px'};
   margin: ${(props) => props.$margin || '0px'};
   padding: ${(props) => props.$padding || '0px  15px'};
+  border: ${(props) => props.$border || 'none'};
   border-radius: ${(props) => props.$borderRadius || '10px'};
   color: ${(props) => props.$color || '#303030'};
   font-size: ${(props) => props.$fontSize || '15px'};
