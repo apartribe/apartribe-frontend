@@ -3,14 +3,14 @@ import { styled } from 'styled-components'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
 
 interface Props {
-  selectedSort: string
-  setSelectedSort: Dispatch<React.SetStateAction<string>>
+  selectedValue: string
+  setSelectedValue: Dispatch<React.SetStateAction<string>>
   dropdownList: string[]
 }
 
-const DropDownSort: FC<Props> = ({ selectedSort, setSelectedSort, dropdownList }) => {
+const DropdownSort: FC<Props> = ({ selectedValue, setSelectedValue, dropdownList }) => {
   const changeSelectedSort = (e: MouseEvent<HTMLButtonElement>) => {
-    setSelectedSort(e.currentTarget.innerText)
+    setSelectedValue(e.currentTarget.innerText)
     setVisible(false)
   }
 
@@ -25,7 +25,7 @@ const DropDownSort: FC<Props> = ({ selectedSort, setSelectedSort, dropdownList }
   return (
     <StyledWrapper>
       <StyledDiv className="view" onClick={toggleDropDown}>
-        {selectedSort}
+        {selectedValue}
         {visible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
       </StyledDiv>
       {visible ? (
@@ -43,7 +43,7 @@ const DropDownSort: FC<Props> = ({ selectedSort, setSelectedSort, dropdownList }
   )
 }
 
-export default DropDownSort
+export default DropdownSort
 
 const StyledWrapper = styled.div`
   position: relative;
