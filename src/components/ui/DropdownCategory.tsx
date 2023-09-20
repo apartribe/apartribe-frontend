@@ -1,7 +1,7 @@
 import React, { Dispatch, FC, MouseEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
-import { Board } from 'types/community-type/annoucementType'
+import { Board } from 'types/community-type/postDataType'
 
 interface Props<T> {
   selectedValue: T

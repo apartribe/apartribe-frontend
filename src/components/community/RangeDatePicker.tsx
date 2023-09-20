@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 // eslint-disable-next-line import/order
 import { addMonths } from 'date-fns'
 import { styled } from 'styled-components'
-import { Announce } from 'types/community-type/annoucementType'
+import { Announce } from 'types/community-type/postDataType'
 import ko from 'date-fns/locale/ko' // 한국어로
 
 interface Props<T> {

@@ -8,7 +8,7 @@ import {
 } from 'mock/categoryData'
 import { styled } from 'styled-components'
 import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
-import { GatherPeople } from 'types/community-type/annoucementType'
+import { GatherPeople } from 'types/community-type/postDataType'
 import RangeDatePicker from 'components/community/RangeDatePicker'
 
 const AddGatherPeoplePage = () => {

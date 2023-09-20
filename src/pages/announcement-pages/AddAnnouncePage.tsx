@@ -5,7 +5,7 @@ import DropdownCategory from 'components/ui/DropdownCategory'
 import { ANNOUNCE_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import { styled } from 'styled-components'
 import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
-import { Announce } from 'types/community-type/annoucementType'
+import { Announce } from 'types/community-type/postDataType'
 import RangeDatePicker from 'components/community/RangeDatePicker'
 
 const AddAnnouncePage = () => {
