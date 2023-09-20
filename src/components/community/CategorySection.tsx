@@ -76,7 +76,6 @@ const CategorySection: FC<Props> = ({
               $border="1px dashed #c1e2dd"
               $margin="0 10px"
             >
-              {' '}
               <AiOutlinePlus />
             </ArrowButton>
           )}
