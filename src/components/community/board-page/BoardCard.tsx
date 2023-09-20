@@ -67,7 +67,7 @@ export default BoardCard
 
 const StyledWrapper = styled.div`
   max-width: 900px;
-  height: 150px;
+  height: 170px;
   display: flex;
   border-top: 1px solid #f2f2f2;
   /* background-color: red; */
