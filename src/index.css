@@ -15,3 +15,40 @@ a {
 }
 
 @import url("https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css");
+
+/* 토글 스위치 */
+.toggleSwitch {
+  width: 40px;
+  height: 25px;
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  background-color: #f2f2f2;
+  /* box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%); */
+  cursor: pointer;
+  margin: 5px;
+}
+
+.toggleSwitch .toggleButton {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #2B7F75;
+}
+
+#toggle:checked ~ .toggleSwitch {
+  background: #2B7F75;
+}
+
+#toggle:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 20px);
+  background: #fff;
+}
+
+.toggleSwitch, .toggleButton {
+  transition: all 0.2s ease-in;
+}
