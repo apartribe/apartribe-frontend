@@ -1,6 +1,6 @@
-import DropDownSort from 'components/common/DropDownSort'
 import CategorySection from 'components/community/CategorySection'
 import AnnouncementListSection from 'components/community/announce-page/AnnouncementListSection'
+import DropdownSort from 'components/ui/DropdownSort'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import { ANNOUNCE_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import React, { useState } from 'react'
@@ -19,9 +19,9 @@ const AnnouncePage = () => {
           setSelectedCategory={setSelectedCategory}
           categoryList={ANNOUNCE_CATEGOTY_LIST_MOCK}
         />
-        <DropDownSort
-          selectedSort={selectedSort}
-          setSelectedSort={setSelectedSort}
+        <DropdownSort
+          selectedValue={selectedSort}
+          setSelectedValue={setSelectedSort}
           dropdownList={SORT_DROPDOWN_LIST}
         />
       </StyledDiv>
