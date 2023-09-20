@@ -29,7 +29,7 @@ export const Button = styled.button<reusableStyleProps>`
     filter: brightness(1.1);
   }
 
-  &.disabled {
+  &:disabled {
     background: #dadada;
     cursor: not-allowed;
   }
