@@ -9,7 +9,7 @@ type AuthLayoutProps = {
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <Container>
-      <Inner $width="550px" $padding="100px 0">
+      <Inner $width="600px" $padding="100px 0">
         <ShadowBox
           $display="flex"
           $flexDirection="column"
