@@ -1,25 +1,19 @@
 import React, { Dispatch, FC, MouseEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
+import { Board } from 'types/community-type/annoucementType'
 
-interface InputValue {
-  category: string
-  protected: boolean
-  title: string
-  content: string
-}
-
-interface Props {
-  selectedValue: InputValue
-  setSelectedValue: Dispatch<React.SetStateAction<InputValue>>
+interface Props<T> {
+  selectedValue: T
+  setSelectedValue: Dispatch<React.SetStateAction<T>>
   dropdownList: string[]
 }
 
-const DropdownCategory: FC<Props> = ({
+const DropdownCategory = <T extends Board>({
   selectedValue,
   setSelectedValue,
   dropdownList,
-}) => {
+}: Props<T>) => {
   const changeSelectedSort = (e: MouseEvent<HTMLButtonElement>) => {
     setSelectedValue((prevState) => ({
       ...prevState,
