@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  Dispatch,
-  FC,
-  SetStateAction,
-  useState,
-} from 'react'
+import React, { ChangeEvent, Dispatch, FC, SetStateAction, useState } from 'react'
 import { styled } from 'styled-components'
 import {
   Button,
@@ -50,13 +43,12 @@ const AddCategoryModal: FC<Props> = ({ setAddModalVisible }) => {
 
         <StyledDiv>
           <P $fontSize="15px" $lineHeight="30px">
-            {' '}
-            잠깐!{' '}
+            잠깐!
           </P>
           <P $fontSize="12px" $lineHeight="15px">
             우리 주민들이 함께 활동하는 공간이에요.
             <br />
-            모두가 애용할 수 있도록 카테고리를 만들어 주실거죠?
+            모두가 애용할 수 있는 카테고리를 만들어 주실거죠?
           </P>
         </StyledDiv>
         <StyledDiv>
@@ -68,7 +60,6 @@ const AddCategoryModal: FC<Props> = ({ setAddModalVisible }) => {
             $height="40px"
           />
           <P $fontSize="12px" $color="#EA1616">
-            {' '}
             &nbsp; ※ 부적절한 카테고리는 경고 없이 삭제될 수 있습니다.
           </P>
         </StyledDiv>
