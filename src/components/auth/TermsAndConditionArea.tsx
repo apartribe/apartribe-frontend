@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import { AiOutlineRight } from 'react-icons/ai'
 import { Input } from 'styles/reusable-style/elementStyle'
 import TermsAndConditionModal from './TermsAndConditionModal'
-import { TERMS_AND_CONDITIONS_LIST } from 'constants/auth'
+import { TERMS_AND_CONDITIONS_LIST } from 'constants/auth/termsAndConditions'
 
 const TermsAndConditionArea = () => {
   const [checkList, setCheckList] = useState<number[]>([])
@@ -63,7 +63,9 @@ const TermsAndConditionArea = () => {
         </StyledLabel>
       ))}
 
-      {modal && <TermsAndConditionModal fileName={showDetail} />}
+      {modal && (
+        <TermsAndConditionModal fileName={showDetail} modal={modal} setModal={setModal} />
+      )}
     </>
   )
 }
