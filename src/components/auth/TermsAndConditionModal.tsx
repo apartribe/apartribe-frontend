@@ -9,12 +9,17 @@ import promotion_and_marketing_use from 'assets/terms_and_conditions/promotion_a
 
 type TermsAndConditionModalProps = {
   fileName: string
+  modal: boolean
+  setModal: (modal: boolean) => void
 }
 
-const TermsAndConditionModal = ({ fileName }: TermsAndConditionModalProps) => {
+const TermsAndConditionModal = ({
+  fileName,
+  modal,
+  setModal,
+}: TermsAndConditionModalProps) => {
   const [text, setText] = useState('')
   const modalRef = useRef<HTMLDivElement>(null)
-  const [modal, setModal] = useState<boolean>(true)
 
   useEffect(() => {
     const fileList = [
@@ -31,7 +36,7 @@ const TermsAndConditionModal = ({ fileName }: TermsAndConditionModalProps) => {
 
   const closeModal = (e: MouseEvent<HTMLDivElement>) => {
     if (modalRef.current === e.target) {
-      setModal((prev) => !prev)
+      setModal(!modal)
     }
   }
 
