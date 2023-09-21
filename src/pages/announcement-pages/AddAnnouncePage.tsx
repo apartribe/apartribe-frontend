@@ -31,7 +31,7 @@ const AddAnnouncePage = () => {
     setInputValue((prevState) => ({ ...prevState, category: e.target.name }))
   }
 
-  console.log(inputValue)
+  console.log(inputValue) // 최종 결과 확인용
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
