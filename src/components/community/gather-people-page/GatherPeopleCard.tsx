@@ -33,11 +33,13 @@ const GatherPeopleCard: FC<Props> = ({
       >
         {state}
       </Badge>
-      {url ? <Img src={url} $width="150px" $height="130spx" $borderRadius="5px" /> : ''}
+      {/* {url ? <Img src={url} $width="150px" $height="130spx" $borderRadius="5px" /> : ''}*/}
+      <StyledImgWrapper>
+        <StyledImg src={url} alt="" />
+      </StyledImgWrapper>
       <StyledDiv className="column">
         <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
         <P $fontSize="12px" $lineHeight="20px" $fontWeight="700">
-          {' '}
           {writer}
         </P>
         <P $fontSize="10px" $color="#b3b3b3" $lineHeight="10px">
@@ -81,7 +83,10 @@ const StyledBox = styled.div`
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.01);
+    img {
+      transform: scale(1.1);
+      transition: 0.1s ease-in-out;
+    }
   }
 `
 
@@ -123,4 +128,15 @@ const StyledParagraph = styled.p`
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
   }
+`
+const StyledImgWrapper = styled.div`
+  min-width: 150px;
+  min-height: 130px;
+  border-radius: 5px;
+  overflow: hidden;
+`
+
+const StyledImg = styled.img`
+  width: 150px;
+  height: 150px;
 `
