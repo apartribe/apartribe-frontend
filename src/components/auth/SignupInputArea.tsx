@@ -7,17 +7,7 @@ import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
 import { InputValue, PasswordType } from 'types/auth'
 
-type SignupInputAreaProps = {
-  requestEmailAuth: (e: MouseEvent<HTMLButtonElement>) => void
-  checkEmailAuth: (e: MouseEvent<HTMLButtonElement>) => void
-  checkNickname: (e: MouseEvent<HTMLButtonElement>) => void
-}
-
-const SignupInputArea = ({
-  requestEmailAuth,
-  checkEmailAuth,
-  checkNickname,
-}: SignupInputAreaProps) => {
+const SignupInputArea = () => {
   const [inputValue, setInputValue] = useState<InputValue>({
     email: '',
     code: '',
@@ -46,13 +36,30 @@ const SignupInputArea = ({
   )
   const isNicknameValid = signupValidation.nickname.validator(nickname)
 
-  const { secondsLeft, formattedTimeLeft } = useTimer()
+  const { startTimer, secondsLeft, formattedTimeLeft } = useTimer()
+  const TIMER_SECONDS = 180
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }))
+  }
+
+  const clickRequestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    //TODO: 서버요청
+    startTimer(TIMER_SECONDS)
+  }
+
+  const clickCheckEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    //TODO: 서버요청
+  }
+
+  const clickCheckNickname = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    //TODO: 서버요청
   }
 
   const changePasswordType = (e: MouseEvent<HTMLSpanElement>) => {
@@ -84,7 +91,7 @@ const SignupInputArea = ({
         invalidMessage={signupValidation.email.invalidMessage}
       >
         <Button
-          onClick={requestEmailAuth}
+          onClick={clickRequestEmailAuth}
           disabled={!isEmailValid}
           $letterSpacing="normal"
         >
@@ -102,7 +109,7 @@ const SignupInputArea = ({
         isValid={isEmailAuthCodeValid}
       >
         <Button
-          onClick={checkEmailAuth}
+          onClick={clickCheckEmailAuth}
           disabled={!isEmailAuthCodeValid}
           $letterSpacing="normal"
         >
@@ -171,7 +178,7 @@ const SignupInputArea = ({
         placeholder="닉네임을 입력하세요"
       >
         <Button
-          onClick={checkNickname}
+          onClick={clickCheckNickname}
           disabled={!isNicknameValid}
           $letterSpacing="normal"
         >

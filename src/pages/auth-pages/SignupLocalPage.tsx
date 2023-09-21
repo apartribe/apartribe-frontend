@@ -1,46 +1,22 @@
-import { FormEvent, MouseEvent } from 'react'
+import { FormEvent } from 'react'
 import { styled } from 'styled-components'
 import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import SignupInputArea from 'components/auth/SignupInputArea'
 import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
-import { useTimer } from 'hooks/useTimer'
 
 const SignupLocalPage = () => {
-  const { startTimer } = useTimer()
-  const TIMER_SECONDS = 180
-
-  const requestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const submitSignupForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    startTimer(TIMER_SECONDS)
-    //TODO: 서버 요청
-  }
-
-  const checkEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    //TODO: 서버 요청
-  }
-
-  const checkNickname = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    //TODO: 서버 요청
-  }
-
-  const signup = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    //TODO: 서버 요청
-    console.log('{id, email, password, name, nickname}')
+    //TODO: 조건따라서 회원가입 disabled 해제
+    //signup()
   }
 
   return (
     <AuthLayout>
       <StyledH>회원가입</StyledH>
-      <StyledForm onSubmit={signup}>
-        <SignupInputArea
-          requestEmailAuth={requestEmailAuth}
-          checkEmailAuth={checkEmailAuth}
-          checkNickname={checkNickname}
-        />
+      <StyledForm onSubmit={submitSignupForm}>
+        <SignupInputArea />
         <TermsAndConditionArea />
         <Button type="submit" disabled>
           회원가입
