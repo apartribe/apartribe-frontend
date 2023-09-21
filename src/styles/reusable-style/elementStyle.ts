@@ -81,6 +81,7 @@ export const ShadowBox = styled.div<reusableStyleProps>`
   color: ${(props) => props.$color || '#303030'};
   font-size: ${(props) => props.$fontSize || '15px'};
   font-weight: ${(props) => props.$fontWeight || '400'};
+  cursor: ${(props) => props.$cursor || 'auto'};
 
   &.modal {
     position: absolute;
