@@ -9,7 +9,7 @@ import {
   NAVER_AUTH_URL,
   PAGE_LOCAL_SIGNUP,
   PAGE_LOGIN,
-} from 'constants/auth'
+} from 'constants/auth/path'
 
 const SignupSelectPage = () => {
   const navigate = useNavigate()
