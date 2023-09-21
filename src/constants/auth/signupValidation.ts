@@ -7,22 +7,22 @@ export const signupValidation = {
     },
     invalidMessage: '올바른 이메일 주소가 아닙니다.',
   },
-  emailAuthCode: {
-    validator: (emailAuthCode: string) => {
-      return emailAuthCode.length !== 0
+  code: {
+    validator: (code: string) => {
+      return code.length !== 0
     },
   },
-  password1: {
-    validator: (password1: string) => {
+  password: {
+    validator: (password: string) => {
       const regex = /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,20}$/
-      return regex.test(password1)
+      return regex.test(password)
     },
     invalidMessage:
       '영문, 숫자, 특수문자를 포함한 8자리 이상 20자리 이하의 비밀번호를 입력해주세요.',
   },
-  password2: {
-    validator: (password1: string, password2: string) => {
-      return Object.is(password1, password2)
+  passwordConfirm: {
+    validator: (password: string, passwordConfirm: string) => {
+      return Object.is(password, passwordConfirm)
     },
     invalidMessage: '입력하신 비밀번호가 일치하지 않습니다.',
   },
