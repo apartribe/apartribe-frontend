@@ -1,6 +1,6 @@
 import { BoardMockType } from 'mock/boardData'
 import React, { FC } from 'react'
-import { Badge, Img, P } from 'styles/reusable-style/elementStyle'
+import { Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'

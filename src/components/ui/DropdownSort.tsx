@@ -20,8 +20,6 @@ const DropdownSort: FC<Props> = ({ selectedValue, setSelectedValue, dropdownList
     setVisible((prev) => !prev)
   }
 
-  console.log(visible)
-
   return (
     <StyledWrapper>
       <StyledDiv className="view" onClick={toggleDropDown}>

@@ -1,13 +1,6 @@
 import React, { Dispatch, FC, LegacyRef, MouseEvent, useState } from 'react'
 import { styled } from 'styled-components'
-import {
-  ArrowButton,
-  Button,
-  Input,
-  Modal,
-  ModalBackground,
-  P,
-} from 'styles/reusable-style/elementStyle'
+import { ArrowButton } from 'styles/reusable-style/elementStyle'
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { useInView } from 'react-intersection-observer'
