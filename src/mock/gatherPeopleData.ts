@@ -13,7 +13,7 @@ export const GATHER_PEOPLE_MOCK = [
   },
   {
     categoroy: '동호회',
-    state: '모집 완료',
+    state: '모집 중',
     title: '독서 모임 회원 모집',
     writer: '간헐적 독서',
     date: '5일 전',
@@ -61,7 +61,7 @@ export const GATHER_PEOPLE_MOCK = [
   },
   {
     categoroy: '동호회',
-    state: '모집 완료',
+    state: '모집 중',
     title: '독서 모임 회원 모집',
     writer: '간헐적 독서',
     date: '5일 전',
@@ -73,7 +73,7 @@ export const GATHER_PEOPLE_MOCK = [
   },
   {
     categoroy: '동호회',
-    state: '모집 중',
+    state: '모집 완료',
     title: '주말 축구회 모집',
     writer: '청평동 네이마르',
     date: '1시간전',
