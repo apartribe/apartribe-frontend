@@ -29,7 +29,7 @@ export const Button = styled.button<reusableStyleProps>`
     filter: brightness(1.1);
   }
 
-  &.disabled {
+  &:disabled {
     background: #dadada;
     cursor: not-allowed;
   }
@@ -65,7 +65,7 @@ export const ShadowBox = styled.div<reusableStyleProps>`
   margin: ${(props) => props.$margin || '0px'};
   padding: ${(props) => props.$padding || '10px'};
   display: ${(props) => props.$display || 'block'};
-  flex-direction: ${(props) => props.$flexDirection || 'column'};
+  flex-direction: ${(props) => props.$flexDirection || 'row'};
   justify-content: ${(props) => props.$justifyContent || 'none'};
   align-items: ${(props) => props.$alignItems || 'none'};
   gap: ${(props) => props.$gap || '0px'};

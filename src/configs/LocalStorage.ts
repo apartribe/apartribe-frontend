@@ -1,0 +1,19 @@
+export class LocalStorage {
+  #TOKEN_KEY
+
+  constructor() {
+    this.#TOKEN_KEY = 'ACCESS_TOKEN'
+  }
+
+  save(token: string) {
+    localStorage.setItem(this.#TOKEN_KEY, token)
+  }
+
+  get() {
+    return localStorage.getItem(this.#TOKEN_KEY)
+  }
+
+  delete() {
+    localStorage.removeItem(this.#TOKEN_KEY)
+  }
+}
