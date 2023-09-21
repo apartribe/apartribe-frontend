@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { AnnouncementMockType } from 'mock/announcementData'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   post: AnnouncementMockType
@@ -18,8 +19,14 @@ const badgeColor = (urgency: string): string => {
 const AnnouncementCard: FC<Props> = ({
   post: { avatar, job, writer, date, urgency, title, content, view, like, comment, url },
 }) => {
+  const navigate = useNavigate()
+
+  const moveToDetail = () => {
+    navigate('/community/123/announcements/45/detail') // 추후 경로 수정
+  }
+
   return (
-    <StyledWrapper className="flex">
+    <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
         src={avatar}
         $width="40px"
