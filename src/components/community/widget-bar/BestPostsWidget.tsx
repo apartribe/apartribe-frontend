@@ -38,4 +38,8 @@ const StyledParagraph = styled.div`
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+  }
 `
