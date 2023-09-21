@@ -5,20 +5,7 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
-
-type inputValueState = {
-  email: string
-  emailAuthCode: string
-  password1: string
-  password2: string
-  name: string
-  nickname: string
-}
-
-type PasswordTypeState = {
-  type: string
-  visible: boolean
-}
+import { InputValue, PasswordType } from 'types/auth'
 
 type SignupInputAreaProps = {
   requestEmailAuth: (e: MouseEvent<HTMLButtonElement>) => void
@@ -31,27 +18,32 @@ const SignupInputArea = ({
   checkEmailAuth,
   checkNickname,
 }: SignupInputAreaProps) => {
-  const [inputValue, setInputValue] = useState<inputValueState>({
+  const [inputValue, setInputValue] = useState<InputValue>({
     email: '',
-    emailAuthCode: '',
-    password1: '',
-    password2: '',
+    code: '',
+    password: '',
+    passwordConfirm: '',
     name: '',
     nickname: '',
   })
-  const [password1Type, setPassword1Type] = useState<PasswordTypeState>({
+  const [passwordType, setPasswordType] = useState<PasswordType>({
     type: 'password',
     visible: false,
   })
-  const [password2Type, setPassword2Type] = useState<PasswordTypeState>({
+  const [passwordConfirmType, setPasswordConfirmType] = useState<PasswordType>({
     type: 'password',
     visible: false,
   })
 
-  const { email, emailAuthCode, password1, password2, name, nickname } = inputValue
+  const { email, code, password, passwordConfirm, name, nickname } = inputValue
 
   const isEmailValid = signupValidation.email.validator(email)
-  const isEmailAuthCodeValid = signupValidation.emailAuthCode.validator(emailAuthCode)
+  const isEmailAuthCodeValid = signupValidation.code.validator(code)
+  const isPasswordValid = signupValidation.password.validator(password)
+  const isPasswordConfirmValid = signupValidation.passwordConfirm.validator(
+    password,
+    passwordConfirm,
+  )
   const isNicknameValid = signupValidation.nickname.validator(nickname)
 
   const { secondsLeft, formattedTimeLeft } = useTimer()
@@ -64,16 +56,15 @@ const SignupInputArea = ({
   }
 
   const changePasswordType = (e: MouseEvent<HTMLSpanElement>) => {
-    //TODO: 선언적으로 시도하는 방식마다 에러나서 이모습인데 마음에 안든다;;
-    if (e.currentTarget.id === 'password1Type') {
-      setPassword1Type(
-        password1Type.visible
+    if (e.currentTarget.id === 'passwordType') {
+      setPasswordType(
+        passwordType.visible
           ? { type: 'password', visible: false }
           : { type: 'text', visible: true },
       )
-    } else if (e.currentTarget.id === 'password2Type') {
-      setPassword2Type(
-        password2Type.visible
+    } else if (e.currentTarget.id === 'passwordConfirmType') {
+      setPasswordConfirmType(
+        passwordConfirmType.visible
           ? { type: 'password', visible: false }
           : { type: 'text', visible: true },
       )
@@ -103,9 +94,9 @@ const SignupInputArea = ({
 
       <SignupInput
         labelText="인증번호 확인"
-        id="emailAuthCode"
-        name="emailAuthCode"
-        value={emailAuthCode}
+        id="code"
+        name="code"
+        value={code}
         onChange={changeInputValue}
         placeholder="인증번호를 입력하세요"
         isValid={isEmailAuthCodeValid}
@@ -129,33 +120,33 @@ const SignupInputArea = ({
 
       <SignupInput
         labelText="비밀번호"
-        id="password1"
-        type={password1Type.type}
-        name="password1"
-        value={password1}
+        id="password"
+        type={passwordType.type}
+        name="password"
+        value={password}
         onChange={changeInputValue}
         placeholder="영문, 숫자, 특수문자 혼합 8~20자"
-        isValid={signupValidation.password1.validator(password1)}
-        invalidMessage={signupValidation.password1.invalidMessage}
+        isValid={isPasswordValid}
+        invalidMessage={signupValidation.password.invalidMessage}
       >
-        <StyledSpan id="password1Type" onClick={changePasswordType}>
-          {!password1Type.visible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+        <StyledSpan id="passwordType" onClick={changePasswordType}>
+          {!passwordType.visible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
         </StyledSpan>
       </SignupInput>
 
       <SignupInput
         labelText="비밀번호 확인"
-        id="password2"
-        type={password2Type.type}
-        name="password2"
-        value={password2}
+        id="passwordConfirm"
+        type={passwordConfirmType.type}
+        name="passwordConfirm"
+        value={passwordConfirm}
         onChange={changeInputValue}
         placeholder="비밀번호를 한 번 더 입력해주세요"
-        isValid={signupValidation.password2.validator(password1, password2)}
-        invalidMessage={signupValidation.password2.invalidMessage}
+        isValid={isPasswordConfirmValid}
+        invalidMessage={signupValidation.passwordConfirm.invalidMessage}
       >
-        <StyledSpan id="password2Type" onClick={changePasswordType}>
-          {!password2Type.visible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+        <StyledSpan id="passwordConfirmType" onClick={changePasswordType}>
+          {!passwordConfirmType.visible ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
         </StyledSpan>
       </SignupInput>
 
