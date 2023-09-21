@@ -4,13 +4,22 @@ import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaRankingStar } from 'react-icons/fa6'
 import { styled } from 'styled-components'
 import { BEST_POST_MOCK } from 'mock/bestPostData'
+import { useNavigate } from 'react-router-dom'
 
 const BestPostsWidget = () => {
+  const navigate = useNavigate()
+
+  const moveToDetail = () => {
+    navigate('/community/123/bbs/45/detail') // 추후 경로 수정
+  }
+
   return (
     <ShadowBox>
       <WidgetTitleArea Icon={FaRankingStar} title="베스트 게시물" hasSeeMore={false} />
       {BEST_POST_MOCK.data.map((item) => (
-        <StyledParagraph key={item.id}>{item.title}</StyledParagraph>
+        <StyledParagraph key={item.id} onClick={moveToDetail}>
+          {item.title}
+        </StyledParagraph>
       ))}
     </ShadowBox>
   )
