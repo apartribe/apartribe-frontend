@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { GatherPeopleMockType } from 'mock/gatherPeopleData'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   post: GatherPeopleMockType
@@ -17,8 +18,13 @@ const badgeColor = (urgency: string): string => {
 const GatherPeopleCard: FC<Props> = ({
   post: { writer, date, state, title, explain, view, like, comment, url },
 }) => {
+  const navigate = useNavigate()
+
+  const moveToDetail = () => {
+    navigate('/community/123/gather-people/45/detail') // 추후 경로 수정
+  }
   return (
-    <StyledBox>
+    <StyledBox onClick={moveToDetail}>
       <Badge
         $position="absolute"
         $top="10px"

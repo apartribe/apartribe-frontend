@@ -4,6 +4,7 @@ import { Badge, Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   post: BoardMockType
@@ -12,8 +13,14 @@ interface Props {
 const BoardCard: FC<Props> = ({
   post: { avatar, writer, date, title, content, view, like, comment, url },
 }) => {
+  const navigate = useNavigate()
+
+  const moveToDetail = () => {
+    navigate('/community/123/bbs/45/detail') // 추후 경로 수정
+  }
+
   return (
-    <StyledWrapper className="flex">
+    <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
         src={avatar}
         $width="40px"
