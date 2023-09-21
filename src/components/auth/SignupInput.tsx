@@ -29,7 +29,7 @@ const SignupInput = ({
         {info && <StyledSpanLabelInfo>{info}</StyledSpanLabelInfo>}
       </StyledLabel>
       <StyledDiv>
-        <StyledInput className={!isEmpty && !isValid ? 'isInvalid' : ''} {...rest} />
+        <StyledInput {...rest} />
         {children}
       </StyledDiv>
       {!isEmpty && !isValid && <StyledP>{invalidMessage}</StyledP>}
