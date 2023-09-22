@@ -4,9 +4,7 @@ import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
-import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
-
-const APT_NAME_MOCK = '자이 힐스테이트 하남'
+import { LANDING_NAV_LIST } from 'constants/navList'
 
 const HeaderLanding = () => {
   return (
