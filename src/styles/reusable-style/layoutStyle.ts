@@ -12,7 +12,7 @@ export const Container = styled.main<reusableStyleProps>`
 export const Inner = styled.div<reusableStyleProps>`
   box-sizing: border-box;
   background: ${(props) => props.$background || '#f2f2f2'};
-  width: ${(props) => props.$width || '1080px'};
+  width: ${(props) => props.$width || '1280px'};
   height: ${(props) => props.$height || 'auto'};
   margin: ${(props) => props.$margin || '0 auto'};
   padding: ${(props) => props.$padding || '0px'};
