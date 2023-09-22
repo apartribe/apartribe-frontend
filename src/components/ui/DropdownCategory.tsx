@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, MouseEvent, useState } from 'react'
+import React, { Dispatch, MouseEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
 import { Board } from 'types/community-type/postDataType'

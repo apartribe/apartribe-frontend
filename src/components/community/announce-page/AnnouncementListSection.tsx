@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import BoardCard from '../board-page/BoardCard'
 import { ANNONCEMENT_MOCK } from 'mock/announcementData'
 import AnnouncementCard from './AnnouncementCard'
 

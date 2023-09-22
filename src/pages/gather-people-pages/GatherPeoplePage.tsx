@@ -1,4 +1,3 @@
-import BoardListSection from 'components/community/board-page/BoardListSection'
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
