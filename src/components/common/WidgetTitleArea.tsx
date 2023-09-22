@@ -27,6 +27,7 @@ const StyledDiv = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 5px;
 `
 
 const StyledLink = styled(Link)`
