@@ -12,7 +12,7 @@ const FindIdPwModal = ({ modal, setModal }: FindIdPwModalProps) => {
   const navigate = useNavigate()
 
   const closeModal = () => {
-    //navigate(PAGE_LOGIN)
+    navigate(PAGE_LOGIN)
     setModal(!modal)
   }
 

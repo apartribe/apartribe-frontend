@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Badge, Img, P, ShadowBox } from 'styles/reusable-style/elementStyle'
+import { Badge, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'

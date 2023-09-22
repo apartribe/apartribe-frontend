@@ -2,12 +2,8 @@ import React, { ChangeEvent, useState } from 'react'
 import CkEditor from 'components/community/CkEditor'
 import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
-import {
-  ANNOUNCE_CATEGOTY_LIST_MOCK,
-  GATHER_PEOPLE_CATEGOTY_LIST_MOCK,
-} from 'mock/categoryData'
+import { GATHER_PEOPLE_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import { styled } from 'styled-components'
-import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
 import { GatherPeople } from 'types/community-type/postDataType'
 import RangeDatePicker from 'components/community/RangeDatePicker'
 
