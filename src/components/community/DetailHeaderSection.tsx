@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 import { RiFileListLine } from 'react-icons/ri'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
-import { BiConversation , BiShareAlt } from 'react-icons/bi'
+import { BiConversation, BiShareAlt } from 'react-icons/bi'
 
 import { Img } from 'styles/reusable-style/elementStyle'
 import { useLocation } from 'react-router-dom'
@@ -31,9 +31,9 @@ const DetailHeaderSection: FC<Props> = ({
   const location = useLocation()
   const currentPath = location.pathname
 
-  const isCommunity = /(bbs)/
-  const isAnnouncement = /(announcements)/
-  const isGatherPeople = /(gather-people)/
+  const isCommunity = /bbs/
+  const isAnnouncement = /announcements/
+  const isGatherPeople = /gather-people/
 
   const decidePath = () => {
     if (isCommunity.test(currentPath)) return '커뮤니티 홈'
