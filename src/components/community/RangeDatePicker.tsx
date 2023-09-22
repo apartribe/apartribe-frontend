@@ -1,11 +1,12 @@
-import React, { Dispatch, FC, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-// eslint-disable-next-line import/order
-import { addMonths } from 'date-fns'
 import { styled } from 'styled-components'
 import { Announce } from 'types/community-type/postDataType'
+/* eslint-disable import/no-duplicates */
+import addMonths from 'date-fns/addMonths'
 import ko from 'date-fns/locale/ko' // 한국어로
+/* eslint-disable import/no-duplicates */
 
 interface Props<T> {
   inputValue: T
