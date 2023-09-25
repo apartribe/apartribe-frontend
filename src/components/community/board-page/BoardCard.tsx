@@ -77,8 +77,6 @@ const StyledWrapper = styled.div`
   height: 170px;
   display: flex;
   border-top: 1px solid #f2f2f2;
-  /* background-color: red; */
-  /* margin: 10px 0; */
   padding: 10px 20px;
   gap: 20px;
   cursor: pointer;
