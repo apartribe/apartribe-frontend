@@ -1,8 +1,8 @@
-import { LogoMainWhite } from 'assets/logos'
-import SearchBar from 'components/ui/SearchBar'
-import { BANNER_TEXT } from 'constants/landing/banner'
 import React from 'react'
 import { styled } from 'styled-components'
+import { LogoMainWhite } from 'assets/logos'
+import AptSearchBar from 'components/common/AptSearchBar'
+import { BANNER_TEXT } from 'constants/landing/banner'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 
 const BannerSection = () => {
@@ -25,7 +25,7 @@ const BannerSection = () => {
               {explain[1]}
             </StyledParagraph>
             <StyledParagraph className="lg">{doIt}</StyledParagraph>
-            <SearchBar $color="#FFFFFF" />
+            <AptSearchBar />
           </StyledDiv>
           <StyledDiv className="right">
             <LogoMainWhite width="350px" height="400px" />
