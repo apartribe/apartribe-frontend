@@ -53,6 +53,14 @@ a {
   transition: all 0.2s ease-in;
 }
 
+ul {
+  padding-left: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
 /* 라디오 박스 ====================================== */
 label {
   font-size: 18px;
