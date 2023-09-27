@@ -15,3 +15,113 @@ a {
 }
 
 @import url("https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css");
+
+/* 토글 스위치 ====================================== */
+.toggleSwitch {
+  width: 40px;
+  height: 25px;
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  background-color: #f2f2f2;
+  /* box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%); */
+  cursor: pointer;
+  margin: 5px;
+}
+
+.toggleSwitch .toggleButton {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #2B7F75;
+}
+
+#toggle:checked ~ .toggleSwitch {
+  background: #2B7F75;
+}
+
+#toggle:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 20px);
+  background: #fff;
+}
+
+.toggleSwitch, .toggleButton {
+  transition: all 0.2s ease-in;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* 라디오 박스 ====================================== */
+label {
+  font-size: 18px;
+  line-height: 2rem;
+  padding: 0.2em 0.4em;
+}
+
+[type="radio"], span {
+  vertical-align: middle;
+}
+
+[type="radio"] {
+  appearance: none;
+  border: max(2px, 0.1em) solid gray;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+  transition: border 0.1s ease-in-out;
+}
+
+[type="radio"]:checked {
+  border: 0.4em solid #2B7F75;
+}
+
+[type="radio"]:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) dotted #2B7F75;
+}
+
+[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+  cursor: pointer;
+}
+
+[type="radio"]:hover + span {
+  cursor: pointer;
+}
+
+[type="radio"]:disabled {
+  background-color: lightgray;
+  box-shadow: none;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type="radio"]:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Global CSS */
+fieldset {
+  display: flex;
+  justify-content: center;
+  border: none;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
