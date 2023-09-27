@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, ChangeEvent, MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { BsCheckCircle } from 'react-icons/bs'
@@ -13,22 +13,42 @@ import {
   PAGE_FIND_PW,
   PAGE_SIGNUP_SELECT,
 } from 'constants/auth/path'
+import { useAuth } from 'contexts/AuthContext'
+import { SigninInputValue } from 'types/auth'
 
 const LoginPage = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [inputValue, setInputValue] = useState<SigninInputValue>({
+    email: '',
+    password: '',
+  })
+
+  const { signin } = useAuth()
+
+  const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
+  const submitSigninForm = (e: MouseEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    signin(email, password)
+  }
+
+  const { email, password } = inputValue
 
   return (
     <AuthLayout>
       <StyledH>로그인</StyledH>
-      <StyledForm>
+      <StyledForm onSubmit={submitSigninForm}>
         <Label>
           이메일
-          <Input value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
+          <Input name="email" value={email} onChange={changeInputValue} />
         </Label>
         <Label>
           비밀번호
-          <Input value={password} onChange={(e) => setPassword(e.currentTarget.value)} />
+          <Input name="password" value={password} onChange={changeInputValue} />
         </Label>
         <Button type="submit">로그인</Button>
         <StyledP>
