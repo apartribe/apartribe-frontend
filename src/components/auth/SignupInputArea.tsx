@@ -1,21 +1,21 @@
-import { useState, ChangeEvent, MouseEvent } from 'react'
+import { useState, ChangeEvent, MouseEvent, Dispatch } from 'react'
 import { styled } from 'styled-components'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { Button } from 'styles/reusable-style/elementStyle'
 import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
-import { InputValue, PasswordType } from 'types/auth'
+import { SignupInputValue, PasswordType } from 'types/auth'
 
-const SignupInputArea = () => {
-  const [inputValue, setInputValue] = useState<InputValue>({
-    email: '',
-    code: '',
-    password: '',
-    passwordConfirm: '',
-    name: '',
-    nickname: '',
-  })
+type SigninupInputAreaProps<T> = {
+  inputValue: T
+  setInputValue: Dispatch<React.SetStateAction<T>>
+}
+
+const SignupInputArea = <T extends SignupInputValue>({
+  inputValue,
+  setInputValue,
+}: SigninupInputAreaProps<T>) => {
   const [passwordType, setPasswordType] = useState<PasswordType>({
     type: 'password',
     visible: false,
