@@ -6,6 +6,7 @@ import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
 import { SignupInputValue, PasswordType } from 'types/auth'
+import { useAuth } from 'contexts/AuthContext'
 
 type SigninupInputAreaProps<T> = {
   inputValue: T
@@ -46,20 +47,22 @@ const SignupInputArea = <T extends SignupInputValue>({
     }))
   }
 
-  const clickRequestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const { sendEmail, confirmEmail, checkNickname } = useAuth()
+
+  const requestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
-    startTimer(TIMER_SECONDS)
+    sendEmail(email)
+    startTimer(TIMER_SECONDS) //TODO: reqeust성공했을때 타이머가도록 수정
   }
 
-  const clickCheckEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const confirmEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
+    confirmEmail(email, code)
   }
 
   const clickCheckNickname = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
+    checkNickname(nickname)
   }
 
   const changePasswordType = (e: MouseEvent<HTMLSpanElement>) => {
@@ -91,7 +94,7 @@ const SignupInputArea = <T extends SignupInputValue>({
         invalidMessage={signupValidation.email.invalidMessage}
       >
         <Button
-          onClick={clickRequestEmailAuth}
+          onClick={requestEmailAuth}
           disabled={!isEmailValid}
           $letterSpacing="normal"
         >
@@ -109,7 +112,7 @@ const SignupInputArea = <T extends SignupInputValue>({
         isValid={isEmailAuthCodeValid}
       >
         <Button
-          onClick={clickCheckEmailAuth}
+          onClick={confirmEmailAuth}
           disabled={!isEmailAuthCodeValid}
           $letterSpacing="normal"
         >
