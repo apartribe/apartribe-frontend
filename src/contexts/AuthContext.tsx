@@ -9,14 +9,15 @@ const AuthContext = createContext<any>(null)
 export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider = ({ children, authService }: AuthProviderProps) => {
-  const sendEmailAuthCode = authService.sendEmailAuthCode.bind(authService)
-  const confirmEmailToken = authService.confirmEmailToken.bind(authService)
-  const confirmNickname = authService.confirmNickname.bind(authService)
+  const sendEmail = authService.sendEmail.bind(authService)
+  const confirmEmail = authService.confirmEmail.bind(authService)
+  const checkNickname = authService.checkNickname.bind(authService)
   const signup = authService.signup.bind(authService)
+  const signin = authService.signin.bind(authService)
 
   return (
     <AuthContext.Provider
-      value={{ sendEmailAuthCode, confirmEmailToken, confirmNickname, signup }}
+      value={{ sendEmail, confirmEmail, checkNickname, signup, signin }}
     >
       {children}
     </AuthContext.Provider>
