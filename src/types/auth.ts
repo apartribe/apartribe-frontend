@@ -1,10 +1,15 @@
-export type InputValue = {
+export type SignupInputValue = {
   email: string
   code: string
   password: string
   passwordConfirm: string
   name: string
   nickname: string
+}
+
+export type SigninInputValue = {
+  email: string
+  password: string
 }
 
 export type PasswordType = {

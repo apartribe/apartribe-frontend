@@ -1,21 +1,22 @@
-import { useState, ChangeEvent, MouseEvent } from 'react'
+import { useState, ChangeEvent, MouseEvent, Dispatch } from 'react'
 import { styled } from 'styled-components'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { Button } from 'styles/reusable-style/elementStyle'
 import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
-import { InputValue, PasswordType } from 'types/auth'
+import { SignupInputValue, PasswordType } from 'types/auth'
+import { useAuth } from 'contexts/AuthContext'
 
-const SignupInputArea = () => {
-  const [inputValue, setInputValue] = useState<InputValue>({
-    email: '',
-    code: '',
-    password: '',
-    passwordConfirm: '',
-    name: '',
-    nickname: '',
-  })
+type SigninupInputAreaProps<T> = {
+  inputValue: T
+  setInputValue: Dispatch<React.SetStateAction<T>>
+}
+
+const SignupInputArea = <T extends SignupInputValue>({
+  inputValue,
+  setInputValue,
+}: SigninupInputAreaProps<T>) => {
   const [passwordType, setPasswordType] = useState<PasswordType>({
     type: 'password',
     visible: false,
@@ -46,20 +47,22 @@ const SignupInputArea = () => {
     }))
   }
 
-  const clickRequestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const { sendEmail, confirmEmail, checkNickname } = useAuth()
+
+  const requestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
-    startTimer(TIMER_SECONDS)
+    sendEmail(email)
+    startTimer(TIMER_SECONDS) //TODO: reqeust성공했을때 타이머가도록 수정
   }
 
-  const clickCheckEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const confirmEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
+    confirmEmail(email, code)
   }
 
   const clickCheckNickname = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
+    checkNickname(nickname)
   }
 
   const changePasswordType = (e: MouseEvent<HTMLSpanElement>) => {
@@ -91,7 +94,7 @@ const SignupInputArea = () => {
         invalidMessage={signupValidation.email.invalidMessage}
       >
         <Button
-          onClick={clickRequestEmailAuth}
+          onClick={requestEmailAuth}
           disabled={!isEmailValid}
           $letterSpacing="normal"
         >
@@ -109,7 +112,7 @@ const SignupInputArea = () => {
         isValid={isEmailAuthCodeValid}
       >
         <Button
-          onClick={clickCheckEmailAuth}
+          onClick={confirmEmailAuth}
           disabled={!isEmailAuthCodeValid}
           $letterSpacing="normal"
         >

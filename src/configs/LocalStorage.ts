@@ -5,7 +5,7 @@ export class LocalStorage {
     this.#TOKEN_KEY = 'ACCESS_TOKEN'
   }
 
-  save(token: string) {
+  set(token: string) {
     localStorage.setItem(this.#TOKEN_KEY, token)
   }
 
@@ -13,7 +13,7 @@ export class LocalStorage {
     return localStorage.getItem(this.#TOKEN_KEY)
   }
 
-  delete() {
+  remove() {
     localStorage.removeItem(this.#TOKEN_KEY)
   }
 }
