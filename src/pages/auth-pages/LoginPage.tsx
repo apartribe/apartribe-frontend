@@ -13,16 +13,14 @@ import {
   PAGE_FIND_PW,
   PAGE_SIGNUP_SELECT,
 } from 'constants/auth/path'
-import { useAuth } from 'contexts/AuthContext'
 import { SigninInputValue } from 'types/auth'
+import { auth } from 'services/auth'
 
 const LoginPage = () => {
   const [inputValue, setInputValue] = useState<SigninInputValue>({
     email: '',
     password: '',
   })
-
-  const { signin } = useAuth()
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prev) => ({
@@ -31,9 +29,11 @@ const LoginPage = () => {
     }))
   }
 
-  const submitSigninForm = (e: MouseEvent<HTMLFormElement>) => {
+  const submitSigninForm = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault()
-    signin(email, password)
+    const { message } = await auth.signin(email, password)
+    alert(message)
+    // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
   }
 
   const { email, password } = inputValue
