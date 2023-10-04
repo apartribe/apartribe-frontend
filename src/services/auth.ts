@@ -139,7 +139,7 @@ export const auth = {
       })
       setAccessToken(response.data.accessToken)
       setRefreshToken(response.data.refreshToken)
-      return { statusCode: 500, message: '토큰 갱신이 완료되었습니다.' }
+      return { statusCode: 200, message: '토큰 갱신이 완료되었습니다.' }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return { statusCode: 500, message: '토큰 갱신에 실패하였습니다.' }
