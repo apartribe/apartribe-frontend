@@ -4,12 +4,12 @@ import { Img, ShadowBox } from 'styles/reusable-style/elementStyle'
 
 const AdvertisementWidget = () => {
   const moveToDetail = () => {
-    window.location.href = ADVERTISEMENT_LIST[0].url
+    window.location.href = ADVERTISEMENT_LIST[1].url
   }
 
   return (
     <ShadowBox
-      $background={ADVERTISEMENT_LIST[0].backgroundColor}
+      $background={ADVERTISEMENT_LIST[1].backgroundColor}
       $height="80px"
       $display="flex"
       $justifyContent="center"
@@ -17,8 +17,8 @@ const AdvertisementWidget = () => {
       onClick={moveToDetail}
     >
       <Img
-        src={ADVERTISEMENT_LIST[0].img}
-        alt={ADVERTISEMENT_LIST[0].sponsor}
+        src={ADVERTISEMENT_LIST[1].img}
+        alt={ADVERTISEMENT_LIST[1].sponsor}
         $width="100px"
       />
     </ShadowBox>
