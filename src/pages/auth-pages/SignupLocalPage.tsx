@@ -4,8 +4,8 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import SignupInputArea from 'components/auth/SignupInputArea'
 import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
-import { useAuth } from 'contexts/AuthContext'
 import { SignupInputValue } from 'types/auth'
+import { auth } from 'services/auth'
 
 const SignupLocalPage = () => {
   const [inputValue, setInputValue] = useState<SignupInputValue>({
@@ -17,12 +17,11 @@ const SignupLocalPage = () => {
     nickname: '',
   })
 
-  const { signup } = useAuth()
-
-  const submitSignupForm = (e: FormEvent<HTMLFormElement>) => {
+  const submitSignupForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     //TODO: 조건따라서 회원가입 disabled 해제
-    signup(inputValue)
+    const { message } = await auth.signup(inputValue)
+    alert(message)
   }
 
   return (

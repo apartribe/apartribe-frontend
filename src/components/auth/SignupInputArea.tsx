@@ -6,7 +6,7 @@ import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
 import { SignupInputValue, PasswordType } from 'types/auth'
-import { useAuth } from 'contexts/AuthContext'
+import { auth } from 'services/auth'
 
 type SigninupInputAreaProps<T> = {
   inputValue: T
@@ -47,22 +47,23 @@ const SignupInputArea = <T extends SignupInputValue>({
     }))
   }
 
-  const { sendEmail, confirmEmail, checkNickname } = useAuth()
-
-  const requestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const requestEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    sendEmail(email)
+    const { message } = await auth.sendEmail(email)
+    alert(message)
     startTimer(TIMER_SECONDS) //TODO: reqeust성공했을때 타이머가도록 수정
   }
 
-  const confirmEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const confirmEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    confirmEmail(email, code)
+    const { message } = await auth.confirmEmail(email, code)
+    alert(message)
   }
 
-  const clickCheckNickname = (e: MouseEvent<HTMLButtonElement>) => {
+  const clickCheckNickname = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    checkNickname(nickname)
+    const { message } = await auth.checkNickname(nickname)
+    alert(message)
   }
 
   const changePasswordType = (e: MouseEvent<HTMLSpanElement>) => {
