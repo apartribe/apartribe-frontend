@@ -9,25 +9,25 @@ import { Img } from 'styles/reusable-style/elementStyle'
 import { useLocation } from 'react-router-dom'
 
 interface DetailHeaderData {
-  avatar: string
-  category: string
+  id: number
   createdBy: string
   title: string
   liked: number
   saw: number
   commentCounts: number
-  job?: string
+  // avatar: string
+  // category: string
+  // job?: string
 }
 
 interface Props {
-  issuedAt: string
-  data: DetailHeaderData
+  data: {
+    issuedAt: string
+    data: DetailHeaderData
+  }
 }
 
-const DetailHeaderSection: FC<Props> = ({
-  issuedAt,
-  data: { category, avatar, job, createdBy, title, liked, saw, commentCounts },
-}) => {
+const DetailHeaderSection: FC<Props> = ({ data }) => {
   const location = useLocation()
   const currentPath = location.pathname
 
@@ -42,11 +42,16 @@ const DetailHeaderSection: FC<Props> = ({
     return
   }
 
+  const {
+    issuedAt,
+    data: { /* category, avatar, job,  */ createdBy, title, liked, saw, commentCounts },
+  } = data
+
   return (
     <StyledWrapper>
       <StyledDiv className="between">
         <StyledParagraph className="md">
-          {decidePath()} &nbsp;&gt;&nbsp; {category}
+          {/* {decidePath()} &nbsp;&gt;&nbsp; {category} */}
         </StyledParagraph>
         <RiFileListLine fontSize="30px" />
       </StyledDiv>
@@ -81,14 +86,14 @@ const DetailHeaderSection: FC<Props> = ({
         </StyledDiv>
       </StyledDiv>
       <StyledDiv>
-        <Img src={avatar} alt="아바타" $width="50px" $height="50px" />
+        {/* <Img src={avatar} alt="아바타" $width="50px" $height="50px" />
         {job ? (
           <p>
             [{job}] {createdBy}
           </p>
         ) : (
           <p>{createdBy}</p>
-        )}
+        )} */}
       </StyledDiv>
     </StyledWrapper>
   )
