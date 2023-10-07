@@ -5,18 +5,29 @@ import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { timeAgo } from 'utils/timeAgo'
 
 interface Props {
   post: BoardMockType
 }
 
 const BoardCard: FC<Props> = ({
-  post: { avatar, writer, date, title, content, view, like, comment, url },
+  post: {
+    id,
+    avatar,
+    createdBy,
+    createdAt,
+    title,
+    content,
+    saw,
+    liked,
+    /* commentCount, */ thumbnail,
+  },
 }) => {
   const navigate = useNavigate()
 
   const moveToDetail = () => {
-    navigate('/community/123/bbs/45/detail') // 추후 경로 수정
+    navigate(`/community/123/bbs/${id}/detail`) // 추후 경로 수정
   }
 
   return (
@@ -32,10 +43,10 @@ const BoardCard: FC<Props> = ({
       <StyledDiv className="column">
         <div>
           <P $fontSize="12px" $fontWeight="700">
-            {writer}
+            {createdBy}
           </P>
           <P $fontSize="10px" $color="#b3b3b3" $lineHeight="12px">
-            {date}
+            {timeAgo(createdAt)}
           </P>
         </div>
         <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
@@ -43,21 +54,21 @@ const BoardCard: FC<Props> = ({
         <StyledDiv className="row">
           <P $fontSize="12px">
             <AiOutlineEye />
-            &nbsp;{view}
+            &nbsp;{saw}
           </P>
           <P $fontSize="12px">
             <AiOutlineLike />
-            &nbsp;{like}
+            &nbsp;{liked}
           </P>
-          <P $fontSize="12px">
+          {/* <P $fontSize="12px">
             <BiConversation />
             &nbsp;{comment}
-          </P>
+          </P> */}
         </StyledDiv>
       </StyledDiv>
-      {url ? (
+      {thumbnail ? (
         <Img
-          src={url}
+          src={thumbnail}
           $width="150px"
           $height="80px"
           $borderRadius="5px"
