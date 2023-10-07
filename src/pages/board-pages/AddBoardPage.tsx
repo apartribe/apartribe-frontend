@@ -4,11 +4,15 @@ import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
 import { BOARD_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import { styled } from 'styled-components'
+import { addPost } from 'redux/post/actions'
+import { useDispatch } from 'react-redux'
 
 const AddBoardPage = () => {
+  const dispatch = useDispatch()
+
   const [inputValue, setInputValue] = useState({
     category: '',
-    protected: false,
+    // protected: false,
     title: '',
     content: '',
   })
@@ -21,6 +25,19 @@ const AddBoardPage = () => {
     setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
   }
 
+  const savePost = () => {
+    dispatch<any>(addPost({ boardType: 'article', data: inputValue }))
+  }
+
+  ///-----
+  // const {data, loading, error} = useSelector((state:any) => state.posts.posts)
+
+  // if (loading) return <div>로딩중...</div>;
+  // if (error) return <div>에러 발생!</div>;
+
+  // const boardPosts = data?.results;
+  //   if (!boardPosts) return null;
+  ///-----
   console.log(inputValue)
 
   return (
@@ -33,13 +50,13 @@ const AddBoardPage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          <input
+          {/* <input
             type="checkbox"
             id="toggle"
             checked={inputValue.protected}
             onChange={toggleCheckValue}
             hidden
-          />
+          /> */}
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>
@@ -80,7 +97,7 @@ const AddBoardPage = () => {
         <Button $background="#FFFFFF" $border="1px solid #F2F2F2" $color="#303030">
           취소
         </Button>
-        <Button>저장</Button>
+        <Button onClick={savePost}>저장</Button>
       </StyledDiv>
     </ShadowBox>
   )
