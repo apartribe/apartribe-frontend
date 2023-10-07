@@ -129,14 +129,15 @@ export const BOARD_MOCK = [
 ]
 
 export interface BoardMockType {
+  id: number
   avatar: string
   title: string
   content: string
-  date: string
-  categoroy: string
+  createdAt: string
+  createdBy: string
   writer: string
-  view: number
-  like: number
-  comment: number
-  url: string
+  saw: number
+  liked: number
+  commentCount: number
+  thumbnail: string
 }
