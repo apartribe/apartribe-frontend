@@ -9,7 +9,7 @@ export interface Announce {
 
 export interface Board {
   category: string
-  protected: boolean
+  // protected: boolean
   title: string
   content: string
 }
