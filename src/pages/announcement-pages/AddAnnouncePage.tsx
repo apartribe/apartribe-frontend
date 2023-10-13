@@ -1,36 +1,80 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState, useEffect } from 'react'
 import CkEditor from 'components/community/CkEditor'
 import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
-import { ANNOUNCE_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import { styled } from 'styled-components'
 import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
 import { Announce } from 'types/community-type/postDataType'
 import RangeDatePicker from 'components/community/RangeDatePicker'
+import { categoryService } from 'services/community/categoryService'
+import { useNavigate } from 'react-router-dom'
+import { postService } from 'services/community/postService'
+import { Category } from 'components/community/CategorySection'
 
 const AddAnnouncePage = () => {
+  const BOARD_TYPE = 'announce'
+
+  const navigate = useNavigate()
+
   const [inputValue, setInputValue] = useState<Announce>({
     //<Announce>
     category: '일반',
-    protected: false,
+    // protected: false,
     title: '',
     content: '',
     startDate: new Date(),
     endDate: null,
   })
 
+  const [categoryList, setCategoryList] = useState<string[]>([])
+
+  useEffect(() => {
+    const getCategory = async () => {
+      const response = await categoryService.getCategory({ boardType: BOARD_TYPE })
+      const mappedResponse = response.data.map((item: Category) => item.categoryName)
+      setCategoryList(['전체', ...mappedResponse])
+    }
+
+    getCategory()
+  }, [])
+
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
-  }
+  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
+  // }
 
   const selectRadioValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, category: e.target.name }))
   }
 
-  console.log(inputValue) // 최종 결과 확인용
+  const savePost = async () => {
+    const { statusCode, message } = await postService.addPost({
+      boardType: BOARD_TYPE,
+      data: inputValue,
+    })
+    if (statusCode === 201) {
+      const userConfirmed = confirm('정말 등록 하시겠습니까?')
+      if (userConfirmed) {
+        alert(message)
+        navigate(`/community/123`)
+        return
+      }
+      return
+    }
+  }
+
+  const cancelPost = () => {
+    const userConfirmed = confirm(
+      '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
+    )
+    if (userConfirmed) {
+      navigate(`/community/123`)
+      return
+    }
+    return
+  }
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
@@ -42,13 +86,13 @@ const AddAnnouncePage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          <input
+          {/* <input
             type="checkbox"
             id="toggle"
             checked={inputValue.protected}
             onChange={toggleCheckValue}
             hidden
-          />
+          /> */}
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>
@@ -60,7 +104,7 @@ const AddAnnouncePage = () => {
         </P>
 
         <StyledDiv className="column">
-          {ANNOUNCE_CATEGOTY_LIST_MOCK.slice(1).map((category, index) => (
+          {categoryList.slice(1).map((category, index) => (
             <StyledLabel htmlFor={category} key={index}>
               <input
                 type="radio"
@@ -105,10 +149,15 @@ const AddAnnouncePage = () => {
         <CkEditor setInputValue={setInputValue} />
       </div>
       <StyledDiv>
-        <Button $background="#FFFFFF" $border="1px solid #F2F2F2" $color="#303030">
+        <Button
+          $background="#FFFFFF"
+          $border="1px solid #F2F2F2"
+          $color="#303030"
+          onClick={cancelPost}
+        >
           취소
         </Button>
-        <Button>저장</Button>
+        <Button onClick={savePost}>저장</Button>
       </StyledDiv>
     </ShadowBox>
   )
