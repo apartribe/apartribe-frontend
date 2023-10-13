@@ -1,43 +1,69 @@
-import React, { FC, FormEvent, useState } from 'react'
+import React, { FC, FormEvent, useState, ChangeEvent } from 'react'
 import { styled } from 'styled-components'
-import { Img, Input } from 'styles/reusable-style/elementStyle'
+import { /* Img, */ Input } from 'styles/reusable-style/elementStyle'
 import { timeAgo } from 'utils/timeAgo'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import ReplyCard from './ReplyCard'
-import { DetailCommentData } from 'types/community-type/detailDataType'
+import { CommentData } from './DetailCommentSection'
+import { replyService } from 'services/community/replyService'
 
 interface Props {
-  comment: DetailCommentData
+  postId: string
+  comment: CommentData
 }
 
 const CommentCard: FC<Props> = ({
-  comment: { avatar, createdBy, createdAt, content, liked, replyCount, relies },
+  postId,
+  comment: {
+    /* avatar, */ id,
+    createdBy,
+    createdAt,
+    content,
+    like: liked,
+    children: replies,
+  },
 }) => {
   const [repliseVisible, setRepliseVisible] = useState(false)
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
+  const [inputValue, setInputValue] = useState('')
+
+  const changeInputValuse = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
 
   const toggleLike = () => {
     setLike((prev) => !prev)
   }
 
-  const submitReply = (e: FormEvent<HTMLFormElement>) => {
+  const submitReply = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    alert('댓글 제출')
+    /*     const response =  */ await replyService.addReply({
+      postId,
+      parentId: id,
+      content: inputValue,
+    })
+    // const newComment = response?.data; // 지금은 undefined임. 서버에서 수정해주면 들어 올 예정
+    // if(newComment){
+    //   const {content, createdAt, createdBy, id, liked, children } = newComment;
+    //     setCommentsData(( prevState ) => ({...prevState, results : [{content, createdAt, createdBy, id, liked, children}, ...prevState?.results]}))
+    // }
+    alert('답글 등록 완료 (추후 이 팝업 삭제 요망)')
+    setInputValue('')
   }
 
   const editReply = () => {
-    alert('댓글 수정')
+    alert('답글 수정')
   }
 
   const deleteReply = () => {
-    alert('댓글 삭제')
+    alert('답글 삭제')
   }
 
   return (
     <StyledWrapper>
       <StyledDiv className="row gap center">
-        <Img src={avatar} alt="댓글 아바타" $width="40px" height="40px" />
+        {/* <Img src={avatar} alt="댓글 아바타" $width="40px" height="40px" /> */}
         <StyledDiv className="column">
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
@@ -75,10 +101,16 @@ const CommentCard: FC<Props> = ({
           </StyledParagraph>
           <StyledDiv className=" column indent">
             <StyledForm onSubmit={submitReply}>
-              <Input type="text" placeholder="답글을 입력하세요." />
+              <Input
+                type="text"
+                placeholder="답글을 입력하세요."
+                value={inputValue}
+                onChange={changeInputValuse}
+              />
               <StyledButton type="submit">등록</StyledButton>
             </StyledForm>
-            {relies && relies.map((reply) => <ReplyCard key={reply.id} reply={reply} />)}
+            {replies &&
+              replies.map((reply) => <ReplyCard key={reply.id} reply={reply} />)}
           </StyledDiv>
         </StyledDiv>
       ) : (
@@ -86,7 +118,7 @@ const CommentCard: FC<Props> = ({
           className="sm bold mainColor"
           onClick={() => setRepliseVisible(true)}
         >
-          답글 {replyCount}개 보기 <IoIosArrowDown />
+          답글 {replies.length}개 보기 <IoIosArrowDown />
         </StyledParagraph>
       )}
     </StyledWrapper>
