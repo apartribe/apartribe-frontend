@@ -1,59 +1,82 @@
 import React, { FC } from 'react'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
-import { RiFileListLine } from 'react-icons/ri'
-import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
+import {
+  AiOutlineEye,
+  AiOutlineLike,
+  AiOutlineEdit,
+  AiOutlineDelete,
+} from 'react-icons/ai'
 import { BiConversation, BiShareAlt } from 'react-icons/bi'
-
-import { Img } from 'styles/reusable-style/elementStyle'
-import { useLocation } from 'react-router-dom'
-
-interface DetailHeaderData {
-  id: number
-  createdBy: string
-  title: string
-  liked: number
-  saw: number
-  commentCounts: number
-  // avatar: string
-  // category: string
-  // job?: string
-}
+// import { Img } from 'styles/reusable-style/elementStyle'
+import { useNavigate } from 'react-router-dom'
+import { BoardPostData } from 'pages/board-pages/DetailBoardPage'
+import { postService } from 'services/community/postService'
+import { BoardType } from 'services/community/postsService'
 
 interface Props {
-  data: {
-    issuedAt: string
-    data: DetailHeaderData
-  }
+  postId: string
+  boardType: BoardType
+  postData: BoardPostData
 }
 
-const DetailHeaderSection: FC<Props> = ({ data }) => {
-  const location = useLocation()
-  const currentPath = location.pathname
+const DetailHeaderSection: FC<Props> = ({
+  boardType,
+  postId,
+  postData: {
+    issuedAt,
+    data: { /* category, avatar, job, createdBy, */ title, liked, saw, commentCounts },
+  },
+}) => {
+  const navigate = useNavigate()
 
-  const isCommunity = /bbs/
-  const isAnnouncement = /announcements/
-  const isGatherPeople = /gather-people/
+  const isCommunity = /article/
+  const isAnnouncement = /announce/
+  const isGatherPeople = /together/
 
   const decidePath = () => {
-    if (isCommunity.test(currentPath)) return '커뮤니티 홈'
-    if (isAnnouncement.test(currentPath)) return '아파트 공지사항'
-    if (isGatherPeople.test(currentPath)) return '같이 하실 분'
+    if (isCommunity.test(boardType)) return '커뮤니티 홈'
+    if (isAnnouncement.test(boardType)) return '아파트 공지사항'
+    if (isGatherPeople.test(boardType)) return '같이 하실 분'
     return
   }
 
-  const {
-    issuedAt,
-    data: { /* category, avatar, job,  */ createdBy, title, liked, saw, commentCounts },
-  } = data
+  const moveToEditPage = () => {
+    navigate(`/community/123/${boardType}/${postId}/edit`)
+  }
+
+  const deletePost = async () => {
+    const userConfirmed = confirm(
+      '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
+    )
+    if (userConfirmed) {
+      const { statusCode, message } = await postService.deletePost({ boardType, postId })
+      if (statusCode === 204) {
+        alert(message)
+        navigate(`/community/123`)
+        return
+      }
+      alert(message)
+      return
+    }
+  }
 
   return (
     <StyledWrapper>
       <StyledDiv className="between">
         <StyledParagraph className="md">
-          {/* {decidePath()} &nbsp;&gt;&nbsp; {category} */}
+          {decidePath()} &nbsp;&gt;&nbsp; *카테고리 정보 필요* {/* {category} */}
         </StyledParagraph>
-        <RiFileListLine fontSize="30px" />
+        <StyledDiv>
+          <StyledButton onClick={moveToEditPage}>
+            <AiOutlineEdit />
+            &nbsp; 수정
+          </StyledButton>
+          <StyledButton onClick={deletePost}>
+            <AiOutlineDelete />
+            &nbsp; 삭제
+          </StyledButton>
+        </StyledDiv>
       </StyledDiv>
       <StyledDiv>
         <StyledParagraph className="xl">{title}</StyledParagraph>
