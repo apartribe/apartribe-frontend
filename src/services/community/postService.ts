@@ -1,10 +1,10 @@
-import { AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { BoardType } from './postsService'
 import { instance } from 'configs/axios'
 
 interface AddPost {
   category: string
-  protected: boolean
+  // protected: boolean
   title: string
   content: string
 }
@@ -16,27 +16,45 @@ interface addParam {
 
 interface getParam {
   boardType: BoardType
-  postId: number
+  aptId: string
+  postId: string
+}
+
+interface deleteParam {
+  boardType: BoardType
+  postId: string
 }
 
 export const postService = {
   async addPost(param: addParam) {
     const { boardType, data } = param
     try {
-      const response: AxiosResponse = await instance(`/api/${boardType}`, {
+      await instance(`/api/${boardType}`, {
         method: 'post',
         data,
       })
-      return response.data
+      return {
+        statusCode: 201,
+        message: '게시물이 등록되었습니다. 커뮤니티로 이동합니다.',
+      }
     } catch (error) {
       console.error(error)
+      if (axios.isAxiosError(error)) {
+        return {
+          statusCode: 500,
+          message: '게시물 등록에 실패하였습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
     }
   },
 
   async getPost(param: getParam) {
-    const { boardType, postId } = param
+    const { boardType /* , aptId */, postId } = param
     try {
       const response: AxiosResponse = await instance(`/api/${boardType}/${postId}`, {
+        // TODO: 아파트 아이디 추가 필요
         method: 'get',
       })
       return response.data
@@ -44,34 +62,27 @@ export const postService = {
       console.error(error)
     }
   },
+
+  async deletePost(param: deleteParam) {
+    const { boardType, postId } = param
+    try {
+      await instance(`/api/${boardType}?${boardType}Id=${postId}`, {
+        method: 'delete',
+      })
+      return {
+        statusCode: 204,
+        message: '게시물이 삭제되었습니다. 커뮤니티로 이동합니다.',
+      }
+    } catch (error) {
+      console.error(error)
+      if (axios.isAxiosError(error)) {
+        return {
+          statusCode: 500,
+          message: '게시물 삭제에 실패하였습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
+    }
+  },
 }
-
-// import { AxiosResponse } from "axios";
-// import { instance } from "configs/axios"
-
-// export type BoardType = 'article' | 'announce' | 'gether-people';
-
-// interface Param {
-//     boardType:BoardType, category:string, page:number
-// }
-
-// export const postsService = {
-//     async getPosts (param:Param): Promise<any> { // TDOD: 타입 수정
-//         const {boardType, category, page} = param;
-//         try{
-//             const response: AxiosResponse = await instance(`/api/${boardType}`, {
-//             method: 'get',
-//             params:{
-//                 size: 10,
-//                 category,
-//                 page
-//             }
-//         })
-//         return response.data;
-//         } catch (error) {
-//             console.error(error);
-
-//         }
-//     },
-//     // getPostsCount,
-// }
