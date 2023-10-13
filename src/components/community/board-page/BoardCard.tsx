@@ -2,16 +2,19 @@ import { BoardMockType } from 'mock/boardData'
 import React, { FC } from 'react'
 import { Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
-import { BiConversation } from 'react-icons/bi'
+// import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { timeAgo } from 'utils/timeAgo'
+import { BoardType } from 'services/community/postsService'
 
 interface Props {
+  boardType: BoardType
   post: BoardMockType
 }
 
 const BoardCard: FC<Props> = ({
+  boardType,
   post: {
     id,
     avatar,
@@ -27,7 +30,7 @@ const BoardCard: FC<Props> = ({
   const navigate = useNavigate()
 
   const moveToDetail = () => {
-    navigate(`/community/123/bbs/${id}/detail`) // 추후 경로 수정
+    navigate(`/community/123/${boardType}/${id}/detail`) // TODO: 아파트 아이디 변경
   }
 
   return (
