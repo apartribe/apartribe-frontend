@@ -1,14 +1,17 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState, useEffect } from 'react'
 import CkEditor from 'components/community/CkEditor'
 import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
-import { BOARD_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import { styled } from 'styled-components'
-import { addPost } from 'redux/post/actions'
-import { useDispatch } from 'react-redux'
+import { categoryService } from 'services/community/categoryService'
+import { postService } from 'services/community/postService'
+import { useNavigate } from 'react-router-dom'
+import { Category } from 'components/community/CategorySection'
 
 const AddBoardPage = () => {
-  const dispatch = useDispatch()
+  const BOARD_TYPE = 'article'
+
+  const navigate = useNavigate()
 
   const [inputValue, setInputValue] = useState({
     category: '',
@@ -17,28 +20,53 @@ const AddBoardPage = () => {
     content: '',
   })
 
+  const [categoryList, setCategoryList] = useState<string[]>([])
+
+  useEffect(() => {
+    const getCategory = async () => {
+      const response = await categoryService.getCategory({ boardType: BOARD_TYPE })
+      const mappedResponse = response.data.map((item: Category) => item.categoryName)
+      setCategoryList(['전체', ...mappedResponse])
+    }
+
+    getCategory()
+  }, [])
+
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
+  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
+  // }
+
+  const savePost = async () => {
+    const { statusCode, message } = await postService.addPost({
+      boardType: BOARD_TYPE,
+      data: inputValue,
+    })
+    if (statusCode === 201) {
+      const userConfirmed = confirm('정말 등록 하시겠습니까?')
+      if (userConfirmed) {
+        alert(message)
+        navigate(`/community/123`)
+        return
+      }
+      alert(message)
+      return
+    }
   }
 
-  const savePost = () => {
-    dispatch<any>(addPost({ boardType: 'article', data: inputValue }))
+  const cancelPost = () => {
+    const userConfirmed = confirm(
+      '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
+    )
+    if (userConfirmed) {
+      navigate(`/community/123`)
+      return
+    }
+    return
   }
-
-  ///-----
-  // const {data, loading, error} = useSelector((state:any) => state.posts.posts)
-
-  // if (loading) return <div>로딩중...</div>;
-  // if (error) return <div>에러 발생!</div>;
-
-  // const boardPosts = data?.results;
-  //   if (!boardPosts) return null;
-  ///-----
-  console.log(inputValue)
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
@@ -69,7 +97,7 @@ const AddBoardPage = () => {
         <DropdownCategory
           selectedValue={inputValue}
           setSelectedValue={setInputValue}
-          dropdownList={BOARD_CATEGOTY_LIST_MOCK}
+          dropdownList={categoryList}
         />
       </div>
       <div>
@@ -94,7 +122,12 @@ const AddBoardPage = () => {
         <CkEditor setInputValue={setInputValue} />
       </div>
       <StyledDiv>
-        <Button $background="#FFFFFF" $border="1px solid #F2F2F2" $color="#303030">
+        <Button
+          $background="#FFFFFF"
+          $border="1px solid #F2F2F2"
+          $color="#303030"
+          onClick={cancelPost}
+        >
           취소
         </Button>
         <Button onClick={savePost}>저장</Button>
