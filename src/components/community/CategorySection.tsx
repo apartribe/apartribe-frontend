@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, LegacyRef, MouseEvent, useState } from 'react'
+import React, { Dispatch, FC, MouseEvent, useState, useEffect } from 'react'
 import { styled } from 'styled-components'
 import { ArrowButton } from 'styles/reusable-style/elementStyle'
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
@@ -6,34 +6,48 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { useInView } from 'react-intersection-observer'
 import { useScrollButton } from 'hooks/useScrollButton'
 import AddCategoryModal from './AddCategoryModal'
+import { categoryService } from 'services/community/categoryService'
+import { BoardType } from 'services/community/postsService'
 
 interface Props {
+  boardType: BoardType
   selectedCategory: string
   setSelectedCategory: Dispatch<React.SetStateAction<string>>
-  categoryList: string[]
   useArrow?: boolean
   canCreate?: boolean
 }
 
+export interface Category {
+  categoryName: string
+}
+
 const CategorySection: FC<Props> = ({
+  boardType,
   selectedCategory,
   setSelectedCategory,
-  categoryList,
   useArrow = false,
   canCreate = false,
 }) => {
+  const [categoryList, setCategoryList] = useState<string[]>([])
+
+  useEffect(() => {
+    const getCategory = async () => {
+      const response = await categoryService.getCategory({ boardType })
+      const mappedResponse = response.data.map((item: Category) => item.categoryName)
+      setCategoryList(['전체', ...mappedResponse])
+    }
+
+    getCategory()
+  }, [boardType])
+
+  //=======
+
   const { ref: firstCategoryRef, inView: firstInViewport } = useInView({
     threshold: 1,
   })
   const { ref: lastCategoryRef, inView: lastInViewport } = useInView({
     threshold: 1,
   })
-
-  const decideRef = (index: number): LegacyRef<HTMLButtonElement> | undefined => {
-    if (index === 0) return firstCategoryRef
-    if (index === categoryList.length - 1) return lastCategoryRef
-    return undefined
-  }
 
   const [scrollContainerRef, scrollRight, scrollLeft] = useScrollButton()
 
@@ -52,11 +66,11 @@ const CategorySection: FC<Props> = ({
           </ArrowButton>
         )}
         <StyledArea ref={scrollContainerRef}>
-          {categoryList.map((category, index) => (
+          {categoryList?.map((category: string, index: number) => (
             <StyledButton
               key={index}
               onClick={changeSeletedCategory}
-              ref={decideRef(index)}
+              ref={index === 0 ? firstCategoryRef : null}
               className={category === selectedCategory ? 'selected' : 'notSelected'}
             >
               {category}
@@ -65,6 +79,7 @@ const CategorySection: FC<Props> = ({
           {canCreate && (
             <ArrowButton
               onClick={() => setAddModalVisible(true)}
+              ref={lastCategoryRef}
               $background="#FFFFFF"
               $border="1px dashed #c1e2dd"
               $margin="0 10px"
@@ -80,7 +95,11 @@ const CategorySection: FC<Props> = ({
         </ArrowButton>
       )}
       {addModalVisible ? (
-        <AddCategoryModal setAddModalVisible={setAddModalVisible} />
+        <AddCategoryModal
+          boardType={boardType}
+          setAddModalVisible={setAddModalVisible}
+          setCategoryList={setCategoryList}
+        />
       ) : (
         ''
       )}
