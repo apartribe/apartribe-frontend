@@ -3,24 +3,22 @@ import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import CategorySection from 'components/community/CategorySection'
-import { GATHER_PEOPLE_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
-import GatherPeopleListSection from 'components/community/gather-people-page/GatherPeopleListSection'
 import DropdownSort from 'components/ui/DropdownSort'
+import PostListSection from 'components/community/board-page/PostListSection'
 
 const GatherPeoplePage = () => {
-  const [selectedCategory, setSelectedCategory] = useState(
-    GATHER_PEOPLE_CATEGOTY_LIST_MOCK[0],
-  )
-  const [selectedSort, setSelectedSort] = useState(SORT_DROPDOWN_LIST[0])
+  const BOARD_TYPE = 'together'
+  const [selectedCategory, setSelectedCategory] = useState('전체')
+  const [selectedSort, setSelectedSort] = useState('최신순')
 
   return (
     <>
       <ShadowBox>
         <StyledDiv>
           <CategorySection
+            boardType={BOARD_TYPE}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
-            categoryList={GATHER_PEOPLE_CATEGOTY_LIST_MOCK}
             useArrow
             canCreate
           />
@@ -32,7 +30,8 @@ const GatherPeoplePage = () => {
         </StyledDiv>
       </ShadowBox>
       <StyledDiv className="wrap">
-        <GatherPeopleListSection
+        <PostListSection
+          boardType={BOARD_TYPE}
           selectedCategory={selectedCategory}
           selectedSort={selectedSort}
         />
