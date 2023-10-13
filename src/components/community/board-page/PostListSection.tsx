@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { styled } from 'styled-components'
 import { BoardType } from 'services/community/postsService'
 import { RootState } from 'redux/store'
+import PostsLoading from 'components/common/loading-effect/PostsLoading'
 
 interface Props {
   boardType: BoardType
@@ -24,7 +25,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     )
   }, [dispatch, selectedCategory, selectedSort, boardType])
 
-  if (loading) return <StyledDiv>로딩중...</StyledDiv>
+  if (loading) return <PostsLoading />
   if (error) return <StyledDiv>에러 발생!</StyledDiv>
 
   const boardPosts = data?.results
