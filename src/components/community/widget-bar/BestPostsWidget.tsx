@@ -1,24 +1,40 @@
 import WidgetTitleArea from 'components/common/WidgetTitleArea'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaRankingStar } from 'react-icons/fa6'
 import { styled } from 'styled-components'
-import { BEST_POST_MOCK } from 'mock/bestPostData'
 import { useNavigate } from 'react-router-dom'
+import { widgetService } from 'services/community/widgetSevice'
+
+interface BestPost {
+  id: number
+  title: string
+}
 
 const BestPostsWidget = () => {
   const navigate = useNavigate()
 
-  const moveToDetail = () => {
-    navigate('/community/123/bbs/45/detail') // 추후 경로 수정
+  const [bestPosts, setBestPosts] = useState<BestPost[]>([])
+
+  const moveToDetail = (id: number) => {
+    navigate(`/community/123/article/${id}/detail`) // 추후 경로 수정
   }
+
+  useEffect(() => {
+    const getBestPosts = async () => {
+      const response = await widgetService.getBestPosts()
+      setBestPosts(response.data)
+    }
+
+    getBestPosts()
+  }, [])
 
   return (
     <ShadowBox>
       <WidgetTitleArea Icon={FaRankingStar} title="베스트 게시물" hasSeeMore={false} />
-      {BEST_POST_MOCK.data.map((item) => (
-        <StyledParagraph key={item.id} onClick={moveToDetail}>
-          {item.title}
+      {bestPosts.map(({ id, title }) => (
+        <StyledParagraph key={id} onClick={() => moveToDetail(id)}>
+          {title}
         </StyledParagraph>
       ))}
     </ShadowBox>
