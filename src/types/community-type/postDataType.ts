@@ -1,6 +1,6 @@
 export interface Announce {
   category: string
-  protected: boolean
+  // protected: boolean
   title: string
   content: string
   startDate: Date
@@ -16,7 +16,7 @@ export interface Board {
 
 export interface GatherPeople {
   category: string
-  protected: boolean
+  // protected: boolean
   title: string
   explain: string
   startDate: Date
