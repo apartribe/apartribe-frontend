@@ -1,23 +1,23 @@
-import BoardListSection from 'components/community/board-page/BoardListSection'
+import PostListSection from 'components/community/board-page/PostListSection'
 import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import CategorySection from 'components/community/CategorySection'
-import { BOARD_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import DropdownSort from 'components/ui/DropdownSort'
 
 const BoardPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState(BOARD_CATEGOTY_LIST_MOCK[0])
-  const [selectedSort, setSelectedSort] = useState(SORT_DROPDOWN_LIST[0])
+  const BOARD_TYPE = 'article'
+  const [selectedCategory, setSelectedCategory] = useState('전체')
+  const [selectedSort, setSelectedSort] = useState('최신순')
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="10px">
       <StyledDiv>
         <CategorySection
+          boardType={BOARD_TYPE}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
-          categoryList={BOARD_CATEGOTY_LIST_MOCK}
           useArrow
           canCreate
         />
@@ -27,7 +27,11 @@ const BoardPage = () => {
           dropdownList={SORT_DROPDOWN_LIST}
         />
       </StyledDiv>
-      <BoardListSection selectedCategory={selectedCategory} selectedSort={selectedSort} />
+      <PostListSection
+        boardType={BOARD_TYPE}
+        selectedCategory={selectedCategory}
+        selectedSort={selectedSort}
+      />
     </ShadowBox>
   )
 }
