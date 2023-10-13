@@ -1,30 +1,57 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import parse from 'html-react-parser'
-import { BOARD_DETAIL_MOCK } from 'mock/boardDetailData'
 import { styled } from 'styled-components'
 import DetailHeaderSection from 'components/community/DetailHeaderSection'
 import DetailCommentSection from 'components/community/DetailCommentSection'
-import { useDispatch, useSelector } from 'react-redux'
-import { getPost } from 'redux/post/actions'
+import { useParams } from 'react-router-dom'
+import { postService } from 'services/community/postService'
+
+export interface BoardPostData {
+  issuedAt: string
+  data: {
+    id: number
+    title: string
+    createdBy: string
+    saw: number
+    liked: number
+    commentCounts: number
+    content: string
+  }
+}
 
 const DetailBoardPage = () => {
-  const { data, loading, error } = useSelector((state: any) => state.post.post)
-  const dispatch = useDispatch()
+  const BOARD_TYPE = 'article'
+
+  const param = useParams()
+  const { aptId, postId } = param
+
+  const [postData, setPostData] = useState<BoardPostData | null>(null)
 
   useEffect(() => {
-    dispatch<any>(getPost({ boardType: 'article', postId: 1 }))
-  }, [dispatch])
+    const getPost = async () => {
+      const response = await postService.getPost({
+        boardType: BOARD_TYPE,
+        aptId: aptId as string,
+        postId: postId as string,
+      })
+      setPostData(response)
+    }
 
-  if (loading) return <div>로딩중...</div>
-  if (error) return <div>에러 발생!</div>
-  if (!data) return null
+    getPost()
+  }, [aptId, postId])
+
+  if (!postData) return <p></p>
 
   return (
     <ShadowBox $padding="30px">
-      <DetailHeaderSection data={data} />
-      <DetailHtmlSection>{parse(data.data.content)}</DetailHtmlSection>
-      {/* <DetailCommentSection commentCounts={commentCounts} comments={comments} /> */}
+      <DetailHeaderSection
+        boardType={BOARD_TYPE}
+        postId={postId as string}
+        postData={postData}
+      />
+      <DetailHtmlSection>{parse(postData.data.content)}</DetailHtmlSection>
+      <DetailCommentSection />
     </ShadowBox>
   )
 }
