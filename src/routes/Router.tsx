@@ -115,7 +115,7 @@ const Router = createBrowserRouter([
     ],
   },
   {
-    path: '/community/:aptId', // bbs를 붙이는게 일관성이 있으나, nest 구조상 불가
+    path: '/community/:aptId', // article를 붙이는게 일관성이 있으나, nest 구조상 불가
     element: <CommunityHomePage />,
     children: [
       {
@@ -123,47 +123,47 @@ const Router = createBrowserRouter([
         element: <BoardPage />,
       },
       {
-        path: '/community/:aptId/bbs/add',
+        path: '/community/:aptId/article/add',
         element: <AddBoardPage />,
       },
       {
-        path: '/community/:aptId/bbs/:postId/detail',
+        path: '/community/:aptId/article/:postId/detail',
         element: <DetailBoardPage />,
       },
       {
-        path: '/community/:aptId/bbs/:postId/edit',
+        path: '/community/:aptId/article/:postId/edit',
         element: <EditBoardPage />,
       },
       {
-        path: '/community/:aptId/announcements',
+        path: '/community/:aptId/announce',
         element: <AnnouncePage />,
       },
       {
-        path: '/community/:aptId/announcements/add',
+        path: '/community/:aptId/announce/add',
         element: <AddAnnouncePage />,
       },
       {
-        path: '/community/:aptId/announcements/:postId/detail',
+        path: '/community/:aptId/announce/:postId/detail',
         element: <DetailAnnouncePage />,
       },
       {
-        path: '/community/:aptId/announcements/:postId/edit',
+        path: '/community/:aptId/announce/:postId/edit',
         element: <EditAnnouncePage />,
       },
       {
-        path: '/community/:aptId/gather-people',
+        path: '/community/:aptId/together',
         element: <GatherPeoplePage />,
       },
       {
-        path: '/community/:aptId/gather-people/add',
+        path: '/community/:aptId/together/add',
         element: <AddGatherPeoplePage />,
       },
       {
-        path: '/community/:aptId/gather-people/:postId/detail',
+        path: '/community/:aptId/together/:postId/detail',
         element: <DetailGatherPeoplePage />,
       },
       {
-        path: '/community/:aptId/gather-people/:postId/edit',
+        path: '/community/:aptId/together/:postId/edit',
         element: <EditGatherPeoplePage />,
       },
     ],
