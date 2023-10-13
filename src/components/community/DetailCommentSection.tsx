@@ -1,8 +1,10 @@
-import React, { FC, FormEvent } from 'react'
+import React, { FormEvent, useState, useEffect, ChangeEvent } from 'react'
 import { styled } from 'styled-components'
 import { Img, Input } from 'styles/reusable-style/elementStyle'
 import CommentCard from './CommentCard'
-import { DetailCommentData } from 'types/community-type/detailDataType'
+import { commentsService } from 'services/community/commentsService'
+import { useParams } from 'react-router-dom'
+import { commentService } from 'services/community/commentService'
 
 const CURRENT_USER_MOCK = {
   avatar:
@@ -10,20 +12,77 @@ const CURRENT_USER_MOCK = {
   nickname: '화해방',
 }
 
-interface Props {
-  commentCounts: number
-  comments: DetailCommentData[]
+export interface CommentsData {
+  results: CommentData[]
+  totalCount: number
 }
 
-const DetailCommentSection: FC<Props> = ({ commentCounts, comments }) => {
-  const submitComment = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    alert('댓글 제출')
+export interface CommentData {
+  content: string
+  createdAt: string
+  createdBy: string
+  id: number
+  like: number
+  children: ReplyData[]
+}
+
+export interface ReplyData {
+  content: string
+  createdAt: string
+  createdBy: string
+  id: number
+  like: number
+}
+
+const DetailCommentSection = (/* { commentCounts, comments } */) => {
+  const [commentsData, setCommentsData] = useState<CommentsData | null>(null)
+
+  const param = useParams()
+  const { postId } = param
+
+  useEffect(() => {
+    const getComments = async () => {
+      const response = await commentsService.getComments({
+        postId: postId as string,
+        page: 1,
+      })
+      if (!response) return
+      setCommentsData(response.data)
+    }
+
+    getComments()
+  }, [postId])
+
+  //=========
+
+  const [inputValue, setInputValue] = useState('')
+
+  const changeInputValuse = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
   }
+
+  const submitComment = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    /*   const response =  */ await commentService.addComment({
+      postId: postId as string,
+      content: inputValue,
+    })
+    // const newComment = response?.data; // 지금은 undefined임. 서버에서 수정해주면 들어 올 예정
+    // if(newComment){
+    //   const {content, createdAt, createdBy, id, liked, children } = newComment;
+    //     setCommentsData(( prevState ) => ({...prevState, results : [{content, createdAt, createdBy, id, liked, children}, ...prevState?.results]}))
+    // }
+    alert('댓글 등록 완료 (추후 이 팝업 삭제 요망)')
+    setInputValue('')
+  }
+
+  if (!commentsData) return <p></p>
+
+  const { totalCount, results: comments } = commentsData
 
   return (
     <StyledWrapper>
-      <p>댓글 {commentCounts}</p>
+      <p>댓글 {totalCount}</p>
       <StyledDiv className="column gap">
         <StyledDiv className="row gap">
           <Img
@@ -35,13 +94,20 @@ const DetailCommentSection: FC<Props> = ({ commentCounts, comments }) => {
           <p>{CURRENT_USER_MOCK.nickname}</p>
         </StyledDiv>
         <StyledForm onSubmit={submitComment}>
-          <Input type="text" placeholder="댓글을 입력하세요." />
+          <Input
+            type="text"
+            placeholder="댓글을 입력하세요."
+            value={inputValue}
+            onChange={changeInputValuse}
+          />
           <StyledButton type="submit">등록</StyledButton>
         </StyledForm>
       </StyledDiv>
       <StyledDiv className="column">
         {comments &&
-          comments.map((comment) => <CommentCard key={comment.id} comment={comment} />)}
+          comments.map((comment) => (
+            <CommentCard key={comment.id} postId={postId as string} comment={comment} />
+          ))}
       </StyledDiv>
     </StyledWrapper>
   )
