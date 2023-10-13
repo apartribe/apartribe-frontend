@@ -1,16 +1,16 @@
 import React, { FC, useState } from 'react'
-import { DetailReplyData } from 'types/community-type/detailDataType'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
-import { Img } from 'styles/reusable-style/elementStyle'
+// import { Img } from 'styles/reusable-style/elementStyle'
+import { ReplyData } from './DetailCommentSection'
 
 interface Props {
-  reply: DetailReplyData
+  reply: ReplyData
 }
 
 const ReplyCard: FC<Props> = ({
-  reply: { avatar, createdBy, createdAt, liked, content },
+  reply: { /* avatar, */ createdBy, createdAt, like: liked, content },
 }) => {
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
 
@@ -29,7 +29,7 @@ const ReplyCard: FC<Props> = ({
   return (
     <StyledWrapper>
       <StyledDiv className="row gap center">
-        <Img src={avatar} alt="댓글 아바타" $width="40px" height="40px" />
+        {/* <Img src={avatar} alt="댓글 아바타" $width="40px" height="40px" /> */}
         <StyledDiv className="column">
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
