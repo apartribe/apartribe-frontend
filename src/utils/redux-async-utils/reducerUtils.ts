@@ -1,22 +1,28 @@
+import { AnnouncementMockType } from 'mock/announcementData'
+import { BoardMockType } from 'mock/boardData'
+import { GatherPeopleMockType } from 'mock/gatherPeopleData'
+
+export interface Payload {
+  data: BoardMockType | AnnouncementMockType | GatherPeopleMockType
+}
+
 export const reducerUtils = {
-  initial: (initialData = null) => ({
+  initial: () => ({
     loading: false,
-    data: initialData,
+    data: [],
     error: null,
   }),
-  loading: (prevState = null) => ({
+  loading: (prevState = []) => ({
     loading: true,
     data: prevState,
     error: null,
   }),
-  success: (payload: any) => ({
-    // TODO: 타입 수정 요망
+  success: (payload: Payload) => ({
     loading: false,
-    data: payload,
+    data: payload.data,
     error: null,
   }),
-  error: (error: any) => ({
-    // TODO: 타입 수정 요망
+  error: (error: Payload) => ({
     loading: false,
     data: null,
     error: error,
