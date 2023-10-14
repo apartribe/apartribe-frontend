@@ -8,13 +8,14 @@ import { postService } from 'services/community/postService'
 import { useNavigate } from 'react-router-dom'
 import { Category } from 'components/community/CategorySection'
 import BtnUpload from 'components/community/Uploader'
+import { Board } from 'types/community-type/postDataType'
 
 const AddBoardPage = () => {
   const BOARD_TYPE = 'article'
 
   const navigate = useNavigate()
 
-  const [inputValue, setInputValue] = useState({
+  const [inputValue, setInputValue] = useState<Board>({
     category: '',
     // protected: false,
     title: '',
