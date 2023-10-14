@@ -20,7 +20,7 @@ export interface Posts {
 }
 
 export const postsService = {
-  async getPosts(param: Param): Promise<Posts | undefined> {
+  async getPosts(param: Param) {
     // TDOD: 타입 수정
     const { boardType, category /* , sort */, page } = param
     let response: AxiosResponse
