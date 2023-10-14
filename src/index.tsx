@@ -13,7 +13,7 @@ const reIssue = () => {
   auth.reissueToken()
   const timer = setInterval(() => {
     auth.reissueToken()
-  }, 70000)
+  }, 360000)
 
   return () => {
     clearInterval(timer)
