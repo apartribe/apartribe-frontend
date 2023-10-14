@@ -7,7 +7,7 @@ interface Props<T> {
   setInputValue: Dispatch<SetStateAction<T>>
 }
 
-// 제네릭 컴포넌트
+// 제네릭 컴포넌트 // test
 class CkEditor<T> extends Component<Props<T>> {
   render() {
     return (
