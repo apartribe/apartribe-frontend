@@ -5,12 +5,12 @@ import { timeAgo } from 'utils/timeAgo'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import ReplyCard from './ReplyCard'
-import { CommentData } from './DetailCommentSection'
+import { Comment } from './DetailCommentSection'
 import { replyService } from 'services/community/replyService'
 
 interface Props {
   postId: string
-  comment: CommentData
+  comment: Comment
 }
 
 const CommentCard: FC<Props> = ({
