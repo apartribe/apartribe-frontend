@@ -15,7 +15,7 @@ export const commentService = {
           content,
         },
       })
-      return response.data
+      return response.data // 쿠키없을 때로 에러 아니고 정성응답 주는 듯 참고
     } catch (error) {
       console.error(error)
     }
