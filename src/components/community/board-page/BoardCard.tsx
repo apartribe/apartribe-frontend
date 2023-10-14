@@ -1,4 +1,3 @@
-import { BoardMockType } from 'mock/boardData'
 import React, { FC } from 'react'
 import { Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
@@ -7,24 +6,26 @@ import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { timeAgo } from 'utils/timeAgo'
 import { BoardType } from 'services/community/postsService'
+import { Post } from './PostListSection'
 
 interface Props {
   boardType: BoardType
-  post: BoardMockType
+  post: Post
 }
 
 const BoardCard: FC<Props> = ({
   boardType,
+  post,
   post: {
     id,
-    avatar,
+    // avatar,
     createdBy,
     createdAt,
     title,
     content,
     saw,
     liked,
-    /* commentCount, */ thumbnail,
+    /* commentCount,  thumbnail, */
   },
 }) => {
   const navigate = useNavigate()
@@ -36,7 +37,7 @@ const BoardCard: FC<Props> = ({
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
-        src={avatar}
+        src="https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png"
         $width="40px"
         $height="40px"
         $borderRadius="50%"
@@ -69,7 +70,7 @@ const BoardCard: FC<Props> = ({
           </P> */}
         </StyledDiv>
       </StyledDiv>
-      {thumbnail ? (
+      {/* {thumbnail ? (
         <Img
           src={thumbnail}
           $width="150px"
@@ -79,7 +80,7 @@ const BoardCard: FC<Props> = ({
         />
       ) : (
         ''
-      )}
+      )} */}
     </StyledWrapper>
   )
 }
