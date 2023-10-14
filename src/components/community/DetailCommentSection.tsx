@@ -1,10 +1,12 @@
-import React, { FormEvent, useState, useEffect, ChangeEvent } from 'react'
+import React, { FormEvent, useState, useEffect, ChangeEvent, useRef } from 'react'
 import { styled } from 'styled-components'
 import { Img, Input } from 'styles/reusable-style/elementStyle'
 import CommentCard from './CommentCard'
 import { commentsService } from 'services/community/commentsService'
 import { useParams } from 'react-router-dom'
 import { commentService } from 'services/community/commentService'
+import { MoonLoader } from 'react-spinners'
+import PostsLoading from 'components/common/loading-effect/PostsLoading'
 
 const CURRENT_USER_MOCK = {
   avatar:
@@ -12,12 +14,12 @@ const CURRENT_USER_MOCK = {
   nickname: '화해방',
 }
 
-export interface CommentsData {
-  results: CommentData[]
-  totalCount: number
-}
+// export interface CommentsData {
+//   results: Comment[]
+//   totalCount: number
+// }
 
-export interface CommentData {
+export interface Comment {
   content: string
   createdAt: string
   createdBy: string
@@ -34,8 +36,14 @@ export interface ReplyData {
   like: number
 }
 
-const DetailCommentSection = (/* { commentCounts, comments } */) => {
-  const [commentsData, setCommentsData] = useState<CommentsData | null>(null)
+const DetailCommentSection = () => {
+  const [comments, setComments] = useState<Comment[]>([])
+  const [commentCount, setCommentsCount] = useState<number | null>(null)
+  const [firstLoading, setFirstLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [nothingToload, setNothingToload] = useState(false)
+  const LoadingTargetRef = useRef(null)
+  const pageCountRef = useRef(1)
 
   const param = useParams()
   const { postId } = param
@@ -47,11 +55,28 @@ const DetailCommentSection = (/* { commentCounts, comments } */) => {
         page: 1,
       })
       if (!response) return
-      setCommentsData(response.data)
+      setFirstLoading(false)
+      setCommentsCount(response.data.totalCount)
+      setComments(response.data.results)
     }
 
     getComments()
   }, [postId])
+
+  //=========
+
+  const getNewPage = async () => {
+    setLoading(true)
+    pageCountRef.current = pageCountRef.current + 1
+    const response = await commentsService.getComments({
+      postId: postId as string,
+      page: pageCountRef.current,
+    })
+    if (!response) return
+    if (response.data.results.length === 0) return setNothingToload(true)
+    setLoading(false)
+    setComments((prev) => [...prev, ...response.data.results])
+  }
 
   //=========
 
@@ -70,19 +95,46 @@ const DetailCommentSection = (/* { commentCounts, comments } */) => {
     // const newComment = response?.data; // 지금은 undefined임. 서버에서 수정해주면 들어 올 예정
     // if(newComment){
     //   const {content, createdAt, createdBy, id, liked, children } = newComment;
-    //     setCommentsData(( prevState ) => ({...prevState, results : [{content, createdAt, createdBy, id, liked, children}, ...prevState?.results]}))
+    //     setComments(( prevState ) => ({...prevState, results : [{content, createdAt, createdBy, id, liked, children}, ...prevState?.results]}))
     // }
     alert('댓글 등록 완료 (추후 이 팝업 삭제 요망)')
     setInputValue('')
   }
 
-  if (!commentsData) return <p></p>
+  // 무한 스크롤 ======추후 커스텀 훅으로 모듈화 고려
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1,
+    }
 
-  const { totalCount, results: comments } = commentsData
+    const callback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !loading) {
+          getNewPage()
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(callback, options)
+    if (LoadingTargetRef.current) {
+      observer.observe(LoadingTargetRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [loading, getNewPage])
+  //======
+
+  if (!comments) return <p></p>
+
+  if (firstLoading) return <PostsLoading />
 
   return (
     <StyledWrapper>
-      <p>댓글 {totalCount}</p>
+      <p>댓글 {commentCount}</p>
       <StyledDiv className="column gap">
         <StyledDiv className="row gap">
           <Img
@@ -105,10 +157,23 @@ const DetailCommentSection = (/* { commentCounts, comments } */) => {
       </StyledDiv>
       <StyledDiv className="column">
         {comments &&
-          comments.map((comment) => (
+          comments.map((comment: Comment) => (
             <CommentCard key={comment.id} postId={postId as string} comment={comment} />
           ))}
       </StyledDiv>
+      {nothingToload ? (
+        <StyledParagraph>더이상 불러 올 댓글이 없습니다.</StyledParagraph>
+      ) : (
+        <div ref={LoadingTargetRef}>
+          {loading && (
+            <MoonLoader
+              color="#36d7b7"
+              size="40px"
+              cssOverride={{ margin: '10px auto' }}
+            />
+          )}
+        </div>
+      )}
     </StyledWrapper>
   )
 }
@@ -160,4 +225,7 @@ const StyledButton = styled.button`
   &:hover {
     transform: scale(1.05);
   }
+`
+const StyledParagraph = styled.p`
+  text-align: center;
 `
