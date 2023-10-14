@@ -14,6 +14,7 @@
     "@types/react-datepicker": "^4.15.0",
     "@types/react-dom": "^18.2.7",
     "@types/redux-logger": "^3.0.10",
+    "aws-sdk": "^2.1473.0",
     "axios": "^1.5.0",
     "html-react-parser": "^4.2.2",
     "react": "^18.2.0",
