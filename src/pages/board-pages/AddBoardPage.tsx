@@ -7,7 +7,6 @@ import { categoryService } from 'services/community/categoryService'
 import { postService } from 'services/community/postService'
 import { useNavigate } from 'react-router-dom'
 import { Category } from 'components/community/CategorySection'
-import BtnUpload from 'components/community/Uploader'
 import { Board } from 'types/community-type/postDataType'
 
 const AddBoardPage = () => {
@@ -43,20 +42,25 @@ const AddBoardPage = () => {
   // }
 
   const savePost = async () => {
-    const { statusCode, message } = await postService.addPost({
-      boardType: BOARD_TYPE,
-      data: inputValue,
-    })
-    if (statusCode === 201) {
-      const userConfirmed = confirm('정말 등록 하시겠습니까?')
-      if (userConfirmed) {
+    if (!inputValue.category) return alert('카테고리를 선택해주세요')
+    if (!inputValue.title) return alert('제목을 입력해주세요')
+    if (!inputValue.content) return alert('내용을 입력해주세요')
+    const userConfirmed = confirm('정말 등록 하시겠습니까?')
+    if (userConfirmed) {
+      const { statusCode, message } = await postService.addPost({
+        boardType: BOARD_TYPE,
+        data: inputValue,
+      })
+      if (statusCode === 201) {
         alert(message)
         navigate(`/community/123`)
         return
+      } else {
+        alert(message)
+        return
       }
-      alert(message)
-      return
     }
+    return
   }
 
   const cancelPost = () => {
@@ -72,7 +76,6 @@ const AddBoardPage = () => {
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
-      <BtnUpload />
       <StyledDiv>
         <P $fontWeight="700" $fontSize="20px" $lineHeight="40px">
           일반 게시물 작성
