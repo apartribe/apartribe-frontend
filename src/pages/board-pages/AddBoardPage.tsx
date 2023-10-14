@@ -7,6 +7,7 @@ import { categoryService } from 'services/community/categoryService'
 import { postService } from 'services/community/postService'
 import { useNavigate } from 'react-router-dom'
 import { Category } from 'components/community/CategorySection'
+import BtnUpload from 'components/community/Uploader'
 
 const AddBoardPage = () => {
   const BOARD_TYPE = 'article'
@@ -70,6 +71,7 @@ const AddBoardPage = () => {
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
+      <BtnUpload />
       <StyledDiv>
         <P $fontWeight="700" $fontSize="20px" $lineHeight="40px">
           일반 게시물 작성
