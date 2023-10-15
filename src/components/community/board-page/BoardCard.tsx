@@ -15,7 +15,6 @@ interface Props {
 
 const BoardCard: FC<Props> = ({
   boardType,
-  post,
   post: {
     id,
     // avatar,
@@ -25,7 +24,8 @@ const BoardCard: FC<Props> = ({
     content,
     saw,
     liked,
-    /* commentCount,  thumbnail, */
+    thumbnail,
+    /* commentCount*/
   },
 }) => {
   const navigate = useNavigate()
@@ -70,7 +70,7 @@ const BoardCard: FC<Props> = ({
           </P> */}
         </StyledDiv>
       </StyledDiv>
-      {/* {thumbnail ? (
+      {thumbnail ? (
         <Img
           src={thumbnail}
           $width="150px"
@@ -80,7 +80,7 @@ const BoardCard: FC<Props> = ({
         />
       ) : (
         ''
-      )} */}
+      )}
     </StyledWrapper>
   )
 }

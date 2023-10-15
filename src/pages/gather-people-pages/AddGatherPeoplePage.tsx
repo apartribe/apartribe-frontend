@@ -27,6 +27,7 @@ const AddGatherPeoplePage = () => {
     target: '',
     dues: '',
     content: '',
+    thumbnail: '',
   })
 
   const [categoryList, setCategoryList] = useState<string[]>([])
@@ -204,7 +205,7 @@ const AddGatherPeoplePage = () => {
         <P $fontWeight="700" $lineHeight="30px">
           상세 정보
         </P>
-        <CkEditor setInputValue={setInputValue} />
+        <CkEditor inputValue={inputValue} setInputValue={setInputValue} />
       </div>
       <StyledDiv>
         <Button
