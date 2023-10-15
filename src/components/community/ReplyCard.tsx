@@ -3,10 +3,10 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 // import { Img } from 'styles/reusable-style/elementStyle'
-import { ReplyData } from './DetailCommentSection'
+import { Reply } from './DetailCommentSection'
 
 interface Props {
-  reply: ReplyData
+  reply: Reply
 }
 
 const ReplyCard: FC<Props> = ({
