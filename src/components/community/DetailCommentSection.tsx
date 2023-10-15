@@ -25,10 +25,10 @@ export interface Comment {
   createdBy: string
   id: number
   like: number
-  children: ReplyData[]
+  children: Reply[]
 }
 
-export interface ReplyData {
+export interface Reply {
   content: string
   createdAt: string
   createdBy: string
@@ -88,16 +88,19 @@ const DetailCommentSection = () => {
 
   const submitComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    /*   const response =  */ await commentService.addComment({
+    const response = await commentService.addComment({
       postId: postId as string,
       content: inputValue,
     })
-    // const newComment = response?.data; // 지금은 undefined임. 서버에서 수정해주면 들어 올 예정
-    // if(newComment){
-    //   const {content, createdAt, createdBy, id, liked, children } = newComment;
-    //     setComments(( prevState ) => ({...prevState, results : [{content, createdAt, createdBy, id, liked, children}, ...prevState?.results]}))
-    // }
-    alert('댓글 등록 완료 (추후 이 팝업 삭제 요망)')
+    const newComment: Comment = response?.data
+
+    if (newComment) {
+      const { content, createdAt, createdBy, id } = newComment
+      setComments((prevState) => [
+        { content, createdAt, createdBy, id, like: 0, children: [] },
+        ...prevState,
+      ])
+    }
     setInputValue('')
   }
 
@@ -158,7 +161,12 @@ const DetailCommentSection = () => {
       <StyledDiv className="column">
         {comments &&
           comments.map((comment: Comment) => (
-            <CommentCard key={comment.id} postId={postId as string} comment={comment} />
+            <CommentCard
+              key={comment.id}
+              postId={postId as string}
+              comment={comment}
+              setComments={setComments}
+            />
           ))}
       </StyledDiv>
       {nothingToload ? (
