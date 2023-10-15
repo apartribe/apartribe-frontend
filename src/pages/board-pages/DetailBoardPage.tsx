@@ -23,8 +23,7 @@ export interface BoardPostData {
 const DetailBoardPage = () => {
   const BOARD_TYPE = 'article'
 
-  const param = useParams()
-  const { aptId, postId } = param
+  const { aptId, postId } = useParams()
 
   const [postData, setPostData] = useState<BoardPostData | null>(null)
 
