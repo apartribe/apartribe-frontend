@@ -23,6 +23,7 @@ const AddAnnouncePage = () => {
     content: '',
     startDate: new Date(),
     endDate: null,
+    thumbnail: '',
   })
 
   const [categoryList, setCategoryList] = useState<string[]>([])
@@ -146,7 +147,7 @@ const AddAnnouncePage = () => {
         <P $fontWeight="700" $lineHeight="30px">
           상세 정보
         </P>
-        <CkEditor setInputValue={setInputValue} />
+        <CkEditor inputValue={inputValue} setInputValue={setInputValue} />
       </div>
       <StyledDiv>
         <Button

@@ -20,6 +20,7 @@ export interface Post {
   liked: number
   saw: number
   title: string
+  thumbnail: string
 }
 
 const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort }) => {
