@@ -1,28 +1,37 @@
-import React, { FC, FormEvent, useState, ChangeEvent } from 'react'
+import React, {
+  FC,
+  FormEvent,
+  useState,
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import { styled } from 'styled-components'
 import { /* Img, */ Input } from 'styles/reusable-style/elementStyle'
 import { timeAgo } from 'utils/timeAgo'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import ReplyCard from './ReplyCard'
-import { Comment } from './DetailCommentSection'
+import { Comment, Reply } from './DetailCommentSection'
 import { replyService } from 'services/community/replyService'
 
 interface Props {
   postId: string
   comment: Comment
+  setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const CommentCard: FC<Props> = ({
   postId,
   comment: {
-    /* avatar, */ id,
+    /* avatar, */ id: parentId,
     createdBy,
     createdAt,
     content,
     like: liked,
     children: replies,
   },
+  setComments,
 }) => {
   const [repliseVisible, setRepliseVisible] = useState(false)
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
@@ -38,17 +47,25 @@ const CommentCard: FC<Props> = ({
 
   const submitReply = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    /*     const response =  */ await replyService.addReply({
+    const response = await replyService.addReply({
       postId,
-      parentId: id,
+      parentId,
       content: inputValue,
     })
-    // const newComment = response?.data; // 지금은 undefined임. 서버에서 수정해주면 들어 올 예정
-    // if(newComment){
-    //   const {content, createdAt, createdBy, id, liked, children } = newComment;
-    //     setCommentsData(( prevState ) => ({...prevState, results : [{content, createdAt, createdBy, id, liked, children}, ...prevState?.results]}))
-    // }
-    alert('답글 등록 완료 (추후 이 팝업 삭제 요망)')
+    const newReply: Reply = response?.data
+
+    if (newReply) {
+      setComments((prevState) => {
+        const result = prevState.map((item) => {
+          if (item.id === parentId) {
+            return { ...item, children: [newReply, ...item.children] }
+          } else {
+            return item
+          }
+        })
+        return result
+      })
+    }
     setInputValue('')
   }
 
