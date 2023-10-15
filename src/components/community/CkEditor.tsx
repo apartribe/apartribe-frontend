@@ -6,11 +6,13 @@ import { Announce, Board, GatherPeople } from 'types/community-type/postDataType
 import uploadS3 from 'utils/uploadS3'
 
 interface Props<T> {
+  inputValue: T
   setInputValue: Dispatch<SetStateAction<T>>
 }
 
 // 제네릭 클래스 함수 컴포넌트
 const CkEditor = <T extends Board | Announce | GatherPeople>({
+  inputValue,
   setInputValue,
 }: Props<T>) => {
   const customUploadAdapter = (loader: any) => {
@@ -21,8 +23,12 @@ const CkEditor = <T extends Board | Announce | GatherPeople>({
             const body = new FormData()
             loader.file.then(async (file: any) => {
               body.append('files', file)
-
               const response = await uploadS3(file)
+              // 현재 로직상 가장 마지막 이미지이 썸네일에 저장됨.
+              setInputValue((prevState) => ({
+                ...prevState,
+                thumbnail: response.Location,
+              }))
               resolve({
                 default: response.Location,
               })
@@ -47,7 +53,10 @@ const CkEditor = <T extends Board | Announce | GatherPeople>({
       config={{
         extraPlugins: [uploadPlugin],
       }}
-      data="<p>작성하실 내용을 입력해주세요.</p><p>이미지를 붙여넣거나, 드래그하여 첨부할 수 있습니다.</p>" // 초기값. 필요시 주석 해제
+      data={
+        inputValue.content ||
+        '<p>작성하실 내용을 입력해주세요.</p><p>이미지를 붙여넣거나, 드래그하여 첨부할 수 있습니다.</p>'
+      }
       onReady={(editor) => {
         // console.log('Editor is ready to use!', editor);
       }}
