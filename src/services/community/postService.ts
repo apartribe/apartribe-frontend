@@ -7,6 +7,7 @@ interface AddPost {
   // protected: boolean
   title: string
   content: string
+  thumbnail: string
 }
 
 interface addParam {
@@ -17,6 +18,12 @@ interface addParam {
 interface getParam {
   boardType: BoardType
   aptId: string
+  postId: string
+}
+
+interface updateParam {
+  boardType: BoardType
+  data: AddPost
   postId: string
 }
 
@@ -31,7 +38,12 @@ export const postService = {
     try {
       await instance(`/api/${boardType}`, {
         method: 'post',
-        data,
+        data: {
+          category: data.category,
+          title: data.title,
+          content: data.content,
+          thumbnail: data.thumbnail,
+        },
       })
       return {
         statusCode: 201,
@@ -60,6 +72,36 @@ export const postService = {
       return response.data
     } catch (error) {
       console.error(error)
+    }
+  },
+
+  async updatePost(param: updateParam) {
+    const { boardType, data, postId } = param
+    console.log('뭐가들었니?', data)
+
+    try {
+      await instance(`/api/${boardType}/${postId}`, {
+        method: 'put',
+        data: {
+          category: data.category,
+          title: data.title,
+          content: data.content,
+        },
+      })
+      return {
+        statusCode: 201,
+        message: '게시물이 수정되었습니다. 수정된 게시물로 이동합니다.',
+      }
+    } catch (error) {
+      console.error(error)
+      if (axios.isAxiosError(error)) {
+        return {
+          statusCode: 500,
+          message: '게시물 수정에 실패하였습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
     }
   },
 

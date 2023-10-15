@@ -5,6 +5,7 @@ export interface Announce {
   content: string
   startDate: Date
   endDate: Date | null
+  thumbnail: string
 }
 
 export interface Board {
@@ -12,6 +13,7 @@ export interface Board {
   // protected: boolean
   title: string
   content: string
+  thumbnail: string
 }
 
 export interface GatherPeople {
@@ -26,4 +28,5 @@ export interface GatherPeople {
   target: string
   dues: string
   content: string
+  thumbnail: string
 }
