@@ -1,4 +1,4 @@
-import WidgetTitleArea from 'components/common/WidgetTitleArea'
+import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
 import React from 'react'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaPeopleGroup } from 'react-icons/fa6'
@@ -7,7 +7,7 @@ import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 import { useNavigate } from 'react-router-dom'
 
-const GatherPeopleWidget = () => {
+const TogetherWidget = () => {
   const navigate = useNavigate()
 
   const moveToDetail = () => {
@@ -45,7 +45,7 @@ const GatherPeopleWidget = () => {
   )
 }
 
-export default GatherPeopleWidget
+export default TogetherWidget
 
 const StyledWrapper = styled.div`
   display: flex;

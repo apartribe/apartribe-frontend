@@ -1,11 +1,11 @@
-import WidgetTitleArea from 'components/common/WidgetTitleArea'
+import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
 import React from 'react'
 import { Badge, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { ANNONCEMENT_MOCK } from 'mock/announcementData'
 import { styled } from 'styled-components'
 
-const AnnouncementWidget = () => {
+const AnnounceWidget = () => {
   return (
     <ShadowBox>
       <WidgetTitleArea
@@ -24,7 +24,7 @@ const AnnouncementWidget = () => {
   )
 }
 
-export default AnnouncementWidget
+export default AnnounceWidget
 
 const StyledDiv = styled.div`
   display: flex;

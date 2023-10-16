@@ -6,7 +6,7 @@ import { commentsService } from 'services/community/commentsService'
 import { useParams } from 'react-router-dom'
 import { commentService } from 'services/community/commentService'
 import { MoonLoader } from 'react-spinners'
-import PostsLoading from 'components/common/loading-effect/PostsLoading'
+import PostsLoading from 'components/common/effect/PostsLoading'
 import { Comment } from 'types/community-type/commentType'
 
 const CURRENT_USER_MOCK = {

@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'
-import CategorySection from 'components/community/CategorySection'
+import CategorySection from 'components/community/common/CategorySection'
 import DropdownSort from 'components/ui/DropdownSort'
-import PostListSection from 'components/community/board-page/PostListSection'
+import PostListSection from 'components/community/common/PostListSection'
 
 const GatherPeoplePage = () => {
   const BOARD_TYPE = 'together'

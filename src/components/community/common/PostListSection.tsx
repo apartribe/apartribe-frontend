@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState, useRef } from 'react'
-import BoardCard from './BoardCard'
+import ArticleCard from '../article-page/ArticleCard'
 import { styled } from 'styled-components'
 import { BoardType, postsService } from 'services/community/postsService'
-import PostsLoading from 'components/common/loading-effect/PostsLoading'
+import PostsLoading from 'components/common/effect/PostsLoading'
 import { MoonLoader } from 'react-spinners'
-import AnnouncementCard from '../announce-page/AnnouncementCard'
-import GatherPeopleCard from '../gather-people-page/GatherPeopleCard'
+import AnnounceCard from '../announce-page/AnnounceCard'
+import TogetherCard from '../together-page/togetherCard'
 import { ArticleCardType } from 'types/community-type/ArticleType'
 import { AnnounceCardType } from 'types/community-type/announceType'
 import { TogetherCardType } from 'types/community-type/togetherType'
@@ -92,7 +92,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
         switch (boardType) {
           case 'article':
             return (
-              <BoardCard
+              <ArticleCard
                 boardType={boardType}
                 post={post as ArticleCardType}
                 key={post.id}
@@ -100,7 +100,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
             )
           case 'announce':
             return (
-              <AnnouncementCard
+              <AnnounceCard
                 boardType={boardType}
                 post={post as AnnounceCardType}
                 key={post.id}
@@ -108,7 +108,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
             )
           case 'together':
             return (
-              <GatherPeopleCard
+              <TogetherCard
                 boardType={boardType}
                 post={post as TogetherCardType}
                 key={post.id}
