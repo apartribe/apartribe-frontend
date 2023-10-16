@@ -3,31 +3,35 @@ import CkEditor from 'components/community/CkEditor'
 import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
 import { styled } from 'styled-components'
-import { GatherPeople } from 'types/community-type/postDataType'
+import { AddTogetherType } from 'types/community-type/togetherType'
 import RangeDatePicker from 'components/community/RangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
 import { useNavigate } from 'react-router-dom'
 import { postService } from 'services/community/postService'
-import { Category } from 'components/community/CategorySection'
+import { Category } from 'types/community-type/categoryType'
+import { togetherService } from 'services/community/togetherService'
+import dateformat from 'utils/dateFormat'
+import uploadS3 from 'utils/uploadS3'
 
 const AddGatherPeoplePage = () => {
   const BOARD_TYPE = 'together'
 
   const navigate = useNavigate()
 
-  const [inputValue, setInputValue] = useState<GatherPeople>({
-    category: '일반',
-    // protected: false,
+  const [inputValue, setInputValue] = useState<AddTogetherType>({
+    category: '',
     title: '',
-    explain: '',
-    startDate: new Date(),
-    endDate: null,
-    time: '',
-    place: '',
-    target: '',
-    dues: '',
     content: '',
     thumbnail: '',
+    description: '',
+    // recruitFrom: new Date().toString(),
+    // recruitTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toString(), // 7일 뒤
+    recruitFrom: new Date(),
+    recruitTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7일 뒤
+    meetTime: '',
+    target: '',
+    location: '',
+    contributeStatus: false,
   })
 
   const [categoryList, setCategoryList] = useState<string[]>([])
@@ -51,7 +55,7 @@ const AddGatherPeoplePage = () => {
   // }
 
   const savePost = async () => {
-    const { statusCode, message } = await postService.addPost({
+    const { statusCode, message } = await togetherService.addPost({
       boardType: BOARD_TYPE,
       data: inputValue,
     })
@@ -77,13 +81,18 @@ const AddGatherPeoplePage = () => {
     return
   }
 
+  const uploadToS3 = async (e: ChangeEvent<HTMLInputElement>) => {
+    const response = await uploadS3(e.target.files?.[0])
+    setInputValue((prevState) => ({ ...prevState, thumbnail: response.Location }))
+  }
+
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
-      <StyledDiv>
+      <StyledWrapper>
         <P $fontWeight="700" $fontSize="20px" $lineHeight="40px">
           같이 하실 분 작성
         </P>
-        <StyledDiv>
+        <StyledWrapper>
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
@@ -97,8 +106,8 @@ const AddGatherPeoplePage = () => {
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>
-        </StyledDiv>
-      </StyledDiv>
+        </StyledWrapper>
+      </StyledWrapper>
       <div>
         <P $fontWeight="700" $lineHeight="40px">
           카테고리
@@ -124,14 +133,36 @@ const AddGatherPeoplePage = () => {
           $border="1px solid #F2F2F2"
         />
       </div>
+      <P $fontWeight="700" $lineHeight="30px">
+        썸네일
+      </P>
+      <StyledDiv className="row">
+        <Input // 파일의 이름을 보여주는 input태그
+          id="profileImage"
+          value={inputValue.thumbnail}
+          readOnly
+          disabled
+          $height="50px"
+          $background="#FFFFFF"
+          $border="1px solid #F2F2F2"
+        />
+        <input // 실제로 업로드를 해주는 input 택그
+          type="file"
+          id="thumbnail"
+          name="profileImage"
+          onChange={uploadToS3}
+          hidden
+        />
+        <StyledLabel htmlFor="thumbnail">파일 선택</StyledLabel>
+      </StyledDiv>
       <div>
         <P $fontWeight="700" $lineHeight="30px">
           한 줄 설명
         </P>
         <Input
           type="text"
-          name="explain"
-          value={inputValue.title}
+          name="description"
+          value={inputValue.description}
           onChange={changeInputValue}
           placeholder="한 줄 설명을 입력하세요."
           $height="50px"
@@ -139,41 +170,41 @@ const AddGatherPeoplePage = () => {
           $border="1px solid #F2F2F2"
         />
       </div>
-      <StyledLabel className="column">
+      <StyledDiv className="column">
         <P $fontWeight="700" $lineHeight="40px">
           필수정보
         </P>
-        <StyledLabel className="row">
+        <StyledDiv className="row">
           <P $whiteSpace="nowrap">모집 기간 : </P>
           <RangeDatePicker inputValue={inputValue} setInputValue={setInputValue} />
-        </StyledLabel>
-        <StyledLabel className="row">
+        </StyledDiv>
+        <StyledDiv className="row">
           <P $whiteSpace="nowrap">활동 시간 : </P>
           <Input
             type="text"
-            name="time"
-            value={inputValue.time}
+            name="meetTime"
+            value={inputValue.meetTime}
             onChange={changeInputValue}
             placeholder="ex) 매주 토요일 17시"
             $height="50px"
             $background="#FFFFFF"
             $border="1px solid #F2F2F2"
           />
-        </StyledLabel>
-        <StyledLabel className="row">
+        </StyledDiv>
+        <StyledDiv className="row">
           <P $whiteSpace="nowrap">활동 장소 : </P>
           <Input
             type="text"
-            name="place"
-            value={inputValue.place}
+            name="location"
+            value={inputValue.location}
             onChange={changeInputValue}
             placeholder="ex) 종합운동장 A 풋살장"
             $height="50px"
             $background="#FFFFFF"
             $border="1px solid #F2F2F2"
           />
-        </StyledLabel>
-        <StyledLabel className="row">
+        </StyledDiv>
+        <StyledDiv className="row">
           <P $whiteSpace="nowrap">모집 대상 : </P>
           <Input
             type="text"
@@ -185,29 +216,45 @@ const AddGatherPeoplePage = () => {
             $background="#FFFFFF"
             $border="1px solid #F2F2F2"
           />
-        </StyledLabel>
-        <StyledLabel className="row">
+        </StyledDiv>
+        <StyledDiv className="row">
           <P $whiteSpace="nowrap">회비 여부 : </P>
-          <Input
+          {/* 백엔드 착오로 인한 임시 주석 */}
+          {/* <Input
             type="text"
-            name="dues"
-            value={inputValue.dues}
+            name="contributeStatus"
+            value={inputValue.contributeStatus}
             onChange={changeInputValue}
             placeholder="ex) 월 1만원 (식수 및 음료 구매비)"
             $height="50px"
             $background="#FFFFFF"
             $border="1px solid #F2F2F2"
+          /> */}
+          <input
+            type="checkbox"
+            checked={inputValue.contributeStatus}
+            name="contributeStatus"
+            onChange={(e) =>
+              setInputValue((prev: AddTogetherType) => ({
+                ...prev,
+                contributeStatus: e.target.checked,
+              }))
+            }
           />
-        </StyledLabel>
-      </StyledLabel>
+        </StyledDiv>
+      </StyledDiv>
 
       <div>
         <P $fontWeight="700" $lineHeight="30px">
           상세 정보
         </P>
-        <CkEditor inputValue={inputValue} setInputValue={setInputValue} />
+        <CkEditor
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          doNotSaveThumbnail
+        />
       </div>
-      <StyledDiv>
+      <StyledWrapper>
         <Button
           $background="#FFFFFF"
           $border="1px solid #F2F2F2"
@@ -217,14 +264,14 @@ const AddGatherPeoplePage = () => {
           취소
         </Button>
         <Button onClick={savePost}>저장</Button>
-      </StyledDiv>
+      </StyledWrapper>
     </ShadowBox>
   )
 }
 
 export default AddGatherPeoplePage
 
-const StyledDiv = styled.div`
+const StyledWrapper = styled.div`
   display: flex;
   gap: 10px;
   justify-content: space-between;
@@ -235,7 +282,7 @@ const StyledDiv = styled.div`
   }
 `
 
-const StyledLabel = styled.div`
+const StyledDiv = styled.div`
   display: flex;
   &.row {
     gap: 10px;
@@ -245,5 +292,31 @@ const StyledLabel = styled.div`
   &.column {
     gap: 10px;
     flex-direction: column;
+  }
+`
+
+const StyledLabel = styled.label`
+  box-sizing: border-box;
+  background: #ffffff;
+  height: 50px;
+  width: 150px;
+  border: 1px solid #f2f2f2;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  cursor: pointer;
+
+  &.mini {
+    border: none;
+    height: 15px;
+    width: 25px;
+    padding: 0px;
+    font-size: 12px;
+    color: #303030;
+    margin-bottom: 25px;
+  }
+
+  &:hover {
+    transform: scale(1.05);
   }
 `
