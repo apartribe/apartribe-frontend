@@ -4,7 +4,7 @@ import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
 import { styled } from 'styled-components'
 import { categoryService } from 'services/community/categoryService'
-import { postService } from 'services/community/postService'
+import { articleService } from 'services/community/articleService'
 import { useNavigate } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
@@ -48,7 +48,7 @@ const AddBoardPage = () => {
     if (!inputValue.content) return alert('내용을 입력해주세요')
     const userConfirmed = confirm('정말 등록 하시겠습니까?')
     if (userConfirmed) {
-      const { statusCode, message } = await postService.addPost({
+      const { statusCode, message } = await articleService.addPost({
         boardType: BOARD_TYPE,
         data: inputValue,
       }) // 아이디 돌려받아서 해당 게시물로 이동 로직 추가 요망

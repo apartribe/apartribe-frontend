@@ -7,7 +7,7 @@ import { AddTogetherType, UpdateTogetherType } from 'types/community-type/togeth
 import RangeDatePicker from 'components/community/RangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
 import { useNavigate, useParams } from 'react-router-dom'
-import { postService } from 'services/community/postService'
+import { articleService } from 'services/community/articleService'
 import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
 import dateformat from 'utils/dateFormat'

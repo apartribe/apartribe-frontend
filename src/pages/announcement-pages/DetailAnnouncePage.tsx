@@ -5,7 +5,7 @@ import { styled } from 'styled-components'
 import DetailHeaderSection from 'components/community/DetailHeaderSection'
 import DetailCommentSection from 'components/community/DetailCommentSection'
 import { useParams } from 'react-router-dom'
-import { postService } from 'services/community/postService'
+import { articleService } from 'services/community/articleService'
 import { AnnounceDetailType } from 'types/community-type/announceType'
 import { announceService } from 'services/community/announceService'
 

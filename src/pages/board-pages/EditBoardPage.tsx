@@ -4,7 +4,7 @@ import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
 import { styled } from 'styled-components'
 import { categoryService } from 'services/community/categoryService'
-import { postService } from 'services/community/postService'
+import { articleService } from 'services/community/articleService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
@@ -27,7 +27,7 @@ const EditBoardPage = () => {
 
   useEffect(() => {
     const getPost = async () => {
-      const response = await postService.getPost({
+      const response = await articleService.getPost({
         boardType: BOARD_TYPE,
         aptId: aptId as string,
         postId: postId as string,
@@ -67,7 +67,7 @@ const EditBoardPage = () => {
     if (!inputValue.content) return alert('내용을 입력해주세요')
     const userConfirmed = confirm('정말 등록 하시겠습니까?')
     if (userConfirmed) {
-      const { statusCode, message } = await postService.updatePost({
+      const { statusCode, message } = await articleService.updatePost({
         boardType: BOARD_TYPE,
         data: inputValue,
         postId: postId as string,
