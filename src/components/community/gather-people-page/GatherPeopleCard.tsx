@@ -3,63 +3,77 @@ import { Badge, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
-import { GatherPeopleMockType } from 'mock/gatherPeopleData'
 import { useNavigate } from 'react-router-dom'
+import { TogetherCardType } from 'types/community-type/togetherType'
+import { BoardType } from 'services/community/postsService'
+import { timeAgo } from 'utils/timeAgo'
 
 interface Props {
-  post: GatherPeopleMockType
+  boardType: BoardType
+  post: TogetherCardType
 }
 
 const badgeColor = (urgency: string): string => {
-  if (urgency === '모집 중') return '#E18745'
+  if (urgency === '모집중') return '#E18745'
   return '#303030'
 }
 
 const GatherPeopleCard: FC<Props> = ({
-  post: { writer, date, state, title, explain, view, like, comment, url },
+  post,
+  post: {
+    id,
+    createdBy,
+    createdAt,
+    recruitStatus,
+    title,
+    description,
+    /* saw, liked, commentCounts, */ thumbnail,
+  },
 }) => {
   const navigate = useNavigate()
 
   const moveToDetail = () => {
-    navigate('/community/123/gather-people/45/detail') // 추후 경로 수정
+    navigate(`/community/123/together/${id}/detail`) // 추후 경로 수정
   }
+
   return (
     <StyledBox onClick={moveToDetail}>
       <Badge
         $position="absolute"
         $top="10px"
         $right="10px"
-        $background={badgeColor(state)}
+        $background={badgeColor(recruitStatus)}
       >
-        {state}
+        {recruitStatus}
       </Badge>
       {/* {url ? <Img src={url} $width="150px" $height="130spx" $borderRadius="5px" /> : ''}*/}
       <StyledImgWrapper>
-        <StyledImg src={url} alt="" />
+        <StyledImg src={thumbnail} alt="썸네일" />
       </StyledImgWrapper>
       <StyledDiv className="column">
         <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
         <P $fontSize="12px" $lineHeight="20px" $fontWeight="700">
-          {writer}
+          {createdBy}
         </P>
         <P $fontSize="10px" $color="#b3b3b3" $lineHeight="10px">
-          {date}
+          {timeAgo(createdAt)}
         </P>
-        <StyledDiv className="row">
+        {/* 추후 필요시 사용 */}
+        {/* <StyledDiv className="row">
           <P $fontSize="12px">
             <AiOutlineEye />
-            &nbsp;{view}
+            &nbsp;{saw}
           </P>
           <P $fontSize="12px">
             <AiOutlineLike />
-            &nbsp;{like}
+            &nbsp;{liked}
           </P>
           <P $fontSize="12px">
             <BiConversation />
-            &nbsp;{comment}
+            &nbsp;{commentCounts}
           </P>
-        </StyledDiv>
-        <StyledParagraph className="doubleLineEclips">{explain}</StyledParagraph>
+        </StyledDiv> */}
+        <StyledParagraph className="doubleLineEclips">{description}</StyledParagraph>
       </StyledDiv>
     </StyledBox>
   )
@@ -70,9 +84,9 @@ export default GatherPeopleCard
 const StyledBox = styled.div`
   background: #ffffff;
   position: relative;
-  width: 440px;
+  width: 435px;
   height: 150px;
-  margin: 10px 0 0 0;
+  margin: 10px 5px 0 5px;
   padding: 10px;
   display: flex;
   gap: 20px;
@@ -84,7 +98,7 @@ const StyledBox = styled.div`
 
   &:hover {
     img {
-      transform: scale(1.1);
+      transform: scale(1.05);
       transition: 0.1s ease-in-out;
     }
   }
@@ -120,7 +134,7 @@ const StyledParagraph = styled.p`
   }
 
   &.doubleLineEclips {
-    margin: 0;
+    margin: 15px 0 0 0;
     font-size: 12px;
     overflow: hidden;
     display: -webkit-box;
