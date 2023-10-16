@@ -24,8 +24,6 @@ const RangeDatePicker = <
   const onChange = (dates: [Date, Date]) => {
     const [start, end] = dates
 
-    console.log([start, end])
-
     setInputValue((prevState) => ({ ...prevState, recruitFrom: start, recruitTo: end }))
   }
 

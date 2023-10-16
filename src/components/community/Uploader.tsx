@@ -53,11 +53,6 @@ const BtnUpload = () => {
     })
 
     const response = await upload.promise()
-    console.log('펜딩', response)
-    // .then(
-    //     // console.log('업로드')
-    //     // alert('완료.')
-    // )
   }
 
   return (

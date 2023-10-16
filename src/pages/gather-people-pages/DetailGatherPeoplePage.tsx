@@ -35,8 +35,6 @@ const DetailGatherPeoplePage = () => {
 
   if (!postData) return <p></p>
 
-  console.log(postData)
-
   return (
     <ShadowBox $padding="30px">
       <DetailHeaderSection
