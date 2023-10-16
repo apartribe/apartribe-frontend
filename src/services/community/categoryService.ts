@@ -25,6 +25,14 @@ export const categoryService = {
 
   async getCategory(param: getParam) {
     const { boardType } = param
+    if (boardType === 'announce')
+      return {
+        data: [
+          { categoryName: '일반' },
+          { categoryName: '긴급' },
+          { categoryName: '비상' },
+        ],
+      }
     const response: AxiosResponse = await instance(`/api/category/${boardType}/list`, {
       method: 'get',
     })
