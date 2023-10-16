@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { styled } from 'styled-components'
-import { Img } from 'styles/reusable-style/elementStyle'
 import { TogetherDetailType } from 'types/community-type/togetherType'
 
 interface Props {

@@ -26,17 +26,14 @@ const DetailHeaderSection: FC<Props> = ({
   boardType,
   postId,
   postData: {
-    id,
     category,
     // level, 하..
     title,
-    content,
     createdAt,
-    createdBy,
+    // createdBy,
     liked,
     saw,
     commentCounts,
-    thumbnail,
   },
 }) => {
   const navigate = useNavigate()
