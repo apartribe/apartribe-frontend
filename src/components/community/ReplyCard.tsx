@@ -1,25 +1,34 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, Dispatch, SetStateAction } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 // import { Img } from 'styles/reusable-style/elementStyle'
-import { Reply } from './DetailCommentSection'
+import { Img } from 'styles/reusable-style/elementStyle'
+import { Comment, Reply } from 'types/community-type/commentType'
+import EditReply from './EditReply'
 
 interface Props {
+  postId: string
+  parentId: number
   reply: Reply
+  setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const ReplyCard: FC<Props> = ({
-  reply: { /* avatar, */ createdBy, createdAt, like: liked, content },
+  postId,
+  parentId,
+  reply: { /* avatar, */ id, createdBy, createdAt, like: liked, content },
+  setComments,
 }) => {
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
+  const [editMode, setEditMode] = useState(false)
 
   const toggleLike = () => {
     setLike((prev) => !prev)
   }
 
   const editReply = () => {
-    alert('답글 수정')
+    setEditMode(true)
   }
 
   const deleteReply = () => {
@@ -29,18 +38,27 @@ const ReplyCard: FC<Props> = ({
   return (
     <StyledWrapper>
       <StyledDiv className="row gap center">
-        {/* <Img src={avatar} alt="댓글 아바타" $width="40px" height="40px" /> */}
+        <Img
+          src="https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png"
+          alt="댓글 아바타"
+          $width="40px"
+          height="40px"
+        />
         <StyledDiv className="column">
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
         </StyledDiv>
         <StyledDiv className="row start gap full">
-          <StyledButton className="mini" onClick={editReply}>
-            수정
-          </StyledButton>
-          <StyledButton className="mini" onClick={deleteReply}>
-            삭제
-          </StyledButton>
+          {!editMode && (
+            <>
+              <StyledButton className="mini" onClick={editReply}>
+                수정
+              </StyledButton>
+              <StyledButton className="mini" onClick={deleteReply}>
+                삭제
+              </StyledButton>
+            </>
+          )}
         </StyledDiv>
         <StyledDiv className="column center">
           {like ? (
@@ -51,7 +69,18 @@ const ReplyCard: FC<Props> = ({
           <StyledParagraph className="sm">{liked}</StyledParagraph>
         </StyledDiv>
       </StyledDiv>
-      <StyledParagraph>{content}</StyledParagraph>
+      {editMode ? (
+        <EditReply
+          postId={postId}
+          parentId={parentId}
+          commentId={id}
+          content={content}
+          setComments={setComments}
+          setEditMode={setEditMode}
+        />
+      ) : (
+        <StyledParagraph>{content}</StyledParagraph>
+      )}
     </StyledWrapper>
   )
 }
