@@ -1,5 +1,3 @@
-// http://{{host}}/api/board/2/comment?size=4&page=1
-
 import { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
 import { CommentResponse } from 'types/community-type/commentType'

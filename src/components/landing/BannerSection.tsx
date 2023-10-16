@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import { LogoMainWhite } from 'assets/logos'
-import AptSearchBar from 'components/common/AptSearchBar'
+import AptSearchBar from 'components/common/apt-sugget-search-bar/AptSearchBar'
 import { BANNER_TEXT } from 'constants/landing/banner'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 

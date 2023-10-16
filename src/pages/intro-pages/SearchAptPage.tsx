@@ -1,5 +1,5 @@
 import React from 'react'
-import AptSearchBar from 'components/common/AptSearchBar'
+import AptSearchBar from 'components/common/apt-sugget-search-bar/AptSearchBar'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { styled } from 'styled-components'
 

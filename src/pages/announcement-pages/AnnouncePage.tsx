@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import PostListSection from 'components/community/board-page/PostListSection'
+import PostListSection from 'components/community/common/PostListSection'
 import DropdownSort from 'components/ui/DropdownSort'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
-import CategorySection from 'components/community/CategorySection'
+import CategorySection from 'components/community/common/CategorySection'
 
 const AnnouncePage = () => {
   const BOARD_TYPE = 'announce'

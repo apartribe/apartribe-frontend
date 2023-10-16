@@ -1,38 +1,43 @@
 import React, { FC } from 'react'
-import { Img, P } from 'styles/reusable-style/elementStyle'
+import { Badge, Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
-// import { BiConversation } from 'react-icons/bi'
+import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { timeAgo } from 'utils/timeAgo'
+import { AnnounceCardType } from 'types/community-type/announceType'
 import { BoardType } from 'services/community/postsService'
-import { ArticleCardType } from 'types/community-type/ArticleType'
-import { BiConversation } from 'react-icons/bi'
+import { timeAgo } from 'utils/timeAgo'
 
 interface Props {
   boardType: BoardType
-  post: ArticleCardType
+  post: AnnounceCardType
 }
 
-const BoardCard: FC<Props> = ({
-  boardType,
+// level 과 category 관련 이슈 announceType.ts 주석 참고.
+const badgeColor = (category: string | undefined): string => {
+  if (category === '일반') return '#0B2A08'
+  if (category === '긴급') return '#C9AB0C'
+  return '#EA1616'
+}
+
+const AnnounceCard: FC<Props> = ({
   post: {
     id,
-    // avatar,
-    createdBy,
-    createdAt,
+    level: category,
     title,
     content,
+    createdBy,
+    createdAt,
     saw,
     liked,
-    thumbnail,
     commentCounts,
+    thumbnail,
   },
 }) => {
   const navigate = useNavigate()
 
   const moveToDetail = () => {
-    navigate(`/community/123/${boardType}/${id}/detail`) // TODO: 아파트 아이디 변경
+    navigate(`/community/123/announce/${id}/detail`) // 추후 경로 수정
   }
 
   return (
@@ -49,13 +54,16 @@ const BoardCard: FC<Props> = ({
         <StyledDiv className="column">
           <div>
             <P $fontSize="12px" $fontWeight="700">
-              {createdBy}
+              [직책정보필요] {createdBy}
             </P>
             <P $fontSize="10px" $color="#b3b3b3" $lineHeight="12px">
               {timeAgo(createdAt)}
             </P>
           </div>
-          <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
+          <StyledDiv className="row">
+            <Badge $background={badgeColor(category)}>{category}</Badge>
+            <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
+          </StyledDiv>
           <StyledParagraph className="doubleLineEclips">{content}</StyledParagraph>
           <StyledDiv className="row">
             <P $fontSize="12px">
@@ -88,7 +96,7 @@ const BoardCard: FC<Props> = ({
   )
 }
 
-export default BoardCard
+export default AnnounceCard
 
 const StyledWrapper = styled.div`
   max-width: 900px;
@@ -104,8 +112,9 @@ const StyledWrapper = styled.div`
 const StyledDiv = styled.div`
   &.row {
     display: flex;
-    flex-direction: row;
     flex: 1;
+    flex-direction: row;
+    align-items: center;
     gap: 5px;
   }
 

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from 'react'
-import CkEditor from 'components/community/CkEditor'
+import CkEditor from 'components/community/common/CkEditor'
 import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { styled } from 'styled-components'
 import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'

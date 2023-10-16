@@ -16,7 +16,7 @@ const badgeColor = (urgency: string): string => {
   return '#303030'
 }
 
-const GatherPeopleCard: FC<Props> = ({
+const TogetherCard: FC<Props> = ({
   post: {
     id,
     createdBy,
@@ -76,7 +76,7 @@ const GatherPeopleCard: FC<Props> = ({
   )
 }
 
-export default GatherPeopleCard
+export default TogetherCard
 
 const StyledBox = styled.div`
   background: #ffffff;

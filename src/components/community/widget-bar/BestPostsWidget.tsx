@@ -1,4 +1,4 @@
-import WidgetTitleArea from 'components/common/WidgetTitleArea'
+import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
 import React, { useState, useEffect } from 'react'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaRankingStar } from 'react-icons/fa6'

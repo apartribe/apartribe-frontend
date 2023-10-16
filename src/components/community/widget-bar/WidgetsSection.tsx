@@ -1,19 +1,19 @@
 import React from 'react'
-import AnnouncementWidget from 'components/community/widget-bar/AnnouncementWidget'
+import AnnounceWidget from 'components/community/widget-bar/AnnounceWidget'
 import BestPostsWidget from 'components/community/widget-bar/BestPostsWidget'
 import AdvertisementWidget from 'components/community/widget-bar/AdvertisementWidget'
 import CommentRankWidget from 'components/community/widget-bar/CommentRankWidget'
-import GatherPeopleWidget from 'components/community/widget-bar/GatherPeopleWidget'
+import TogetherWidget from 'components/community/widget-bar/TogetherWidget'
 import SearchPostWidget from 'components/community/widget-bar/SearchPostWidget'
 
 const WidgetsSection = () => {
   return (
     <>
-      <AnnouncementWidget />
+      <AnnounceWidget />
       <SearchPostWidget />
       <BestPostsWidget />
       <AdvertisementWidget />
-      <GatherPeopleWidget />
+      <TogetherWidget />
       <CommentRankWidget />
     </>
   )
