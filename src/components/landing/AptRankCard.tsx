@@ -3,17 +3,8 @@ import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { Badge } from 'styles/reusable-style/elementStyle'
+import { AptInfo } from 'types/community-type/aptType'
 import { timeAgo } from 'utils/timeAgo'
-
-interface AptInfo {
-  id: number
-  img: string
-  badge: string
-  name: string
-  location: string
-  recentPost: string
-  userCount: number
-}
 
 interface Props {
   index: number

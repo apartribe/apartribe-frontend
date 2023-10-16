@@ -1,18 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
 import { BoardType } from './postsService'
 import { instance } from 'configs/axios'
-
-interface AddPost {
-  category: string
-  // protected: boolean
-  title: string
-  content: string
-  thumbnail: string
-}
+import { AddArticleType } from 'types/community-type/ArticleType'
 
 interface addParam {
   boardType: BoardType
-  data: AddPost
+  data: AddArticleType
 }
 
 interface getParam {
@@ -23,7 +16,7 @@ interface getParam {
 
 interface updateParam {
   boardType: BoardType
-  data: AddPost
+  data: AddArticleType
   postId: string
 }
 
@@ -35,14 +28,15 @@ interface deleteParam {
 export const postService = {
   async addPost(param: addParam) {
     const { boardType, data } = param
+    const { category, title, content, thumbnail } = data
     try {
       await instance(`/api/${boardType}`, {
         method: 'post',
         data: {
-          category: data.category,
-          title: data.title,
-          content: data.content,
-          thumbnail: data.thumbnail,
+          category,
+          title,
+          content,
+          thumbnail,
         },
       })
       return {
@@ -69,6 +63,7 @@ export const postService = {
         // TODO: 아파트 아이디 추가 필요
         method: 'get',
       })
+
       return response.data
     } catch (error) {
       console.error(error)
@@ -77,15 +72,15 @@ export const postService = {
 
   async updatePost(param: updateParam) {
     const { boardType, data, postId } = param
-    console.log('뭐가들었니?', data)
+    const { category, title, content } = data
 
     try {
       await instance(`/api/${boardType}/${postId}`, {
         method: 'put',
         data: {
-          category: data.category,
-          title: data.title,
-          content: data.content,
+          category,
+          title,
+          content,
         },
       })
       return {

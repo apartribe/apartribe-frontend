@@ -11,12 +11,7 @@ import axios from 'axios'
 import SearchBar from 'components/ui/SearchBar'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-
-interface AptSearch {
-  name: string
-  id: string
-  address: string
-}
+import { AptSearch } from 'types/community-type/aptType'
 
 const AptSearchBar = () => {
   const navigate = useNavigate()

@@ -144,16 +144,3 @@ export const GATHER_PEOPLE_MOCK = [
     url: 'https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695026491/KakaoTalk_20230918_174029375_sp680m.png',
   },
 ]
-
-export interface GatherPeopleMockType {
-  categoroy: string
-  state: string
-  title: string
-  writer: string
-  date: string
-  view: number
-  like: number
-  comment: number
-  explain: string
-  url: string
-}

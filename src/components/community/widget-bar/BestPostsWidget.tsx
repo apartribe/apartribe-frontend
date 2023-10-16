@@ -5,11 +5,7 @@ import { FaRankingStar } from 'react-icons/fa6'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
-
-interface BestPost {
-  id: number
-  title: string
-}
+import { BestPost } from 'types/community-type/widgetType'
 
 const BestPostsWidget = () => {
   const navigate = useNavigate()
