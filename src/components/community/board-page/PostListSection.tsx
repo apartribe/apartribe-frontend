@@ -4,6 +4,11 @@ import { styled } from 'styled-components'
 import { BoardType, postsService } from 'services/community/postsService'
 import PostsLoading from 'components/common/loading-effect/PostsLoading'
 import { MoonLoader } from 'react-spinners'
+import AnnouncementCard from '../announce-page/AnnouncementCard'
+import GatherPeopleCard from '../gather-people-page/GatherPeopleCard'
+import { ArticleCardType } from 'types/community-type/ArticleType'
+import { AnnounceCardType } from 'types/community-type/announceType'
+import { TogetherCardType } from 'types/community-type/togetherType'
 
 interface Props {
   boardType: BoardType
@@ -11,21 +16,11 @@ interface Props {
   selectedSort: string
 }
 
-export interface Post {
-  // 모집공고는 또 다를 텐데..
-  content: string
-  createdAt: string
-  createdBy: string
-  id: number
-  liked: number
-  saw: number
-  title: string
-  thumbnail: string
-}
-
 const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort }) => {
   //=========================================================================
-  const [postList, setPostList] = useState<Post[]>([])
+  const [postList, setPostList] = useState<
+    ArticleCardType[] | AnnounceCardType[] | TogetherCardType[]
+  >([])
   const [firstLoading, setFirstLoading] = useState(true)
   const [loading, setLoading] = useState(false)
   const [nothingToload, setNothingToload] = useState(false)
@@ -94,9 +89,34 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
 
   return (
     <StyledDiv>
-      {postList.map((post: Post) => (
-        <BoardCard boardType={boardType} post={post} key={post.id} />
-      ))}
+      {postList.map((post) => {
+        switch (boardType) {
+          case 'article':
+            return (
+              <BoardCard
+                boardType={boardType}
+                post={post as ArticleCardType}
+                key={post.id}
+              />
+            )
+          case 'announce':
+            return (
+              <AnnouncementCard
+                boardType={boardType}
+                post={post as AnnounceCardType}
+                key={post.id}
+              />
+            )
+          case 'together':
+            return (
+              <GatherPeopleCard
+                boardType={boardType}
+                post={post as TogetherCardType}
+                key={post.id}
+              />
+            )
+        }
+      })}
       {nothingToload ? (
         <StyledParagraph>더이상 불러 올 게시물이 없습니다.</StyledParagraph>
       ) : (
@@ -118,8 +138,12 @@ export default PostListSection
 
 const StyledDiv = styled.div`
   min-height: 80vh;
+  display: flex;
+  flex-wrap: wrap;
 `
 
 const StyledParagraph = styled.p`
+  width: 100%;
+  margin: 50px 0;
   text-align: center;
 `

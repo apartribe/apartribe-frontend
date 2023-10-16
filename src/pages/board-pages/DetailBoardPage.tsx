@@ -6,26 +6,14 @@ import DetailHeaderSection from 'components/community/DetailHeaderSection'
 import DetailCommentSection from 'components/community/DetailCommentSection'
 import { useParams } from 'react-router-dom'
 import { postService } from 'services/community/postService'
-
-export interface BoardPostData {
-  issuedAt: string
-  data: {
-    id: number
-    title: string
-    createdBy: string
-    saw: number
-    liked: number
-    commentCounts: number
-    content: string
-  }
-}
+import { ArticleDetailType } from 'types/community-type/ArticleType'
 
 const DetailBoardPage = () => {
   const BOARD_TYPE = 'article'
 
   const { aptId, postId } = useParams()
 
-  const [postData, setPostData] = useState<BoardPostData | null>(null)
+  const [postData, setPostData] = useState<ArticleDetailType | null>(null)
 
   useEffect(() => {
     const getPost = async () => {
@@ -34,7 +22,8 @@ const DetailBoardPage = () => {
         aptId: aptId as string,
         postId: postId as string,
       })
-      setPostData(response)
+
+      setPostData(response.data)
     }
 
     getPost()
@@ -49,7 +38,7 @@ const DetailBoardPage = () => {
         postId={postId as string}
         postData={postData}
       />
-      <DetailHtmlSection>{parse(postData.data.content)}</DetailHtmlSection>
+      <DetailHtmlSection>{parse(postData.content)}</DetailHtmlSection>
       <DetailCommentSection />
     </ShadowBox>
   )

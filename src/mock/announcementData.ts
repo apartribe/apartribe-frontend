@@ -135,17 +135,3 @@ export const ANNONCEMENT_MOCK = [
     url: 'https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145823493_hyqg3v.png',
   },
 ]
-
-export interface AnnouncementMockType {
-  avatar: string
-  title: string
-  content: string
-  date: string
-  job: string
-  urgency: string
-  writer: string
-  view: number
-  like: number
-  comment: number
-  url: string
-}

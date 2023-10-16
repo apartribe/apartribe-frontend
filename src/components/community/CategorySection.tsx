@@ -8,6 +8,7 @@ import { useScrollButton } from 'hooks/useScrollButton'
 import AddCategoryModal from './AddCategoryModal'
 import { categoryService } from 'services/community/categoryService'
 import { BoardType } from 'services/community/postsService'
+import { Category } from 'types/community-type/categoryType'
 
 interface Props {
   boardType: BoardType
@@ -15,10 +16,6 @@ interface Props {
   setSelectedCategory: Dispatch<React.SetStateAction<string>>
   useArrow?: boolean
   canCreate?: boolean
-}
-
-export interface Category {
-  categoryName: string
 }
 
 const CategorySection: FC<Props> = ({

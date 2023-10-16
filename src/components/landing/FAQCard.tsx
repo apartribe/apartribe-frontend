@@ -1,10 +1,6 @@
 import React, { FC } from 'react'
 import { styled } from 'styled-components'
-
-interface FAQ {
-  question: string
-  answer: string
-}
+import { FAQ } from 'types/landingType'
 
 interface Props {
   faq: FAQ

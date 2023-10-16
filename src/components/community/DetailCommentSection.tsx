@@ -7,33 +7,12 @@ import { useParams } from 'react-router-dom'
 import { commentService } from 'services/community/commentService'
 import { MoonLoader } from 'react-spinners'
 import PostsLoading from 'components/common/loading-effect/PostsLoading'
+import { Comment } from 'types/community-type/commentType'
 
 const CURRENT_USER_MOCK = {
   avatar:
     'https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png',
   nickname: '화해방',
-}
-
-// export interface CommentsData {
-//   results: Comment[]
-//   totalCount: number
-// }
-
-export interface Comment {
-  content: string
-  createdAt: string
-  createdBy: string
-  id: number
-  like: number
-  children: Reply[]
-}
-
-export interface Reply {
-  content: string
-  createdAt: string
-  createdBy: string
-  id: number
-  like: number
 }
 
 const DetailCommentSection = () => {
@@ -56,8 +35,8 @@ const DetailCommentSection = () => {
       })
       if (!response) return
       setFirstLoading(false)
-      setCommentsCount(response.data.totalCount)
-      setComments(response.data.results)
+      setCommentsCount(response.totalCount)
+      setComments(response.results)
     }
 
     getComments()
@@ -73,9 +52,9 @@ const DetailCommentSection = () => {
       page: pageCountRef.current,
     })
     if (!response) return
-    if (response.data.results.length === 0) return setNothingToload(true)
+    if (response.results.length === 0) return setNothingToload(true)
     setLoading(false)
-    setComments((prev) => [...prev, ...response.data.results])
+    setComments((prev) => [...prev, ...response.results])
   }
 
   //=========

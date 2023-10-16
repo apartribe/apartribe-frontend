@@ -1,23 +1,12 @@
 // http://{{host}}/api/board/2/comment?size=4&page=1
 
 import { AxiosResponse } from 'axios'
-import { Comment } from 'components/community/DetailCommentSection'
 import { instance } from 'configs/axios'
+import { CommentResponse } from 'types/community-type/commentType'
 
 interface GetParam {
   postId: string
   page: number
-}
-
-export interface CommentResponse {
-  data: CommentResponseData
-  issuedAt: string
-  type: string
-}
-
-export interface CommentResponseData {
-  results: Comment[]
-  totalCount: number
 }
 
 export const commentsService = {
@@ -27,7 +16,8 @@ export const commentsService = {
       const response: AxiosResponse = await instance(
         `/api/board/${postId}/comment?size=5&page=${page}`,
       )
-      return response.data
+
+      return response.data.data
     } catch (error) {
       console.error(error)
     }

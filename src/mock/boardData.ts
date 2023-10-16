@@ -127,17 +127,3 @@ export const BOARD_MOCK = [
     url: 'https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145452102_ggmbe9.png',
   },
 ]
-
-export interface BoardMockType {
-  id: number
-  avatar: string
-  title: string
-  content: string
-  createdAt: string
-  createdBy: string
-  writer: string
-  saw: number
-  liked: number
-  commentCount: number
-  thumbnail: string
-}

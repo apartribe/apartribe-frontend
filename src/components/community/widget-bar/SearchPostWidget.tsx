@@ -11,11 +11,7 @@ import SearchBar from 'components/ui/SearchBar'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
-
-interface AptSearch {
-  title: string
-  id: string
-}
+import { AptSearch } from 'types/community-type/widgetType'
 
 const SearchPostWidget = () => {
   const navigate = useNavigate()
@@ -126,7 +122,7 @@ const SearchPostWidget = () => {
           onKeyDown={moveFocus}
           onFocus={onFocus}
           onBlur={onBlur}
-          placeholder="아파트 이름을 입력해주세요."
+          placeholder="게시물 제목을 검색해주세요."
         />
         {suggestVisible ? (
           <StyledBox>
