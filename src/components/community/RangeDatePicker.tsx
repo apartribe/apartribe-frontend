@@ -2,10 +2,11 @@ import React, { Dispatch, SetStateAction } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { styled } from 'styled-components'
-import { Announce } from 'types/community-type/postDataType'
 /* eslint-disable import/no-duplicates */
 import addMonths from 'date-fns/addMonths'
 import ko from 'date-fns/locale/ko' // 한국어로
+import { AddTogetherType, UpdateTogetherType } from 'types/community-type/togetherType'
+import { AddAnnounceType } from 'types/community-type/announceType'
 /* eslint-disable import/no-duplicates */
 
 interface Props<T> {
@@ -14,23 +15,30 @@ interface Props<T> {
 }
 
 // 제네릭 컴포넌트
-const RangeDatePicker = <T extends Announce>({ inputValue, setInputValue }: Props<T>) => {
+const RangeDatePicker = <
+  T extends AddTogetherType | UpdateTogetherType /* | AddAnnounceType  */,
+>({
+  inputValue,
+  setInputValue,
+}: Props<T>) => {
   const onChange = (dates: [Date, Date]) => {
     const [start, end] = dates
 
-    setInputValue((prevState) => ({ ...prevState, startDate: start, endDate: end }))
+    console.log([start, end])
+
+    setInputValue((prevState) => ({ ...prevState, recruitFrom: start, recruitTo: end }))
   }
 
   registerLocale('ko', ko) // 한국어로
 
   return (
     <StyledDatePicker
-      selected={inputValue.startDate}
+      selected={inputValue.recruitFrom}
       onChange={onChange}
       minDate={new Date()}
       maxDate={addMonths(new Date(), 5)}
-      startDate={inputValue.startDate}
-      endDate={inputValue.endDate}
+      startDate={inputValue.recruitFrom}
+      endDate={inputValue.recruitTo}
       selectsRange
       showDisabledMonthNavigation
       dateFormat="yyyy/MM/dd"
