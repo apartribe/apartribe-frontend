@@ -1,24 +1,24 @@
 import App from 'App'
-import AddAnnouncePage from 'pages/announcement-pages/AddAnnouncePage'
-import AnnouncePage from 'pages/announcement-pages/AnnouncePage'
-import DetailAnnouncePage from 'pages/announcement-pages/DetailAnnouncePage'
-import EditAnnouncePage from 'pages/announcement-pages/EditAnnouncePage'
+import AddAnnouncePage from 'pages/announce-pages/AddAnnouncePage'
+import AnnouncePage from 'pages/announce-pages/AnnouncePage'
+import DetailAnnouncePage from 'pages/announce-pages/DetailAnnouncePage'
+import EditAnnouncePage from 'pages/announce-pages/EditAnnouncePage'
 import FindIdPage from 'pages/auth-pages/FindIdPage'
 import FindPwPage from 'pages/auth-pages/FindPwPage'
 import LoginPage from 'pages/auth-pages/LoginPage'
 import ResetPwPage from 'pages/auth-pages/ResetPwPage'
 import SignupLocalPage from 'pages/auth-pages/SignupLocalPage'
 import SignupSelectPage from 'pages/auth-pages/SignupSelectPage'
-import AddBoardPage from 'pages/board-pages/AddBoardPage'
-import BoardPage from 'pages/board-pages/BoardPage'
-import CommunityHomePage from 'pages/board-pages/CommunityHomePage'
-import CreateAptCommunityPage from 'pages/board-pages/CreateAptCommunityPage'
-import DetailBoardPage from 'pages/board-pages/DetailBoardPage'
-import EditBoardPage from 'pages/board-pages/EditBoardPage'
-import AddGatherPeoplePage from 'pages/gather-people-pages/AddGatherPeoplePage'
-import DetailGatherPeoplePage from 'pages/gather-people-pages/DetailGatherPeoplePage'
-import EditGatherPeoplePage from 'pages/gather-people-pages/EditGatherPeoplePage'
-import GatherPeoplePage from 'pages/gather-people-pages/GatherPeoplePage'
+import AddArticlePage from 'pages/article-pages/AddArticlePage'
+import ArticlePage from 'pages/article-pages/ArticlePage'
+import CommunityHomePage from 'pages/community-pages/CommunityHomePage'
+import CreateAptCommunityPage from 'pages/community-pages/CreateAptCommunityPage'
+import DetailArticlePage from 'pages/article-pages/DetailArticlePage'
+import EditArticlePage from 'pages/article-pages/EditArticlePage'
+import AddTogetherPage from 'pages/gather-people-pages/AddTogetherPage'
+import DetailTogetherPage from 'pages/gather-people-pages/DetailTogetherPage'
+import EditTogetherPage from 'pages/gather-people-pages/EditTogetherPage'
+import TogetherPage from 'pages/gather-people-pages/TogetherPage'
 import AboutUsPage from 'pages/intro-pages/AboutUsPage'
 import ContactPage from 'pages/intro-pages/ContactPage'
 import LandingPage from 'pages/intro-pages/LandingPage'
@@ -120,19 +120,19 @@ const Router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <BoardPage />,
+        element: <ArticlePage />,
       },
       {
         path: '/community/:aptId/article/add',
-        element: <AddBoardPage />,
+        element: <AddArticlePage />,
       },
       {
         path: '/community/:aptId/article/:postId/detail',
-        element: <DetailBoardPage />,
+        element: <DetailArticlePage />,
       },
       {
         path: '/community/:aptId/article/:postId/edit',
-        element: <EditBoardPage />,
+        element: <EditArticlePage />,
       },
       {
         path: '/community/:aptId/announce',
@@ -152,19 +152,19 @@ const Router = createBrowserRouter([
       },
       {
         path: '/community/:aptId/together',
-        element: <GatherPeoplePage />,
+        element: <TogetherPage />,
       },
       {
         path: '/community/:aptId/together/add',
-        element: <AddGatherPeoplePage />,
+        element: <AddTogetherPage />,
       },
       {
         path: '/community/:aptId/together/:postId/detail',
-        element: <DetailGatherPeoplePage />,
+        element: <DetailTogetherPage />,
       },
       {
         path: '/community/:aptId/together/:postId/edit',
-        element: <EditGatherPeoplePage />,
+        element: <EditTogetherPage />,
       },
     ],
   },

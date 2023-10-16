@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
 
-const EditBoardPage = () => {
+const EditArticlePage = () => {
   const BOARD_TYPE = 'article'
 
   const { aptId, postId } = useParams()
@@ -163,7 +163,7 @@ const EditBoardPage = () => {
   )
 }
 
-export default EditBoardPage
+export default EditArticlePage
 
 const StyledDiv = styled.div`
   display: flex;

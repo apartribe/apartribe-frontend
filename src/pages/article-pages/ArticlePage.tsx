@@ -6,7 +6,7 @@ import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import CategorySection from 'components/community/common/CategorySection'
 import DropdownSort from 'components/ui/DropdownSort'
 
-const BoardPage = () => {
+const ArticlePage = () => {
   const BOARD_TYPE = 'article'
   const [selectedCategory, setSelectedCategory] = useState('전체')
   const [selectedSort, setSelectedSort] = useState('최신순')
@@ -36,7 +36,7 @@ const BoardPage = () => {
   )
 }
 
-export default BoardPage
+export default ArticlePage
 
 const StyledDiv = styled.div`
   display: flex;

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
 
-const AddBoardPage = () => {
+const AddArticlePage = () => {
   const BOARD_TYPE = 'article'
 
   const navigate = useNavigate()
@@ -143,7 +143,7 @@ const AddBoardPage = () => {
   )
 }
 
-export default AddBoardPage
+export default AddArticlePage
 
 const StyledDiv = styled.div`
   display: flex;
