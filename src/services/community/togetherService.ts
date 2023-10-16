@@ -42,7 +42,6 @@ export const togetherService = {
       location,
       contributeStatus,
     } = data
-    console.log('뭘까 400에러', data)
 
     try {
       await instance(`/api/${boardType}`, {
@@ -85,7 +84,6 @@ export const togetherService = {
         // TODO: 아파트 아이디 추가 필요
         method: 'get',
       })
-
       return response.data
     } catch (error) {
       console.error(error)

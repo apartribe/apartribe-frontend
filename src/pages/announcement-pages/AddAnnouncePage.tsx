@@ -76,8 +76,6 @@ const AddAnnouncePage = () => {
     return
   }
 
-  console.log('테슷흐', inputValue)
-
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
       <StyledDiv>
