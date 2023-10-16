@@ -43,23 +43,22 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     getPost()
   }, [selectedCategory, selectedSort, boardType])
 
-  const getNewPage = async () => {
-    setLoading(true)
-    pageCountRef.current = pageCountRef.current + 1
-    const response = await postsService.getPosts({
-      boardType,
-      category: selectedCategory,
-      sort: selectedSort,
-      page: pageCountRef.current,
-    })
-    if (!response) return
-    if (response.data.results.length === 0) return setNothingToload(true)
-    setLoading(false)
-    setPostList((prev) => [...prev, ...response.data.results])
-  }
-
   // 무한 스크롤 ======추후 커스텀 훅으로 모듈화 고려
   useEffect(() => {
+    const getNewPage = async () => {
+      setLoading(true)
+      pageCountRef.current = pageCountRef.current + 1
+      const response = await postsService.getPosts({
+        boardType,
+        category: selectedCategory,
+        sort: selectedSort,
+        page: pageCountRef.current,
+      })
+      if (!response) return
+      if (response.data.results.length === 0) return setNothingToload(true)
+      setLoading(false)
+      setPostList((prev) => [...prev, ...response.data.results])
+    }
     const options = {
       root: null,
       rootMargin: '0px',
@@ -82,7 +81,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     return () => {
       observer.disconnect()
     }
-  }, [loading, getNewPage])
+  }, [loading, boardType, selectedSort, selectedCategory])
   //======
 
   if (firstLoading) return <PostsLoading />
