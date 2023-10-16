@@ -6,11 +6,12 @@ import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { timeAgo } from 'utils/timeAgo'
 import { BoardType } from 'services/community/postsService'
-import { Post } from './PostListSection'
+import { ArticleCardType } from 'types/community-type/ArticleType'
+import { BiConversation } from 'react-icons/bi'
 
 interface Props {
   boardType: BoardType
-  post: Post
+  post: ArticleCardType
 }
 
 const BoardCard: FC<Props> = ({
@@ -25,7 +26,7 @@ const BoardCard: FC<Props> = ({
     saw,
     liked,
     thumbnail,
-    /* commentCount*/
+    commentCounts,
   },
 }) => {
   const navigate = useNavigate()
@@ -44,30 +45,32 @@ const BoardCard: FC<Props> = ({
         $lineHeight="12px"
         $margin="5px 0"
       />
-      <StyledDiv className="column">
-        <div>
-          <P $fontSize="12px" $fontWeight="700">
-            {createdBy}
-          </P>
-          <P $fontSize="10px" $color="#b3b3b3" $lineHeight="12px">
-            {timeAgo(createdAt)}
-          </P>
-        </div>
-        <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
-        <StyledParagraph className="doubleLineEclips">{content}</StyledParagraph>
-        <StyledDiv className="row">
-          <P $fontSize="12px">
-            <AiOutlineEye />
-            &nbsp;{saw}
-          </P>
-          <P $fontSize="12px">
-            <AiOutlineLike />
-            &nbsp;{liked}
-          </P>
-          {/* <P $fontSize="12px">
-            <BiConversation />
-            &nbsp;{comment}
-          </P> */}
+      <StyledDiv className="row">
+        <StyledDiv className="column">
+          <div>
+            <P $fontSize="12px" $fontWeight="700">
+              {createdBy}
+            </P>
+            <P $fontSize="10px" $color="#b3b3b3" $lineHeight="12px">
+              {timeAgo(createdAt)}
+            </P>
+          </div>
+          <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
+          <StyledParagraph className="doubleLineEclips">{content}</StyledParagraph>
+          <StyledDiv className="row">
+            <P $fontSize="12px">
+              <AiOutlineEye />
+              &nbsp;{saw}
+            </P>
+            <P $fontSize="12px">
+              <AiOutlineLike />
+              &nbsp;{liked}
+            </P>
+            <P $fontSize="12px">
+              <BiConversation />
+              &nbsp;{commentCounts}
+            </P>
+          </StyledDiv>
         </StyledDiv>
       </StyledDiv>
       {thumbnail ? (
@@ -89,6 +92,7 @@ export default BoardCard
 
 const StyledWrapper = styled.div`
   max-width: 900px;
+  width: 100%;
   height: 170px;
   display: flex;
   border-top: 1px solid #f2f2f2;
@@ -101,6 +105,7 @@ const StyledDiv = styled.div`
   &.row {
     display: flex;
     flex-direction: row;
+    flex: 1;
     gap: 5px;
   }
 
