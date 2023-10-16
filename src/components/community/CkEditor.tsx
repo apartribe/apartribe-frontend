@@ -2,18 +2,22 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import 'styles/ckeditor.css'
-import { Announce, Board, GatherPeople } from 'types/community-type/postDataType'
+import { AddArticleType } from 'types/community-type/ArticleType'
+import { AddAnnounceType } from 'types/community-type/announceType'
+import { AddTogetherType } from 'types/community-type/togetherType'
 import uploadS3 from 'utils/uploadS3'
 
 interface Props<T> {
   inputValue: T
   setInputValue: Dispatch<SetStateAction<T>>
+  doNotSaveThumbnail?: boolean
 }
 
 // 제네릭 클래스 함수 컴포넌트
-const CkEditor = <T extends Board | Announce | GatherPeople>({
+const CkEditor = <T extends AddArticleType | AddAnnounceType | AddTogetherType>({
   inputValue,
   setInputValue,
+  doNotSaveThumbnail,
 }: Props<T>) => {
   const customUploadAdapter = (loader: any) => {
     return {
@@ -23,15 +27,18 @@ const CkEditor = <T extends Board | Announce | GatherPeople>({
             const body = new FormData()
             loader.file.then(async (file: any) => {
               body.append('files', file)
+
               const response = await uploadS3(file)
-              // 현재 로직상 가장 마지막 이미지이 썸네일에 저장됨.
+              // 현재 로직상 가장 마지막 이미지가 썸네일에 저장됨.
+
+              resolve({
+                default: response.Location,
+              })
+              if (doNotSaveThumbnail) return
               setInputValue((prevState) => ({
                 ...prevState,
                 thumbnail: response.Location,
               }))
-              resolve({
-                default: response.Location,
-              })
             })
           } catch (error) {
             reject(error)
