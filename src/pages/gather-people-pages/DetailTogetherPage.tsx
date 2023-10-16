@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react'
+// 서버측 API 미완성으로 인한 주석처리
+
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
-import parse from 'html-react-parser'
 import { styled } from 'styled-components'
+import React, { useState, useEffect } from 'react'
+import parse from 'html-react-parser'
 import DetailHeaderSection from 'components/community/common/DetailHeaderSection'
 import DetailCommentSection from 'components/community/common/DetailCommentSection'
+import DetailInfoSection from 'components/community/together-page/DetailInfoSection'
 import { useParams } from 'react-router-dom'
-import { articleService } from 'services/community/articleService'
-import { ArticleDetailType } from 'types/community-type/ArticleType'
+import { TogetherDetailType } from 'types/community-type/togetherType'
+import { togetherService } from 'services/community/togetherService'
 
-const DetailBoardPage = () => {
-  const BOARD_TYPE = 'article'
+const DetailTogetherPage = () => {
+  const BOARD_TYPE = 'together'
 
   const { aptId, postId } = useParams()
 
-  const [postData, setPostData] = useState<ArticleDetailType | null>(null)
+  const [postData, setPostData] = useState<TogetherDetailType | null>(null)
 
   useEffect(() => {
     const getPost = async () => {
-      const response = await articleService.getPost({
+      const response = await togetherService.getPost({
         boardType: BOARD_TYPE,
         aptId: aptId as string,
         postId: postId as string,
@@ -38,16 +41,16 @@ const DetailBoardPage = () => {
         postId={postId as string}
         postData={postData}
       />
+      <DetailInfoSection data={postData} />
       <DetailHtmlSection>{parse(postData.content)}</DetailHtmlSection>
       <DetailCommentSection />
     </ShadowBox>
   )
 }
 
-export default DetailBoardPage
+export default DetailTogetherPage
 
 const DetailHtmlSection = styled.div`
-  padding: 40px 0;
   img {
     max-width: 100%;
     height: auto;

@@ -6,7 +6,7 @@ import CategorySection from 'components/community/common/CategorySection'
 import DropdownSort from 'components/ui/DropdownSort'
 import PostListSection from 'components/community/common/PostListSection'
 
-const GatherPeoplePage = () => {
+const TogetherPage = () => {
   const BOARD_TYPE = 'together'
   const [selectedCategory, setSelectedCategory] = useState('전체')
   const [selectedSort, setSelectedSort] = useState('최신순')
@@ -40,7 +40,7 @@ const GatherPeoplePage = () => {
   )
 }
 
-export default GatherPeoplePage
+export default TogetherPage
 
 const StyledDiv = styled.div`
   display: flex;

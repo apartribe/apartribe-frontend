@@ -11,7 +11,7 @@ import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
 import uploadS3 from 'utils/uploadS3'
 
-const EditGatherPeoplePage = () => {
+const EditTogetherPage = () => {
   const BOARD_TYPE = 'together'
 
   const { aptId, postId } = useParams()
@@ -311,7 +311,7 @@ const EditGatherPeoplePage = () => {
   )
 }
 
-export default EditGatherPeoplePage
+export default EditTogetherPage
 
 const StyledWrapper = styled.div`
   display: flex;

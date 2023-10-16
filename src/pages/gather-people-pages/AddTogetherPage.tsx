@@ -11,7 +11,7 @@ import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
 import uploadS3 from 'utils/uploadS3'
 
-const AddGatherPeoplePage = () => {
+const AddTogetherPage = () => {
   const BOARD_TYPE = 'together'
 
   const navigate = useNavigate()
@@ -267,7 +267,7 @@ const AddGatherPeoplePage = () => {
   )
 }
 
-export default AddGatherPeoplePage
+export default AddTogetherPage
 
 const StyledWrapper = styled.div`
   display: flex;
