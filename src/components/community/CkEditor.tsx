@@ -25,7 +25,7 @@ const CkEditor = <T extends AddArticleType | AddAnnounceType | AddTogetherType>(
         return new Promise((resolve, reject) => {
           try {
             const body = new FormData()
-            loader.file.then(async (file: any) => {
+            loader.file.then(async (file: File) => {
               body.append('files', file)
 
               const response = await uploadS3(file)
@@ -64,19 +64,19 @@ const CkEditor = <T extends AddArticleType | AddAnnounceType | AddTogetherType>(
         inputValue.content ||
         '<p>작성하실 내용을 입력해주세요.</p><p>이미지를 붙여넣거나, 드래그하여 첨부할 수 있습니다.</p>'
       }
-      onReady={(editor) => {
-        // console.log('Editor is ready to use!', editor);
-      }}
-      onChange={(event, editor) => {
+      // onReady={(editor) => {
+      //   // console.log('Editor is ready to use!', editor);
+      // }}
+      onChange={(event, editor: ClassicEditor) => {
         const data = editor.getData()
         setInputValue((prevState) => ({ ...prevState, content: data }))
       }}
-      onBlur={(event, editor) => {
-        // console.log('Blur.', editor);
-      }}
-      onFocus={(event, editor) => {
-        // console.log('Focus.', editor);
-      }}
+      // onBlur={(event, editor) => {
+      //   // console.log('Blur.', editor);
+      // }}
+      // onFocus={(event, editor) => {
+      //   // console.log('Focus.', editor);
+      // }}
     />
   )
 }
