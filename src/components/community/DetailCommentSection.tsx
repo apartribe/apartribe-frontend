@@ -42,23 +42,6 @@ const DetailCommentSection = () => {
     getComments()
   }, [postId])
 
-  //=========
-
-  const getNewPage = async () => {
-    setLoading(true)
-    pageCountRef.current = pageCountRef.current + 1
-    const response = await commentsService.getComments({
-      postId: postId as string,
-      page: pageCountRef.current,
-    })
-    if (!response) return
-    if (response.results.length === 0) return setNothingToload(true)
-    setLoading(false)
-    setComments((prev) => [...prev, ...response.results])
-  }
-
-  //=========
-
   const [inputValue, setInputValue] = useState('')
 
   const changeInputValuse = (e: ChangeEvent<HTMLInputElement>) => {
@@ -85,6 +68,19 @@ const DetailCommentSection = () => {
 
   // 무한 스크롤 ======추후 커스텀 훅으로 모듈화 고려
   useEffect(() => {
+    const getNewPage = async () => {
+      setLoading(true)
+      pageCountRef.current = pageCountRef.current + 1
+      const response = await commentsService.getComments({
+        postId: postId as string,
+        page: pageCountRef.current,
+      })
+      if (!response) return
+      if (response.results.length === 0) return setNothingToload(true)
+      setLoading(false)
+      setComments((prev) => [...prev, ...response.results])
+    }
+
     const options = {
       root: null,
       rootMargin: '0px',
@@ -107,7 +103,7 @@ const DetailCommentSection = () => {
     return () => {
       observer.disconnect()
     }
-  }, [loading, getNewPage])
+  }, [loading, postId])
   //======
 
   if (!comments) return <p></p>
