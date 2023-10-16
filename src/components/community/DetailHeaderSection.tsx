@@ -10,22 +10,33 @@ import {
 import { BiConversation, BiShareAlt } from 'react-icons/bi'
 // import { Img } from 'styles/reusable-style/elementStyle'
 import { useNavigate } from 'react-router-dom'
-import { BoardPostData } from 'pages/board-pages/DetailBoardPage'
 import { postService } from 'services/community/postService'
 import { BoardType } from 'services/community/postsService'
+import { ArticleDetailType } from 'types/community-type/ArticleType'
+import { AnnounceDetailType } from 'types/community-type/announceType'
+import { TogetherDetailType } from 'types/community-type/togetherType'
 
 interface Props {
   postId: string
   boardType: BoardType
-  postData: BoardPostData
+  postData: ArticleDetailType | AnnounceDetailType | TogetherDetailType
 }
 
 const DetailHeaderSection: FC<Props> = ({
   boardType,
   postId,
   postData: {
-    issuedAt,
-    data: { /* category, avatar, job, createdBy, */ title, liked, saw, commentCounts },
+    id,
+    category,
+    // level, 하..
+    title,
+    content,
+    createdAt,
+    createdBy,
+    liked,
+    saw,
+    commentCounts,
+    thumbnail,
   },
 }) => {
   const navigate = useNavigate()
@@ -65,7 +76,7 @@ const DetailHeaderSection: FC<Props> = ({
     <StyledWrapper>
       <StyledDiv className="between">
         <StyledParagraph className="md">
-          {decidePath()} &nbsp;&gt;&nbsp; *카테고리 정보 필요* {/* {category} */}
+          {decidePath()} &nbsp;&gt;&nbsp; {category}
         </StyledParagraph>
         <StyledDiv>
           <StyledButton onClick={moveToEditPage}>
@@ -83,7 +94,7 @@ const DetailHeaderSection: FC<Props> = ({
       </StyledDiv>
       <StyledDiv className="between">
         <StyledDiv>
-          <StyledParagraph className="md">{timeAgo(issuedAt)}</StyledParagraph>
+          <StyledParagraph className="md">{timeAgo(createdAt)}</StyledParagraph>
           <StyledParagraph className="sm">
             <AiOutlineEye />
             {saw}
