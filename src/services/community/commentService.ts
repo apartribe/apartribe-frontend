@@ -5,6 +5,12 @@ interface AddParam {
   content: string
 }
 
+interface UpdateParam {
+  postId: string
+  commentId: number
+  content: string
+}
+
 export const commentService = {
   async addComment(param: AddParam) {
     const { postId, content } = param
@@ -20,6 +26,21 @@ export const commentService = {
       console.error(error)
     }
   },
-  // updateComment(){},
+
+  async updateComment(param: UpdateParam) {
+    const { postId, commentId, content } = param
+    try {
+      const response = await instance(`api/board/${postId}/comment`, {
+        method: 'put',
+        data: {
+          commentId,
+          content,
+        },
+      })
+      return response.data
+    } catch (error) {
+      console.error(error)
+    }
+  },
   // deleteComment(){}
 }
