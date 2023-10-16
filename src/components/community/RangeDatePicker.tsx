@@ -6,7 +6,7 @@ import { styled } from 'styled-components'
 import addMonths from 'date-fns/addMonths'
 import ko from 'date-fns/locale/ko' // 한국어로
 import { AddTogetherType, UpdateTogetherType } from 'types/community-type/togetherType'
-import { AddAnnounceType } from 'types/community-type/announceType'
+// import { AddAnnounceType } from 'types/community-type/announceType'
 /* eslint-disable import/no-duplicates */
 
 interface Props<T> {

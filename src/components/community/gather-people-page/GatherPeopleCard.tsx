@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
 import { Badge, P } from 'styles/reusable-style/elementStyle'
-import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
-import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { TogetherCardType } from 'types/community-type/togetherType'
@@ -19,7 +17,6 @@ const badgeColor = (urgency: string): string => {
 }
 
 const GatherPeopleCard: FC<Props> = ({
-  post,
   post: {
     id,
     createdBy,

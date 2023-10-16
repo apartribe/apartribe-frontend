@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import { BoardType } from './postsService'
 import { instance } from 'configs/axios'
 import { AddAnnounceType } from 'types/community-type/announceType'
 

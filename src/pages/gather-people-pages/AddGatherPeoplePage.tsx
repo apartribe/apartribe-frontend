@@ -7,10 +7,8 @@ import { AddTogetherType } from 'types/community-type/togetherType'
 import RangeDatePicker from 'components/community/RangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
 import { useNavigate } from 'react-router-dom'
-import { articleService } from 'services/community/articleService'
 import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
-import dateformat from 'utils/dateFormat'
 import uploadS3 from 'utils/uploadS3'
 
 const AddGatherPeoplePage = () => {
