@@ -4,14 +4,14 @@ import { IconType } from 'react-icons'
 import { P } from 'styles/reusable-style/elementStyle'
 import { Link } from 'react-router-dom'
 
-export interface WidgetTitle {
+export interface Props {
   title: string
   hasSeeMore: boolean
   seeMorePath?: string
   Icon?: IconType
 }
 
-const WidgetTitleArea: FC<WidgetTitle> = ({ Icon, title, hasSeeMore, seeMorePath }) => {
+const WidgetTitleArea: FC<Props> = ({ Icon, title, hasSeeMore, seeMorePath }) => {
   return (
     <StyledDiv>
       {Icon && <Icon />}
