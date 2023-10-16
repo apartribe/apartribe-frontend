@@ -7,20 +7,21 @@ import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import { ANNOUNCE_CATEGOTY_LIST_MOCK } from 'mock/categoryData'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
+import CategorySection from 'components/community/CategorySection'
 
 const AnnouncePage = () => {
   const BOARD_TYPE = 'announce'
-  const [selectedCategory, setSelectedCategory] = useState(ANNOUNCE_CATEGOTY_LIST_MOCK[0])
-  const [selectedSort, setSelectedSort] = useState(SORT_DROPDOWN_LIST[0])
+  const [selectedCategory, setSelectedCategory] = useState('전체')
+  const [selectedSort, setSelectedSort] = useState('최신순')
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="10px">
       <StyledDiv>
-        {/* <CategorySection
+        <CategorySection
           boardType={BOARD_TYPE}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
-        /> */}
+        />
         <DropdownSort
           selectedValue={selectedSort}
           setSelectedValue={setSelectedSort}
