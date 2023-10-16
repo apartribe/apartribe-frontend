@@ -6,15 +6,15 @@ import { styled } from 'styled-components'
 import { categoryService } from 'services/community/categoryService'
 import { postService } from 'services/community/postService'
 import { useNavigate } from 'react-router-dom'
-import { Category } from 'components/community/CategorySection'
-import { Board } from 'types/community-type/postDataType'
+import { AddArticleType } from 'types/community-type/ArticleType'
+import { Category } from 'types/community-type/categoryType'
 
 const AddBoardPage = () => {
   const BOARD_TYPE = 'article'
 
   const navigate = useNavigate()
 
-  const [inputValue, setInputValue] = useState<Board>({
+  const [inputValue, setInputValue] = useState<AddArticleType>({
     category: '',
     // protected: false,
     title: '',
@@ -51,7 +51,7 @@ const AddBoardPage = () => {
       const { statusCode, message } = await postService.addPost({
         boardType: BOARD_TYPE,
         data: inputValue,
-      })
+      }) // 아이디 돌려받아서 해당 게시물로 이동 로직 추가 요망
       if (statusCode === 201) {
         alert(message)
         navigate(`/community/123`)

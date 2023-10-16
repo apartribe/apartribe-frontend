@@ -6,9 +6,8 @@ import { styled } from 'styled-components'
 import { categoryService } from 'services/community/categoryService'
 import { postService } from 'services/community/postService'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Category } from 'components/community/CategorySection'
-import { Board } from 'types/community-type/postDataType'
-import { BoardPostData } from './DetailBoardPage'
+import { AddArticleType } from 'types/community-type/ArticleType'
+import { Category } from 'types/community-type/categoryType'
 
 const EditBoardPage = () => {
   const BOARD_TYPE = 'article'
@@ -16,7 +15,7 @@ const EditBoardPage = () => {
   const { aptId, postId } = useParams()
   const navigate = useNavigate()
 
-  const [inputValue, setInputValue] = useState<Board>({
+  const [inputValue, setInputValue] = useState<AddArticleType>({
     category: '',
     // protected: false,
     title: '',
