@@ -10,7 +10,7 @@ import {
 import { BiConversation, BiShareAlt } from 'react-icons/bi'
 // import { Img } from 'styles/reusable-style/elementStyle'
 import { useNavigate } from 'react-router-dom'
-import { postService } from 'services/community/postService'
+import { articleService } from 'services/community/articleService'
 import { BoardType } from 'services/community/postsService'
 import { ArticleDetailType } from 'types/community-type/ArticleType'
 import { AnnounceDetailType } from 'types/community-type/announceType'
@@ -61,7 +61,10 @@ const DetailHeaderSection: FC<Props> = ({
       '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
     )
     if (userConfirmed) {
-      const { statusCode, message } = await postService.deletePost({ boardType, postId })
+      const { statusCode, message } = await articleService.deletePost({
+        boardType,
+        postId,
+      })
       if (statusCode === 204) {
         alert(message)
         navigate(`/community/123`)

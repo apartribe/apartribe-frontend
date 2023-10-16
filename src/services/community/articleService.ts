@@ -25,7 +25,7 @@ interface deleteParam {
   postId: string
 }
 
-export const postService = {
+export const articleService = {
   async addPost(param: addParam) {
     const { boardType, data } = param
     const { category, title, content, thumbnail } = data
