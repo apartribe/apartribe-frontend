@@ -7,13 +7,14 @@ import React, {
   SetStateAction,
 } from 'react'
 import { styled } from 'styled-components'
-import { /* Img, */ Input } from 'styles/reusable-style/elementStyle'
+import { /* Img, */ Img, Input } from 'styles/reusable-style/elementStyle'
 import { timeAgo } from 'utils/timeAgo'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import ReplyCard from './ReplyCard'
-import { Comment, Reply } from './DetailCommentSection'
 import { replyService } from 'services/community/replyService'
+import EditComment from './EditComment'
+import { Comment, Reply } from 'types/community-type/commentType'
 
 interface Props {
   postId: string
@@ -24,7 +25,7 @@ interface Props {
 const CommentCard: FC<Props> = ({
   postId,
   comment: {
-    /* avatar, */ id: parentId,
+    /* avatar, */ id,
     createdBy,
     createdAt,
     content,
@@ -36,6 +37,7 @@ const CommentCard: FC<Props> = ({
   const [repliseVisible, setRepliseVisible] = useState(false)
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
   const [inputValue, setInputValue] = useState('')
+  const [editMode, setEditMode] = useState(false)
 
   const changeInputValuse = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -49,7 +51,7 @@ const CommentCard: FC<Props> = ({
     e.preventDefault()
     const response = await replyService.addReply({
       postId,
-      parentId,
+      parentId: id,
       content: inputValue,
     })
     const newReply: Reply = response?.data
@@ -57,7 +59,7 @@ const CommentCard: FC<Props> = ({
     if (newReply) {
       setComments((prevState) => {
         const result = prevState.map((item) => {
-          if (item.id === parentId) {
+          if (item.id === id) {
             return { ...item, children: [newReply, ...item.children] }
           } else {
             return item
@@ -69,29 +71,34 @@ const CommentCard: FC<Props> = ({
     setInputValue('')
   }
 
-  const editReply = () => {
-    alert('답글 수정')
-  }
-
-  const deleteReply = () => {
+  const deleteComment = () => {
     alert('답글 삭제')
   }
 
   return (
     <StyledWrapper>
       <StyledDiv className="row gap center">
-        {/* <Img src={avatar} alt="댓글 아바타" $width="40px" height="40px" /> */}
+        <Img
+          src="https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png"
+          alt="댓글 아바타"
+          $width="40px"
+          height="40px"
+        />
         <StyledDiv className="column">
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
         </StyledDiv>
         <StyledDiv className="row gap full">
-          <StyledButton className="mini" onClick={editReply}>
-            수정
-          </StyledButton>
-          <StyledButton className="mini" onClick={deleteReply}>
-            삭제
-          </StyledButton>
+          {!editMode && (
+            <>
+              <StyledButton className="mini" onClick={() => setEditMode(true)}>
+                수정
+              </StyledButton>
+              <StyledButton className="mini" onClick={deleteComment}>
+                삭제
+              </StyledButton>
+            </>
+          )}
         </StyledDiv>
         <StyledDiv className="column center">
           {like ? (
@@ -107,7 +114,17 @@ const CommentCard: FC<Props> = ({
           <StyledParagraph className="sm">{liked}</StyledParagraph>
         </StyledDiv>
       </StyledDiv>
-      <StyledParagraph>{content}</StyledParagraph>
+      {editMode ? (
+        <EditComment
+          postId={postId}
+          commentId={id}
+          content={content}
+          setComments={setComments}
+          setEditMode={setEditMode}
+        />
+      ) : (
+        <StyledParagraph>{content}</StyledParagraph>
+      )}
       {repliseVisible ? (
         <StyledDiv className="column">
           <StyledParagraph
@@ -127,7 +144,15 @@ const CommentCard: FC<Props> = ({
               <StyledButton type="submit">등록</StyledButton>
             </StyledForm>
             {replies &&
-              replies.map((reply) => <ReplyCard key={reply.id} reply={reply} />)}
+              replies.map((reply) => (
+                <ReplyCard
+                  key={reply.id}
+                  postId={postId}
+                  parentId={id}
+                  reply={reply}
+                  setComments={setComments}
+                />
+              ))}
           </StyledDiv>
         </StyledDiv>
       ) : (
