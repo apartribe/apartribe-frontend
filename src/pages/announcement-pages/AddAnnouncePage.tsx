@@ -3,26 +3,25 @@ import CkEditor from 'components/community/CkEditor'
 import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { styled } from 'styled-components'
 import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
-import { Announce } from 'types/community-type/postDataType'
+import { AddAnnounceType } from 'types/community-type/announceType'
 import RangeDatePicker from 'components/community/RangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
 import { useNavigate } from 'react-router-dom'
-import { postService } from 'services/community/postService'
-import { Category } from 'components/community/CategorySection'
+import { Category } from 'types/community-type/categoryType'
+import { announceService } from 'services/community/announceService'
 
 const AddAnnouncePage = () => {
   const BOARD_TYPE = 'announce'
 
   const navigate = useNavigate()
 
-  const [inputValue, setInputValue] = useState<Announce>({
-    //<Announce>
+  const [inputValue, setInputValue] = useState<AddAnnounceType>({
     category: '일반',
     // protected: false,
     title: '',
     content: '',
-    startDate: new Date(),
-    endDate: null,
+    // recruitFrom: new Date(),
+    // recruitTo: null,
     thumbnail: '',
   })
 
@@ -51,7 +50,7 @@ const AddAnnouncePage = () => {
   }
 
   const savePost = async () => {
-    const { statusCode, message } = await postService.addPost({
+    const { statusCode, message } = await announceService.addPost({
       boardType: BOARD_TYPE,
       data: inputValue,
     })
@@ -76,6 +75,8 @@ const AddAnnouncePage = () => {
     }
     return
   }
+
+  console.log('테슷흐', inputValue)
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
@@ -126,7 +127,7 @@ const AddAnnouncePage = () => {
         <P $fontWeight="700" $lineHeight="40px">
           커뮤니티 홈 위젯 노출 기간
         </P>
-        <RangeDatePicker inputValue={inputValue} setInputValue={setInputValue} />
+        {/* <RangeDatePicker inputValue={inputValue} setInputValue={setInputValue} /> */}
       </div>
       <div>
         <P $fontWeight="700" $lineHeight="30px">
