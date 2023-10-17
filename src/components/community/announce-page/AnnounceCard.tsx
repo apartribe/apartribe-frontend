@@ -99,7 +99,7 @@ const AnnounceCard: FC<Props> = ({
 export default AnnounceCard
 
 const StyledWrapper = styled.div`
-  max-width: 900px;
+  max-width: 870px;
   width: 100%;
   height: 170px;
   display: flex;
