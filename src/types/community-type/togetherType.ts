@@ -65,6 +65,6 @@ export interface UpdateTogetherType {
   target: string
   location: string
   contributeStatus: boolean
-  recruitStatus: string // AddTogetherType와 차이점.
+  recruitStatus: '모집 예정' | '모집중' | '모집 완료' // AddTogetherType와 차이점.
   // protected: boolean
 }
