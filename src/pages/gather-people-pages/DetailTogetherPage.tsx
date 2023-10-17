@@ -51,6 +51,7 @@ const DetailTogetherPage = () => {
 export default DetailTogetherPage
 
 const DetailHtmlSection = styled.div`
+  word-break: break-all;
   img {
     max-width: 100%;
     height: auto;

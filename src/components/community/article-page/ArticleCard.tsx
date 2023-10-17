@@ -120,6 +120,8 @@ const StyledDiv = styled.div`
 `
 
 const StyledParagraph = styled.p`
+  word-break: break-all;
+
   &.singleLineEclips {
     margin: 0;
     font-size: 20px;
