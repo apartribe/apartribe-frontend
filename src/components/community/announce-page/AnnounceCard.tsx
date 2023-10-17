@@ -85,13 +85,9 @@ const AnnounceCard: FC<Props> = ({
         </StyledDiv>
       </StyledDiv>
       {thumbnail ? (
-        <Img
-          src={thumbnail}
-          $width="150px"
-          $height="80px"
-          $borderRadius="5px"
-          $margin="45px 0"
-        />
+        <StyledImgWrapper>
+          <StyledImg src={thumbnail} />
+        </StyledImgWrapper>
       ) : (
         ''
       )}
@@ -150,4 +146,17 @@ const StyledParagraph = styled.p`
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
   }
+`
+const StyledImgWrapper = styled.div`
+  min-width: 150px;
+  min-height: 80px;
+  height: 80px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 45px 0;
+`
+
+const StyledImg = styled.img`
+  width: 150px;
+  height: auto;
 `
