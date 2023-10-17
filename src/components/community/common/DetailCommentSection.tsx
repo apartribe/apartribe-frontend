@@ -99,7 +99,7 @@ const DetailCommentSection = () => {
       <StyledDiv className="column gap">
         <StyledDiv className="row gap">
           <Img
-            src={CURRENT_USER_MOCK.avatar} //{ avater || dafaultAvatar}
+            src={dafaultAvatar} //{ avater || dafaultAvatar}
             alt="로그인 회원 아바타"
             $width="50px"
             $height="50px"
