@@ -62,4 +62,26 @@ export const aptService = {
       }
     }
   },
+
+  async getAptName(param: getAptNameParam) {
+    const { aptId } = param
+    try {
+      const response: AxiosResponse = await instance(`/api/apartment/${aptId}`, {
+        method: 'get',
+        data: {
+          aptId,
+        },
+      })
+      return response.data.data
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return {
+          statusCode: 500,
+          message: '아파트 이름 조회에 실패 하였습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
+    }
+  },
 }
