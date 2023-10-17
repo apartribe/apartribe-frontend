@@ -29,7 +29,7 @@ const EditTogetherPage = () => {
     target: '',
     location: '',
     contributeStatus: false,
-    recruitStatus: '',
+    recruitStatus: '모집중',
   })
 
   //===========
@@ -53,9 +53,9 @@ const EditTogetherPage = () => {
         target,
         location,
         contributeStatus,
+        recruitStatus,
       } = response.data
-      setInputValue((prevState) => ({
-        ...prevState,
+      setInputValue({
         category,
         title,
         content,
@@ -67,7 +67,8 @@ const EditTogetherPage = () => {
         target,
         location,
         contributeStatus,
-      }))
+        recruitStatus,
+      })
     }
 
     getPost()
@@ -94,6 +95,11 @@ const EditTogetherPage = () => {
   // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
   //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
   // }
+
+  const toggleEarlyClosing = (e: ChangeEvent<HTMLInputElement>) => {
+    const recruitStatus = e.target.checked ? '모집 완료' : '모집중'
+    setInputValue((prevState) => ({ ...prevState, recruitStatus }))
+  }
 
   const savePost = async () => {
     const { statusCode, message } = await togetherService.updatePost({
@@ -127,6 +133,8 @@ const EditTogetherPage = () => {
     const response = await uploadS3(e.target.files?.[0])
     setInputValue((prevState) => ({ ...prevState, thumbnail: response.Location }))
   }
+
+  console.log(inputValue)
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
@@ -219,6 +227,17 @@ const EditTogetherPage = () => {
         <StyledDiv className="row">
           <P $whiteSpace="nowrap">모집 기간 : </P>
           <RangeDatePicker inputValue={inputValue} setInputValue={setInputValue} />
+          <input
+            type="checkbox"
+            id="toggle"
+            checked={inputValue.recruitStatus === '모집 완료' ? true : false}
+            onChange={toggleEarlyClosing}
+            hidden
+          />
+          <label htmlFor="toggle" className="toggleSwitch">
+            <span className="toggleButton"></span>
+          </label>
+          ( 조기 마감 원하시면 체크해주세요. )
         </StyledDiv>
         <StyledDiv className="row">
           <P $whiteSpace="nowrap">활동 시간 : </P>
