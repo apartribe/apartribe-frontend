@@ -33,7 +33,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     setPostList([])
     setNothingToload(false)
     setLoading(false)
-  }, [selectedCategory])
+  }, [selectedCategory, selectedSort])
 
   useEffect(() => {
     const getNewPage = async () => {
@@ -136,7 +136,7 @@ const StyledDiv = styled.div`
 `
 
 const StyledParagraph = styled.p`
-  width: 100%;
+  width: 870px;
   margin: 50px 0;
   text-align: center;
 `
