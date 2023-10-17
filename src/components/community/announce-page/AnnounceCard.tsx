@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { AnnounceCardType } from 'types/community-type/announceType'
 import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
+import { tagRemover } from 'utils/tagRemover'
 
 interface Props {
   boardType: BoardType
@@ -64,7 +65,9 @@ const AnnounceCard: FC<Props> = ({
             <Badge $background={badgeColor(category)}>{category}</Badge>
             <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
           </StyledDiv>
-          <StyledParagraph className="doubleLineEclips">{content}</StyledParagraph>
+          <StyledParagraph className="doubleLineEclips">
+            {tagRemover(content)}
+          </StyledParagraph>
           <StyledDiv className="row">
             <P $fontSize="12px">
               <AiOutlineEye />

@@ -8,6 +8,7 @@ import { timeAgo } from 'utils/timeAgo'
 import { BoardType } from 'services/community/postsService'
 import { ArticleCardType } from 'types/community-type/ArticleType'
 import { BiConversation } from 'react-icons/bi'
+import { tagRemover } from 'utils/tagRemover'
 
 interface Props {
   boardType: BoardType
@@ -56,7 +57,9 @@ const ArticleCard: FC<Props> = ({
             </P>
           </div>
           <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
-          <StyledParagraph className="doubleLineEclips">{content}</StyledParagraph>
+          <StyledParagraph className="doubleLineEclips">
+            {tagRemover(content)}
+          </StyledParagraph>
           <StyledDiv className="row">
             <P $fontSize="12px">
               <AiOutlineEye />
