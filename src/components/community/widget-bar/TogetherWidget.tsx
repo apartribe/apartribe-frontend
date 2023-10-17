@@ -1,14 +1,38 @@
 import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaPeopleGroup } from 'react-icons/fa6'
 import { GATHER_PEOPLE_MOCK } from 'mock/gatherPeopleData'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 import { useNavigate } from 'react-router-dom'
+import { postsService } from 'services/community/postsService'
+import { TogetherCardType } from 'types/community-type/togetherType'
 
 const TogetherWidget = () => {
   const navigate = useNavigate()
+
+  const [postList, setPostList] = useState<TogetherCardType[]>([])
+
+  useEffect(() => {
+    const getPost = async () => {
+      const response = await postsService.getPosts({
+        boardType: 'together',
+        category: '전체',
+        sort: '최신순',
+        page: 1,
+      })
+      if (!response) return
+
+      setPostList(
+        response.data.results.filter(
+          (item: TogetherCardType) => item.recruitStatus === '모집중',
+        ),
+      )
+    }
+
+    getPost()
+  }, [])
 
   const moveToDetail = () => {
     navigate('/community/123/gather-people/45/detail') // 추후 경로 수정
@@ -22,25 +46,22 @@ const TogetherWidget = () => {
         hasSeeMore={true}
         seeMorePath="/community/123/gather-people"
       />
-      {GATHER_PEOPLE_MOCK.filter((item) => item.state === '모집 중')
-        .slice(0, 2)
-        .map((item) => (
-          <StyledWrapper key={item.title}>
-            {' '}
-            {/* 추후 아이디로 수정 */}
-            <StyledImgWrapper>
-              <StyledImg src={item.url} alt="" />
-            </StyledImgWrapper>
-            <StyledDiv className="column">
-              <div>
-                <StyledParagraph className="md">{item.title}</StyledParagraph>
-                <StyledParagraph className="sm">{item.writer}</StyledParagraph>
-                <StyledParagraph className="sm">{timeAgo(item.date)}</StyledParagraph>
-              </div>
-              <StyledParagraph className="sm">{item.explain}</StyledParagraph>
-            </StyledDiv>
-          </StyledWrapper>
-        ))}
+      {postList.map(({ id, thumbnail, title, createdBy, createdAt, description }) => (
+        <StyledWrapper key={id}>
+          {/* 추후 아이디로 수정 */}
+          <StyledImgWrapper>
+            <StyledImg src={thumbnail} alt="" />
+          </StyledImgWrapper>
+          <StyledDiv className="column">
+            <div>
+              <StyledParagraph className="md">{title}</StyledParagraph>
+              <StyledParagraph className="sm">{createdBy}</StyledParagraph>
+              <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
+            </div>
+            <StyledParagraph className="sm">{description}</StyledParagraph>
+          </StyledDiv>
+        </StyledWrapper>
+      ))}
     </ShadowBox>
   )
 }
