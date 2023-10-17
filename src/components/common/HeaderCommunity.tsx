@@ -1,10 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { LogoHeaderGradation } from 'assets/logos'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
+import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
 
 const APT_NAME_MOCK = '자이 힐스테이트 하남'
 
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
+  const [searchMode, setSearchMode] = useState<boolean>(false)
   return (
     <Container $background="#FFFFFF" ref={backToTopRef}>
       <Inner
@@ -30,13 +32,19 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
         </StyledDiv>
         <StyledDiv className="interval">
           {COMMUNITY_NAV_LIST.map((item, index) => (
-            <StyledNavLink key={index} to={item.path} end={index === 0 ? true : false}>
+            <StyledNavLink
+              className={searchMode ? 'disappear' : 'appear'}
+              key={index}
+              to={item.path}
+              end={index === 0 ? true : false}
+            >
               {item.title}
             </StyledNavLink>
           ))}
         </StyledDiv>
         <StyledDiv className="interval">
-          {LANDING_NAV_LIST.slice(2).map((item, index) => (
+          <HeaderAptSearchBar searchMode={searchMode} setSearchMode={setSearchMode} />
+          {LANDING_NAV_LIST.slice(3).map((item, index) => (
             <StyledNavLink key={index} to={item.path}>
               {item.title}
             </StyledNavLink>
@@ -64,8 +72,17 @@ const StyledDiv = styled.div`
 `
 
 const StyledNavLink = styled(NavLink)`
-  font-size: 12px;
   color: #303030;
+
+  &.disappear {
+    font-size: 0;
+    /* transition: .2s ease-in-out; */
+  }
+
+  &.appear {
+    font-size: 12px;
+    transition: 0.2s ease-in-out;
+  }
 
   &:hover {
     transform: scale(1.05);
