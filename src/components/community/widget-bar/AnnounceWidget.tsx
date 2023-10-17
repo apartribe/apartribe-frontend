@@ -12,7 +12,7 @@ const AnnounceWidget = () => {
         Icon={HiSpeakerphone}
         title="치직.. 관리실에서 전파합니다."
         hasSeeMore={true}
-        seeMorePath="/community/123/announcements"
+        seeMorePath="/community/123/announce"
       />
       {ANNONCEMENT_MOCK.slice(0, 1).map((item, index) => (
         <StyledDiv key={index}>
