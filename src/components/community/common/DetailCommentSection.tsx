@@ -6,7 +6,6 @@ import { commentsService } from 'services/community/commentsService'
 import { useParams } from 'react-router-dom'
 import { commentService } from 'services/community/commentService'
 import { MoonLoader } from 'react-spinners'
-import PostsLoading from 'components/common/effect/PostsLoading'
 import { Comment } from 'types/community-type/commentType'
 
 const CURRENT_USER_MOCK = {
@@ -18,29 +17,13 @@ const CURRENT_USER_MOCK = {
 const DetailCommentSection = () => {
   const [comments, setComments] = useState<Comment[]>([])
   const [commentCount, setCommentsCount] = useState<number | null>(null)
-  const [firstLoading, setFirstLoading] = useState(true)
   const [loading, setLoading] = useState(false)
   const [nothingToload, setNothingToload] = useState(false)
   const LoadingTargetRef = useRef(null)
-  const pageCountRef = useRef(1)
+  const pageCountRef = useRef(0)
 
   const param = useParams()
   const { postId } = param
-
-  useEffect(() => {
-    const getComments = async () => {
-      const response = await commentsService.getComments({
-        postId: postId as string,
-        page: 1,
-      })
-      if (!response) return
-      setFirstLoading(false)
-      setCommentsCount(response.totalCount)
-      setComments(response.results)
-    }
-
-    getComments()
-  }, [postId])
 
   const [inputValue, setInputValue] = useState('')
 
@@ -76,6 +59,7 @@ const DetailCommentSection = () => {
         page: pageCountRef.current,
       })
       if (!response) return
+      setCommentsCount(response.totalCount)
       if (response.results.length === 0) return setNothingToload(true)
       setLoading(false)
       setComments((prev) => [...prev, ...response.results])
@@ -107,8 +91,6 @@ const DetailCommentSection = () => {
   //======
 
   if (!comments) return <p></p>
-
-  if (firstLoading) return <PostsLoading />
 
   return (
     <StyledWrapper>
