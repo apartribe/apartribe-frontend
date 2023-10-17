@@ -48,6 +48,7 @@ export default DetailAnnouncePage
 
 const DetailHtmlSection = styled.div`
   padding: 40px 0;
+  word-break: break-all;
   img {
     max-width: 100%;
     height: auto;

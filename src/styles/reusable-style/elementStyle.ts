@@ -2,6 +2,7 @@ import { styled } from 'styled-components'
 import { reusableStyleProps } from 'types/style-type/reusableStyleType'
 
 export const P = styled.p<reusableStyleProps>`
+  word-break: break-all;
   margin: 0;
   line-height: ${(props) => props.$lineHeight || '25px'};
   font-size: ${(props) => props.$fontSize || '15px'};
