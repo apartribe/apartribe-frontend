@@ -34,20 +34,20 @@ const TogetherWidget = () => {
     getPost()
   }, [])
 
-  const moveToDetail = () => {
-    navigate('/community/123/gather-people/45/detail') // 추후 경로 수정
+  const moveToDetail = (id: number) => {
+    navigate(`/community/123/together/${id}/detail`) // 추후 경로 수정
   }
 
   return (
-    <ShadowBox onClick={moveToDetail} $cursor="pointer">
+    <ShadowBox>
       <WidgetTitleArea
         Icon={FaPeopleGroup}
         title="같이 하실 분 ~"
         hasSeeMore={true}
-        seeMorePath="/community/123/gather-people"
+        seeMorePath="/community/123/together"
       />
       {postList.map(({ id, thumbnail, title, createdBy, createdAt, description }) => (
-        <StyledWrapper key={id}>
+        <StyledWrapper key={id} onClick={() => moveToDetail(id)}>
           {/* 추후 아이디로 수정 */}
           <StyledImgWrapper>
             <StyledImg src={thumbnail} alt="" />

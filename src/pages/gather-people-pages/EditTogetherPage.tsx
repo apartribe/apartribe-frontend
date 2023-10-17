@@ -105,7 +105,7 @@ const EditTogetherPage = () => {
       const userConfirmed = confirm('정말 등록 하시겠습니까?')
       if (userConfirmed) {
         alert(message)
-        navigate(`/community/123`)
+        navigate(`/community/123/together/${postId}/detail`)
         return
       }
       return
@@ -117,7 +117,7 @@ const EditTogetherPage = () => {
       '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
     )
     if (userConfirmed) {
-      navigate(`/community/123`)
+      navigate(`/community/123/together/${postId}/detail`)
       return
     }
     return
