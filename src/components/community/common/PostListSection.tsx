@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState, useRef } from 'react'
 import ArticleCard from '../article-page/ArticleCard'
 import { styled } from 'styled-components'
 import { BoardType, postsService } from 'services/community/postsService'
-import PostsLoading from 'components/common/effect/PostsLoading'
 import { MoonLoader } from 'react-spinners'
 import AnnounceCard from '../announce-page/AnnounceCard'
 import TogetherCard from '../together-page/togetherCard'
@@ -21,29 +20,21 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
   const [postList, setPostList] = useState<
     ArticleCardType[] | AnnounceCardType[] | TogetherCardType[]
   >([])
-  const [firstLoading, setFirstLoading] = useState(true)
   const [loading, setLoading] = useState(false)
   const [nothingToload, setNothingToload] = useState(false)
   const LoadingTargetRef = useRef(null)
-  const pageCountRef = useRef(1)
-
-  useEffect(() => {
-    const getPost = async () => {
-      const response = await postsService.getPosts({
-        boardType,
-        category: selectedCategory,
-        sort: selectedSort,
-        page: 1,
-      })
-      if (!response) return
-      setFirstLoading(false)
-      setPostList(response.data.results)
-    }
-
-    getPost()
-  }, [selectedCategory, selectedSort, boardType])
+  const pageCountRef = useRef(0)
 
   // 무한 스크롤 ======추후 커스텀 훅으로 모듈화 고려
+
+  useEffect(() => {
+    // 카테고리 변경시 초기화 핵심 로직.
+    pageCountRef.current = 0
+    setPostList([])
+    setNothingToload(false)
+    setLoading(false)
+  }, [selectedCategory])
+
   useEffect(() => {
     const getNewPage = async () => {
       setLoading(true)
@@ -59,6 +50,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
       setLoading(false)
       setPostList((prev) => [...prev, ...response.data.results])
     }
+
     const options = {
       root: null,
       rootMargin: '0px',
@@ -66,6 +58,8 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     }
 
     const callback = (entries: IntersectionObserverEntry[]) => {
+      console.log('콜백', pageCountRef.current)
+
       entries.forEach((entry) => {
         if (entry.isIntersecting && !loading) {
           getNewPage()
@@ -84,7 +78,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
   }, [loading, boardType, selectedSort, selectedCategory])
   //======
 
-  if (firstLoading) return <PostsLoading />
+  // if (firstLoading) return <PostsLoading />
 
   return (
     <StyledDiv>
@@ -119,7 +113,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
       {nothingToload ? (
         <StyledParagraph>더이상 불러 올 게시물이 없습니다.</StyledParagraph>
       ) : (
-        <div ref={LoadingTargetRef}>
+        <StyledTarget ref={LoadingTargetRef}>
           {loading && (
             <MoonLoader
               color="#36d7b7"
@@ -127,7 +121,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
               cssOverride={{ margin: '10px auto' }}
             />
           )}
-        </div>
+        </StyledTarget>
       )}
     </StyledDiv>
   )
@@ -145,4 +139,10 @@ const StyledParagraph = styled.p`
   width: 100%;
   margin: 50px 0;
   text-align: center;
+`
+const StyledTarget = styled.div`
+  width: 100%;
+  height: 130px;
+  display: flex;
+  align-items: center;
 `
