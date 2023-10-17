@@ -91,7 +91,7 @@ const ArticleCard: FC<Props> = ({
 export default ArticleCard
 
 const StyledWrapper = styled.div`
-  max-width: 900px;
+  max-width: 870px;
   width: 100%;
   height: 170px;
   display: flex;
