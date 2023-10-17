@@ -9,6 +9,7 @@ import { BoardType } from 'services/community/postsService'
 import { ArticleCardType } from 'types/community-type/ArticleType'
 import { BiConversation } from 'react-icons/bi'
 import { tagRemover } from 'utils/tagRemover'
+import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
   boardType: BoardType
@@ -39,7 +40,7 @@ const ArticleCard: FC<Props> = ({
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
-        src="https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png"
+        src={dafaultAvatar} //{ avater || dafaultAvatar}
         $width="40px"
         $height="40px"
         $borderRadius="50%"

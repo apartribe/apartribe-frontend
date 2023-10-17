@@ -6,6 +6,7 @@ import { timeAgo } from 'utils/timeAgo'
 import { Img } from 'styles/reusable-style/elementStyle'
 import { Comment, Reply } from 'types/community-type/commentType'
 import EditReply from './EditReply'
+import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
   postId: string
@@ -39,7 +40,7 @@ const ReplyCard: FC<Props> = ({
     <StyledWrapper>
       <StyledDiv className="row gap center">
         <Img
-          src="https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png"
+          src={dafaultAvatar} // { avater || dafaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"

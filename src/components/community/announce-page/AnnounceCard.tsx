@@ -8,6 +8,7 @@ import { AnnounceCardType } from 'types/community-type/announceType'
 import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
 import { tagRemover } from 'utils/tagRemover'
+import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
   boardType: BoardType
@@ -44,7 +45,7 @@ const AnnounceCard: FC<Props> = ({
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
-        src="https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png"
+        src={dafaultAvatar} //{ avater || dafaultAvatar}
         $width="40px"
         $height="40px"
         $borderRadius="50%"
