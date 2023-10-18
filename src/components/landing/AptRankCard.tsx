@@ -43,8 +43,8 @@ const AptRankCard: FC<Props> = ({ index, aptInfo }) => {
         <StyledParagraph className="md">{name}</StyledParagraph>
         <StyledParagraph className="sm">{location}</StyledParagraph>
         <StyledDiv className="row">
-          <StyledParagraph className="sm">
-            최근 게시물{timeAgo(recentPost)}
+          <StyledParagraph className="sm lineHeight">
+            최근 업데이트 <br /> {timeAgo(recentPost)}
           </StyledParagraph>
           <StyledParagraph className="lg">{userCount}명</StyledParagraph>
         </StyledDiv>
@@ -76,29 +76,6 @@ const StyledWrapper = styled.div`
     }
   }
 `
-
-// const StyledBox = styled.div`
-//   background: #ffffff;
-//   position: relative;
-//   width: 440px;
-//   height: 150px;
-//   margin: 10px 0 0 0;
-//   padding: 10px;
-//   display: flex;
-//   gap: 20px;
-//   box-sizing: border-box;
-//   box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
-//   border-radius: 10px;
-//   color: #303030;
-//   cursor: pointer;
-
-//   &:hover {
-//     img {
-//       transform: scale(1.1);
-//       transition: 0.1s ease-in-out;
-//     }
-//   }
-// `
 
 const StyledImg = styled.img`
   height: 210px;
@@ -134,10 +111,12 @@ height: 100px; */
     flex-direction: row;
     gap: 20px;
     margin-top: 5px;
+    justify-content: space-between;
   }
 
   &.column {
     flex-direction: column;
+    width: 190px;
   }
 `
 
@@ -151,6 +130,10 @@ const StyledParagraph = styled.p`
     align-items: center;
     color: #303030;
     line-height: 25px;
+  }
+
+  &.lineHeight {
+    line-height: 17px;
   }
 
   &.md {
