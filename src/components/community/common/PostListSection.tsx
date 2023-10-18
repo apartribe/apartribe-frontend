@@ -58,8 +58,6 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     }
 
     const callback = (entries: IntersectionObserverEntry[]) => {
-      console.log('콜백', pageCountRef.current)
-
       entries.forEach((entry) => {
         if (entry.isIntersecting && !loading) {
           getNewPage()

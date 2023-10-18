@@ -134,8 +134,6 @@ const EditTogetherPage = () => {
     setInputValue((prevState) => ({ ...prevState, thumbnail: response.Location }))
   }
 
-  console.log(inputValue)
-
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
       <StyledWrapper>
