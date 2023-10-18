@@ -24,7 +24,7 @@ export const signupValidation = {
     validator: (password: string, passwordConfirm: string) => {
       return Object.is(password, passwordConfirm)
     },
-    invalidMessage: '입력하신 비밀번호가 일치하지 않습니다.',
+    invalidMessage: '비밀번호가 일치하지 않습니다.',
   },
   name: {
     validator: (name: string) => {

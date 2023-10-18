@@ -61,7 +61,7 @@ const SignupLocalPage = () => {
 
 export default SignupLocalPage
 
-const StyledH = styled.h1`
+const StyledH = styled.h2`
   display: flex;
   justify-content: center;
 `
@@ -70,5 +70,5 @@ const StyledForm = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 7px;
 `

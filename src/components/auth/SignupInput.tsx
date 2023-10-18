@@ -40,11 +40,12 @@ export default SignupInput
 const StyledInputArea = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
 `
 
 const StyledLabel = styled.label`
   font-weight: 700;
+  font-size: 15px;
+  margin-bottom: -10px;
 `
 
 const StyledSpanLabelInfo = styled.span`
@@ -53,14 +54,25 @@ const StyledSpanLabelInfo = styled.span`
   margin-left: 10px;
 `
 
-const StyledInput = styled(Input)``
+const StyledInput = styled(Input)`
+  font-size: 15px;
+`
+
+const StyledP = styled.p`
+  font-size: small;
+  margin: 0;
+  color: #e18745;
+`
 
 const StyledDiv = styled.div`
   display: grid;
   place-items: center;
   grid-template-columns: repeat(10, minmax(0, 1fr));
   grid-template-rows: repeat(1, minmax(0, 1fr));
-  gap: 5px;
+  column-gap: 5px;
+  &:has(StyledP) {
+    row-gap: 5px;
+  }
   &:has(Button) {
     & > Input {
       grid-column: 1 / span 8;
@@ -75,10 +87,4 @@ const StyledDiv = styled.div`
     grid-column: 1 / span 10;
     grid-row: 1;
   }
-`
-
-const StyledP = styled.p`
-  font-size: small;
-  margin: 0;
-  color: #e18745;
 `
