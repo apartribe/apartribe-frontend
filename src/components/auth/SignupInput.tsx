@@ -14,14 +14,12 @@ interface SignupInputProps extends ComponentProps<'input'> {
 const SignupInput = ({
   labelText,
   info,
-  value,
+  value = '',
   isValid = false,
   invalidMessage = '',
   children,
   ...rest
 }: SignupInputProps) => {
-  const isEmpty = value === ''
-
   return (
     <StyledInputArea>
       <StyledLabel>
@@ -32,7 +30,7 @@ const SignupInput = ({
         <StyledInput {...rest} />
         {children}
       </StyledDiv>
-      {!isEmpty && !isValid && <StyledP>{invalidMessage}</StyledP>}
+      {value && !isValid && <StyledP>{invalidMessage}</StyledP>}
     </StyledInputArea>
   )
 }
