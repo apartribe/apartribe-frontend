@@ -1,20 +1,32 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { LogoHeaderGradation } from 'assets/logos'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
 import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
-
-const APT_NAME_MOCK = '자이 힐스테이트 하남'
+import { aptService } from 'services/apt/aptService'
 
 interface Props {
   backToTopRef: (node?: Element | null | undefined) => void
 }
 
 const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
+  const { aptId } = useParams()
+
   const [searchMode, setSearchMode] = useState<boolean>(false)
+  const [aptName, setAptName] = useState<string>('')
+
+  useEffect(() => {
+    const getAptName = async () => {
+      const response = await aptService.getAptName({ aptId: aptId as string })
+      setAptName(response.apartName)
+    }
+
+    getAptName()
+  }, [aptId])
+
   return (
     <Container $background="#FFFFFF" ref={backToTopRef}>
       <Inner
@@ -28,7 +40,7 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
           <StyledNavLink to="/">
             <LogoHeaderGradation width="170px" height="30px" />
           </StyledNavLink>
-          {APT_NAME_MOCK}
+          {aptName}
         </StyledDiv>
         <StyledDiv className="interval">
           {COMMUNITY_NAV_LIST.map((item, index) => (
