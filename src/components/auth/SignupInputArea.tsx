@@ -163,13 +163,9 @@ const SignupInputArea = <T extends SignupInputValue>({
         isValid={isEmailValid}
         invalidMessage={signupValidation.email.invalidMessage}
       >
-        <Button
-          onClick={requestEmailAuth}
-          disabled={!isEmailValid}
-          $letterSpacing="normal"
-        >
+        <StyledButton onClick={requestEmailAuth} disabled={!isEmailValid}>
           인증요청
-        </Button>
+        </StyledButton>
       </SignupInput>
 
       <SignupInput
@@ -181,13 +177,9 @@ const SignupInputArea = <T extends SignupInputValue>({
         placeholder="인증번호를 입력하세요"
         isValid={isEmailAuthCodeValid}
       >
-        <Button
-          onClick={confirmEmailAuth}
-          disabled={!isEmailAuthCodeValid}
-          $letterSpacing="normal"
-        >
+        <StyledButton onClick={confirmEmailAuth} disabled={!isEmailAuthCodeValid}>
           인증
-        </Button>
+        </StyledButton>
         <StyledP className={confirmEmailResponseMessage.status}>
           {secondsLeft > 0 ? formattedTimeLeft : confirmEmailResponseMessage.message}
         </StyledP>
@@ -246,13 +238,9 @@ const SignupInputArea = <T extends SignupInputValue>({
         placeholder="닉네임을 입력하세요"
         isValid={isNicknameValid}
       >
-        <Button
-          onClick={clickCheckNickname}
-          disabled={!isNicknameValid}
-          $letterSpacing="normal"
-        >
+        <StyledButton onClick={clickCheckNickname} disabled={!isNicknameValid}>
           중복확인
-        </Button>
+        </StyledButton>
         <StyledP className={checkNicknameResponseMessage.status}>
           {checkNicknameResponseMessage.message}
         </StyledP>
@@ -290,4 +278,9 @@ const StyledSpan = styled.span`
   font-size: 20px;
   grid-column: 10 / span 1;
   grid-row: 1;
+`
+
+const StyledButton = styled(Button)`
+  letter-spacing: normal;
+  font-size: 15px;
 `

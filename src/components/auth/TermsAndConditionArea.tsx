@@ -33,27 +33,23 @@ const TermsAndConditionArea = () => {
   }
 
   return (
-    <>
+    <div>
       <StyledLabel>
-        <Input
+        <StyledCheckbox
           type="checkbox"
           checked={checkList.length === TERMS_AND_CONDITIONS_LIST.length ? true : false}
           onChange={checkAll}
-          $width="25px"
-          $height="25px"
         />
         전체 동의
       </StyledLabel>
 
       {TERMS_AND_CONDITIONS_LIST.map(({ id, isMandatory, title, fileName }) => (
         <StyledLabel key={id}>
-          <Input
+          <StyledCheckbox
             type="checkbox"
             value={id}
             checked={checkList.includes(id) ? true : false}
             onChange={check}
-            $width="25px"
-            $height="25px"
           />
           <StyledSpan>{isMandatory}</StyledSpan>
           {title}
@@ -66,7 +62,7 @@ const TermsAndConditionArea = () => {
       {modal && (
         <TermsAndConditionModal fileName={showDetail} modal={modal} setModal={setModal} />
       )}
-    </>
+    </div>
   )
 }
 
@@ -75,9 +71,17 @@ export default TermsAndConditionArea
 const StyledLabel = styled.label`
   display: flex;
   gap: 10px;
+  font-size: 15px;
   font-weight: 700;
   align-items: center;
 `
+
+const StyledCheckbox = styled(Input)`
+  width: 20px;
+  height: 20px;
+  accent-color: #2b7f75;
+`
+
 const StyledButton = styled.button`
   background: #fff;
   border: none;

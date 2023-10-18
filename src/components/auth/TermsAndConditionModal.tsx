@@ -65,6 +65,7 @@ export default TermsAndConditionModal
 
 const StyledModal = styled(Modal)`
   height: 700px;
+  display: block;
   overflow-y: auto;
   padding: 20px;
   align-items: unset;
