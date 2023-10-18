@@ -5,6 +5,7 @@ export type SignupInputValue = {
   passwordConfirm: string
   name: string
   nickname: string
+  terms_and_conditions?: boolean
 }
 
 export type SigninInputValue = {
@@ -17,12 +18,22 @@ export type PasswordType = {
   visible: boolean
 }
 
-export type ConfirmEmailTokenResult = {
-  isEmailTokenValid: boolean
+type Result = {
+  result: 'success' | 'fail'
+  message: string
 }
-export type ConfirmNicknameResult = {
-  isNicknameValid: boolean
+
+export type SendEmailResult = Result
+export type ConfirmEmailResult = Result
+export type CheckNicknameResult = Result
+export type SignupResult = Result
+
+export type Message = {
+  status: 'waiting' | 'success' | 'fail'
+  message: string
 }
+
+export type SigninResult = Result
 
 export type FindIdPwInputValue = {
   email: string
