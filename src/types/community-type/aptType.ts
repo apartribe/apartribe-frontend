@@ -5,7 +5,7 @@ export interface AptSearch {
 }
 
 export interface AptInfo {
-  id: number
+  id: string
   img: string
   badge: string
   name: string
