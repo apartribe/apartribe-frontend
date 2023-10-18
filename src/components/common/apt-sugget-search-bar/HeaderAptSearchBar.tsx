@@ -11,12 +11,12 @@ import React, {
   Dispatch,
 } from 'react'
 import axios from 'axios'
-import SearchBar from 'components/ui/SearchBar'
 import { styled } from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AptSearch } from 'types/community-type/aptType'
 import { BiSearchAlt } from 'react-icons/bi'
 import { TiDelete } from 'react-icons/ti'
+import { aptService } from 'services/apt/aptService'
 
 interface Props {
   searchMode: boolean
@@ -106,14 +106,24 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
     }
   }
 
-  const moveToCommunityClick = (aptId: string) => {
-    navigate(`/community/${aptId}`)
+  const moveToCommunityClick = async (aptId: string, aptName: string) => {
+    const response = await aptService.aptExists({ aptId })
+    if (response.apartExists) {
+      return navigate(`/community/${aptId}`)
+    }
+    return navigate(`/community/${aptId}/create`, { state: { aptId, aptName } })
   }
 
-  const moveToCommunityEnter = (e: FormEvent<HTMLFormElement>) => {
+  const moveToCommunityEnter = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!inputValue.id) return alert('목록에서 아파트를 선택해주세요.')
-    navigate(`/community/${inputValue.id}`)
+    const response = await aptService.aptExists({ aptId: inputValue.id })
+    if (response.apartExists) {
+      return navigate(`/community/${inputValue.id}`)
+    }
+    return navigate(`/community/${inputValue.id}/create`, {
+      state: { aptId: inputValue.id, aptName: inputValue.name },
+    })
   }
 
   useEffect(() => {
@@ -155,7 +165,7 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
                     <StyledLi
                       key={id}
                       tabIndex={-1}
-                      onClick={() => moveToCommunityClick(id)}
+                      onClick={() => moveToCommunityClick(id, name)}
                       className={index === focusIndex ? 'focus' : ''}
                       ref={(el) => {
                         if (index === focusIndex) {
