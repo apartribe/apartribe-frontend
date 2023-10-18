@@ -15,6 +15,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
         $display="flex"
         $flexDirection="column"
         $justifyContent="center"
+        $padding="30px 0"
       >
         <ShadowBox
           $display="flex"
