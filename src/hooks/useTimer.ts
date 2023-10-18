@@ -20,5 +20,9 @@ export const useTimer = () => {
     setSecondsLeft(seconds)
   }
 
-  return { startTimer, secondsLeft, formattedTimeLeft }
+  const resetTimer = () => {
+    setSecondsLeft(0)
+  }
+
+  return { startTimer, secondsLeft, resetTimer, formattedTimeLeft }
 }
