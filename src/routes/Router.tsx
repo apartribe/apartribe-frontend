@@ -23,7 +23,6 @@ import AboutUsPage from 'pages/intro-pages/AboutUsPage'
 import ContactPage from 'pages/intro-pages/ContactPage'
 import LandingPage from 'pages/intro-pages/LandingPage'
 import NotFoundPage from 'pages/intro-pages/NotFoundPage'
-import SearchAptPage from 'pages/intro-pages/SearchAptPage'
 import ChangeImagePage from 'pages/setting-pages/ChangeImagePage'
 import ChangeNicknamePage from 'pages/setting-pages/ChangeNicknamePage'
 import ChangePwPage from 'pages/setting-pages/ChangePwPage'
@@ -74,10 +73,6 @@ const Router = createBrowserRouter([
       {
         path: '/contact',
         element: <ContactPage />,
-      },
-      {
-        path: '/search-apartment',
-        element: <SearchAptPage />,
       },
       {
         path: '/setting',
