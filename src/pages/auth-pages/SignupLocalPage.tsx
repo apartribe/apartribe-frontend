@@ -4,7 +4,8 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import SignupInputArea from 'components/auth/SignupInputArea'
 import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
-import { SignupInputValue } from 'types/auth'
+import { Message, SignupInputValue } from 'types/auth'
+import SignupModal from 'components/auth/SignupModal'
 import { auth } from 'services/auth'
 
 const SignupLocalPage = () => {
@@ -16,23 +17,45 @@ const SignupLocalPage = () => {
     name: '',
     nickname: '',
   })
+  const [isSignupPossible, setIsSignupPossible] = useState<boolean>(false)
+  const [modal, setModal] = useState<boolean>(false)
+  const [modalMessage, setModalMessage] = useState<Message>({
+    status: 'waiting',
+    message: '',
+  })
+
+  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+    setModal((prev) => !prev)
+    setModalMessage({ status, message })
+  }
 
   const submitSignupForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    //TODO: 조건따라서 회원가입 disabled 해제
-    const { message } = await auth.signup(inputValue)
-    alert(message)
+
+    const { result, message } = await auth.signup(inputValue)
+    openModal(result, message)
   }
 
   return (
-    <AuthLayout>
-      <StyledH>회원가입</StyledH>
-      <StyledForm onSubmit={submitSignupForm}>
-        <SignupInputArea inputValue={inputValue} setInputValue={setInputValue} />
-        <TermsAndConditionArea />
-        <Button type="submit">회원가입</Button>
-      </StyledForm>
-    </AuthLayout>
+    <>
+      <AuthLayout>
+        <StyledH>회원가입</StyledH>
+        <StyledForm onSubmit={submitSignupForm}>
+          <SignupInputArea
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            setIsSignupPossible={setIsSignupPossible}
+          />
+          <TermsAndConditionArea />
+          <Button type="submit" disabled={!isSignupPossible}>
+            회원가입
+          </Button>
+        </StyledForm>
+      </AuthLayout>
+      {modal && (
+        <SignupModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
+      )}
+    </>
   )
 }
 
