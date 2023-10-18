@@ -26,6 +26,11 @@ export const signupValidation = {
     },
     invalidMessage: '입력하신 비밀번호가 일치하지 않습니다.',
   },
+  name: {
+    validator: (name: string) => {
+      return name.length !== 0
+    },
+  },
   nickname: {
     validator: (nickname: string) => {
       return nickname.length !== 0
