@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 
-export const useTimer = () => {
+export const useTimer = (message: string) => {
   const [secondsLeft, setSecondsLeft] = useState<number>(0)
   const minutes = String(Math.floor((secondsLeft / 60) % 60)).padStart(2, '0')
   const seconds = String(Math.floor(secondsLeft % 60)).padStart(2, '0')
-  const formattedTimeLeft = `${minutes} : ${seconds}`
+  const formattedTimeLeft = `${message} ${minutes} : ${seconds}`
 
   useEffect(() => {
     if (secondsLeft <= 0) return
