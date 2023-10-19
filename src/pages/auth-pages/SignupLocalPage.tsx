@@ -7,6 +7,8 @@ import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
 import { Message, SignupInputValue } from 'types/auth'
 import SignupModal from 'components/auth/SignupModal'
 import { auth } from 'services/auth'
+import { useNavigate } from 'react-router-dom'
+import { PAGE_LOGIN } from 'constants/auth/path'
 
 const SignupLocalPage = () => {
   const [inputValue, setInputValue] = useState<SignupInputValue>({
@@ -24,6 +26,8 @@ const SignupLocalPage = () => {
     message: '',
   })
 
+  const navigate = useNavigate()
+
   const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
     setModal((prev) => !prev)
     setModalMessage({ status, message })
@@ -34,6 +38,10 @@ const SignupLocalPage = () => {
 
     const { result, message } = await auth.signup(inputValue)
     openModal(result, message)
+
+    if (result === 'success') {
+      navigate(PAGE_LOGIN)
+    }
   }
 
   return (
