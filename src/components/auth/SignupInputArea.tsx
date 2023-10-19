@@ -1,21 +1,22 @@
-import { useState, ChangeEvent, MouseEvent } from 'react'
+import { useState, ChangeEvent, MouseEvent, Dispatch } from 'react'
 import { styled } from 'styled-components'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { Button } from 'styles/reusable-style/elementStyle'
 import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
-import { InputValue, PasswordType } from 'types/auth'
+import { SignupInputValue, PasswordType } from 'types/auth'
+import { auth } from 'services/auth'
 
-const SignupInputArea = () => {
-  const [inputValue, setInputValue] = useState<InputValue>({
-    email: '',
-    code: '',
-    password: '',
-    passwordConfirm: '',
-    name: '',
-    nickname: '',
-  })
+type SigninupInputAreaProps<T> = {
+  inputValue: T
+  setInputValue: Dispatch<React.SetStateAction<T>>
+}
+
+const SignupInputArea = <T extends SignupInputValue>({
+  inputValue,
+  setInputValue,
+}: SigninupInputAreaProps<T>) => {
   const [passwordType, setPasswordType] = useState<PasswordType>({
     type: 'password',
     visible: false,
@@ -46,20 +47,23 @@ const SignupInputArea = () => {
     }))
   }
 
-  const clickRequestEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const requestEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
-    startTimer(TIMER_SECONDS)
+    const { message } = await auth.sendEmail(email)
+    alert(message)
+    startTimer(TIMER_SECONDS) //TODO: reqeust성공했을때 타이머가도록 수정
   }
 
-  const clickCheckEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
+  const confirmEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
+    const { message } = await auth.confirmEmail(email, code)
+    alert(message)
   }
 
-  const clickCheckNickname = (e: MouseEvent<HTMLButtonElement>) => {
+  const clickCheckNickname = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
+    const { message } = await auth.checkNickname(nickname)
+    alert(message)
   }
 
   const changePasswordType = (e: MouseEvent<HTMLSpanElement>) => {
@@ -91,7 +95,7 @@ const SignupInputArea = () => {
         invalidMessage={signupValidation.email.invalidMessage}
       >
         <Button
-          onClick={clickRequestEmailAuth}
+          onClick={requestEmailAuth}
           disabled={!isEmailValid}
           $letterSpacing="normal"
         >
@@ -109,7 +113,7 @@ const SignupInputArea = () => {
         isValid={isEmailAuthCodeValid}
       >
         <Button
-          onClick={clickCheckEmailAuth}
+          onClick={confirmEmailAuth}
           disabled={!isEmailAuthCodeValid}
           $letterSpacing="normal"
         >

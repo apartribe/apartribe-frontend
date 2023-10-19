@@ -1,26 +1,36 @@
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import SignupInputArea from 'components/auth/SignupInputArea'
 import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
+import { SignupInputValue } from 'types/auth'
+import { auth } from 'services/auth'
 
 const SignupLocalPage = () => {
-  const submitSignupForm = (e: FormEvent<HTMLFormElement>) => {
+  const [inputValue, setInputValue] = useState<SignupInputValue>({
+    email: '',
+    code: '',
+    password: '',
+    passwordConfirm: '',
+    name: '',
+    nickname: '',
+  })
+
+  const submitSignupForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     //TODO: 조건따라서 회원가입 disabled 해제
-    //signup()
+    const { message } = await auth.signup(inputValue)
+    alert(message)
   }
 
   return (
     <AuthLayout>
       <StyledH>회원가입</StyledH>
       <StyledForm onSubmit={submitSignupForm}>
-        <SignupInputArea />
+        <SignupInputArea inputValue={inputValue} setInputValue={setInputValue} />
         <TermsAndConditionArea />
-        <Button type="submit" disabled>
-          회원가입
-        </Button>
+        <Button type="submit">회원가입</Button>
       </StyledForm>
     </AuthLayout>
   )
