@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, ChangeEvent, MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { BsCheckCircle } from 'react-icons/bs'
@@ -13,22 +13,42 @@ import {
   PAGE_FIND_PW,
   PAGE_SIGNUP_SELECT,
 } from 'constants/auth/path'
+import { SigninInputValue } from 'types/auth'
+import { auth } from 'services/auth'
 
 const LoginPage = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [inputValue, setInputValue] = useState<SigninInputValue>({
+    email: '',
+    password: '',
+  })
+
+  const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
+  const submitSigninForm = async (e: MouseEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const { message } = await auth.signin(email, password)
+    alert(message)
+    // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
+  }
+
+  const { email, password } = inputValue
 
   return (
     <AuthLayout>
       <StyledH>로그인</StyledH>
-      <StyledForm>
+      <StyledForm onSubmit={submitSigninForm}>
         <Label>
           이메일
-          <Input value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
+          <Input name="email" value={email} onChange={changeInputValue} />
         </Label>
         <Label>
           비밀번호
-          <Input value={password} onChange={(e) => setPassword(e.currentTarget.value)} />
+          <Input name="password" value={password} onChange={changeInputValue} />
         </Label>
         <Button type="submit">로그인</Button>
         <StyledP>
