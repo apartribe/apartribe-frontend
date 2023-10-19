@@ -56,6 +56,7 @@ const StyledSpanLabelInfo = styled.span`
 
 const StyledInput = styled(Input)`
   font-size: 15px;
+  padding-right: 40px;
 `
 
 const StyledP = styled.p`
