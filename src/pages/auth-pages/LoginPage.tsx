@@ -1,7 +1,8 @@
-import { useState, ChangeEvent, MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, ChangeEvent, MouseEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
-import { BsCheckCircle } from 'react-icons/bs'
+import { BsCircle, BsCheckCircle } from 'react-icons/bs'
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import AuthLayout from 'components/auth/AuthLayout'
 import { Button, Input } from 'styles/reusable-style/elementStyle'
 import { KakaoLogin, NaverLogin, GoogleLogin } from 'components/auth/OauthLoginButton'
@@ -13,14 +14,37 @@ import {
   PAGE_FIND_PW,
   PAGE_SIGNUP_SELECT,
 } from 'constants/auth/path'
-import { SigninInputValue } from 'types/auth'
+import { Message, SigninInputValue } from 'types/auth'
 import { auth } from 'services/auth'
+import SignupModal from 'components/auth/SignupModal'
 
 const LoginPage = () => {
   const [inputValue, setInputValue] = useState<SigninInputValue>({
     email: '',
     password: '',
   })
+
+  console.log(inputValue)
+  const [passwordType, setPasswordType] = useState<'password' | 'text'>('password')
+  const [isChecked, setIsChecked] = useState<boolean>(true)
+  const [isSigninPossible, setIsSigninPossible] = useState<boolean>(false)
+  const [modal, setModal] = useState<boolean>(false)
+  const [modalMessage, setModalMessage] = useState<Message>({
+    status: 'waiting',
+    message: '',
+  })
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const inputValueList = Object.values(inputValue)
+    const inputValueValid = inputValueList.map((item) => item.length !== 0)
+    const isAllInputValueValid = inputValueValid.reduce(
+      (prev, current) => prev && current,
+    )
+
+    setIsSigninPossible(isAllInputValueValid)
+  }, [inputValue])
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prev) => ({
@@ -29,11 +53,31 @@ const LoginPage = () => {
     }))
   }
 
+  const changePasswordType = () => {
+    setPasswordType((prev) => (prev === 'password' ? 'text' : 'password'))
+  }
+
+  const rememberMe = (e: MouseEvent<HTMLParagraphElement>) => {
+    e.preventDefault()
+
+    setIsChecked((prev) => !prev)
+  }
+
+  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+    setModal((prev) => !prev)
+    setModalMessage({ status, message })
+  }
+
   const submitSigninForm = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { message } = await auth.signin(email, password)
-    alert(message)
+
+    const { result, message } = await auth.signin(email, password)
+    openModal(result, message)
+
     // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
+    /* if (result === 'success') {
+      navigate()
+    } */
   }
 
   const { email, password } = inputValue
@@ -42,18 +86,30 @@ const LoginPage = () => {
     <AuthLayout>
       <StyledH>로그인</StyledH>
       <StyledForm onSubmit={submitSigninForm}>
-        <Label>
+        <StyledLabel>
           이메일
           <Input name="email" value={email} onChange={changeInputValue} />
-        </Label>
-        <Label>
+        </StyledLabel>
+        <StyledLabel>
           비밀번호
-          <Input name="password" value={password} onChange={changeInputValue} />
-        </Label>
-        <Button type="submit">로그인</Button>
-        <StyledP>
-          <BsCheckCircle />
-          &nbsp;로그인 상태 유지
+          <StyledPasswordDiv>
+            <StyledInput
+              type={passwordType}
+              name="password"
+              value={password}
+              onChange={changeInputValue}
+            />
+            <StyledPasswordSpan id="passwordType" onClick={changePasswordType}>
+              {passwordType === 'password' ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </StyledPasswordSpan>
+          </StyledPasswordDiv>
+        </StyledLabel>
+        <StyledButton type="submit" disabled={!isSigninPossible}>
+          로그인
+        </StyledButton>
+        <StyledP onClick={rememberMe}>
+          {isChecked ? <BsCheckCircle size={20} /> : <BsCircle size={20} />}
+          로그인 상태 유지
         </StyledP>
       </StyledForm>
 
@@ -83,15 +139,17 @@ const LoginPage = () => {
           <StyledSpan>&nbsp;회원가입</StyledSpan>
         </Link>
       </p>
+
+      {modal && (
+        <SignupModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
+      )}
     </AuthLayout>
   )
 }
 
 export default LoginPage
 
-const Label = styled.label``
-
-const StyledH = styled.h1`
+const StyledH = styled.h2`
   display: flex;
   justify-content: center;
 `
@@ -101,6 +159,43 @@ const StyledForm = styled.form`
   flex-direction: column;
   gap: 10px;
   width: 90%;
+`
+
+const StyledButton = styled(Button)`
+  margin-top: 10px;
+`
+
+const StyledLabel = styled.label`
+  padding: 0;
+  margin: 0;
+  font-weight: 700;
+  font-size: 15px;
+`
+
+const StyledPasswordDiv = styled.div`
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  & > Input {
+    grid-column: 1 / span 10;
+    grid-row: 1;
+  }
+`
+
+const StyledInput = styled(Input)`
+  padding-right: 40px;
+`
+
+const StyledPasswordSpan = styled.span`
+  display: flex;
+  align-items: center;
+  color: #303030;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  grid-column: 10 / span 1;
+  grid-row: 1;
 `
 
 const StyledDiv = styled.div`
@@ -124,6 +219,11 @@ const StyledP = styled.p`
   margin: 0;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  gap: 5px;
+  font-weight: 700;
+  color: #303030;
+  width: fit-content;
 `
 
 const StyledSpan = styled.span`
