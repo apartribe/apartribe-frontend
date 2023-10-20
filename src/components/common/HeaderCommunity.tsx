@@ -60,7 +60,9 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
               </StyledNavLink>
             </Slider>
           </StyledLogoBox>
-          <StyledParagraph>{aptName}</StyledParagraph>
+          <StyledParagraph className={searchMode ? 'disappear' : 'appear'}>
+            {aptName}
+          </StyledParagraph>
         </StyledDiv>
         <StyledDiv className="interval">
           {COMMUNITY_NAV_LIST.map((item, index) => (
@@ -99,7 +101,7 @@ const StyledDiv = styled.div`
   font-weight: 700;
 
   &.interval {
-    gap: 30px;
+    gap: 20px;
   }
 `
 
@@ -132,4 +134,14 @@ const StyledLogoBox = styled.div`
 
 const StyledParagraph = styled.p`
   margin-top: 20px;
+
+  &.disappear {
+    font-size: 0;
+    transition: 0.2s ease-in-out;
+  }
+
+  &.appear {
+    font-size: 12px;
+    transition: 0.2s ease-in-out;
+  }
 `
