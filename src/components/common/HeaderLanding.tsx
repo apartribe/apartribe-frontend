@@ -1,14 +1,27 @@
 import React, { useState } from 'react'
-import { LogoHeaderGradation } from 'assets/logos'
+import { LogoHeaderGradation, LogoHeaderGradationKorean } from 'assets/logos'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { LANDING_NAV_LIST } from 'constants/navList'
 import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
+import Slider from 'react-slick'
 
 const HeaderLanding = () => {
   const [searchMode, setSearchMode] = useState<boolean>(false)
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    vertical: true,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 10000,
+  }
+
   return (
     <Container $background="#FFFFFF">
       <Inner
@@ -18,9 +31,16 @@ const HeaderLanding = () => {
         $justifyContent="space-between"
         $alignItems="center"
       >
-        <StyledNavLink to="/">
-          <LogoHeaderGradation width="170px" height="30px" />
-        </StyledNavLink>
+        <StyledLogoBox>
+          <Slider {...settings}>
+            <StyledNavLink to="/">
+              <LogoHeaderGradation width="170px" height="30px" />
+            </StyledNavLink>
+            <StyledNavLink to="/">
+              <LogoHeaderGradationKorean width="170px" height="30px" />
+            </StyledNavLink>
+          </Slider>
+        </StyledLogoBox>
         <StyledDiv className="interval">
           {LANDING_NAV_LIST.slice(0, 2).map((item, index) => (
             <StyledNavLink
@@ -81,4 +101,8 @@ const StyledNavLink = styled(NavLink)`
     font-weight: 900;
     color: #2b7f75;
   }
+`
+
+const StyledLogoBox = styled.div`
+  width: 175px;
 `

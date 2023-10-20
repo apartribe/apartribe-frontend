@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { LogoHeaderGradation } from 'assets/logos'
+import { LogoHeaderGradation, LogoHeaderGradationKorean } from 'assets/logos'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { NavLink, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
@@ -7,6 +7,7 @@ import { IoPersonCircle } from 'react-icons/io5'
 import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
 import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
 import { aptService } from 'services/apt/aptService'
+import Slider from 'react-slick'
 
 interface Props {
   backToTopRef: (node?: Element | null | undefined) => void
@@ -27,6 +28,18 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
     getAptName()
   }, [aptId])
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    vertical: true,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 10000,
+    arrows: false,
+  }
+
   return (
     <Container $background="#FFFFFF" ref={backToTopRef}>
       <Inner
@@ -37,10 +50,17 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
         $alignItems="center"
       >
         <StyledDiv>
-          <StyledNavLink to="/">
-            <LogoHeaderGradation width="170px" height="30px" />
-          </StyledNavLink>
-          {aptName}
+          <StyledLogoBox>
+            <Slider {...settings}>
+              <StyledNavLink to="/">
+                <LogoHeaderGradation width="170px" height="30px" />
+              </StyledNavLink>
+              <StyledNavLink to="/">
+                <LogoHeaderGradationKorean width="170px" height="30px" />
+              </StyledNavLink>
+            </Slider>
+          </StyledLogoBox>
+          <StyledParagraph>{aptName}</StyledParagraph>
         </StyledDiv>
         <StyledDiv className="interval">
           {COMMUNITY_NAV_LIST.map((item, index) => (
@@ -104,4 +124,12 @@ const StyledNavLink = styled(NavLink)`
     font-weight: 900;
     color: #2b7f75;
   }
+`
+
+const StyledLogoBox = styled.div`
+  width: 170px;
+`
+
+const StyledParagraph = styled.p`
+  margin-top: 20px;
 `
