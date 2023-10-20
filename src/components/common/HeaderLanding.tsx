@@ -75,7 +75,7 @@ const StyledDiv = styled.div`
   font-weight: 700;
 
   &.interval {
-    gap: 30px;
+    gap: 20px;
   }
 `
 
