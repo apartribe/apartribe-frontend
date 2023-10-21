@@ -10,13 +10,14 @@ import 'slick-carousel/slick/slick-theme.css'
 const AptRankSection = () => {
   const settings = {
     dots: false,
-    infinite: true,
     slidesToShow: 8,
-    slidesToScroll: 0.5,
+    slidesToScroll: 5, // 이걸로 속도올리면 버벅임 없음
+    infinite: true,
     autoplay: true,
-    speed: 700,
-    autoplaySpeed: 700,
+    speed: 10000,
+    autoplaySpeed: 0,
     cssEase: 'linear',
+    arrows: false,
   }
 
   return (
