@@ -4,8 +4,28 @@ import { Badge, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { ANNONCEMENT_MOCK } from 'mock/announcementData'
 import { styled } from 'styled-components'
+import Slider from 'react-slick'
 
 const AnnounceWidget = () => {
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    vertical: true,
+    autoplay: true,
+    speed: 500,
+    autoplaySpeed: 5000,
+    arrows: false,
+  }
+
+  // level 과 category 관련 이슈 announceType.ts 주석 참고.
+  const badgeColor = (category: string | undefined): string => {
+    if (category === '일반') return '#0B2A08'
+    if (category === '긴급') return '#C9AB0C'
+    return '#EA1616'
+  }
+
   return (
     <ShadowBox>
       <WidgetTitleArea
@@ -14,12 +34,18 @@ const AnnounceWidget = () => {
         hasSeeMore={true}
         seeMorePath="/community/123/announce"
       />
-      {ANNONCEMENT_MOCK.slice(0, 1).map((item, index) => (
-        <StyledDiv key={index}>
-          <Badge $width="50px">{item.urgency}</Badge>
-          <P>{item.title}</P>
-        </StyledDiv>
-      ))}
+      <Slider {...settings}>
+        {ANNONCEMENT_MOCK.map((item, index) => (
+          <div key={index}>
+            <StyledDiv>
+              <Badge $width="50px" $background={badgeColor(item.urgency)}>
+                {item.urgency}
+              </Badge>
+              <StyledParagraph>{item.title}</StyledParagraph>
+            </StyledDiv>
+          </div>
+        ))}
+      </Slider>
     </ShadowBox>
   )
 }
@@ -31,4 +57,15 @@ const StyledDiv = styled.div`
   align-items: center;
   gap: 10px;
   padding-left: 10px;
+`
+
+const StyledParagraph = styled.p`
+  line-height: 25px;
+  font-size: 15px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  margin: 0;
 `
