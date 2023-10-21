@@ -12,6 +12,7 @@ import { Input } from 'styles/reusable-style/elementStyle'
 import { Comment } from 'types/community-type/commentType'
 
 interface Props {
+  aptId: string
   postId: string
   commentId: number
   content: string
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const EditComment: FC<Props> = ({
+  aptId,
   postId,
   commentId,
   content,
@@ -35,6 +37,7 @@ const EditComment: FC<Props> = ({
   const submitEditedComments = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await commentService.updateComment({
+      aptId,
       postId,
       commentId,
       content: inputValue,

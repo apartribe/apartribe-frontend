@@ -16,14 +16,17 @@ import { replyService } from 'services/community/replyService'
 import EditComment from './EditComment'
 import { Comment, Reply } from 'types/community-type/commentType'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import { useParams } from 'react-router-dom'
 
 interface Props {
+  aptId: string
   postId: string
   comment: Comment
   setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const CommentCard: FC<Props> = ({
+  aptId,
   postId,
   comment: {
     /* avatar, */ id,
@@ -51,7 +54,8 @@ const CommentCard: FC<Props> = ({
   const submitReply = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await replyService.addReply({
-      postId,
+      aptId: aptId,
+      postId: postId,
       parentId: id,
       content: inputValue,
     })
@@ -117,6 +121,7 @@ const CommentCard: FC<Props> = ({
       </StyledDiv>
       {editMode ? (
         <EditComment
+          aptId={aptId}
           postId={postId}
           commentId={id}
           content={content}
@@ -148,6 +153,7 @@ const CommentCard: FC<Props> = ({
               replies.map((reply) => (
                 <ReplyCard
                   key={reply.id}
+                  aptId={aptId}
                   postId={postId}
                   parentId={id}
                   reply={reply}
