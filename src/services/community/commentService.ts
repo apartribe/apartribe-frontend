@@ -1,11 +1,13 @@
 import { instance } from 'configs/axios'
 
 interface AddParam {
+  aptId: string
   postId: string
   content: string
 }
 
 interface UpdateParam {
+  aptId: string
   postId: string
   commentId: number
   content: string
@@ -13,9 +15,9 @@ interface UpdateParam {
 
 export const commentService = {
   async addComment(param: AddParam) {
-    const { postId, content } = param
+    const { aptId, postId, content } = param
     try {
-      const response = await instance(`/api/board/${postId}/comment`, {
+      const response = await instance(`/api/${aptId}/board/${postId}/comment`, {
         method: 'post',
         data: {
           content,
@@ -28,9 +30,9 @@ export const commentService = {
   },
 
   async updateComment(param: UpdateParam) {
-    const { postId, commentId, content } = param
+    const { aptId, postId, commentId, content } = param
     try {
-      const response = await instance(`api/board/${postId}/comment`, {
+      const response = await instance(`api/${aptId}/board/${postId}/comment`, {
         method: 'put',
         data: {
           commentId,

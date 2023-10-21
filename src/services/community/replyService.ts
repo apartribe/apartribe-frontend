@@ -1,6 +1,7 @@
 import { instance } from 'configs/axios'
 
 interface AddParam {
+  aptId: string
   postId: string
   parentId: number
   content: string
@@ -8,9 +9,9 @@ interface AddParam {
 
 export const replyService = {
   async addReply(param: AddParam) {
-    const { postId, parentId, content } = param
+    const { aptId, postId, parentId, content } = param
     try {
-      const response = await instance(`/api/board/${postId}/comment`, {
+      const response = await instance(`/api/${aptId}/board/${postId}/comment/reply`, {
         method: 'post',
         data: {
           parentId,

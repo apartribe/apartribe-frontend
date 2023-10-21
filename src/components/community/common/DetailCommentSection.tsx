@@ -24,7 +24,7 @@ const DetailCommentSection = () => {
   const pageCountRef = useRef(0)
 
   const param = useParams()
-  const { postId } = param
+  const { aptId, postId } = param
 
   const [inputValue, setInputValue] = useState('')
 
@@ -35,6 +35,7 @@ const DetailCommentSection = () => {
   const submitComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await commentService.addComment({
+      aptId: aptId as string,
       postId: postId as string,
       content: inputValue,
     })
@@ -121,6 +122,7 @@ const DetailCommentSection = () => {
           comments.map((comment: Comment) => (
             <CommentCard
               key={comment.id}
+              aptId={aptId as string}
               postId={postId as string}
               comment={comment}
               setComments={setComments}

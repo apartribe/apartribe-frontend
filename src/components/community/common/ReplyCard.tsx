@@ -9,6 +9,7 @@ import EditReply from './EditReply'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
+  aptId: string
   postId: string
   parentId: number
   reply: Reply
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const ReplyCard: FC<Props> = ({
+  aptId,
   postId,
   parentId,
   reply: { /* avatar, */ id, createdBy, createdAt, like: liked, content },
@@ -72,6 +74,7 @@ const ReplyCard: FC<Props> = ({
       </StyledDiv>
       {editMode ? (
         <EditReply
+          aptId={aptId}
           postId={postId}
           parentId={parentId}
           commentId={id}
