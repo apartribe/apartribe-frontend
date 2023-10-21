@@ -33,7 +33,7 @@ const ContactPage = () => {
   const { termsAndConditions, name, email, code, nonMember, title, content } = inputValue
   const isEmailAuthCodeValid = signupValidation.code.validator(code)
 
-  const { startTimer, secondsLeft, formattedTimeLeft } = useTimer()
+  const { startTimer, secondsLeft, formattedTimeLeft } = useTimer('')
   const TIMER_SECONDS = 180
 
   const check = (e: ChangeEvent<HTMLInputElement>) => {
