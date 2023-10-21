@@ -1,6 +1,6 @@
 export const LANDING_NAV_LIST = [
   { title: '아파트라이브 소개', path: '/about' },
-  { title: '우리 아파트 바로가기', path: '/community/123' },
+  { title: '우리 아파트 바로가기', path: '/community/dyWaf' },
   { title: '아파트 커뮤니티 검색', path: '/search-apartment' },
   { title: '광고 / 제휴 문의', path: '/contact' },
 ]
