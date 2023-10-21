@@ -1,24 +1,26 @@
 import { Dispatch, SetStateAction, useRef, MouseEvent } from 'react'
 import { AiOutlineCheckCircle } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { Modal, ModalBackground } from 'styles/reusable-style/elementStyle'
 import { Message } from 'types/auth'
 
-type SignupModalProps = {
+type MessageModalProps = {
   modal: boolean
   setModal: Dispatch<SetStateAction<boolean>>
   modalMessage: Message
 }
 
-const SignupModal = ({ modal, setModal, modalMessage }: SignupModalProps) => {
+const MessageModal = ({ modal, setModal, modalMessage }: MessageModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   const { status, message } = modalMessage
-  console.log('modalMessage', status, message)
 
   const closeModal = (e: MouseEvent<HTMLDivElement>) => {
     if (modalRef.current === e.target) {
       setModal(!modal)
+      navigate(-1)
     }
   }
 
@@ -36,7 +38,7 @@ const SignupModal = ({ modal, setModal, modalMessage }: SignupModalProps) => {
   )
 }
 
-export default SignupModal
+export default MessageModal
 
 const StyledModal = styled(Modal)`
   height: 200px;
@@ -52,6 +54,7 @@ const StyledIcon = styled(AiOutlineCheckCircle)`
   font-size: 50px;
   color: ${(props) => {
     if (props.className === 'success') return 'green'
+    else if (props.className === 'waiting') return '#C9AB0C'
     else if (props.className === 'fail') return '#EA1616'
   }};
 `
