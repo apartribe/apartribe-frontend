@@ -7,7 +7,7 @@ import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
 import { SignupInputValue, PasswordType, Message } from 'types/auth'
 import { auth } from 'services/auth'
-import SignupModal from './SignupModal'
+import MessageModal from '../common/MessageModal'
 
 type SigninupInputAreaProps<T> = {
   inputValue: T
@@ -247,7 +247,7 @@ const SignupInputArea = <T extends SignupInputValue>({
       </SignupInput>
 
       {modal && (
-        <SignupModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
+        <MessageModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
       )}
     </>
   )
