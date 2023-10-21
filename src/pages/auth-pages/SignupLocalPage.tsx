@@ -5,7 +5,7 @@ import AuthLayout from 'components/auth/AuthLayout'
 import SignupInputArea from 'components/auth/SignupInputArea'
 import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
 import { Message, SignupInputValue } from 'types/auth'
-import SignupModal from 'components/auth/SignupModal'
+import MessageModal from 'components/common/MessageModal'
 import { auth } from 'services/auth'
 import { useNavigate } from 'react-router-dom'
 import { PAGE_LOGIN } from 'constants/auth/path'
@@ -61,7 +61,7 @@ const SignupLocalPage = () => {
         </StyledForm>
       </AuthLayout>
       {modal && (
-        <SignupModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
+        <MessageModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
       )}
     </>
   )

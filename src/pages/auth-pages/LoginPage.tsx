@@ -16,7 +16,9 @@ import {
 } from 'constants/auth/path'
 import { Message, SigninInputValue } from 'types/auth'
 import { auth } from 'services/auth'
-import SignupModal from 'components/auth/SignupModal'
+import MessageModal from 'components/common/MessageModal'
+import { loginUser } from 'redux/store/userSlice'
+import { useDispatch } from 'react-redux'
 
 const LoginPage = () => {
   const [inputValue, setInputValue] = useState<SigninInputValue>({
@@ -24,7 +26,6 @@ const LoginPage = () => {
     password: '',
   })
 
-  console.log(inputValue)
   const [passwordType, setPasswordType] = useState<'password' | 'text'>('password')
   const [isChecked, setIsChecked] = useState<boolean>(true)
   const [isSigninPossible, setIsSigninPossible] = useState<boolean>(false)
@@ -34,6 +35,7 @@ const LoginPage = () => {
     message: '',
   })
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -74,10 +76,11 @@ const LoginPage = () => {
     const { result, message } = await auth.signin(email, password)
     openModal(result, message)
 
-    // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
-    /* if (result === 'success') {
-      navigate()
-    } */
+    if (result === 'success') {
+      dispatch(loginUser(email))
+      // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
+      //navigate()
+    }
   }
 
   const { email, password } = inputValue
@@ -141,7 +144,7 @@ const LoginPage = () => {
       </p>
 
       {modal && (
-        <SignupModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
+        <MessageModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
       )}
     </AuthLayout>
   )
