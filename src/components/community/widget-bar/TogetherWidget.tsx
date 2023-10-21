@@ -7,6 +7,7 @@ import { timeAgo } from 'utils/timeAgo'
 import { useNavigate } from 'react-router-dom'
 import { postsService } from 'services/community/postsService'
 import { TogetherCardType } from 'types/community-type/togetherType'
+import Slider from 'react-slick'
 
 const TogetherWidget = () => {
   const navigate = useNavigate()
@@ -17,9 +18,9 @@ const TogetherWidget = () => {
     const getPost = async () => {
       const response = await postsService.getPosts({
         boardType: 'together',
-        category: '전체',
+        category: '당구 동호회', // 추후 전체로 수정 요망
         sort: '최신순',
-        page: 1,
+        page: 0,
       })
       if (!response) return
 
@@ -37,6 +38,17 @@ const TogetherWidget = () => {
     navigate(`/community/123/together/${id}/detail`) // 추후 경로 수정
   }
 
+  const settings = {
+    infinite: true,
+    slidesToShow: 1,
+    speed: 500,
+    rows: 2,
+    slidesPerRow: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    arrows: false,
+  }
+
   return (
     <ShadowBox>
       <WidgetTitleArea
@@ -45,22 +57,27 @@ const TogetherWidget = () => {
         hasSeeMore={true}
         seeMorePath="/community/123/together"
       />
-      {postList.map(({ id, thumbnail, title, createdBy, createdAt, description }) => (
-        <StyledWrapper key={id} onClick={() => moveToDetail(id)}>
-          {/* 추후 아이디로 수정 */}
-          <StyledImgWrapper>
-            <StyledImg src={thumbnail} alt="" />
-          </StyledImgWrapper>
-          <StyledDiv className="column">
-            <div>
-              <StyledParagraph className="md">{title}</StyledParagraph>
-              <StyledParagraph className="sm">{createdBy}</StyledParagraph>
-              <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
-            </div>
-            <StyledParagraph className="sm">{description}</StyledParagraph>
-          </StyledDiv>
-        </StyledWrapper>
-      ))}
+
+      <Slider {...settings}>
+        {postList.map(({ id, thumbnail, title, createdBy, createdAt, description }) => (
+          <div key={id}>
+            <StyledWrapper onClick={() => moveToDetail(id)}>
+              {/* 추후 아이디로 수정 */}
+              <StyledImgWrapper>
+                <StyledImg src={thumbnail} alt="" />
+              </StyledImgWrapper>
+              <StyledDiv className="column">
+                <div>
+                  <StyledParagraph className="md">{title}</StyledParagraph>
+                  <StyledParagraph className="sm">{createdBy}</StyledParagraph>
+                  <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
+                </div>
+                <StyledParagraph className="sm">{description}</StyledParagraph>
+              </StyledDiv>
+            </StyledWrapper>
+          </div>
+        ))}
+      </Slider>
     </ShadowBox>
   )
 }
@@ -70,7 +87,7 @@ export default TogetherWidget
 const StyledWrapper = styled.div`
   display: flex;
   height: auto;
-  width: 100%;
+  width: 400px;
   border-top: 1px solid #f2f2f2;
   padding: 10px;
 
@@ -100,6 +117,7 @@ const StyledDiv = styled.div`
     flex-direction: column;
     gap: 10px;
     padding: 15px;
+    width: 200px;
   }
 
   &.end {
