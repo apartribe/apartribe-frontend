@@ -69,7 +69,7 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
             <StyledNavLink
               className={searchMode ? 'disappear' : 'appear'}
               key={index}
-              to={item.path}
+              to={item.path(aptId as string)}
               end={index === 0 ? true : false}
             >
               {item.title}

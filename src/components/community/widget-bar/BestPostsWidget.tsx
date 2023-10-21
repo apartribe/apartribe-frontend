@@ -3,17 +3,18 @@ import React, { useState, useEffect } from 'react'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaRankingStar } from 'react-icons/fa6'
 import { styled } from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
 import { BestPost } from 'types/community-type/widgetType'
 
 const BestPostsWidget = () => {
   const navigate = useNavigate()
+  const { aptId } = useParams()
 
   const [bestPosts, setBestPosts] = useState<BestPost[]>([])
 
   const moveToDetail = (id: number) => {
-    navigate(`/community/123/article/${id}/detail`) // 추후 경로 수정
+    navigate(`/community/${aptId}/article/${id}/detail`) // 추후 경로 수정
   }
 
   useEffect(() => {

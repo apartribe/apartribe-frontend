@@ -5,6 +5,7 @@ import { HiSpeakerphone } from 'react-icons/hi'
 import { ANNONCEMENT_MOCK } from 'mock/announcementData'
 import { styled } from 'styled-components'
 import Slider from 'react-slick'
+import { useParams } from 'react-router-dom'
 
 const AnnounceWidget = () => {
   const settings = {
@@ -19,6 +20,8 @@ const AnnounceWidget = () => {
     arrows: false,
   }
 
+  const { aptId } = useParams()
+
   // level 과 category 관련 이슈 announceType.ts 주석 참고.
   const badgeColor = (category: string | undefined): string => {
     if (category === '일반') return '#0B2A08'
@@ -32,7 +35,7 @@ const AnnounceWidget = () => {
         Icon={HiSpeakerphone}
         title="치직.. 관리실에서 전파합니다."
         hasSeeMore={true}
-        seeMorePath="/community/123/announce"
+        seeMorePath={`/community/${aptId}/announce`}
       />
       <Slider {...settings}>
         {ANNONCEMENT_MOCK.map((item, index) => (

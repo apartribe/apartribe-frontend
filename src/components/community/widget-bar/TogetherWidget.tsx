@@ -4,13 +4,14 @@ import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaPeopleGroup } from 'react-icons/fa6'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { postsService } from 'services/community/postsService'
 import { TogetherCardType } from 'types/community-type/togetherType'
 import Slider from 'react-slick'
 
 const TogetherWidget = () => {
   const navigate = useNavigate()
+  const { aptId } = useParams()
 
   const [postList, setPostList] = useState<TogetherCardType[]>([])
 
@@ -35,7 +36,7 @@ const TogetherWidget = () => {
   }, [])
 
   const moveToDetail = (id: number) => {
-    navigate(`/community/123/together/${id}/detail`) // 추후 경로 수정
+    navigate(`/community/${aptId}/together/${id}/detail`) // 추후 경로 수정
   }
 
   const settings = {
@@ -55,7 +56,7 @@ const TogetherWidget = () => {
         Icon={FaPeopleGroup}
         title="같이 하실 분 ~"
         hasSeeMore={true}
-        seeMorePath="/community/123/together"
+        seeMorePath={`/community/${aptId}/together`}
       />
 
       <Slider {...settings}>

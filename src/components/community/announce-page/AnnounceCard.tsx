@@ -3,7 +3,7 @@ import { Badge, Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AnnounceCardType } from 'types/community-type/announceType'
 import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
@@ -37,9 +37,10 @@ const AnnounceCard: FC<Props> = ({
   },
 }) => {
   const navigate = useNavigate()
+  const { aptId } = useParams()
 
   const moveToDetail = () => {
-    navigate(`/community/123/announce/${id}/detail`) // 추후 경로 수정
+    navigate(`/community/${aptId}/announce/${id}/detail`) // 추후 경로 수정
   }
 
   return (
