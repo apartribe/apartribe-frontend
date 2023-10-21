@@ -28,9 +28,13 @@ import ChangeNicknamePage from 'pages/setting-pages/ChangeNicknamePage'
 import ChangePwPage from 'pages/setting-pages/ChangePwPage'
 import SettingPage from 'pages/setting-pages/SettingPage'
 import VerifyAptPage from 'pages/setting-pages/VerifyAptPage'
-import VerifyManagerPage from 'pages/setting-pages/VerifyManagerPage'
-import VerifyResidentPage from 'pages/setting-pages/VerifyResidentPage'
+// import VerifyManagerPage from 'pages/setting-pages/VerifyManagerPage' // 추후 인증 모듈 개발 시 복구
+// import VerifyResidentPage from 'pages/setting-pages/VerifyResidentPage' // 추후 인증 모듈 개발 시 복구
 import { createBrowserRouter } from 'react-router-dom'
+import ProtectedRouteOnlyNotLoggedIn from './ProtectedRouteOnlyNotLoggedIn'
+import ProtectedRouteLoggedIn from './ProtectedRouteLoggedIn'
+import ProtectedRouteOnlyManager from './ProtectedRouteOnlyManager'
+import ProtectedRoutePresentAptVerified from './ProtectedRoutePresentAptVerified'
 
 const Router = createBrowserRouter([
   {
@@ -44,27 +48,51 @@ const Router = createBrowserRouter([
       },
       {
         path: '/signup/select',
-        element: <SignupSelectPage />,
+        element: (
+          <ProtectedRouteOnlyNotLoggedIn>
+            <SignupSelectPage />
+          </ProtectedRouteOnlyNotLoggedIn>
+        ),
       },
       {
         path: '/signup/local',
-        element: <SignupLocalPage />,
+        element: (
+          <ProtectedRouteOnlyNotLoggedIn>
+            <SignupLocalPage />,
+          </ProtectedRouteOnlyNotLoggedIn>
+        ),
       },
       {
         path: '/login',
-        element: <LoginPage />,
+        element: (
+          <ProtectedRouteOnlyNotLoggedIn>
+            <LoginPage />
+          </ProtectedRouteOnlyNotLoggedIn>
+        ),
       },
       {
         path: '/find/id',
-        element: <FindIdPage />,
+        element: (
+          <ProtectedRouteOnlyNotLoggedIn>
+            <FindIdPage />
+          </ProtectedRouteOnlyNotLoggedIn>
+        ),
       },
       {
         path: '/find/pw',
-        element: <FindPwPage />,
+        element: (
+          <ProtectedRouteOnlyNotLoggedIn>
+            <FindPwPage />
+          </ProtectedRouteOnlyNotLoggedIn>
+        ),
       },
       {
         path: '/find/pw/reset',
-        element: <ResetPwPage />,
+        element: (
+          <ProtectedRouteOnlyNotLoggedIn>
+            <ResetPwPage />
+          </ProtectedRouteOnlyNotLoggedIn>
+        ),
       },
       {
         path: '/about',
@@ -76,34 +104,53 @@ const Router = createBrowserRouter([
       },
       {
         path: '/setting',
-        element: <SettingPage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <SettingPage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/setting/apartment-verification',
-        element: <VerifyAptPage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <VerifyAptPage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
-      {
-        path: '/setting/apartment-verification/resident',
-        element: <VerifyResidentPage />,
-      },
-      {
-        path: '/setting/apartment-verification/manager',
-        element: <VerifyManagerPage />,
-      },
+      // { // 추후 인증 모듈 개발 시 복구
+      //   path: '/setting/apartment-verification/resident',
+      //   element: <VerifyResidentPage />,
+      // },
+      // { // 추후 인증 모듈 개발 시 복구
+      //   path: '/setting/apartment-verification/manager',
+      //   element: <VerifyManagerPage />,
+      // },
       {
         path: '/setting/pw/change',
-        element: <ChangePwPage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <ChangePwPage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/setting/nickname/change',
-        element: <ChangeNicknamePage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <ChangeNicknamePage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/setting/image/change',
-        element: <ChangeImagePage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <ChangeImagePage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
-        // 다시 보기
         path: '/community/:aptId/create',
         element: <CreateAptCommunityPage />,
       },
@@ -119,15 +166,27 @@ const Router = createBrowserRouter([
       },
       {
         path: '/community/:aptId/article/add',
-        element: <AddArticlePage />,
+        element: (
+          <ProtectedRoutePresentAptVerified>
+            <AddArticlePage />
+          </ProtectedRoutePresentAptVerified>
+        ),
       },
       {
         path: '/community/:aptId/article/:postId/detail',
-        element: <DetailArticlePage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <DetailArticlePage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/community/:aptId/article/:postId/edit',
-        element: <EditArticlePage />,
+        element: (
+          <ProtectedRoutePresentAptVerified>
+            <EditArticlePage />
+          </ProtectedRoutePresentAptVerified>
+        ),
       },
       {
         path: '/community/:aptId/announce',
@@ -135,15 +194,27 @@ const Router = createBrowserRouter([
       },
       {
         path: '/community/:aptId/announce/add',
-        element: <AddAnnouncePage />,
+        element: (
+          <ProtectedRouteOnlyManager>
+            <AddAnnouncePage />
+          </ProtectedRouteOnlyManager>
+        ),
       },
       {
         path: '/community/:aptId/announce/:postId/detail',
-        element: <DetailAnnouncePage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <DetailAnnouncePage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/community/:aptId/announce/:postId/edit',
-        element: <EditAnnouncePage />,
+        element: (
+          <ProtectedRouteOnlyManager>
+            <EditAnnouncePage />
+          </ProtectedRouteOnlyManager>
+        ),
       },
       {
         path: '/community/:aptId/together',
@@ -151,15 +222,27 @@ const Router = createBrowserRouter([
       },
       {
         path: '/community/:aptId/together/add',
-        element: <AddTogetherPage />,
+        element: (
+          <ProtectedRoutePresentAptVerified>
+            <AddTogetherPage />
+          </ProtectedRoutePresentAptVerified>
+        ),
       },
       {
         path: '/community/:aptId/together/:postId/detail',
-        element: <DetailTogetherPage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <DetailTogetherPage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/community/:aptId/together/:postId/edit',
-        element: <EditTogetherPage />,
+        element: (
+          <ProtectedRoutePresentAptVerified>
+            <EditTogetherPage />,
+          </ProtectedRoutePresentAptVerified>
+        ),
       },
     ],
   },
