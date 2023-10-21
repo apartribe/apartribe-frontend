@@ -25,6 +25,8 @@ import LandingPage from 'pages/intro-pages/LandingPage'
 import NotFoundPage from 'pages/intro-pages/NotFoundPage'
 import SearchAptPage from 'pages/intro-pages/SearchAptPage'
 import ChangeImagePage from 'pages/setting-pages/ChangeImagePage'
+import MyArticlePage from 'pages/setting-pages/MyArticlePage'
+import MyCommentPage from 'pages/setting-pages/MyCommentPage'
 import ChangeNicknamePage from 'pages/setting-pages/ChangeNicknamePage'
 import ChangePwPage from 'pages/setting-pages/ChangePwPage'
 import SettingPage from 'pages/setting-pages/SettingPage'
@@ -106,6 +108,14 @@ const Router = createBrowserRouter([
       {
         path: '/setting/image/change',
         element: <ChangeImagePage />,
+      },
+      {
+        path: '/setting/my-article',
+        element: <MyArticlePage />,
+      },
+      {
+        path: '/setting/my-comment',
+        element: <MyCommentPage />,
       },
       {
         // 다시 보기
