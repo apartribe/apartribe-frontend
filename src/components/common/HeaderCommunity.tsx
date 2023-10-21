@@ -52,12 +52,12 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
         <StyledDiv>
           <StyledLogoBox>
             <Slider {...settings}>
-              <StyledNavLink to="/">
+              <NavLink to="/">
                 <LogoHeaderGradation width="170px" height="30px" />
-              </StyledNavLink>
-              <StyledNavLink to="/">
+              </NavLink>
+              <NavLink to="/">
                 <LogoHeaderGradationKorean width="170px" height="30px" />
-              </StyledNavLink>
+              </NavLink>
             </Slider>
           </StyledLogoBox>
           <StyledParagraph className={searchMode ? 'disappear' : 'appear'}>
