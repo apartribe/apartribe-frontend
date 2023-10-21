@@ -133,7 +133,7 @@ const StyledLogoBox = styled.div`
 `
 
 const StyledParagraph = styled.p`
-  margin-top: 20px;
+  margin-top: 15px;
 
   &.disappear {
     font-size: 0;
