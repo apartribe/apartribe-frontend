@@ -18,6 +18,7 @@ const TogetherWidget = () => {
   useEffect(() => {
     const getPost = async () => {
       const response = await postsService.getPosts({
+        aptId: aptId as string,
         boardType: 'together',
         category: '당구 동호회', // 추후 전체로 수정 요망
         sort: '최신순',

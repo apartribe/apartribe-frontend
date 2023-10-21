@@ -4,6 +4,7 @@ import { instance } from 'configs/axios'
 export type BoardType = 'article' | 'announce' | 'together'
 
 interface Param {
+  aptId: string
   boardType: BoardType
   category: string
   sort: string
@@ -13,7 +14,7 @@ interface Param {
 export const postsService = {
   async getPosts(param: Param) {
     // TDOD: 타입 수정
-    const { boardType, category /* , sort */, page } = param
+    const { aptId, boardType, category, sort, page } = param
     let response: AxiosResponse
     try {
       const mappedCategory = category === '전체' ? '' : category
@@ -24,19 +25,19 @@ export const postsService = {
             params: {
               size: 10,
               category: mappedCategory,
-              //sort,
+              // sort,
               page,
             },
           })
 
           return response.data
         case 'announce':
-          response = await instance(`/api/${boardType}`, {
+          response = await instance(`/api/${aptId}/${boardType}`, {
             method: 'get',
             params: {
               size: 10,
               level: mappedCategory,
-              //sort,
+              sort,
               page,
             },
           })
