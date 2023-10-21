@@ -9,12 +9,13 @@ import React, {
 } from 'react'
 import SearchBar from 'components/ui/SearchBar'
 import { styled } from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
 import { AptSearch } from 'types/community-type/widgetType'
 
 const SearchPostWidget = () => {
   const navigate = useNavigate()
+  const { aptId } = useParams()
 
   const [suggestVisible, setSuggestVisible] = useState(false)
   const [focusIndex, setFocusIndex] = useState(-1)
@@ -92,14 +93,14 @@ const SearchPostWidget = () => {
     }
   }
 
-  const moveToCommunityClick = (aptId: string) => {
-    navigate(`/community/${aptId}`)
+  const moveToCommunityClick = (postId: string) => {
+    navigate(`/community/${aptId}/article/${postId}/detail`)
   }
 
   const moveToCommunityEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!inputValue.id) return alert('목록에서 게시물을 선택해주세요.')
-    navigate(`/community/123/article/${inputValue.id}/detail`)
+    navigate(`/community/${aptId}/article/${inputValue.id}/detail`) // 전체 검색으로 변경 예정
   }
 
   useEffect(() => {

@@ -7,9 +7,9 @@ export const LANDING_NAV_LIST = [
 
 // 경로 수정 필요
 export const COMMUNITY_NAV_LIST = [
-  { title: '커뮤니티 홈', path: '/community/123' },
-  { title: '아파트 공지사항', path: '/community/123/announce' },
-  { title: '같이 하실 분', path: '/community/123/together' },
+  { title: '커뮤니티 홈', path: (aptId: string) => `/community/${aptId}` },
+  { title: '아파트 공지사항', path: (aptId: string) => `/community/${aptId}/announce` },
+  { title: '같이 하실 분', path: (aptId: string) => `/community/${aptId}/together` },
 ]
 
 // TODO: 빼먹은 경로들 다 여기에 추가해서 관리할 것.

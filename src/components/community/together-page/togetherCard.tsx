@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Badge, P } from 'styles/reusable-style/elementStyle'
 import { styled } from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { TogetherCardType } from 'types/community-type/togetherType'
 import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
@@ -9,11 +9,6 @@ import { timeAgo } from 'utils/timeAgo'
 interface Props {
   boardType: BoardType
   post: TogetherCardType
-}
-
-const badgeColor = (urgency: string): string => {
-  if (urgency === '모집중') return '#E18745'
-  return '#303030'
 }
 
 const TogetherCard: FC<Props> = ({
@@ -28,9 +23,15 @@ const TogetherCard: FC<Props> = ({
   },
 }) => {
   const navigate = useNavigate()
+  const { aptId } = useParams()
 
   const moveToDetail = () => {
-    navigate(`/community/123/together/${id}/detail`) // 추후 경로 수정
+    navigate(`/community/${aptId}/together/${id}/detail`) // 추후 경로 수정
+  }
+
+  const badgeColor = (urgency: string): string => {
+    if (urgency === '모집중') return '#E18745'
+    return '#303030'
   }
 
   return (

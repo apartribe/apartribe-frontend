@@ -3,7 +3,7 @@ import { Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
 // import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { timeAgo } from 'utils/timeAgo'
 import { BoardType } from 'services/community/postsService'
 import { ArticleCardType } from 'types/community-type/ArticleType'
@@ -32,9 +32,10 @@ const ArticleCard: FC<Props> = ({
   },
 }) => {
   const navigate = useNavigate()
+  const { aptId } = useParams()
 
   const moveToDetail = () => {
-    navigate(`/community/123/${boardType}/${id}/detail`) // TODO: 아파트 아이디 변경
+    navigate(`/community/${aptId}/${boardType}/${id}/detail`) // TODO: 아파트 아이디 변경
   }
 
   return (
