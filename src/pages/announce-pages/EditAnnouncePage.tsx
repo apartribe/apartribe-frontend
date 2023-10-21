@@ -30,8 +30,8 @@ const AddAnnouncePage = () => {
   useEffect(() => {
     const getPost = async () => {
       const response = await announceService.getPost({
-        boardType: BOARD_TYPE,
         aptId: aptId as string,
+        boardType: BOARD_TYPE,
         postId: postId as string,
       })
       const { level, title, content, thumbnail } = response.data
@@ -74,6 +74,7 @@ const AddAnnouncePage = () => {
 
   const savePost = async () => {
     const { statusCode, message } = await announceService.updatePost({
+      aptId: aptId as string,
       boardType: BOARD_TYPE,
       postId: postId as string,
       data: inputValue,

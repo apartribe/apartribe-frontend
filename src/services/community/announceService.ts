@@ -3,33 +3,36 @@ import { instance } from 'configs/axios'
 import { AddAnnounceType } from 'types/community-type/announceType'
 
 interface addParam {
+  aptId: string
   boardType: 'announce'
   data: AddAnnounceType
 }
 
 interface getParam {
-  boardType: 'announce'
   aptId: string
+  boardType: 'announce'
   postId: string
 }
 
 interface updateParam {
+  aptId: string
   boardType: 'announce'
-  data: AddAnnounceType
   postId: string
+  data: AddAnnounceType
 }
 
 interface deleteParam {
+  aptId: string
   boardType: 'announce'
   postId: string
 }
 
 export const announceService = {
   async addPost(param: addParam) {
-    const { boardType, data } = param
+    const { aptId, boardType, data } = param
     const { category, title, content, thumbnail /* , recruitFrom, recruitTo */ } = data
     try {
-      await instance(`/api/${boardType}`, {
+      await instance(`/api/${aptId}/${boardType}`, {
         method: 'post',
         data: {
           level: category,
@@ -58,12 +61,14 @@ export const announceService = {
   },
 
   async getPost(param: getParam) {
-    const { boardType /* , aptId */, postId } = param
+    const { aptId, boardType, postId } = param
     try {
-      const response: AxiosResponse = await instance(`/api/${boardType}/${postId}`, {
-        // TODO: 아파트 아이디 추가 필요
-        method: 'get',
-      })
+      const response: AxiosResponse = await instance(
+        `/api/${aptId}/${boardType}/${postId}`,
+        {
+          method: 'get',
+        },
+      )
       return response.data
     } catch (error) {
       console.error(error)
@@ -71,10 +76,10 @@ export const announceService = {
   },
 
   async updatePost(param: updateParam) {
-    const { boardType, data, postId } = param
+    const { aptId, postId, boardType, data } = param
     const { category, title, content, thumbnail /* , recruitFrom, recruitTo */ } = data
     try {
-      await instance(`/api/${boardType}/${postId}`, {
+      await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'put',
         data: {
           level: category,
@@ -103,10 +108,14 @@ export const announceService = {
   },
 
   async deletePost(param: deleteParam) {
-    const { boardType, postId } = param
+    const { aptId, boardType, postId } = param
     try {
-      await instance(`/api/${boardType}?${boardType}Id=${postId}`, {
+      await instance(`/api/${aptId}/${boardType}`, {
         method: 'delete',
+        params: {
+          boardType,
+          postId,
+        },
       })
       return {
         statusCode: 204,

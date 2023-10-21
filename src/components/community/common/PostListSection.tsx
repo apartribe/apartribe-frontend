@@ -8,6 +8,7 @@ import TogetherCard from '../together-page/togetherCard'
 import { ArticleCardType } from 'types/community-type/ArticleType'
 import { AnnounceCardType } from 'types/community-type/announceType'
 import { TogetherCardType } from 'types/community-type/togetherType'
+import { useParams } from 'react-router-dom'
 
 interface Props {
   boardType: BoardType
@@ -17,6 +18,8 @@ interface Props {
 
 const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort }) => {
   //=========================================================================
+  const { aptId } = useParams()
+
   const [postList, setPostList] = useState<
     ArticleCardType[] | AnnounceCardType[] | TogetherCardType[]
   >([])
@@ -40,6 +43,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
       setLoading(true)
       pageCountRef.current = pageCountRef.current + 1
       const response = await postsService.getPosts({
+        aptId: aptId as string,
         boardType,
         category: selectedCategory,
         sort: selectedSort,

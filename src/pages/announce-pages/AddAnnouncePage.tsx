@@ -6,7 +6,7 @@ import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
 import { AddAnnounceType } from 'types/community-type/announceType'
 // import RangeDatePicker from 'components/community/RangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { announceService } from 'services/community/announceService'
 
@@ -14,6 +14,7 @@ const AddAnnouncePage = () => {
   const BOARD_TYPE = 'announce'
 
   const navigate = useNavigate()
+  const { aptId } = useParams()
 
   const [inputValue, setInputValue] = useState<AddAnnounceType>({
     category: '일반',
@@ -51,6 +52,7 @@ const AddAnnouncePage = () => {
 
   const savePost = async () => {
     const { statusCode, message } = await announceService.addPost({
+      aptId: aptId as string,
       boardType: BOARD_TYPE,
       data: inputValue,
     })
