@@ -31,6 +31,7 @@ export type SignupResult = Result
 export type Message = {
   status: 'waiting' | 'success' | 'fail'
   message: string
+  todo?: () => void
 }
 
 export type SigninResult = Result
