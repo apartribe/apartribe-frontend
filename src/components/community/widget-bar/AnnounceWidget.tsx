@@ -1,11 +1,12 @@
 import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Badge, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { ANNONCEMENT_MOCK } from 'mock/announcementData'
 import { styled } from 'styled-components'
 import Slider from 'react-slick'
 import { useParams } from 'react-router-dom'
+import { widgetService } from 'services/community/widgetSevice'
 
 const AnnounceWidget = () => {
   const settings = {
@@ -21,6 +22,10 @@ const AnnounceWidget = () => {
   }
 
   const { aptId } = useParams()
+
+  useEffect(() => {
+    widgetService.getVaildAnnounce({ aptId: aptId as string })
+  }, [])
 
   // level 과 category 관련 이슈 announceType.ts 주석 참고.
   const badgeColor = (category: string | undefined): string => {
