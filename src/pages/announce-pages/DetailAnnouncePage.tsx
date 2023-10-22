@@ -34,6 +34,7 @@ const DetailAnnouncePage = () => {
   return (
     <ShadowBox $padding="30px">
       <DetailHeaderSection
+        aptId={aptId as string}
         boardType={BOARD_TYPE}
         postId={postId as string}
         postData={postData}

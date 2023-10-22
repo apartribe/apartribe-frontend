@@ -15,14 +15,17 @@ import { BoardType } from 'services/community/postsService'
 import { ArticleDetailType } from 'types/community-type/ArticleType'
 import { AnnounceDetailType } from 'types/community-type/announceType'
 import { TogetherDetailType } from 'types/community-type/togetherType'
+import { likeService } from 'services/community/likeService'
 
 interface Props {
+  aptId: string
   postId: string
   boardType: BoardType
   postData: ArticleDetailType | AnnounceDetailType | TogetherDetailType
 }
 
 const DetailHeaderSection: FC<Props> = ({
+  aptId,
   boardType,
   postId,
   postData: {
@@ -72,6 +75,10 @@ const DetailHeaderSection: FC<Props> = ({
     }
   }
 
+  const toggleLike = async () => {
+    const response = await likeService.postLike({ aptId, boardType, postId })
+  }
+
   return (
     <StyledWrapper>
       <StyledDiv className="between">
@@ -109,7 +116,7 @@ const DetailHeaderSection: FC<Props> = ({
           </StyledParagraph>
         </StyledDiv>
         <StyledDiv>
-          <StyledButton>
+          <StyledButton onClick={toggleLike}>
             <AiOutlineLike />
             &nbsp; 좋아요
           </StyledButton>
