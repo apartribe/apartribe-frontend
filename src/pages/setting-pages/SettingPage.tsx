@@ -1,8 +1,9 @@
-import { useState, useEffect, MouseEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { useAppSelector } from 'hooks/useRedux'
+import { user } from 'services/user'
 import { auth } from 'services/auth'
 import { P, Img, ShadowBox, Badge } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
@@ -10,8 +11,10 @@ import {
   PAGE_CHANGE_IMAGE,
   PAGE_CHANGE_NICKNAME,
   PAGE_CHANGE_PW,
+  PAGE_MY_ARTICLE,
+  PAGE_MY_COMMENT,
 } from 'constants/setting/path'
-import { MyInfo } from 'types/setting'
+import { MyInfo, ResultWithData } from 'types/setting'
 import { Message } from 'types/auth'
 import QuestionModal from 'components/common/QuestionModal'
 
@@ -31,7 +34,6 @@ const SettingPage = () => {
     todo: '' as unknown as () => void,
   })
 
-  const navigate = useNavigate()
   const userEmail = useAppSelector((state) => state.user?.userEmail)
 
   const { email, name, nickname, profileImageUrl /* , aptName, badge */ } = myInfo
@@ -40,15 +42,15 @@ const SettingPage = () => {
 
   useEffect(() => {
     const viewMyInfo = async () => {
-      //const showMemberResult = await user.showMember(/* userEmail */'jieun2.dev@gmail.com')
-      /* const { result, data } = showMemberResult as ResultWithData
-      
-      if(result === 'success') {
+      const showMemberResult = await user.showMember(userEmail)
+      const { result, data } = showMemberResult as ResultWithData
+
+      if (result === 'success') {
         setMyInfo(data)
-      } */
+      }
     }
     viewMyInfo()
-  }, [])
+  }, [userEmail])
 
   const openModal = (
     status: 'waiting' | 'success' | 'fail',
@@ -66,8 +68,6 @@ const SettingPage = () => {
       '로그아웃 하시겠습니까? 확인을 누르면 로그아웃 됩니다.',
       auth.logout,
     )
-    //auth.logout()
-    //navigate('/')
   }
 
   return (
@@ -82,7 +82,7 @@ const SettingPage = () => {
                   <h3>내정보</h3>
                   <StyledButtonBlack onClick={logout}>로그아웃</StyledButtonBlack>
                 </StyledDiv>
-                <StyledDiv className="row">
+                <StyledMyInfoDiv>
                   {profileImageUrl.length !== 0 ? (
                     <StyledImg src={profileImageUrl} />
                   ) : (
@@ -98,7 +98,7 @@ const SettingPage = () => {
                       <StyledBadge className={badge}>{badge}</StyledBadge>
                     </StyledDiv>
                   </StyledDiv>
-                </StyledDiv>
+                </StyledMyInfoDiv>
               </StyledShadowBox>
               <StyledShadowBox>
                 <h3>계정</h3>
@@ -112,8 +112,8 @@ const SettingPage = () => {
               <StyledShadowBox>
                 <h3>커뮤니티</h3>
                 <StyledLinkContainer>
-                  <StyledLink to="">내가 쓴 게시물</StyledLink>
-                  <StyledLink to="">내가 쓴 댓글</StyledLink>
+                  <StyledLink to={PAGE_MY_ARTICLE}>내가 쓴 게시물</StyledLink>
+                  <StyledLink to={PAGE_MY_COMMENT}>내가 쓴 댓글</StyledLink>
                 </StyledLinkContainer>
               </StyledShadowBox>
               <StyledShadowBox>
@@ -142,28 +142,34 @@ const SettingPage = () => {
 export default SettingPage
 
 const StyledDiv = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: ${(props) => (props.className === 'row' ? 'row' : 'column')};
   align-items: ${(props) => props.className === 'row' && 'center'};
   justify-content: ${(props) => props.className === 'row' && 'space-between'};
   align-items: ${(props) => props.className === 'row' && 'center'};
   gap: ${(props) => (props.className === 'gap' || props.className === 'row') && '15px'};
+  & * {
+  }
+`
+
+const StyledMyInfoDiv = styled.div`
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
 `
 
 const StyledImg = styled(Img)`
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   border: 1px solid #dadada;
   border-radius: 50%;
-  line-height: 12px;
-  margin: 5px 0;
 `
 
 const StyledIcon = styled(IoPersonCircle)`
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
   color: #dadada;
+  margin: -10px;
 `
 
 const StyledButtonBlack = styled.button`
