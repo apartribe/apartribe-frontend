@@ -81,4 +81,60 @@ export const user = {
       }
     }
   },
+
+  async myArticle(
+    size: number,
+    page: number,
+  ): Promise<ResultWithData | ResultWithMessage> {
+    try {
+      const response = await instance('/api/member/article', {
+        method: 'GET',
+        params: {
+          size,
+          page,
+        },
+      })
+      return {
+        result: 'success',
+        data: response.data.data,
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return {
+          result: 'fail',
+          message: '조회에 실패했습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
+    }
+  },
+
+  async MyComment(
+    size: number,
+    page: number,
+  ): Promise<ResultWithData | ResultWithMessage> {
+    try {
+      const response = await instance('/api/member/comment', {
+        method: 'GET',
+        params: {
+          size,
+          page,
+        },
+      })
+      return {
+        result: 'success',
+        data: response.data.data,
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return {
+          result: 'fail',
+          message: '조회에 실패했습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
+    }
+  },
 }
