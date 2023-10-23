@@ -24,4 +24,5 @@ export interface reusableStyleProps {
   $lineHeight?: string
   $whiteSpace?: string
   $cursor?: string
+  $overflow?: string
 }

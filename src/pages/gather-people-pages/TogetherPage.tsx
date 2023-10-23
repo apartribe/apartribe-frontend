@@ -13,7 +13,7 @@ const TogetherPage = () => {
 
   return (
     <>
-      <ShadowBox>
+      <ShadowBox $overflow="visible">
         <StyledDiv>
           <CategorySection
             boardType={BOARD_TYPE}
