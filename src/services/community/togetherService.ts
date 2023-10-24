@@ -16,6 +16,7 @@ interface getParam {
 }
 
 interface updateParam {
+  aptId: string
   boardType: BoardType
   data: UpdateTogetherType
   postId: string
@@ -78,12 +79,15 @@ export const togetherService = {
   },
 
   async getPost(param: getParam) {
-    const { boardType /* , aptId */, postId } = param
+    const { boardType, aptId, postId } = param
     try {
-      const response: AxiosResponse = await instance(`/api/${boardType}/${postId}`, {
-        // TODO: 아파트 아이디 추가 필요
-        method: 'get',
-      })
+      const response: AxiosResponse = await instance(
+        `/api/${aptId}/${boardType}/${postId}`,
+        {
+          method: 'get',
+        },
+      )
+      console.log('아아', response.data)
       return response.data
     } catch (error) {
       console.error(error)
@@ -91,7 +95,7 @@ export const togetherService = {
   },
 
   async updatePost(param: updateParam) {
-    const { boardType, data, postId } = param
+    const { aptId, boardType, data, postId } = param
     const {
       category,
       title,

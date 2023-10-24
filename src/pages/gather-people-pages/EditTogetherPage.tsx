@@ -4,7 +4,7 @@ import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
 import { styled } from 'styled-components'
 import { UpdateTogetherType } from 'types/community-type/togetherType'
-import RangeDatePicker from 'components/community/common/RangeDatePicker'
+import RangeDatePicker from 'components/community/together-page/TogetherRangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
@@ -103,6 +103,7 @@ const EditTogetherPage = () => {
 
   const savePost = async () => {
     const { statusCode, message } = await togetherService.updatePost({
+      aptId: aptId as string,
       boardType: BOARD_TYPE,
       data: inputValue,
       postId: postId as string,
@@ -111,7 +112,7 @@ const EditTogetherPage = () => {
       const userConfirmed = confirm('정말 등록 하시겠습니까?')
       if (userConfirmed) {
         alert(message)
-        navigate(`/community/123/together/${postId}/detail`)
+        navigate(`/community/${aptId}/together/${postId}/detail`)
         return
       }
       return
@@ -123,7 +124,7 @@ const EditTogetherPage = () => {
       '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
     )
     if (userConfirmed) {
-      navigate(`/community/123/together/${postId}/detail`)
+      navigate(`/community/${aptId}/together/${postId}/detail`)
       return
     }
     return
