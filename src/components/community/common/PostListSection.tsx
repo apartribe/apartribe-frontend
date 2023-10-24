@@ -9,11 +9,12 @@ import { ArticleCardType } from 'types/community-type/ArticleType'
 import { AnnounceCardType } from 'types/community-type/announceType'
 import { TogetherCardType } from 'types/community-type/togetherType'
 import { useParams } from 'react-router-dom'
+import { Sort } from 'types/community-type/sortType'
 
 interface Props {
   boardType: BoardType
   selectedCategory: string
-  selectedSort: string
+  selectedSort: Sort
 }
 
 const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort }) => {
@@ -46,7 +47,8 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
         aptId: aptId as string,
         boardType,
         category: selectedCategory,
-        sort: selectedSort,
+        sort: selectedSort.value,
+        order: selectedSort.order,
         page: pageCountRef.current,
       })
       if (!response) return

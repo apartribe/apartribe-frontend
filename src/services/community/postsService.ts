@@ -8,14 +8,15 @@ interface Param {
   boardType: BoardType
   category: string
   sort: string
-  page: number
+  order?: string // together 위젯은 sort지정 없기떄문에 일단 선택사항 (임시)
+  page?: number
 }
 
 export const postsService = {
   async getPosts(param: Param) {
-    // TDOD: 타입 수정
-    const { aptId, boardType, category, sort, page } = param
+    const { aptId, boardType, category, sort, order, page } = param
     let response: AxiosResponse
+
     try {
       const mappedCategory = category === '전체' ? '' : category
       switch (boardType) {
@@ -29,7 +30,6 @@ export const postsService = {
               page,
             },
           })
-
           return response.data
         case 'announce':
           response = await instance(`/api/${aptId}/${boardType}`, {
@@ -37,18 +37,18 @@ export const postsService = {
             params: {
               size: 10,
               level: mappedCategory,
-              sort,
+              sort: `${sort},${order}`,
               page,
             },
           })
           return response.data
         case 'together':
-          response = await instance(`/api/${boardType}`, {
+          response = await instance(`/api/${aptId}/${boardType}`, {
             method: 'get',
             params: {
               size: 10,
               category: mappedCategory,
-              //sort,
+              sort: `${sort},${order}`,
               page,
             },
           })
