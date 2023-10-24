@@ -19,7 +19,7 @@ const BestPostsWidget = () => {
 
   useEffect(() => {
     const getBestPosts = async () => {
-      const response = await widgetService.getBestPosts()
+      const response = await widgetService.getBestPosts({ aptId: aptId as string })
       setBestPosts(response.data)
     }
 

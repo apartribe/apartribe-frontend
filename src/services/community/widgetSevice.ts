@@ -1,11 +1,17 @@
 import { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
+import { BoardType } from './postsService'
 
 interface ValidAnnounce {
   aptId: string
 }
 
+interface BestPostsParam {
+  aptId: string
+}
+
 interface SearchPostParam {
+  aptId: string
   keyword: string
 }
 
@@ -26,9 +32,12 @@ export const widgetService = {
     }
   },
 
-  async getBestPosts() {
+  async getBestPosts(param: BestPostsParam) {
+    const { aptId } = param
     try {
-      const response: AxiosResponse = await instance('/api/article/best/view')
+      const response: AxiosResponse = await instance(`/api/${aptId}/article/best/view`, {
+        method: 'get',
+      })
       return response.data
     } catch (error) {
       console.error(error)
@@ -36,12 +45,15 @@ export const widgetService = {
   },
 
   async getSearchPost(param: SearchPostParam) {
-    const { keyword } = param
+    const { aptId, keyword } = param
     try {
       if (!keyword) return
-      const response: AxiosResponse = await instance(
-        `/api/article/search?title=${keyword}`,
-      )
+      const response: AxiosResponse = await instance(`/api/${aptId}/article/search`, {
+        method: 'get',
+        params: {
+          title: keyword,
+        },
+      })
       return response.data
     } catch (error) {
       console.error(error)
