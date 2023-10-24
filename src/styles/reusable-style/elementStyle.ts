@@ -60,8 +60,8 @@ export const Input = styled.input<reusableStyleProps>`
 `
 
 export const ShadowBox = styled.div<reusableStyleProps>`
-  overflow: hidden;
   box-sizing: border-box;
+  overflow: ${(props) => props.$overflow || 'hidden'};
   background: ${(props) => props.$background || '#FFFFFF'};
   box-shadow: ${(props) => props.$boxShadow || '5px 5px 4px -1px rgba(0, 0, 0, 0.25)'};
   position: ${(props) => props.$position || 'relative'};
