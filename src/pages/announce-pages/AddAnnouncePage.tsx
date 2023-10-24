@@ -4,26 +4,25 @@ import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { styled } from 'styled-components'
 import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
 import { AddAnnounceType } from 'types/community-type/announceType'
-// import RangeDatePicker from 'components/community/RangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { announceService } from 'services/community/announceService'
+import AnnounceRangeDatePicker from 'components/community/announce-page/AnnounceRangeDatePicker'
 
 const AddAnnouncePage = () => {
   const BOARD_TYPE = 'announce'
 
   const navigate = useNavigate()
-  const { aptId } = useParams()
 
   const [inputValue, setInputValue] = useState<AddAnnounceType>({
     category: '일반',
     // protected: false,
     title: '',
     content: '',
-    // recruitFrom: new Date(),
-    // recruitTo: null,
     thumbnail: '',
+    floatFrom: new Date(),
+    floatTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7일 뒤
   })
 
   const [categoryList, setCategoryList] = useState<string[]>([])
@@ -52,7 +51,6 @@ const AddAnnouncePage = () => {
 
   const savePost = async () => {
     const { statusCode, message } = await announceService.addPost({
-      aptId: aptId as string,
       boardType: BOARD_TYPE,
       data: inputValue,
     })
@@ -77,6 +75,8 @@ const AddAnnouncePage = () => {
     }
     return
   }
+
+  console.log('안녕', inputValue)
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
@@ -127,7 +127,7 @@ const AddAnnouncePage = () => {
         <P $fontWeight="700" $lineHeight="40px">
           커뮤니티 홈 위젯 노출 기간
         </P>
-        {/* <RangeDatePicker inputValue={inputValue} setInputValue={setInputValue} /> */}
+        <AnnounceRangeDatePicker inputValue={inputValue} setInputValue={setInputValue} />
       </div>
       <div>
         <P $fontWeight="700" $lineHeight="30px">
