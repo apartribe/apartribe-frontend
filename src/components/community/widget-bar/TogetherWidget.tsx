@@ -20,8 +20,9 @@ const TogetherWidget = () => {
       const response = await postsService.getPosts({
         aptId: aptId as string,
         boardType: 'together',
-        category: '당구 동호회', // 추후 전체로 수정 요망
-        sort: '최신순',
+        category: '전체',
+        sort: 'createdAt',
+        order: 'desc',
         page: 0,
       })
       if (!response) return
