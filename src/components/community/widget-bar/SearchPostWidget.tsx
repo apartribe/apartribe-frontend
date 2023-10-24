@@ -29,9 +29,11 @@ const SearchPostWidget = () => {
     setFocusIndex(-1)
     if (!inputValue.title) return
 
-    widgetService.getSearchPost({ keyword: inputValue.title }).then((response) => {
-      setSuggestApts(response?.data)
-    })
+    widgetService
+      .getSearchPost({ aptId: aptId as string, keyword: inputValue.title })
+      .then((response) => {
+        setSuggestApts(response?.data)
+      })
   }
 
   const moveFocus = (e: KeyboardEvent<HTMLInputElement>) => {
