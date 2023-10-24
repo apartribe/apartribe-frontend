@@ -4,7 +4,7 @@ import { Button, Input, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import DropdownCategory from 'components/ui/DropdownCategory'
 import { styled } from 'styled-components'
 import { AddTogetherType } from 'types/community-type/togetherType'
-import RangeDatePicker from 'components/community/common/RangeDatePicker'
+import RangeDatePicker from 'components/community/together-page/TogetherRangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
 import { useNavigate } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
@@ -22,8 +22,6 @@ const AddTogetherPage = () => {
     content: '',
     thumbnail: '',
     description: '',
-    // recruitFrom: new Date().toString(),
-    // recruitTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toString(), // 7일 뒤
     recruitFrom: new Date(),
     recruitTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7일 뒤
     meetTime: '',
