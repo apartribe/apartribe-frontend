@@ -2,12 +2,9 @@ import React, { Dispatch, SetStateAction } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { styled } from 'styled-components'
-/* eslint-disable import/no-duplicates */
 import addMonths from 'date-fns/addMonths'
 import ko from 'date-fns/locale/ko' // 한국어로
 import { AddTogetherType, UpdateTogetherType } from 'types/community-type/togetherType'
-// import { AddAnnounceType } from 'types/community-type/announceType'
-/* eslint-disable import/no-duplicates */
 
 interface Props<T> {
   inputValue: T
@@ -15,9 +12,7 @@ interface Props<T> {
 }
 
 // 제네릭 컴포넌트
-const RangeDatePicker = <
-  T extends AddTogetherType | UpdateTogetherType /* | AddAnnounceType  */,
->({
+const TogetherRangeDatePicker = <T extends AddTogetherType | UpdateTogetherType>({
   inputValue,
   setInputValue,
 }: Props<T>) => {
@@ -49,7 +44,7 @@ const RangeDatePicker = <
   )
 }
 
-export default RangeDatePicker
+export default TogetherRangeDatePicker
 
 const StyledDatePicker = styled(DatePicker)`
   width: 250px;
