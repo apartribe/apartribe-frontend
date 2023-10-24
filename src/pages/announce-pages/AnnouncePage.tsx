@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PostListSection from 'components/community/common/PostListSection'
 import DropdownSort from 'components/ui/DropdownSort'
-import { SORT_DROPDOWN_LIST } from 'constants/sortList'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import CategorySection from 'components/community/common/CategorySection'
@@ -9,7 +8,11 @@ import CategorySection from 'components/community/common/CategorySection'
 const AnnouncePage = () => {
   const BOARD_TYPE = 'announce'
   const [selectedCategory, setSelectedCategory] = useState('전체')
-  const [selectedSort, setSelectedSort] = useState('최신순')
+  const [selectedSort, setSelectedSort] = useState({
+    title: '최신순',
+    value: 'createdAt',
+    order: 'desc',
+  })
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="10px">
@@ -19,11 +22,7 @@ const AnnouncePage = () => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
-        <DropdownSort
-          selectedValue={selectedSort}
-          setSelectedValue={setSelectedSort}
-          dropdownList={SORT_DROPDOWN_LIST}
-        />
+        <DropdownSort selectedValue={selectedSort} setSelectedValue={setSelectedSort} />
       </StyledDiv>
       <PostListSection
         boardType={BOARD_TYPE}
