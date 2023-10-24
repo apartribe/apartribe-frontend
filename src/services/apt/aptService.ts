@@ -53,6 +53,7 @@ export const aptService = {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        console.error(error)
         return {
           statusCode: 500,
           message: '커뮤니티 생성에 실패 하였습니다. 다시 시도해주세요.',
