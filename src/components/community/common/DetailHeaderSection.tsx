@@ -53,7 +53,7 @@ const DetailHeaderSection: FC<Props> = ({
   }
 
   const moveToEditPage = () => {
-    navigate(`/community/123/${boardType}/${postId}/edit`)
+    navigate(`/community/${aptId}/${boardType}/${postId}/edit`)
   }
 
   const deletePost = async () => {
@@ -67,7 +67,7 @@ const DetailHeaderSection: FC<Props> = ({
       })
       if (statusCode === 204) {
         alert(message)
-        navigate(`/community/123`)
+        navigate(`/community/${aptId}`)
         return
       }
       alert(message)
