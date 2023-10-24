@@ -9,6 +9,7 @@ import { categoryService } from 'services/community/categoryService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { announceService } from 'services/community/announceService'
+import AnnounceRangeDatePicker from 'components/community/announce-page/AnnounceRangeDatePicker'
 
 const AddAnnouncePage = () => {
   const BOARD_TYPE = 'announce'
@@ -21,8 +22,8 @@ const AddAnnouncePage = () => {
     title: '',
     content: '',
     thumbnail: '',
-    // recruitFrom: new Date(),
-    // recruitTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7일 뒤
+    floatFrom: new Date(),
+    floatTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7일 뒤
   })
 
   //===========
@@ -34,12 +35,16 @@ const AddAnnouncePage = () => {
         boardType: BOARD_TYPE,
         postId: postId as string,
       })
-      const { level, title, content, thumbnail } = response.data
+      const { level, title, content, thumbnail, floatFrom, floatTo } = response.data
+      console.log('뭐지..', response.data)
+
       setInputValue({
         category: level,
         title,
         content,
-        thumbnail /* , recruitFrom, recruitTo */,
+        thumbnail,
+        floatFrom: new Date(floatFrom),
+        floatTo: new Date(floatTo),
       })
     }
 
@@ -83,7 +88,7 @@ const AddAnnouncePage = () => {
       const userConfirmed = confirm('정말 등록 하시겠습니까?')
       if (userConfirmed) {
         alert(message)
-        navigate(`/community/123/announce/${postId}/detail`)
+        navigate(`/community/${aptId}/announce/${postId}/detail`)
         return
       }
       return
@@ -95,11 +100,13 @@ const AddAnnouncePage = () => {
       '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
     )
     if (userConfirmed) {
-      navigate(`/community/123/announce/${postId}/detail`)
+      navigate(`/community/${aptId}/announce/${postId}/detail`)
       return
     }
     return
   }
+
+  console.log('안녕', inputValue)
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
@@ -150,7 +157,7 @@ const AddAnnouncePage = () => {
         <P $fontWeight="700" $lineHeight="40px">
           커뮤니티 홈 위젯 노출 기간
         </P>
-        {/* <RangeDatePicker inputValue={inputValue} setInputValue={setInputValue} /> */}
+        <AnnounceRangeDatePicker inputValue={inputValue} setInputValue={setInputValue} />
       </div>
       <div>
         <P $fontWeight="700" $lineHeight="30px">

@@ -36,8 +36,8 @@ export interface AnnounceDetailType {
   liked: number
   commentCounts: number
   thumbnail: string
-  //   recruitFrom: Date
-  //   recruitTo: Date | null
+  floatFrom: string
+  floatTo: string
   // protected: boolean
 }
 
@@ -47,6 +47,6 @@ export interface AddAnnounceType {
   title: string
   content: string
   thumbnail: string
-  // recruitFrom: Date
-  // recruitTo: Date | null,
+  floatFrom: Date
+  floatTo: Date
 }

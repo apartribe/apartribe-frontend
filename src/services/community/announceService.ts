@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
 import { AddAnnounceType } from 'types/community-type/announceType'
+import dateformat from 'utils/dateFormat'
 
 interface addParam {
-  aptId: string
   boardType: 'announce'
   data: AddAnnounceType
 }
@@ -29,18 +29,18 @@ interface deleteParam {
 
 export const announceService = {
   async addPost(param: addParam) {
-    const { aptId, boardType, data } = param
-    const { category, title, content, thumbnail /* , recruitFrom, recruitTo */ } = data
+    const { boardType, data } = param
+    const { category, title, content, thumbnail, floatFrom, floatTo } = data
     try {
-      await instance(`/api/${aptId}/${boardType}`, {
+      await instance(`/api/${boardType}`, {
         method: 'post',
         data: {
           level: category,
           title,
           content,
           thumbnail,
-          //   recruitFrom,
-          //   recruitTo,
+          floatFrom: dateformat(floatFrom.toString()),
+          floatTo: dateformat(floatTo.toString()),
         },
       })
       return {
@@ -77,7 +77,7 @@ export const announceService = {
 
   async updatePost(param: updateParam) {
     const { aptId, postId, boardType, data } = param
-    const { category, title, content, thumbnail /* , recruitFrom, recruitTo */ } = data
+    const { category, title, content, thumbnail, floatFrom, floatTo } = data
     try {
       await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'put',
@@ -86,8 +86,8 @@ export const announceService = {
           title,
           content,
           thumbnail,
-          //   recruitFrom,
-          //   recruitTo,
+          floatFrom: dateformat(floatFrom.toString()),
+          floatTo: dateformat(floatTo.toString()),
         },
       })
       return {
