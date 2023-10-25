@@ -27,6 +27,15 @@ export type MyArticle = {
   createdBy: string
 }
 
+export type MyComment = {
+  id: number
+  content: string
+  createdBy: string
+  createdAt: string
+  boardType: string
+  boardId: number
+}
+
 export type ResultWithMessage = {
   result: 'success' | 'fail'
   message: string
