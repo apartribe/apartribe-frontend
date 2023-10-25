@@ -35,26 +35,26 @@ const Pagination = ({ totalPages, size, page, setPage }: PaginationProps) => {
   }, [totalPages, size])
 
   useEffect(() => {
-    if (page % size === 1) {
-      setCurentPageList(totalPageList[Math.floor(page / size)])
-    } else if (page % size === 0) {
+    if (page % size === 0) {
       setCurentPageList(totalPageList[Math.floor(page / size) - 1])
+    } else {
+      setCurentPageList(totalPageList[Math.floor(page / size)])
     }
-  }, [totalPageList, page, size])
+  }, [totalPageList, page, size, currentPageList])
 
   const showFirst = () => {
     setPage(1)
   }
-  const showPrevious = (page: number) => {
+  const showPrevious = () => {
     setPage(page - 1)
   }
   const goToPage = (pageNumber: number) => {
     setPage(pageNumber)
   }
-  const showNext = (page: number) => {
+  const showNext = () => {
     setPage(page + 1)
   }
-  const showLast = (totalPages: number) => {
+  const showLast = () => {
     setPage(totalPages)
   }
 
@@ -63,7 +63,7 @@ const Pagination = ({ totalPages, size, page, setPage }: PaginationProps) => {
       <StyledIconButton onClick={showFirst} disabled={page === 1}>
         <AiOutlineDoubleLeft />
       </StyledIconButton>
-      <StyledIconButton onClick={() => showPrevious(page)} disabled={page === 1}>
+      <StyledIconButton onClick={showPrevious} disabled={page === 1}>
         <AiOutlineLeft />
       </StyledIconButton>
       {currentPageList?.map((item) => (
@@ -75,13 +75,10 @@ const Pagination = ({ totalPages, size, page, setPage }: PaginationProps) => {
           {item}
         </StyledButton>
       ))}
-      <StyledIconButton onClick={() => showNext(page)} disabled={page === totalPages}>
+      <StyledIconButton onClick={showNext} disabled={page === totalPages}>
         <AiOutlineRight />
       </StyledIconButton>
-      <StyledIconButton
-        onClick={() => showLast(totalPages)}
-        disabled={page === totalPages}
-      >
+      <StyledIconButton onClick={showLast} disabled={page === totalPages}>
         <AiOutlineDoubleRight />
       </StyledIconButton>
     </StyledDiv>
@@ -95,6 +92,7 @@ const StyledDiv = styled.div`
   justify-content: center;
   align-items: center;
   gap: 3px;
+  margin-bottom: 20px;
 `
 
 const StyledButton = styled.button`
@@ -111,5 +109,5 @@ const StyledIconButton = styled.button`
   height: 33px;
   border: 1px solid #dadada;
   border-radius: 50%;
-  cursor: pointer;
+  cursor: ${(props) => (!props.disabled ? 'pointer' : 'initial')};
 `
