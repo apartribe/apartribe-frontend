@@ -14,6 +14,19 @@ export type ChangePwInputValue = {
   newPasswordConfirm: string
 }
 
+export type MyArticle = {
+  id: number
+  boardType: string
+  liked: number
+  saw: number
+  title: string
+  content: string
+  thumbnail: string
+  commentCounts: number
+  createdAt: string
+  createdBy: string
+}
+
 export type ResultWithMessage = {
   result: 'success' | 'fail'
   message: string
