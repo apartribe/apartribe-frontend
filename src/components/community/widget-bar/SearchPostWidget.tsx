@@ -27,10 +27,10 @@ const SearchPostWidget = () => {
   const changeInputvalue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, title: e.target.value }))
     setFocusIndex(-1)
-    if (!inputValue.title) return
+    if (!e.target.value) return
 
     widgetService
-      .getSearchPost({ aptId: aptId as string, keyword: inputValue.title })
+      .getSearchPost({ aptId: aptId as string, keyword: e.target.value })
       .then((response) => {
         setSuggestApts(response?.data)
       })
