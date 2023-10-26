@@ -172,10 +172,12 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
             searchMode ? '아파트 이름을 입력해주세요.' : '아파트 커뮤니티 검색'
           }
         />
-        <StyledClearIcon
-          onClick={() => setInputValue({ name: '', id: '', address: '' })}
-        />
-        <StyledSearchIcon />
+        <StyledDiv>
+          <StyledClearIcon
+            onClick={() => setInputValue({ name: '', id: '', address: '' })}
+          />
+          <StyledSearchIcon />
+        </StyledDiv>
         {suggestVisible ? (
           <StyledBox>
             <StyledUl>
@@ -230,6 +232,19 @@ const StyledForm = styled.form`
   }
 `
 
+const StyledDiv = styled.div`
+  background-color: white;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  transform: translate(0, -50%);
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: #555555;
+`
+
 const StyledBox = styled.div`
   background: #ffffffeb;
   position: absolute;
@@ -252,6 +267,10 @@ const StyledBox = styled.div`
 
 const StyledUl = styled.ul`
   /* background: #FFFFFF; */
+  position: absolute;
+  top: 50%;
+  right: 32px;
+  transform: translate(0, -50%);
 `
 
 const StyledLi = styled.li`
@@ -290,6 +309,7 @@ const StyledInput = styled.input`
   border-radius: 100px;
   outline: none;
   transition: 0.3s ease-in-out;
+  overflow: hidden;
 
   &.stretch {
     width: 900px;
@@ -301,20 +321,7 @@ const StyledInput = styled.input`
 `
 
 const StyledClearIcon = styled(TiDelete)`
-  position: absolute;
-  top: 50%;
-  right: 32px;
-  transform: translate(0, -50%);
-  font-size: 20px;
-  color: #555555;
   cursor: pointer;
 `
 
-const StyledSearchIcon = styled(BiSearchAlt)`
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translate(0, -50%);
-  font-size: 20px;
-  color: #555555;
-`
+const StyledSearchIcon = styled(BiSearchAlt)``
