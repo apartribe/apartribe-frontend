@@ -17,6 +17,8 @@ import { AptSearch } from 'types/community-type/aptType'
 import { BiSearchAlt } from 'react-icons/bi'
 import { TiDelete } from 'react-icons/ti'
 import { aptService } from 'services/apt/aptService'
+import { useGeolocation } from 'hooks/useGeolocation'
+import { externalAptSearchService } from 'services/apt/externalAptSearchService'
 
 interface Props {
   searchMode: boolean
@@ -33,16 +35,34 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
   const liRef = useRef<HTMLElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const changeInputvalue = (e: ChangeEvent<HTMLInputElement>) => {
+  const { coordinates } = useGeolocation()
+  const lng = coordinates?.lng ?? 127.256518
+  const lat = coordinates?.lat ?? 37.2666079
+
+  const startSearch = () => {
+    setSuggestVisible(true)
+    setSearchMode(true)
+  }
+
+  const finishSearch = () => {
+    setSuggestVisible(false)
+    setSearchMode(false)
+    // 재검색 시, 기 검색된 아이디가 남아있으면 존재하지 않는 아파트로 접근할 수 있게됨.
+    // 따라서 검색이 완료되면, id 값을 초기화함. name값은 남아있는 것이 사용자 경험이 좋다고 판단됨.
+    setInputValue((prevState) => ({ ...prevState, id: '' }))
+  }
+
+  const changeInputvalue = async (e: ChangeEvent<HTMLInputElement>) => {
+    startSearch()
     setInputValue((prevState) => ({ ...prevState, name: e.target.value }))
     setFocusIndex(-1)
-    if (!inputValue.name) return
-    axios({
-      method: 'get',
-      url: `https://hogangnono.com/api/v2/searches/suggestions/new?query=${e.target.value}=127.256518&y=37.2666079`,
-    }).then((response) => {
-      setSuggestApts(response.data.data.matched.apt.list)
+    if (!e.target.value) return
+    const response = await externalAptSearchService.search({
+      keyword: e.target.value,
+      lng,
+      lat,
     })
+    setSuggestApts(response)
   }
 
   const moveFocus = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -91,8 +111,7 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
   }
 
   const onFocus = () => {
-    setSuggestVisible(true)
-    setSearchMode(true)
+    startSearch()
   }
 
   const onBlur = (e: FocusEvent<HTMLInputElement>) => {
@@ -101,13 +120,13 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
       if (!inputRef.current) return
       inputRef.current.focus()
     } else {
-      setSuggestVisible(false)
-      setSearchMode(false)
+      finishSearch()
     }
   }
 
   const moveToCommunityClick = async (aptId: string, aptName: string) => {
     const response = await aptService.aptExists({ aptId })
+    finishSearch()
     if (response.apartExists) {
       return navigate(`/community/${aptId}`)
     }
@@ -118,6 +137,8 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
     e.preventDefault()
     if (!inputValue.id) return alert('목록에서 아파트를 선택해주세요.')
     const response = await aptService.aptExists({ aptId: inputValue.id })
+    finishSearch()
+
     if (response.apartExists) {
       return navigate(`/community/${inputValue.id}`)
     }
