@@ -2,6 +2,7 @@ import React from 'react'
 import { ADVERTISEMENT_LIST } from 'constants/advertisementList'
 import { Img, ShadowBox } from 'styles/reusable-style/elementStyle'
 import Slider from 'react-slick'
+import { styled } from 'styled-components'
 
 const AdvertisementWidget = () => {
   const moveToDetail = (url: string) => {
@@ -21,11 +22,11 @@ const AdvertisementWidget = () => {
   }
 
   return (
-    <Slider {...settings}>
+    <StyledSlider {...settings}>
       {ADVERTISEMENT_LIST.map(({ url, img, sponsor, backgroundColor }, index) => (
         <div key={index}>
           <ShadowBox
-            $boxShadow="none"
+            // $boxShadow="none"
             $background={backgroundColor}
             $height="80px"
             $display="flex"
@@ -37,8 +38,14 @@ const AdvertisementWidget = () => {
           </ShadowBox>
         </div>
       ))}
-    </Slider>
+    </StyledSlider>
   )
 }
 
 export default AdvertisementWidget
+
+const StyledSlider = styled(Slider)`
+  .slick-list {
+    overflow: visible;
+  }
+`
