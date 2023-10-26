@@ -214,7 +214,7 @@ const StyledBox = styled.div`
   position: absolute;
   top: 50px;
   left: 0;
-  z-index: 2;
+  z-index: 999;
   width: 100%;
   border-radius: 10px;
   max-height: 300px;

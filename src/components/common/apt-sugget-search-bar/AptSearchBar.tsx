@@ -12,6 +12,9 @@ import SearchBar from 'components/ui/SearchBar'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { AptSearch } from 'types/community-type/aptType'
+import { useGeolocation } from 'hooks/useGeolocation'
+import { externalAptSearchService } from 'services/apt/externalAptSearchService'
+import { aptService } from 'services/apt/aptService'
 
 const AptSearchBar = () => {
   const navigate = useNavigate()
@@ -23,16 +26,20 @@ const AptSearchBar = () => {
   const liRef = useRef<HTMLElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const changeInputvalue = (e: ChangeEvent<HTMLInputElement>) => {
+  const { coordinates } = useGeolocation()
+  const lng = coordinates?.lng ?? 127.256518
+  const lat = coordinates?.lat ?? 37.2666079
+
+  const changeInputvalue = async (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, name: e.target.value }))
     setFocusIndex(-1)
-    if (!inputValue.name) return
-    axios({
-      method: 'get',
-      url: `https://hogangnono.com/api/v2/searches/suggestions/new?query=${e.target.value}=127.256518&y=37.2666079`,
-    }).then((response) => {
-      setSuggestApts(response.data.data.matched.apt.list)
+    if (!e.target.value) return
+    const response = await externalAptSearchService.search({
+      keyword: e.target.value,
+      lng,
+      lat,
     })
+    setSuggestApts(response)
   }
 
   const moveFocus = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -94,14 +101,24 @@ const AptSearchBar = () => {
     }
   }
 
-  const moveToCommunityClick = (aptId: string) => {
-    navigate(`/community/${aptId}`)
+  const moveToCommunityClick = async (aptId: string, aptName: string) => {
+    const response = await aptService.aptExists({ aptId })
+    if (response.apartExists) {
+      return navigate(`/community/${aptId}`)
+    }
+    return navigate(`/community/${aptId}/create`, { state: { aptId, aptName } })
   }
 
-  const moveToCommunityEnter = (e: FormEvent<HTMLFormElement>) => {
+  const moveToCommunityEnter = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!inputValue.id) return alert('목록에서 아파트를 선택해주세요.')
-    navigate(`/community/${inputValue.id}`)
+    const response = await aptService.aptExists({ aptId: inputValue.id })
+    if (response.apartExists) {
+      return navigate(`/community/${inputValue.id}`)
+    }
+    return navigate(`/community/${inputValue.id}/create`, {
+      state: { aptId: inputValue.id, aptName: inputValue.name },
+    })
   }
 
   useEffect(() => {
@@ -136,7 +153,7 @@ const AptSearchBar = () => {
                     <StyledLi
                       key={id}
                       tabIndex={-1}
-                      onClick={() => moveToCommunityClick(id)}
+                      onClick={() => moveToCommunityClick(id, name)}
                       className={index === focusIndex ? 'focus' : ''}
                       ref={(el) => {
                         if (index === focusIndex) {
