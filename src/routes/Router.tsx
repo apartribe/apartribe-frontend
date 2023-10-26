@@ -35,6 +35,7 @@ import ProtectedRouteOnlyNotLoggedIn from './ProtectedRouteOnlyNotLoggedIn'
 import ProtectedRouteLoggedIn from './ProtectedRouteLoggedIn'
 import ProtectedRouteOnlyManager from './ProtectedRouteOnlyManager'
 import ProtectedRoutePresentAptVerified from './ProtectedRoutePresentAptVerified'
+import ProtectedRouteNonExistentApt from './ProtectedRouteNonExistentApt'
 
 const Router = createBrowserRouter([
   {
@@ -158,7 +159,11 @@ const Router = createBrowserRouter([
   },
   {
     path: '/community/:aptId', // article를 붙이는게 일관성이 있으나, nest 구조상 불가
-    element: <CommunityHomePage />,
+    element: (
+      <ProtectedRouteNonExistentApt>
+        <CommunityHomePage />
+      </ProtectedRouteNonExistentApt>
+    ),
     children: [
       {
         index: true,
