@@ -14,9 +14,11 @@ import {
   PAGE_MY_ARTICLE,
   PAGE_MY_COMMENT,
 } from 'constants/setting/path'
-import { MyInfo, ResultWithData } from 'types/setting'
+import { MyInfo } from 'types/setting'
 import { Message } from 'types/auth'
 import QuestionModal from 'components/common/QuestionModal'
+import { loginUser } from 'redux/store/userSlice'
+import { useDispatch } from 'react-redux'
 
 const SettingPage = () => {
   const [myInfo, setMyInfo] = useState<MyInfo>({
@@ -34,23 +36,20 @@ const SettingPage = () => {
     todo: '' as unknown as () => void,
   })
 
-  const userEmail = useAppSelector((state) => state.user?.userEmail)
+  const userInfo = useAppSelector((state) => state.user?.userInfo)
 
   const { email, name, nickname, profileImageUrl /* , aptName, badge */ } = myInfo
   const aptName = '아파트명'
   const badge = '미인증'
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     const viewMyInfo = async () => {
-      const showMemberResult = await user.showMember(userEmail)
-      const { result, data } = showMemberResult as ResultWithData
-
-      if (result === 'success') {
-        setMyInfo(data)
-      }
+      setMyInfo(userInfo)
     }
     viewMyInfo()
-  }, [userEmail])
+  }, [userInfo])
 
   const openModal = (
     status: 'waiting' | 'success' | 'fail',
@@ -63,11 +62,11 @@ const SettingPage = () => {
   }
 
   const logout = () => {
-    openModal(
-      'waiting',
-      '로그아웃 하시겠습니까? 확인을 누르면 로그아웃 됩니다.',
-      auth.logout,
-    )
+    const toDo = () => {
+      auth.logout()
+      dispatch(loginUser(null))
+    }
+    openModal('waiting', '로그아웃 하시겠습니까? 확인을 누르면 로그아웃 됩니다.', toDo)
   }
 
   return (

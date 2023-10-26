@@ -19,6 +19,8 @@ import { auth } from 'services/auth'
 import MessageModal from 'components/common/MessageModal'
 import { loginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
+import { user } from 'services/user'
+import { ResultWithData } from 'types/setting'
 
 const LoginPage = () => {
   const [inputValue, setInputValue] = useState<SigninInputValue>({
@@ -75,9 +77,16 @@ const LoginPage = () => {
 
     const { result, message } = await auth.signin(email, password)
     openModal(result, message)
+    navigate('/')
 
     if (result === 'success') {
-      dispatch(loginUser(email))
+      const showMemberResult = await user.showMember(email)
+      const { result, data } = showMemberResult as ResultWithData
+
+      if (result === 'success') {
+        dispatch(loginUser(data))
+      }
+
       // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
       //navigate()
     }
