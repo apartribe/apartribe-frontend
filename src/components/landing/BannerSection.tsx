@@ -6,6 +6,7 @@ import Slider from 'react-slick'
 import BannerFirst from './BannerFirst'
 import BannerSecond from './BannerSecond'
 import BannerThird from './BannerThird'
+import { styled } from 'styled-components'
 
 const BannerSection = () => {
   const settings = {
@@ -20,9 +21,9 @@ const BannerSection = () => {
   }
 
   return (
-    <Container $background="#FFFFFF">
+    <Container $background="#FFFFFF" $height="500px">
       <Inner>
-        <Slider {...settings}>
+        <StyledSlider {...settings}>
           <div>
             <BannerFirst />
           </div>
@@ -32,10 +33,17 @@ const BannerSection = () => {
           <div>
             <BannerThird />
           </div>
-        </Slider>
+        </StyledSlider>
       </Inner>
     </Container>
   )
 }
 
 export default BannerSection
+
+const StyledSlider = styled(Slider)`
+  .slick-list {
+    overflow: visible;
+    z-index: 10; // 없을 시 하위에 아파트 랭크 케러셸이 검색어 박스를 가림/
+  }
+`
