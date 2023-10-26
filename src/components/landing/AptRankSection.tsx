@@ -27,11 +27,11 @@ const AptRankSection = () => {
           <StyledParagraph>지금 가장 핫한 아파트 TOP 10</StyledParagraph>
         </Inner>
         <StyledDiv>
-          <Slider {...settings}>
+          <StyledSlider {...settings}>
             {APT_RANK_MOCK.map((aptInfo, index) => (
               <AptRankCard key={index} index={index} aptInfo={aptInfo} />
             ))}
-          </Slider>
+          </StyledSlider>
         </StyledDiv>
       </StyledWrapper>
     </Container>
@@ -47,6 +47,7 @@ const StyledWrapper = styled.div`
 
 const StyledDiv = styled.div`
   width: 2000px;
+  margin: 0 auto;
 `
 
 const StyledParagraph = styled.p`
@@ -56,4 +57,10 @@ const StyledParagraph = styled.p`
   font-weight: 900;
   color: #303030;
   /* line-height: 25px; */
+`
+
+const StyledSlider = styled(Slider)`
+  .slick-list {
+    overflow: visible;
+  }
 `
