@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
+import { useAppSelector } from 'hooks/useRedux'
+import { Img } from 'styles/reusable-style/elementStyle'
 
 const APT_NAME_MOCK = '자이 힐스테이트 하남'
 
@@ -13,6 +15,8 @@ interface Props {
 }
 
 const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
+  const { profileImageUrl } = useAppSelector((state) => state.user?.userInfo)
+
   return (
     <Container $background="#FFFFFF" ref={backToTopRef}>
       <Inner
@@ -42,7 +46,11 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
             </StyledNavLink>
           ))}
           <StyledNavLink to="/setting">
-            <IoPersonCircle fontSize="40px" color="#B3B3B3" cursor="pointer" />
+            {profileImageUrl.length !== 0 ? (
+              <StyledImg src={profileImageUrl} />
+            ) : (
+              <StyledIcon />
+            )}
           </StyledNavLink>
         </StyledDiv>
       </Inner>
@@ -75,4 +83,19 @@ const StyledNavLink = styled(NavLink)`
     font-weight: 900;
     color: #2b7f75;
   }
+`
+
+const StyledImg = styled(Img)`
+  width: 40px;
+  height: 40px;
+  border: 1px solid #dadada;
+  border-radius: 50%;
+`
+
+const StyledIcon = styled(IoPersonCircle)`
+  width: 40px;
+  height: 40px;
+  color: #b3b3b3;
+  margin: -10px;
+  cursor: pointer;
 `
