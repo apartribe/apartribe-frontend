@@ -12,11 +12,15 @@ interface ModalProps {
     text: string
     buttons: ButtonsType[]
   }
+  noBackground?: boolean
 }
 
-const FlexibleModal: FC<ModalProps> = ({ modalProps: { text, buttons } }) => {
+const FlexibleModal: FC<ModalProps> = ({
+  modalProps: { text, buttons },
+  noBackground,
+}) => {
   return (
-    <ModalBackground>
+    <ModalBackground $background={noBackground ? 'none' : ''}>
       <StyledWrapper>
         <StyledDiv className="textSection">{text}</StyledDiv>
         <StyledDiv className="buttonSection">
@@ -42,6 +46,7 @@ const StyledWrapper = styled.div`
   display: inline-block;
   border-radius: 25px;
   overflow: hidden;
+  box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.5);
 `
 
 const StyledDiv = styled.div`
