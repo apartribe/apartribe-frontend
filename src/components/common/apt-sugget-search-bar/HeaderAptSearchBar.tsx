@@ -19,6 +19,7 @@ import { TiDelete } from 'react-icons/ti'
 import { aptService } from 'services/apt/aptService'
 import { useGeolocation } from 'hooks/useGeolocation'
 import { externalAptSearchService } from 'services/apt/externalAptSearchService'
+import { Modal, ModalBackground } from 'styles/reusable-style/elementStyle'
 
 interface Props {
   searchMode: boolean
@@ -47,6 +48,7 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
   const finishSearch = () => {
     setSuggestVisible(false)
     setSearchMode(false)
+    setFocusIndex(0)
     // 재검색 시, 기 검색된 아이디가 남아있으면 존재하지 않는 아파트로 접근할 수 있게됨.
     // 따라서 검색이 완료되면, id 값을 초기화함. name값은 남아있는 것이 사용자 경험이 좋다고 판단됨.
     setInputValue((prevState) => ({ ...prevState, id: '' }))
@@ -102,8 +104,7 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
         }
         break
       case 'Escape':
-        setSuggestVisible(false)
-        setFocusIndex(0)
+        finishSearch()
         break
       default:
         break
@@ -265,13 +266,7 @@ const StyledBox = styled.div`
   }
 `
 
-const StyledUl = styled.ul`
-  /* background: #FFFFFF; */
-  position: absolute;
-  top: 50%;
-  right: 32px;
-  transform: translate(0, -50%);
-`
+const StyledUl = styled.ul``
 
 const StyledLi = styled.li`
   padding: 10px 20px;
@@ -309,7 +304,6 @@ const StyledInput = styled.input`
   border-radius: 100px;
   outline: none;
   transition: 0.3s ease-in-out;
-  overflow: hidden;
 
   &.stretch {
     width: 900px;
