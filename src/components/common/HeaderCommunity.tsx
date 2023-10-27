@@ -120,6 +120,7 @@ const StyledNavLink = styled(NavLink)`
 
   &:hover {
     transform: scale(1.05);
+    transition: 0s;
   }
 
   &.active {
