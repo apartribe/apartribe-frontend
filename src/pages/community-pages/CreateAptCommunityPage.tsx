@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { aptService } from 'services/apt/aptService'
 import { styled } from 'styled-components'
 import { Button, P } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { BiSolidQuoteAltLeft, BiSolidQuoteAltRight } from 'react-icons/bi'
+import Confetti from 'components/common/effect/Confetti'
+import FlexibleModal from 'components/common/FlexibleModal'
 
 const CreateAptCommunityPage = () => {
   const navigate = useNavigate()
+  const [visibleModal, setVisibleModal] = useState(false)
 
   // 사용자가 직접 주소로 접근한 경우, 아래 정보과 없으므로 에러발생. 추후 직접 접근 감시 로직 추가 요망
   const {
@@ -15,9 +18,18 @@ const CreateAptCommunityPage = () => {
   } = useLocation()
 
   const createAptCommunity = async () => {
+    setVisibleModal(true)
     const { statusCode, message } = await aptService.createCommunity({ aptId, aptName })
     alert(message)
     if (statusCode === 201) return navigate(`/community/${aptId}`)
+  }
+
+  const modalProps = {
+    text: `" ${aptName} "의 커뮤니티가 성공적으로 개설되었습니다 !`,
+    buttons: [
+      { title: '홈으로 돌아가기', action: () => navigate('/') },
+      { title: '커뮤니티 바로가기', action: () => navigate(`/community/${aptId}`) },
+    ],
   }
 
   return (
@@ -43,6 +55,14 @@ const CreateAptCommunityPage = () => {
           </StyledParagraph>
           <StyledParagraph>아래 버튼을 누르기만하면 생성이 완료됩니다.</StyledParagraph>
         </div>
+        {visibleModal ? (
+          <>
+            <FlexibleModal modalProps={modalProps} noBackground />
+            <Confetti />
+          </>
+        ) : (
+          ''
+        )}
         <Button $width="350px" onClick={createAptCommunity}>
           우리 아파트 커뮤니티 개설하기
         </Button>
