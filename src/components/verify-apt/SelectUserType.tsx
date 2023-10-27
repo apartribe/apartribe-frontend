@@ -1,4 +1,4 @@
-import { CARD_CONTENTS } from 'pages/setting-pages/VerifyAptPage'
+import { CARD_CONTENTS } from 'constants/landing/verifyApt'
 import React, { FC, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { Badge } from 'styles/reusable-style/elementStyle'

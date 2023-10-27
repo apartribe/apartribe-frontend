@@ -1,8 +1,8 @@
-import { MANAGER_POSITIONS, RESIDENT_POSITIONS } from 'pages/setting-pages/VerifyAptPage'
 import React, { FC, Dispatch, SetStateAction, useState } from 'react'
 import { styled } from 'styled-components'
 import { Verification } from 'types/VerifyAptType'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
+import { MANAGER_POSITIONS, RESIDENT_POSITIONS } from 'constants/landing/verifyApt'
 
 interface Props {
   formValue: Verification
@@ -25,9 +25,8 @@ const SelectPosition: FC<Props> = ({ formValue, setFormValue }) => {
     <>
       <StyledH2>STEP3. 세부 유형 선택</StyledH2>
       <StyledParagraph className="helper">
-        {' '}
         {`사용자의 세부 유형을 선택해주세요.
-        일치하는 유형이 없을 시 가장 유사한 유형을 선택해주세요.`}{' '}
+        일치하는 유형이 없을 시 가장 유사한 유형을 선택해주세요.`}
       </StyledParagraph>
       <StyledSection>
         {formValue.userType === 'resident' && (
