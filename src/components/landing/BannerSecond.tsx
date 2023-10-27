@@ -46,6 +46,8 @@ const StyledWrapper = styled.div`
   display: flex;
   margin-bottom: 20px;
   color: #ffffff;
+  position: relative;
+  overflow: hidden;
 `
 
 const StyledDiv = styled.div`
@@ -106,7 +108,7 @@ const StyledLogoOnlyIconWhite = styled(LogoOnlyIconWhite)`
   }
 
   &.right {
-    bottom: -20px;
+    bottom: -50px;
     right: -80px;
   }
 `
