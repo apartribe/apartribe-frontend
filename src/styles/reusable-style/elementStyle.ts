@@ -15,7 +15,7 @@ export const P = styled.p<reusableStyleProps>`
 export const Button = styled.button<reusableStyleProps>`
   border: none;
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: ${(props) => props.$cursor || 'pointer'};
   background: ${(props) => props.$background || '#2B7F75'};
   width: ${(props) => props.$width || '100%'};
   height: ${(props) => props.$height || '55px'};
