@@ -38,6 +38,8 @@ export interface AnnounceDetailType {
   thumbnail: string
   floatFrom: string
   floatTo: string
+  memberLiked: boolean
+  profileImage: string
   // protected: boolean
 }
 

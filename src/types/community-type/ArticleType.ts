@@ -23,6 +23,8 @@ export interface ArticleDetailType {
   saw: number
   commentCounts: number
   thumbnail: string
+  memberLiked: boolean
+  profileImage: string
   // protected: boolean
 }
 
