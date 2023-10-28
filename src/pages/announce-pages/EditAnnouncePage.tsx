@@ -88,7 +88,7 @@ const AddAnnouncePage = () => {
       data: inputValue,
     })
     if (statusCode === 201) {
-      const userConfirmed = confirm('정말 등록 하시겠습니까?')
+      const userConfirmed = confirm('정말 수정 하시겠습니까?')
       if (userConfirmed) {
         alert(message)
         navigate(`/community/${aptId}/announce/${postId}/detail`)
@@ -115,7 +115,7 @@ const AddAnnouncePage = () => {
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
       <StyledDiv>
         <P $fontWeight="700" $fontSize="20px" $lineHeight="40px">
-          공지사항 작성
+          공지사항 수정
         </P>
         <StyledDiv>
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
