@@ -68,7 +68,7 @@ const EditArticlePage = () => {
     if (!inputValue.category) return alert('카테고리를 선택해주세요')
     if (!inputValue.title) return alert('제목을 입력해주세요')
     if (!inputValue.content) return alert('내용을 입력해주세요')
-    const userConfirmed = confirm('정말 등록 하시겠습니까?')
+    const userConfirmed = confirm('정말 수정 하시겠습니까?')
     if (userConfirmed) {
       const { statusCode, message } = await articleService.updatePost({
         aptId: aptId as string,

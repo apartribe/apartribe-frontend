@@ -112,7 +112,7 @@ const EditTogetherPage = () => {
       postId: postId as string,
     })
     if (statusCode === 201) {
-      const userConfirmed = confirm('정말 등록 하시겠습니까?')
+      const userConfirmed = confirm('정말 수정 하시겠습니까?')
       if (userConfirmed) {
         alert(message)
         navigate(`/community/${aptId}/together/${postId}/detail`)
