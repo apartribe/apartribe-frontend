@@ -57,12 +57,14 @@ export const articleService = {
   },
 
   async getPost(param: getParam) {
-    const { boardType /* , aptId */, postId } = param
+    const { boardType, aptId, postId } = param
     try {
-      const response: AxiosResponse = await instance(`/api/${boardType}/${postId}`, {
-        // TODO: 아파트 아이디 추가 필요
-        method: 'get',
-      })
+      const response: AxiosResponse = await instance(
+        `/api/${aptId}/${boardType}/${postId}`,
+        {
+          method: 'get',
+        },
+      )
 
       return response.data
     } catch (error) {
