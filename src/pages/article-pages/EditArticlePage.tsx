@@ -78,7 +78,7 @@ const EditArticlePage = () => {
       })
       if (statusCode === 201) {
         alert(message)
-        navigate(`/community/123/article/${postId}/detail`)
+        navigate(`/community/${aptId}/article/${postId}/detail`)
         return
       } else {
         alert(message)
@@ -93,7 +93,7 @@ const EditArticlePage = () => {
       '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
     )
     if (userConfirmed) {
-      navigate(`/community/123/article/${postId}/detail`)
+      navigate(`/community/${aptId}/article/${postId}/detail`)
       return
     }
     return

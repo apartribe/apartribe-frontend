@@ -64,7 +64,7 @@ const AddTogetherPage = () => {
       const userConfirmed = confirm('정말 등록 하시겠습니까?')
       if (userConfirmed) {
         alert(message)
-        navigate(`/community/123/together`)
+        navigate(`/community/${aptId}/together`)
         return
       }
       return
@@ -76,7 +76,7 @@ const AddTogetherPage = () => {
       '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
     )
     if (userConfirmed) {
-      navigate(`/community/123/together`)
+      navigate(-1)
       return
     }
     return
