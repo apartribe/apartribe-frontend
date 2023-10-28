@@ -4,13 +4,15 @@ import { ArrowButton } from 'styles/reusable-style/elementStyle'
 import { IoIosArrowUp } from 'react-icons/io'
 import { PiPencilSimpleLineDuotone } from 'react-icons/pi'
 import { FIXED_BUTTON_LISTS } from 'constants/fixedButtonList'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 interface Props {
   isInViewport: boolean
 }
 
 export const FixedButtonList: FC<Props> = ({ isInViewport }) => {
+  const { aptId } = useParams()
+
   const clickBackToTop = () => {
     window.scrollTo({
       top: 0,
@@ -22,7 +24,7 @@ export const FixedButtonList: FC<Props> = ({ isInViewport }) => {
     <StyledWrapper>
       <StyledSubWrapper>
         {FIXED_BUTTON_LISTS.map((list, index) => (
-          <StyledLink key={index} to={list.path}>
+          <StyledLink key={index} to={list.path(aptId as string)}>
             <PiPencilSimpleLineDuotone />
             {list.option}
           </StyledLink>
