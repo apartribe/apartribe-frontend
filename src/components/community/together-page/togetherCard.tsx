@@ -14,15 +14,7 @@ interface Props {
 
 const TogetherCard: FC<Props> = ({
   aptId,
-  post: {
-    id,
-    createdBy,
-    createdAt,
-    recruitStatus,
-    title,
-    description,
-    /* saw, liked, commentCounts, */ thumbnail,
-  },
+  post: { id, createdBy, createdAt, recruitStatus, title, description, thumbnail },
 }) => {
   const navigate = useNavigate()
 

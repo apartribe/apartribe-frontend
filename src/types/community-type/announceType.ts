@@ -21,6 +21,7 @@ export interface AnnounceCardType {
   liked: number
   commentCounts: number
   thumbnail: string
+  profileImage: string
   // protected: boolean
 }
 

@@ -36,6 +36,7 @@ const AnnounceCard: FC<Props> = ({
     liked,
     commentCounts,
     thumbnail,
+    profileImage,
   },
 }) => {
   const navigate = useNavigate()
@@ -47,7 +48,7 @@ const AnnounceCard: FC<Props> = ({
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
-        src={dafaultAvatar} //{ avater || dafaultAvatar}
+        src={profileImage || dafaultAvatar}
         $width="40px"
         $height="40px"
         $borderRadius="50%"
