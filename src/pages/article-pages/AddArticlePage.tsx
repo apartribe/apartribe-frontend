@@ -59,7 +59,7 @@ const AddArticlePage = () => {
       }) // 아이디 돌려받아서 해당 게시물로 이동 로직 추가 요망
       if (statusCode === 201) {
         alert(message)
-        navigate(`/community/123`)
+        navigate(`/community/${aptId}`)
         return
       } else {
         alert(message)
@@ -74,7 +74,7 @@ const AddArticlePage = () => {
       '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
     )
     if (userConfirmed) {
-      navigate(`/community/123`)
+      navigate(-1)
       return
     }
     return

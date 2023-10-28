@@ -63,7 +63,7 @@ const AddAnnouncePage = () => {
       const userConfirmed = confirm('정말 등록 하시겠습니까?')
       if (userConfirmed) {
         alert(message)
-        navigate(`/community/123/announce`)
+        navigate(`/community/${aptId}/announce`)
         return
       }
       return
@@ -75,13 +75,11 @@ const AddAnnouncePage = () => {
       '작성중인 내용은 복구할 수 없습니다. 정말 취소 하시겠습니까? ',
     )
     if (userConfirmed) {
-      navigate(`/community/123/announce`)
+      navigate(-1)
       return
     }
     return
   }
-
-  console.log('안녕', inputValue)
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
