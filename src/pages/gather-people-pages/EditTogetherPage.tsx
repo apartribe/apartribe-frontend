@@ -80,7 +80,10 @@ const EditTogetherPage = () => {
 
   useEffect(() => {
     const getCategory = async () => {
-      const response = await categoryService.getCategory({ boardType: BOARD_TYPE })
+      const response = await categoryService.getCategory({
+        aptId: aptId as string,
+        boardType: BOARD_TYPE,
+      })
       const mappedResponse = response.data.map((item: Category) => item.categoryName)
       setCategoryList(['전체', ...mappedResponse])
     }

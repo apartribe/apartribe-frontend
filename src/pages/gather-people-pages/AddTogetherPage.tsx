@@ -6,7 +6,7 @@ import { styled } from 'styled-components'
 import { AddTogetherType } from 'types/community-type/togetherType'
 import RangeDatePicker from 'components/community/together-page/TogetherRangeDatePicker'
 import { categoryService } from 'services/community/categoryService'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
 import uploadS3 from 'utils/uploadS3'
@@ -14,6 +14,7 @@ import uploadS3 from 'utils/uploadS3'
 const AddTogetherPage = () => {
   const BOARD_TYPE = 'together'
 
+  const { aptId } = useParams()
   const navigate = useNavigate()
 
   const [inputValue, setInputValue] = useState<AddTogetherType>({
@@ -34,7 +35,10 @@ const AddTogetherPage = () => {
 
   useEffect(() => {
     const getCategory = async () => {
-      const response = await categoryService.getCategory({ boardType: BOARD_TYPE })
+      const response = await categoryService.getCategory({
+        aptId: aptId as string,
+        boardType: BOARD_TYPE,
+      })
       const mappedResponse = response.data.map((item: Category) => item.categoryName)
       setCategoryList(['전체', ...mappedResponse])
     }

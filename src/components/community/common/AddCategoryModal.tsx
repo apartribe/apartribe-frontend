@@ -6,6 +6,7 @@ import React, {
   useState,
   FormEvent,
 } from 'react'
+import { useParams } from 'react-router-dom'
 import { categoryService } from 'services/community/categoryService'
 import { BoardType } from 'services/community/postsService'
 import { styled } from 'styled-components'
@@ -28,6 +29,8 @@ const AddCategoryModal: FC<Props> = ({
   setAddModalVisible,
   setCategoryList,
 }) => {
+  const { aptId } = useParams()
+
   const [inputValue, setInputValue] = useState('')
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -43,7 +46,11 @@ const AddCategoryModal: FC<Props> = ({
       '생성된 카테고리는 관리자만 삭제할 수 있습니다. 정말 생성하시겠습니까?',
     )
     if (userConfirmed) {
-      const response = await categoryService.addCategory({ boardType, data: inputValue })
+      const response = await categoryService.addCategory({
+        aptId: aptId as string,
+        boardType,
+        data: inputValue,
+      })
       setCategoryList((prevState) => [...prevState, response.data.name])
       setAddModalVisible(false)
     }
