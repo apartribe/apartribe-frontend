@@ -5,6 +5,7 @@ import { AddTogetherType, UpdateTogetherType } from 'types/community-type/togeth
 import dateformat from 'utils/dateFormat'
 
 interface addParam {
+  aptId: string
   boardType: BoardType
   data: AddTogetherType
 }
@@ -29,7 +30,7 @@ interface deleteParam {
 
 export const togetherService = {
   async addPost(param: addParam) {
-    const { boardType, data } = param
+    const { aptId, boardType, data } = param
     const {
       category,
       title,
@@ -45,7 +46,7 @@ export const togetherService = {
     } = data
 
     try {
-      await instance(`/api/${boardType}`, {
+      await instance(`/api/${aptId}/${boardType}`, {
         method: 'post',
         data: {
           category,
@@ -87,7 +88,6 @@ export const togetherService = {
           method: 'get',
         },
       )
-      console.log('아아', response.data)
       return response.data
     } catch (error) {
       console.error(error)

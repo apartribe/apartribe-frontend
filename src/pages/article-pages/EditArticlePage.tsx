@@ -71,6 +71,7 @@ const EditArticlePage = () => {
     const userConfirmed = confirm('정말 등록 하시겠습니까?')
     if (userConfirmed) {
       const { statusCode, message } = await articleService.updatePost({
+        aptId: aptId as string,
         boardType: BOARD_TYPE,
         data: inputValue,
         postId: postId as string,

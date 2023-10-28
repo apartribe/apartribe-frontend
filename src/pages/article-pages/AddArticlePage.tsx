@@ -53,6 +53,7 @@ const AddArticlePage = () => {
     const userConfirmed = confirm('정말 등록 하시겠습니까?')
     if (userConfirmed) {
       const { statusCode, message } = await articleService.addPost({
+        aptId: aptId as string,
         boardType: BOARD_TYPE,
         data: inputValue,
       }) // 아이디 돌려받아서 해당 게시물로 이동 로직 추가 요망
