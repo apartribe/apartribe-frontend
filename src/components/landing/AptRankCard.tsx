@@ -55,7 +55,7 @@ const AptRankCard: FC<Props> = ({ index, aptInfo }) => {
 
 export default AptRankCard
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.li`
   position: relative;
   background: #ffffff;
   box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
