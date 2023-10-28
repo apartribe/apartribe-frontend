@@ -9,6 +9,7 @@ export interface ArticleCardType {
   liked: number
   commentCounts: number
   thumbnail: string
+  profileImage: string
   // protected: boolean
 }
 

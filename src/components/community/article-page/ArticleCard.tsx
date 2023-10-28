@@ -22,7 +22,6 @@ const ArticleCard: FC<Props> = ({
   boardType,
   post: {
     id,
-    // avatar,
     createdBy,
     createdAt,
     title,
@@ -31,18 +30,19 @@ const ArticleCard: FC<Props> = ({
     liked,
     thumbnail,
     commentCounts,
+    profileImage,
   },
 }) => {
   const navigate = useNavigate()
 
   const moveToDetail = () => {
-    navigate(`/community/${aptId}/${boardType}/${id}/detail`) // TODO: 아파트 아이디 변경
+    navigate(`/community/${aptId}/${boardType}/${id}/detail`)
   }
 
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
-        src={dafaultAvatar} //{ avater || dafaultAvatar}
+        src={profileImage || dafaultAvatar}
         $width="40px"
         $height="40px"
         $borderRadius="50%"
