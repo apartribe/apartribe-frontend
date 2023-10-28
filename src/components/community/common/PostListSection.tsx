@@ -91,6 +91,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
           case 'article':
             return (
               <ArticleCard
+                aptId={aptId as string}
                 boardType={boardType}
                 post={post as ArticleCardType}
                 key={post.id}
@@ -99,6 +100,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
           case 'announce':
             return (
               <AnnounceCard
+                aptId={aptId as string}
                 boardType={boardType}
                 post={post as AnnounceCardType}
                 key={post.id}
@@ -107,6 +109,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
           case 'together':
             return (
               <TogetherCard
+                aptId={aptId as string}
                 boardType={boardType}
                 post={post as TogetherCardType}
                 key={post.id}

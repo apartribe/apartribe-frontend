@@ -11,6 +11,7 @@ import { tagRemover } from 'utils/tagRemover'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
+  aptId: string
   boardType: BoardType
   post: AnnounceCardType
 }
@@ -23,6 +24,7 @@ const badgeColor = (category: string | undefined): string => {
 }
 
 const AnnounceCard: FC<Props> = ({
+  aptId,
   post: {
     id,
     level: category,
@@ -37,7 +39,6 @@ const AnnounceCard: FC<Props> = ({
   },
 }) => {
   const navigate = useNavigate()
-  const { aptId } = useParams()
 
   const moveToDetail = () => {
     navigate(`/community/${aptId}/announce/${id}/detail`) // 추후 경로 수정
