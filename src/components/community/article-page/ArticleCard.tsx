@@ -12,11 +12,13 @@ import { tagRemover } from 'utils/tagRemover'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
+  aptId: string
   boardType: BoardType
   post: ArticleCardType
 }
 
 const ArticleCard: FC<Props> = ({
+  aptId,
   boardType,
   post: {
     id,
@@ -32,7 +34,6 @@ const ArticleCard: FC<Props> = ({
   },
 }) => {
   const navigate = useNavigate()
-  const { aptId } = useParams()
 
   const moveToDetail = () => {
     navigate(`/community/${aptId}/${boardType}/${id}/detail`) // TODO: 아파트 아이디 변경

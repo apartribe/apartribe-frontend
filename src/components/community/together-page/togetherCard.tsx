@@ -7,11 +7,13 @@ import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
 
 interface Props {
+  aptId: string
   boardType: BoardType
   post: TogetherCardType
 }
 
 const TogetherCard: FC<Props> = ({
+  aptId,
   post: {
     id,
     createdBy,
@@ -23,7 +25,6 @@ const TogetherCard: FC<Props> = ({
   },
 }) => {
   const navigate = useNavigate()
-  const { aptId } = useParams()
 
   const moveToDetail = () => {
     navigate(`/community/${aptId}/together/${id}/detail`) // 추후 경로 수정
