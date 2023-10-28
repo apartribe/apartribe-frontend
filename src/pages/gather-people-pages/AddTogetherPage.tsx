@@ -56,6 +56,7 @@ const AddTogetherPage = () => {
 
   const savePost = async () => {
     const { statusCode, message } = await togetherService.addPost({
+      aptId: aptId as string,
       boardType: BOARD_TYPE,
       data: inputValue,
     })

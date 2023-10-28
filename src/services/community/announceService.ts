@@ -4,6 +4,7 @@ import { AddAnnounceType } from 'types/community-type/announceType'
 import dateformat from 'utils/dateFormat'
 
 interface addParam {
+  aptId: string
   boardType: 'announce'
   data: AddAnnounceType
 }
@@ -29,10 +30,10 @@ interface deleteParam {
 
 export const announceService = {
   async addPost(param: addParam) {
-    const { boardType, data } = param
+    const { aptId, boardType, data } = param
     const { category, title, content, thumbnail, floatFrom, floatTo } = data
     try {
-      await instance(`/api/${boardType}`, {
+      await instance(`/api/${aptId}/${boardType}`, {
         method: 'post',
         data: {
           level: category,

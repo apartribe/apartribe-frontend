@@ -55,6 +55,7 @@ const AddAnnouncePage = () => {
 
   const savePost = async () => {
     const { statusCode, message } = await announceService.addPost({
+      aptId: aptId as string,
       boardType: BOARD_TYPE,
       data: inputValue,
     })

@@ -4,17 +4,19 @@ import { instance } from 'configs/axios'
 import { AddArticleType } from 'types/community-type/ArticleType'
 
 interface addParam {
+  aptId: string
   boardType: BoardType
   data: AddArticleType
 }
 
 interface getParam {
-  boardType: BoardType
   aptId: string
+  boardType: BoardType
   postId: string
 }
 
 interface updateParam {
+  aptId: string
   boardType: BoardType
   data: AddArticleType
   postId: string
@@ -27,10 +29,10 @@ interface deleteParam {
 
 export const articleService = {
   async addPost(param: addParam) {
-    const { boardType, data } = param
+    const { aptId, boardType, data } = param
     const { category, title, content, thumbnail } = data
     try {
-      await instance(`/api/${boardType}`, {
+      await instance(`/api/${aptId}/${boardType}`, {
         method: 'post',
         data: {
           category,
@@ -57,7 +59,7 @@ export const articleService = {
   },
 
   async getPost(param: getParam) {
-    const { boardType, aptId, postId } = param
+    const { aptId, boardType, postId } = param
     try {
       const response: AxiosResponse = await instance(
         `/api/${aptId}/${boardType}/${postId}`,
@@ -73,11 +75,11 @@ export const articleService = {
   },
 
   async updatePost(param: updateParam) {
-    const { boardType, data, postId } = param
+    const { aptId, boardType, data, postId } = param
     const { category, title, content } = data
 
     try {
-      await instance(`/api/${boardType}/${postId}`, {
+      await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'put',
         data: {
           category,
