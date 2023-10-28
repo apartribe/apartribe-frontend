@@ -21,12 +21,12 @@ export const postsService = {
       const mappedCategory = category === '전체' ? '' : category
       switch (boardType) {
         case 'article':
-          response = await instance(`/api/${boardType}`, {
+          response = await instance(`/api/${aptId}/${boardType}`, {
             method: 'get',
             params: {
               size: 10,
               category: mappedCategory,
-              // sort,
+              sort: `${sort},${order}`,
               page,
             },
           })
