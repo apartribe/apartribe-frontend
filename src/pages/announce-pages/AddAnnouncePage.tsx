@@ -5,7 +5,7 @@ import { styled } from 'styled-components'
 import { URGENCY_GUIDE_LIST } from 'constants/urgencyGuideList'
 import { AddAnnounceType } from 'types/community-type/announceType'
 import { categoryService } from 'services/community/categoryService'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { announceService } from 'services/community/announceService'
 import AnnounceRangeDatePicker from 'components/community/announce-page/AnnounceRangeDatePicker'
@@ -13,6 +13,7 @@ import AnnounceRangeDatePicker from 'components/community/announce-page/Announce
 const AddAnnouncePage = () => {
   const BOARD_TYPE = 'announce'
 
+  const { aptId } = useParams()
   const navigate = useNavigate()
 
   const [inputValue, setInputValue] = useState<AddAnnounceType>({
@@ -29,7 +30,10 @@ const AddAnnouncePage = () => {
 
   useEffect(() => {
     const getCategory = async () => {
-      const response = await categoryService.getCategory({ boardType: BOARD_TYPE })
+      const response = await categoryService.getCategory({
+        aptId: aptId as string,
+        boardType: BOARD_TYPE,
+      })
       const mappedResponse = response.data.map((item: Category) => item.categoryName)
       setCategoryList(['전체', ...mappedResponse])
     }

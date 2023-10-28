@@ -5,13 +5,14 @@ import DropdownCategory from 'components/ui/DropdownCategory'
 import { styled } from 'styled-components'
 import { categoryService } from 'services/community/categoryService'
 import { articleService } from 'services/community/articleService'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
 
 const AddArticlePage = () => {
   const BOARD_TYPE = 'article'
 
+  const { aptId } = useParams()
   const navigate = useNavigate()
 
   const [inputValue, setInputValue] = useState<AddArticleType>({
@@ -26,7 +27,10 @@ const AddArticlePage = () => {
 
   useEffect(() => {
     const getCategory = async () => {
-      const response = await categoryService.getCategory({ boardType: BOARD_TYPE })
+      const response = await categoryService.getCategory({
+        aptId: aptId as string,
+        boardType: BOARD_TYPE,
+      })
       const mappedResponse = response.data.map((item: Category) => item.categoryName)
       setCategoryList(['전체', ...mappedResponse])
     }

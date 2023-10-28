@@ -9,6 +9,7 @@ import AddCategoryModal from './AddCategoryModal'
 import { categoryService } from 'services/community/categoryService'
 import { BoardType } from 'services/community/postsService'
 import { Category } from 'types/community-type/categoryType'
+import { useParams } from 'react-router-dom'
 
 interface Props {
   boardType: BoardType
@@ -25,11 +26,15 @@ const CategorySection: FC<Props> = ({
   useArrow = false,
   canCreate = false,
 }) => {
+  const { aptId } = useParams()
   const [categoryList, setCategoryList] = useState<string[]>([])
 
   useEffect(() => {
     const getCategory = async () => {
-      const response = await categoryService.getCategory({ boardType })
+      const response = await categoryService.getCategory({
+        aptId: aptId as string,
+        boardType,
+      })
       const mappedResponse = response.data.map((item: Category) => item.categoryName)
       setCategoryList(['전체', ...mappedResponse])
     }
