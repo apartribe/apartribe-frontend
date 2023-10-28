@@ -124,7 +124,7 @@ const StyledArea = styled.div`
   display: flex;
   gap: 10px;
   overflow: auto;
-  max-width: 700px;
+  max-width: 650px;
 
   // 스크롤 바 숨김
   -ms-overflow-style: none; //인터넷 익스플로러
