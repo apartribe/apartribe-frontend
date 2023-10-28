@@ -7,15 +7,20 @@ import { Verification } from 'types/VerifyAptType'
 import SelectUserType from 'components/verify-apt/SelectUserType'
 import SelectPosition from 'components/verify-apt/SelectPosition'
 import SelectVerifyMethod from 'components/verify-apt/SelectVerifyMethod'
+import { aptService } from 'services/apt/aptService'
+import { useNavigate } from 'react-router-dom'
 
 const VerifyAptPage = () => {
+  const navigate = useNavigate()
+
   const [formValue, setFormValue] = useState<Verification>({
     aptId: '',
     aptName: '',
     userType: '',
     position: '',
   })
-  const { aptId, userType, position } = formValue
+
+  const { aptId, aptName, userType, position } = formValue
 
   const resetFormValue = () => {
     setFormValue({ aptId: '', aptName: '', userType: '', position: '' })
@@ -29,11 +34,20 @@ const VerifyAptPage = () => {
     } else alert('제출')
   }
 
+  const temporaryAuthentication = async () => {
+    const { statusCode, message } = await aptService.verifyApt({ aptId, aptName })
+    alert(message)
+    if (statusCode === 201) return navigate(`/`) // 추후에 아파트 존재하는지 확인하고 바로 보내줘도 좋을 듯
+  }
+
   return (
     <Container $padding="30px">
       <Inner $padding="0 200px">
         <StyledH1>아파트 인증</StyledH1>
-
+        <button onClick={temporaryAuthentication}>
+          임시 인증 버튼! 여기에요 여기!!!! 아래에서 아파트만 하나 선택해서 버튼
+          눌러주세요
+        </button>
         <SelectAptModule setFormValue={setFormValue} />
         {aptId && <SelectUserType formValue={formValue} setFormValue={setFormValue} />}
         {userType && <SelectPosition formValue={formValue} setFormValue={setFormValue} />}

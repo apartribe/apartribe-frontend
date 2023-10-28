@@ -1,6 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
 
+interface AptVerifyParam {
+  aptId: string
+  aptName: string
+}
+
 interface AptExistsParam {
   aptId: string
 }
@@ -15,6 +20,33 @@ interface getAptNameParam {
 }
 
 export const aptService = {
+  async verifyApt(param: CommunityCreateParam) {
+    const { aptId, aptName } = param
+    try {
+      await instance('/api/apartment/auth', {
+        method: 'post',
+        data: {
+          code: aptId,
+          name: aptName,
+        },
+      })
+      return {
+        statusCode: 201,
+        message: `${aptName} 아파트 인증이 완료 되었습니다. 메인 화면으로 이동합니다.`,
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(error)
+        return {
+          statusCode: 500,
+          message: '아파트 인증에 실패하였습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
+    }
+  },
+
   async aptExists(param: AptExistsParam) {
     const { aptId } = param
     try {
@@ -40,7 +72,7 @@ export const aptService = {
   async createCommunity(param: CommunityCreateParam) {
     const { aptId, aptName } = param
     try {
-      await instance('/api/apartment', {
+      await instance('/api/apartment/register', {
         method: 'post',
         data: {
           code: aptId,
