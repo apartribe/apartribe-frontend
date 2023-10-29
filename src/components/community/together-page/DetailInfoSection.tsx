@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { styled } from 'styled-components'
+import { Img } from 'styles/reusable-style/elementStyle'
 import { TogetherDetailType } from 'types/community-type/togetherType'
 
 interface Props {
@@ -8,7 +9,8 @@ interface Props {
 
 const DetailInfoSection: FC<Props> = ({
   data: {
-    /* thumbnail, */ recruitFrom,
+    thumbnail,
+    recruitFrom,
     recruitTo,
     meetTime,
     target,
@@ -18,31 +20,34 @@ const DetailInfoSection: FC<Props> = ({
   },
 }) => {
   return (
-    // <Img src={thumbnail}/> // 있으면 좋겠음
-    <StyledWrapper>
-      <StyledDiv>
-        <StyledParagraph className="title">모집 기간 : </StyledParagraph>
-        <StyledParagraph>
-          {`${recruitFrom.slice(0, 10)} ~ ${recruitTo.slice(0, 10)}`}({recruitStatus})
-        </StyledParagraph>
-      </StyledDiv>
-      <StyledDiv>
-        <StyledParagraph className="title">활동 시간 : </StyledParagraph>
-        <StyledParagraph>{meetTime}</StyledParagraph>
-      </StyledDiv>
-      <StyledDiv>
-        <StyledParagraph className="title">활동 장소 : </StyledParagraph>
-        <StyledParagraph>{location}</StyledParagraph>
-      </StyledDiv>
-      <StyledDiv>
-        <StyledParagraph className="title">모집 대상 : </StyledParagraph>
-        <StyledParagraph>{target}</StyledParagraph>
-      </StyledDiv>
-      <StyledDiv>
-        <StyledParagraph className="title">참가 비용 및 회비 여부 : </StyledParagraph>
-        <StyledParagraph>{contributeStatus ? '있음' : '없음'}</StyledParagraph>
-      </StyledDiv>
-    </StyledWrapper>
+    <>
+      <br />
+      <Img src={thumbnail} $borderRadius="20px" />
+      <StyledWrapper>
+        <StyledDiv>
+          <StyledParagraph className="title">모집 기간 : </StyledParagraph>
+          <StyledParagraph>
+            {`${recruitFrom.slice(0, 10)} ~ ${recruitTo.slice(0, 10)}`}({recruitStatus})
+          </StyledParagraph>
+        </StyledDiv>
+        <StyledDiv>
+          <StyledParagraph className="title">활동 시간 : </StyledParagraph>
+          <StyledParagraph>{meetTime}</StyledParagraph>
+        </StyledDiv>
+        <StyledDiv>
+          <StyledParagraph className="title">활동 장소 : </StyledParagraph>
+          <StyledParagraph>{location}</StyledParagraph>
+        </StyledDiv>
+        <StyledDiv>
+          <StyledParagraph className="title">모집 대상 : </StyledParagraph>
+          <StyledParagraph>{target}</StyledParagraph>
+        </StyledDiv>
+        <StyledDiv>
+          <StyledParagraph className="title">참가 비용 및 회비 여부 : </StyledParagraph>
+          <StyledParagraph>{contributeStatus ? '있음' : '없음'}</StyledParagraph>
+        </StyledDiv>
+      </StyledWrapper>
+    </>
   )
 }
 
