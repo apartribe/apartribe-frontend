@@ -219,11 +219,11 @@ const StyledLi = styled.li`
   padding: 10px 20px;
   cursor: pointer;
   &.focus {
-    background-color: #f2f2f2;
+    background-color: #e9e9e9;
   }
 
   &:hover {
-    background-color: #f2f2f2;
+    background-color: #e9e9e9;
   }
 `
 
