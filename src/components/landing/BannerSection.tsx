@@ -11,7 +11,7 @@ import { styled } from 'styled-components'
 const BannerSection = () => {
   const settings = {
     dots: false,
-    fade: true,
+    // fade: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -22,7 +22,7 @@ const BannerSection = () => {
 
   return (
     <Container $background="#FFFFFF" $height="500px">
-      <Inner>
+      <Inner $overflow="hidden">
         <StyledSlider {...settings}>
           <div>
             <BannerFirst />

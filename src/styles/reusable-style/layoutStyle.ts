@@ -11,6 +11,7 @@ export const Container = styled.main<reusableStyleProps>`
 
 export const Inner = styled.div<reusableStyleProps>`
   box-sizing: border-box;
+  overflow: ${(props) => props.$overflow || 'auto'};
   background: ${(props) => props.$background || 'none'};
   width: ${(props) => props.$width || '1280px'};
   height: ${(props) => props.$height || 'auto'};

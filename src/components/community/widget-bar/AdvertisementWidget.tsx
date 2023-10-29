@@ -22,27 +22,34 @@ const AdvertisementWidget = () => {
   }
 
   return (
-    <StyledSlider {...settings}>
-      {ADVERTISEMENT_LIST.map(({ url, img, sponsor, backgroundColor }, index) => (
-        <div key={index}>
-          <ShadowBox
-            // $boxShadow="none"
-            $background={backgroundColor}
-            $height="80px"
-            $display="flex"
-            $justifyContent="center"
-            $cursor="pointer"
-            onClick={() => moveToDetail(url)}
-          >
-            <Img src={img} alt={sponsor} $width="100px" />
-          </ShadowBox>
-        </div>
-      ))}
-    </StyledSlider>
+    <StyledWrapper>
+      <StyledSlider {...settings}>
+        {ADVERTISEMENT_LIST.map(({ url, img, sponsor, backgroundColor }, index) => (
+          <div key={index}>
+            <ShadowBox
+              // $boxShadow="none"
+              $background={backgroundColor}
+              $height="80px"
+              $display="flex"
+              $justifyContent="center"
+              $cursor="pointer"
+              onClick={() => moveToDetail(url)}
+            >
+              <Img src={img} alt={sponsor} $width="100px" />
+            </ShadowBox>
+          </div>
+        ))}
+      </StyledSlider>
+    </StyledWrapper>
   )
 }
 
 export default AdvertisementWidget
+
+const StyledWrapper = styled.section`
+  overflow: hidden;
+  padding: 5px;
+`
 
 const StyledSlider = styled(Slider)`
   .slick-list {
