@@ -112,7 +112,7 @@ export const togetherService = {
     } = data
 
     try {
-      await instance(`/api/${boardType}/${postId}`, {
+      await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'put',
         data: {
           category,
