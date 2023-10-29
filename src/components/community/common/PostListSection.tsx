@@ -137,6 +137,8 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
 export default PostListSection
 
 const StyledDiv = styled.div`
+  position: relative;
+  width: 100%;
   min-height: 80vh;
   display: flex;
   flex-wrap: wrap;
