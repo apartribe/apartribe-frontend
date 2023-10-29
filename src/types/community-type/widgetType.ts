@@ -1,5 +1,6 @@
 export interface BestPost {
   id: number
+  boardType: string
   title: string
 }
 
