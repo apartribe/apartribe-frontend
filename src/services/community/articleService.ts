@@ -76,7 +76,7 @@ export const articleService = {
 
   async updatePost(param: updateParam) {
     const { aptId, boardType, data, postId } = param
-    const { category, title, content } = data
+    const { category, title, content, thumbnail } = data
 
     try {
       await instance(`/api/${aptId}/${boardType}/${postId}`, {
@@ -85,6 +85,7 @@ export const articleService = {
           category,
           title,
           content,
+          thumbnail,
         },
       })
       return {
