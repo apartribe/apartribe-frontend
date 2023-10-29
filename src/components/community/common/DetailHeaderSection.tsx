@@ -1,14 +1,9 @@
 import React, { FC, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
-import {
-  AiOutlineEye,
-  AiOutlineLike,
-  AiOutlineEdit,
-  AiOutlineDelete,
-} from 'react-icons/ai'
+import { AiOutlineEye, AiOutlineLike, AiOutlineDelete } from 'react-icons/ai'
 import { BiConversation, BiShareAlt } from 'react-icons/bi'
-// import { Img } from 'styles/reusable-style/elementStyle'
+import { PiPencilSimpleLineDuotone } from 'react-icons/pi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { articleService } from 'services/community/articleService'
 import { BoardType } from 'services/community/postsService'
@@ -108,13 +103,11 @@ const DetailHeaderSection = <
           {decidePath()} &nbsp;&gt;&nbsp; {category}
         </StyledParagraph>
         <StyledDiv>
-          <StyledButton onClick={moveToEditPage}>
-            <AiOutlineEdit />
-            &nbsp; 수정
+          <StyledButton className="lg" onClick={moveToEditPage}>
+            <PiPencilSimpleLineDuotone />
           </StyledButton>
-          <StyledButton onClick={deletePost}>
+          <StyledButton className="lg" onClick={deletePost}>
             <AiOutlineDelete />
-            &nbsp; 삭제
           </StyledButton>
         </StyledDiv>
       </StyledDiv>
@@ -181,6 +174,7 @@ const StyledDiv = styled.div`
 
   &.between {
     justify-content: space-between;
+    height: 40px;
   }
 `
 
@@ -211,18 +205,21 @@ const StyledParagraph = styled.p`
 
 const StyledButton = styled.button`
   background: #ffffff;
-  /* border: 1px solid #f2f2f2; */
   border: none;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 10px 10px;
   cursor: pointer;
+  font-size: 12px;
 
   &.active {
     color: #ea1616;
   }
 
+  &.lg {
+    font-size: 20px;
+  }
+
   &:hover {
-    /* transform: scale(1.05); */
     filter: brightness(0.95);
   }
 `
