@@ -18,15 +18,12 @@ const BannerSection = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
-    vertical: true /* 검색창 버그 해결 조건1 */,
   }
 
   return (
-    <Container $background="#FFFFFF" $height="500px">
+    <Container $background="#FFFFFF" $height="480px">
       <Inner>
-        <StyledWapper>
-          {' '}
-          {/* 검색창 버그 해결 조건2 */}
+        <StyledWrapper>
           <StyledSlider {...settings}>
             <div>
               <BannerFirst />
@@ -38,7 +35,7 @@ const BannerSection = () => {
               <BannerThird />
             </div>
           </StyledSlider>
-        </StyledWapper>
+        </StyledWrapper>
       </Inner>
     </Container>
   )
@@ -46,8 +43,10 @@ const BannerSection = () => {
 
 export default BannerSection
 
-const StyledWapper = styled.section`
+const StyledWrapper = styled.section`
   overflow: hidden;
+  z-index: -100;
+  /* overflow-y: visible; */
 `
 
 const StyledSlider = styled(Slider)`

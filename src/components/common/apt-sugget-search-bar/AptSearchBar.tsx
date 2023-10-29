@@ -192,14 +192,14 @@ const StyledForm = styled.form`
 `
 
 const StyledBox = styled.div`
-  background: #ffffffeb;
+  background: #e9e9e9;
   position: absolute;
   top: 60px;
   left: 0;
   z-index: 2;
   width: 100%;
   border-radius: 10px;
-  max-height: 300px;
+  max-height: 117px;
   overflow: auto;
   // 스크롤 바 숨김
   -ms-overflow-style: none; //인터넷 익스플로러
@@ -219,11 +219,11 @@ const StyledLi = styled.li`
   padding: 10px 20px;
   cursor: pointer;
   &.focus {
-    background-color: #e9e9e9;
+    background-color: #c8c8c8;
   }
 
   &:hover {
-    background-color: #e9e9e9;
+    background-color: #c8c8c8;
   }
 `
 
