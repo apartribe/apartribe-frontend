@@ -7,3 +7,9 @@ export interface AptSearch {
   title: string
   id: string
 }
+
+export interface VaildAnnounce {
+  id: number
+  level: string
+  content: string
+}
