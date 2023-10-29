@@ -13,8 +13,8 @@ const BestPostsWidget = () => {
 
   const [bestPosts, setBestPosts] = useState<BestPost[]>([])
 
-  const moveToDetail = (id: number) => {
-    navigate(`/community/${aptId}/article/${id}/detail`) // 추후 경로 수정
+  const moveToDetail = (id: number, boardType: string) => {
+    navigate(`/community/${aptId}/${boardType}/${id}/detail`) // 추후 경로 수정
   }
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const BestPostsWidget = () => {
         <StyledParagraph className="noData">표시할 게시물이 없습니다.</StyledParagraph>
       ) : (
         <>
-          {bestPosts.map(({ id, title }) => (
-            <StyledParagraph key={id} onClick={() => moveToDetail(id)}>
+          {bestPosts.map(({ id, boardType, title }) => (
+            <StyledParagraph key={id} onClick={() => moveToDetail(id, boardType)}>
               {title}
             </StyledParagraph>
           ))}
