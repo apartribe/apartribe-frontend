@@ -11,35 +11,44 @@ import { styled } from 'styled-components'
 const BannerSection = () => {
   const settings = {
     dots: false,
-    // fade: true,
+    fade: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
+    vertical: true /* 검색창 버그 해결 조건1 */,
   }
 
   return (
     <Container $background="#FFFFFF" $height="500px">
-      <Inner $overflow="hidden">
-        <StyledSlider {...settings}>
-          <div>
-            <BannerFirst />
-          </div>
-          <div>
-            <BannerSecond />
-          </div>
-          <div>
-            <BannerThird />
-          </div>
-        </StyledSlider>
+      <Inner>
+        <StyledWapper>
+          {' '}
+          {/* 검색창 버그 해결 조건2 */}
+          <StyledSlider {...settings}>
+            <div>
+              <BannerFirst />
+            </div>
+            <div>
+              <BannerSecond />
+            </div>
+            <div>
+              <BannerThird />
+            </div>
+          </StyledSlider>
+        </StyledWapper>
       </Inner>
     </Container>
   )
 }
 
 export default BannerSection
+
+const StyledWapper = styled.section`
+  overflow: hidden;
+`
 
 const StyledSlider = styled(Slider)`
   .slick-list {
