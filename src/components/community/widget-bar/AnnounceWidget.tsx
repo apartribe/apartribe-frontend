@@ -52,13 +52,13 @@ const AnnounceWidget = () => {
         <StyledParagraph className="noData">표시할 게시물이 없습니다.</StyledParagraph>
       ) : (
         <Slider {...settings}>
-          {vaildAnnounceList?.map(({ id, level, content }: VaildAnnounce) => (
+          {vaildAnnounceList?.map(({ id, level, title }: VaildAnnounce) => (
             <div key={id}>
               <StyledDiv>
                 <Badge $width="50px" $background={badgeColor(level)}>
                   {level}
                 </Badge>
-                <StyledParagraph>{content}</StyledParagraph>
+                <StyledParagraph>{title}</StyledParagraph>
               </StyledDiv>
             </div>
           ))}

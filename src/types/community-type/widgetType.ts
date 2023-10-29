@@ -11,5 +11,5 @@ export interface AptSearch {
 export interface VaildAnnounce {
   id: number
   level: string
-  content: string
+  title: string
 }
