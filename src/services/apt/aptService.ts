@@ -20,7 +20,7 @@ interface getAptNameParam {
 }
 
 export const aptService = {
-  async verifyApt(param: CommunityCreateParam) {
+  async verifyApt(param: AptVerifyParam) {
     const { aptId, aptName } = param
     try {
       await instance('/api/apartment/auth', {

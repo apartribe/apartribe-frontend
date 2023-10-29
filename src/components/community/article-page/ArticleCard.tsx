@@ -12,14 +12,10 @@ import { tagRemover } from 'utils/tagRemover'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
-  aptId: string
-  boardType: BoardType
   post: ArticleCardType
 }
 
 const ArticleCard: FC<Props> = ({
-  aptId,
-  boardType,
   post: {
     id,
     createdBy,
@@ -33,10 +29,11 @@ const ArticleCard: FC<Props> = ({
     profileImage,
   },
 }) => {
+  const { aptId } = useParams()
   const navigate = useNavigate()
 
   const moveToDetail = () => {
-    navigate(`/community/${aptId}/${boardType}/${id}/detail`)
+    navigate(`/community/${aptId}/article/${id}/detail`)
   }
 
   return (

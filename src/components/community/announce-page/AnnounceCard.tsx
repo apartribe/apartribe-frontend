@@ -11,20 +11,10 @@ import { tagRemover } from 'utils/tagRemover'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
-  aptId: string
-  boardType: BoardType
   post: AnnounceCardType
 }
 
-// level 과 category 관련 이슈 announceType.ts 주석 참고.
-const badgeColor = (category: string | undefined): string => {
-  if (category === '일반') return '#0B2A08'
-  if (category === '긴급') return '#C9AB0C'
-  return '#EA1616'
-}
-
 const AnnounceCard: FC<Props> = ({
-  aptId,
   post: {
     id,
     level: category,
@@ -39,10 +29,18 @@ const AnnounceCard: FC<Props> = ({
     profileImage,
   },
 }) => {
+  const { aptId } = useParams()
   const navigate = useNavigate()
 
   const moveToDetail = () => {
     navigate(`/community/${aptId}/announce/${id}/detail`) // 추후 경로 수정
+  }
+
+  // level 과 category 관련 이슈 announceType.ts 주석 참고.
+  const badgeColor = (category: string | undefined): string => {
+    if (category === '일반') return '#0B2A08'
+    if (category === '긴급') return '#C9AB0C'
+    return '#EA1616'
   }
 
   return (

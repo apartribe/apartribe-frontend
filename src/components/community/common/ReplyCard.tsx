@@ -7,22 +7,21 @@ import { Img } from 'styles/reusable-style/elementStyle'
 import { Comment, Reply } from 'types/community-type/commentType'
 import EditReply from './EditReply'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import { useParams } from 'react-router-dom'
 
 interface Props {
-  aptId: string
-  postId: string
   parentId: number
   reply: Reply
   setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const ReplyCard: FC<Props> = ({
-  aptId,
-  postId,
   parentId,
   reply: { /* avatar, */ id, createdBy, createdAt, like: liked, content },
   setComments,
 }) => {
+  const { aptId, postId } = useParams()
+
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
   const [editMode, setEditMode] = useState(false)
 
@@ -74,8 +73,6 @@ const ReplyCard: FC<Props> = ({
       </StyledDiv>
       {editMode ? (
         <EditReply
-          aptId={aptId}
-          postId={postId}
           parentId={parentId}
           commentId={id}
           content={content}
