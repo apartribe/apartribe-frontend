@@ -4,7 +4,7 @@ import { Badge, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { styled } from 'styled-components'
 import Slider from 'react-slick'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
 import { VaildAnnounce } from 'types/community-type/widgetType'
 
@@ -22,6 +22,7 @@ const AnnounceWidget = () => {
   }
 
   const { aptId } = useParams()
+  const navigate = useNavigate()
 
   const [vaildAnnounceList, setVaildAnnounceList] = useState<VaildAnnounce[] | null>(null)
 
@@ -33,6 +34,10 @@ const AnnounceWidget = () => {
 
     getVaildAnnounce()
   }, [])
+
+  const moveToDetail = (postId: number) => {
+    navigate(`/community/${aptId}/announce/${postId}/detail`)
+  }
 
   const badgeColor = (level: string | undefined): string => {
     if (level === '일반') return '#0B2A08'
@@ -54,7 +59,7 @@ const AnnounceWidget = () => {
         <Slider {...settings}>
           {vaildAnnounceList?.map(({ id, level, title }: VaildAnnounce) => (
             <div key={id}>
-              <StyledDiv>
+              <StyledDiv onClick={() => moveToDetail(id)}>
                 <Badge $width="50px" $background={badgeColor(level)}>
                   {level}
                 </Badge>
@@ -73,8 +78,9 @@ export default AnnounceWidget
 const StyledDiv = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding-left: 10px;
+  cursor: pointer;
 `
 
 const StyledParagraph = styled.p`
