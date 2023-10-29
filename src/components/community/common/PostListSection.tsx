@@ -89,32 +89,11 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
       {postList.map((post) => {
         switch (boardType) {
           case 'article':
-            return (
-              <ArticleCard
-                aptId={aptId as string}
-                boardType={boardType}
-                post={post as ArticleCardType}
-                key={post.id}
-              />
-            )
+            return <ArticleCard key={post.id} post={post as ArticleCardType} />
           case 'announce':
-            return (
-              <AnnounceCard
-                aptId={aptId as string}
-                boardType={boardType}
-                post={post as AnnounceCardType}
-                key={post.id}
-              />
-            )
+            return <AnnounceCard key={post.id} post={post as AnnounceCardType} />
           case 'together':
-            return (
-              <TogetherCard
-                aptId={aptId as string}
-                boardType={boardType}
-                post={post as TogetherCardType}
-                key={post.id}
-              />
-            )
+            return <TogetherCard key={post.id} post={post as TogetherCardType} />
         }
       })}
       {nothingToload ? (

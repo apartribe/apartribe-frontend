@@ -19,15 +19,11 @@ import dafaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 
 interface Props {
-  aptId: string
-  postId: string
   comment: Comment
   setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const CommentCard: FC<Props> = ({
-  aptId,
-  postId,
   comment: {
     /* avatar, */ id,
     createdBy,
@@ -38,6 +34,8 @@ const CommentCard: FC<Props> = ({
   },
   setComments,
 }) => {
+  const { aptId, postId } = useParams()
+
   const [repliseVisible, setRepliseVisible] = useState(false)
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
   const [inputValue, setInputValue] = useState('')
@@ -54,8 +52,8 @@ const CommentCard: FC<Props> = ({
   const submitReply = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await replyService.addReply({
-      aptId: aptId,
-      postId: postId,
+      aptId: aptId as string,
+      postId: postId as string,
       parentId: id,
       content: inputValue,
     })
@@ -121,8 +119,6 @@ const CommentCard: FC<Props> = ({
       </StyledDiv>
       {editMode ? (
         <EditComment
-          aptId={aptId}
-          postId={postId}
           commentId={id}
           content={content}
           setComments={setComments}
@@ -153,8 +149,6 @@ const CommentCard: FC<Props> = ({
               replies.map((reply) => (
                 <ReplyCard
                   key={reply.id}
-                  aptId={aptId}
-                  postId={postId}
                   parentId={id}
                   reply={reply}
                   setComments={setComments}

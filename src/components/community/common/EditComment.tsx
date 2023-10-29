@@ -6,28 +6,22 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react'
+import { useParams } from 'react-router-dom'
 import { commentService } from 'services/community/commentService'
 import { styled } from 'styled-components'
 import { Input } from 'styles/reusable-style/elementStyle'
 import { Comment } from 'types/community-type/commentType'
 
 interface Props {
-  aptId: string
-  postId: string
   commentId: number
   content: string
   setComments: Dispatch<SetStateAction<Comment[]>>
   setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
-const EditComment: FC<Props> = ({
-  aptId,
-  postId,
-  commentId,
-  content,
-  setComments,
-  setEditMode,
-}) => {
+const EditComment: FC<Props> = ({ commentId, content, setComments, setEditMode }) => {
+  const { aptId, postId } = useParams()
+
   const [inputValue, setInputValue] = useState(content)
 
   const changeInputValuse = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,8 +31,8 @@ const EditComment: FC<Props> = ({
   const submitEditedComments = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const response = await commentService.updateComment({
-      aptId,
-      postId,
+      aptId: aptId as string,
+      postId: postId as string,
       commentId,
       content: inputValue,
     })

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 import {
@@ -9,36 +9,48 @@ import {
 } from 'react-icons/ai'
 import { BiConversation, BiShareAlt } from 'react-icons/bi'
 // import { Img } from 'styles/reusable-style/elementStyle'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { articleService } from 'services/community/articleService'
 import { BoardType } from 'services/community/postsService'
 import { ArticleDetailType } from 'types/community-type/ArticleType'
 import { AnnounceDetailType } from 'types/community-type/announceType'
 import { TogetherDetailType } from 'types/community-type/togetherType'
 import { likeService } from 'services/community/likeService'
+import { Img } from 'styles/reusable-style/elementStyle'
+import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
-interface Props {
-  aptId: string
-  postId: string
+// 타입 수정 요망!
+interface Props<T> {
+  // aptId: string
+  // postId: string
   boardType: BoardType
-  postData: ArticleDetailType | AnnounceDetailType | TogetherDetailType
+  postData: T /* ArticleDetailType | AnnounceDetailType | TogetherDetailType */
+  setPostData: Dispatch<
+    SetStateAction<T | null>
+  > /*  Dispatch<SetStateAction<ArticleDetailType | null>> | Dispatch<SetStateAction<AnnounceDetailType | null>> | Dispatch<SetStateAction<TogetherDetailType | null>> */
 }
 
-const DetailHeaderSection: FC<Props> = ({
-  aptId,
+const DetailHeaderSection = <
+  T extends ArticleDetailType | AnnounceDetailType | TogetherDetailType,
+>({
+  // aptId,
+  // postId,
   boardType,
-  postId,
   postData: {
     category,
     // level, 하..
     title,
     createdAt,
-    // createdBy,
+    createdBy,
     liked,
     saw,
     commentCounts,
+    memberLiked,
+    profileImage,
   },
-}) => {
+  setPostData,
+}: Props<T>) => {
+  const { aptId, postId } = useParams()
   const navigate = useNavigate()
 
   const isCommunity = /article/
@@ -63,7 +75,7 @@ const DetailHeaderSection: FC<Props> = ({
     if (userConfirmed) {
       const { statusCode, message } = await articleService.deletePost({
         boardType,
-        postId,
+        postId: postId as string,
       })
       if (statusCode === 204) {
         alert(message)
@@ -76,7 +88,17 @@ const DetailHeaderSection: FC<Props> = ({
   }
 
   const toggleLike = async () => {
-    const response = await likeService.postLike({ aptId, boardType, postId })
+    const response = await likeService.postLike({
+      aptId: aptId as string,
+      boardType,
+      postId: postId as string,
+    })
+    const newMemberLiked: boolean = response.data.liked
+    setPostData((prevState: any) => ({
+      ...prevState,
+      memberLiked: newMemberLiked,
+      liked: newMemberLiked ? prevState.liked + 1 : prevState.liked - 1,
+    }))
   }
 
   return (
@@ -116,7 +138,7 @@ const DetailHeaderSection: FC<Props> = ({
           </StyledParagraph>
         </StyledDiv>
         <StyledDiv>
-          <StyledButton onClick={toggleLike}>
+          <StyledButton className={memberLiked ? 'active' : ''} onClick={toggleLike}>
             <AiOutlineLike />
             &nbsp; 좋아요
           </StyledButton>
@@ -127,14 +149,19 @@ const DetailHeaderSection: FC<Props> = ({
         </StyledDiv>
       </StyledDiv>
       <StyledDiv>
-        {/* <Img src={avatar} alt="아바타" $width="50px" $height="50px" />
-        {job ? (
+        <Img
+          src={profileImage || dafaultAvatar}
+          alt="댓글 아바타"
+          $width="40px"
+          height="40px"
+        />
+        {/* {job ? (
           <p>
-            [{job}] {createdBy}
+            [직업 정보 필요] {createdBy}
           </p>
-        ) : (
-          <p>{createdBy}</p>
-        )} */}
+        ) : ( */}
+        <p>{createdBy}</p>
+        {/* )} */}
       </StyledDiv>
     </StyledWrapper>
   )
@@ -184,12 +211,18 @@ const StyledParagraph = styled.p`
 
 const StyledButton = styled.button`
   background: #ffffff;
-  border: 1px solid #f2f2f2;
+  /* border: 1px solid #f2f2f2; */
+  border: none;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
 
+  &.active {
+    color: #ea1616;
+  }
+
   &:hover {
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
+    filter: brightness(0.95);
   }
 `

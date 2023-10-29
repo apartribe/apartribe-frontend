@@ -120,13 +120,7 @@ const DetailCommentSection = () => {
       <StyledDiv className="column">
         {comments &&
           comments.map((comment: Comment) => (
-            <CommentCard
-              key={comment.id}
-              aptId={aptId as string}
-              postId={postId as string}
-              comment={comment}
-              setComments={setComments}
-            />
+            <CommentCard key={comment.id} comment={comment} setComments={setComments} />
           ))}
       </StyledDiv>
       {nothingToload ? (
