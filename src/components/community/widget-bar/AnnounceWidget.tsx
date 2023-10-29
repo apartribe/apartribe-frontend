@@ -1,5 +1,5 @@
 import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Badge, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { HiSpeakerphone } from 'react-icons/hi'
 import { ANNONCEMENT_MOCK } from 'mock/announcementData'
@@ -7,6 +7,7 @@ import { styled } from 'styled-components'
 import Slider from 'react-slick'
 import { useParams } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
+import { VaildAnnounce } from 'types/community-type/widgetType'
 
 const AnnounceWidget = () => {
   const settings = {
@@ -23,14 +24,21 @@ const AnnounceWidget = () => {
 
   const { aptId } = useParams()
 
+  const [vaildAnnounceList, setVaildAnnounceList] = useState<VaildAnnounce[] | null>(null)
+
   useEffect(() => {
-    widgetService.getVaildAnnounce({ aptId: aptId as string })
+    const getVaildAnnounce = async () => {
+      const response = await widgetService.getVaildAnnounce({ aptId: aptId as string })
+      setVaildAnnounceList(response.data)
+    }
+
+    getVaildAnnounce()
   }, [])
 
   // level 과 category 관련 이슈 announceType.ts 주석 참고.
-  const badgeColor = (category: string | undefined): string => {
-    if (category === '일반') return '#0B2A08'
-    if (category === '긴급') return '#C9AB0C'
+  const badgeColor = (level: string | undefined): string => {
+    if (level === '일반') return '#0B2A08'
+    if (level === '긴급') return '#C9AB0C'
     return '#EA1616'
   }
 
@@ -43,13 +51,13 @@ const AnnounceWidget = () => {
         seeMorePath={`/community/${aptId}/announce`}
       />
       <Slider {...settings}>
-        {ANNONCEMENT_MOCK.map((item, index) => (
-          <div key={index}>
+        {vaildAnnounceList?.map(({ id, level, content }: VaildAnnounce) => (
+          <div key={id}>
             <StyledDiv>
-              <Badge $width="50px" $background={badgeColor(item.urgency)}>
-                {item.urgency}
+              <Badge $width="50px" $background={badgeColor(level)}>
+                {level}
               </Badge>
-              <StyledParagraph>{item.title}</StyledParagraph>
+              <StyledParagraph>{content}</StyledParagraph>
             </StyledDiv>
           </div>
         ))}
@@ -68,7 +76,7 @@ const StyledDiv = styled.div`
 `
 
 const StyledParagraph = styled.p`
-  line-height: 25px;
+  line-height: 26px;
   font-size: 15px;
   overflow: hidden;
   display: -webkit-box;
