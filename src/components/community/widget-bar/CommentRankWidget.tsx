@@ -21,20 +21,24 @@ const CommentRankWidget = () => {
         title="지난 주 댓글 랭킹"
         hasSeeMore={false}
       />
-      {COMMENT_RANK_MOCK.data.map((item, index) => (
-        <StyledWrapper key={item.nickname}>
-          <StyledDiv className="rank">{decideIcon(index)}</StyledDiv>
-          <Img src={item.avatar} $width="40px" $height="40px" />
-          <StyledDiv>
-            <P $fontWeight="700" $lineHeight="25px">
-              {item.nickname}
-            </P>
-            <P $fontSize="11px" $lineHeight="15px">
-              댓글 {item.commentCount}개
-            </P>
-          </StyledDiv>
-        </StyledWrapper>
-      ))}
+      {/* {COMMENT_RANK_MOCK?.length === 0 ? <StyledParagraph className='noData'>표시할 게시물이 없습니다.</StyledParagraph>: */}
+      <>
+        {COMMENT_RANK_MOCK.data.map((item, index) => (
+          <StyledWrapper key={item.nickname}>
+            <StyledDiv className="rank">{decideIcon(index)}</StyledDiv>
+            <Img src={item.avatar} $width="40px" $height="40px" />
+            <StyledDiv>
+              <P $fontWeight="700" $lineHeight="25px">
+                {item.nickname}
+              </P>
+              <P $fontSize="11px" $lineHeight="15px">
+                댓글 {item.commentCount}개
+              </P>
+            </StyledDiv>
+          </StyledWrapper>
+        ))}
+      </>
+      {/* } */}
     </ShadowBox>
   )
 }

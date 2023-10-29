@@ -60,27 +60,30 @@ const TogetherWidget = () => {
         hasSeeMore={true}
         seeMorePath={`/community/${aptId}/together`}
       />
-
-      <Slider {...settings}>
-        {postList.map(({ id, thumbnail, title, createdBy, createdAt, description }) => (
-          <div key={id}>
-            <StyledWrapper onClick={() => moveToDetail(id)}>
-              {/* 추후 아이디로 수정 */}
-              <StyledImgWrapper>
-                <StyledImg src={thumbnail} alt="" />
-              </StyledImgWrapper>
-              <StyledDiv className="column">
-                <div>
-                  <StyledParagraph className="md">{title}</StyledParagraph>
-                  <StyledParagraph className="sm">{createdBy}</StyledParagraph>
-                  <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
-                </div>
-                <StyledParagraph className="sm">{description}</StyledParagraph>
-              </StyledDiv>
-            </StyledWrapper>
-          </div>
-        ))}
-      </Slider>
+      {postList?.length === 0 ? (
+        <StyledParagraph className="noData">표시할 게시물이 없습니다.</StyledParagraph>
+      ) : (
+        <Slider {...settings}>
+          {postList.map(({ id, thumbnail, title, createdBy, createdAt, description }) => (
+            <div key={id}>
+              <StyledWrapper onClick={() => moveToDetail(id)}>
+                {/* 추후 아이디로 수정 */}
+                <StyledImgWrapper>
+                  <StyledImg src={thumbnail} alt="" />
+                </StyledImgWrapper>
+                <StyledDiv className="column">
+                  <div>
+                    <StyledParagraph className="md">{title}</StyledParagraph>
+                    <StyledParagraph className="sm">{createdBy}</StyledParagraph>
+                    <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
+                  </div>
+                  <StyledParagraph className="sm">{description}</StyledParagraph>
+                </StyledDiv>
+              </StyledWrapper>
+            </div>
+          ))}
+        </Slider>
+      )}
     </ShadowBox>
   )
 }
@@ -163,5 +166,12 @@ const StyledParagraph = styled.p`
 
   &.mainColor {
     color: #2b7f75;
+  }
+
+  &.noData {
+    border-top: none;
+    line-height: 20px;
+    font-size: 12px;
+    padding-left: 30px;
   }
 `

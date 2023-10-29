@@ -1,8 +1,7 @@
 import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
 import React, { useEffect, useState } from 'react'
-import { Badge, P, ShadowBox } from 'styles/reusable-style/elementStyle'
+import { Badge, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { HiSpeakerphone } from 'react-icons/hi'
-import { ANNONCEMENT_MOCK } from 'mock/announcementData'
 import { styled } from 'styled-components'
 import Slider from 'react-slick'
 import { useParams } from 'react-router-dom'
@@ -35,7 +34,6 @@ const AnnounceWidget = () => {
     getVaildAnnounce()
   }, [])
 
-  // level 과 category 관련 이슈 announceType.ts 주석 참고.
   const badgeColor = (level: string | undefined): string => {
     if (level === '일반') return '#0B2A08'
     if (level === '긴급') return '#C9AB0C'
@@ -50,18 +48,22 @@ const AnnounceWidget = () => {
         hasSeeMore={true}
         seeMorePath={`/community/${aptId}/announce`}
       />
-      <Slider {...settings}>
-        {vaildAnnounceList?.map(({ id, level, content }: VaildAnnounce) => (
-          <div key={id}>
-            <StyledDiv>
-              <Badge $width="50px" $background={badgeColor(level)}>
-                {level}
-              </Badge>
-              <StyledParagraph>{content}</StyledParagraph>
-            </StyledDiv>
-          </div>
-        ))}
-      </Slider>
+      {vaildAnnounceList?.length === 0 ? (
+        <StyledParagraph className="noData">표시할 게시물이 없습니다.</StyledParagraph>
+      ) : (
+        <Slider {...settings}>
+          {vaildAnnounceList?.map(({ id, level, content }: VaildAnnounce) => (
+            <div key={id}>
+              <StyledDiv>
+                <Badge $width="50px" $background={badgeColor(level)}>
+                  {level}
+                </Badge>
+                <StyledParagraph>{content}</StyledParagraph>
+              </StyledDiv>
+            </div>
+          ))}
+        </Slider>
+      )}
     </ShadowBox>
   )
 }
@@ -84,4 +86,10 @@ const StyledParagraph = styled.p`
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   margin: 0;
+
+  &.noData {
+    line-height: 20px;
+    font-size: 12px;
+    padding-left: 30px;
+  }
 `

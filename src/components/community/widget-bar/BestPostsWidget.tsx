@@ -29,11 +29,17 @@ const BestPostsWidget = () => {
   return (
     <ShadowBox>
       <WidgetTitleArea Icon={FaRankingStar} title="베스트 게시물" hasSeeMore={false} />
-      {bestPosts.map(({ id, title }) => (
-        <StyledParagraph key={id} onClick={() => moveToDetail(id)}>
-          {title}
-        </StyledParagraph>
-      ))}
+      {bestPosts?.length === 0 ? (
+        <StyledParagraph className="noData">표시할 게시물이 없습니다.</StyledParagraph>
+      ) : (
+        <>
+          {bestPosts.map(({ id, title }) => (
+            <StyledParagraph key={id} onClick={() => moveToDetail(id)}>
+              {title}
+            </StyledParagraph>
+          ))}
+        </>
+      )}
     </ShadowBox>
   )
 }
@@ -54,5 +60,12 @@ const StyledParagraph = styled.div`
 
   &:hover {
     transform: scale(1.01);
+  }
+
+  &.noData {
+    border-top: none;
+    line-height: 20px;
+    font-size: 12px;
+    padding-left: 25px;
   }
 `
