@@ -59,6 +59,7 @@ const StyledDiv = styled.div`
     justify-content: center;
     gap: 10px;
     margin-left: 100px;
+    margin-bottom: 50px;
   }
 
   &.right {
@@ -82,7 +83,7 @@ const StyledParagraph = styled.p`
 
   &.lg {
     font-size: 20px;
-    margin-top: 40px;
+    margin-top: 10px;
   }
 
   &.xl {
