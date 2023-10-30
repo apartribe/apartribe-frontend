@@ -14,7 +14,24 @@ const DetailAnnouncePage = () => {
   const param = useParams()
   const { aptId, postId } = param
 
-  const [postData, setPostData] = useState<AnnounceDetailType | null>(null)
+  const [postData, setPostData] = useState<AnnounceDetailType>({
+    // 찝찝
+    id: 0,
+    category: '',
+    level: '',
+    title: '',
+    content: '',
+    createdBy: '',
+    createdAt: '',
+    saw: 0,
+    liked: 0,
+    commentCounts: 0,
+    thumbnail: '',
+    floatFrom: '',
+    floatTo: '',
+    memberLiked: false,
+    profileImage: '',
+  })
 
   useEffect(() => {
     const getPost = async () => {

@@ -16,20 +16,14 @@ import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 // 타입 수정 요망!
 interface Props<T> {
-  // aptId: string
-  // postId: string
   boardType: BoardType
-  postData: T /* ArticleDetailType | AnnounceDetailType | TogetherDetailType */
-  setPostData: Dispatch<
-    SetStateAction<T | null>
-  > /*  Dispatch<SetStateAction<ArticleDetailType | null>> | Dispatch<SetStateAction<AnnounceDetailType | null>> | Dispatch<SetStateAction<TogetherDetailType | null>> */
+  postData: T
+  setPostData: Dispatch<SetStateAction<T>>
 }
 
 const DetailHeaderSection = <
   T extends ArticleDetailType | AnnounceDetailType | TogetherDetailType,
 >({
-  // aptId,
-  // postId,
   boardType,
   postData: {
     category,
@@ -89,7 +83,7 @@ const DetailHeaderSection = <
       postId: postId as string,
     })
     const newMemberLiked: boolean = response.data.liked
-    setPostData((prevState: any) => ({
+    setPostData((prevState: T) => ({
       ...prevState,
       memberLiked: newMemberLiked,
       liked: newMemberLiked ? prevState.liked + 1 : prevState.liked - 1,
