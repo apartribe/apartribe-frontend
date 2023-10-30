@@ -8,10 +8,11 @@ import { PAGE_SETTING } from 'constants/setting/path'
 import MessageModal from 'components/common/MessageModal'
 import { user } from 'services/user'
 import { IoPersonCircle } from 'react-icons/io5'
+import { updateLoginUser } from 'redux/store/userSlice'
+import { useDispatch } from 'react-redux'
 
 const ChangeImagePage = () => {
-  const [file, setFile] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string>('')
+  const [imageUrl, setImageUrl] = useState<string>('')
   const [modal, setModal] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<Message>({
     status: 'waiting',
@@ -19,6 +20,7 @@ const ChangeImagePage = () => {
   })
   const fileInput = useRef<HTMLInputElement>(null)
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const selectImage = () => {
@@ -26,26 +28,17 @@ const ChangeImagePage = () => {
   }
 
   const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0]
 
-    if (e.target.files[0]) {
-      setFile(e.target.files[0])
-    } else {
-      setImagePreview('')
-      return
+      const blob = new Blob([file as File])
+      const pdfUrl = URL.createObjectURL(blob)
+      setImageUrl(pdfUrl)
     }
-
-    const reader = new FileReader()
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setImagePreview(reader.result as string)
-      }
-    }
-    reader.readAsDataURL(e.target.files[0])
   }
 
   const cancelChangeImage = () => {
-    setImagePreview('')
+    setImageUrl('')
     navigate(PAGE_SETTING)
   }
 
@@ -57,7 +50,12 @@ const ChangeImagePage = () => {
   const uploadImage = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    //TODO: 프로필 이미지 변경 백엔드 완료되면 연동, 모달 띄워서 응답메세지 출력
+    const { result, message } = await user.updateImage(imageUrl)
+    openModal(result, message)
+
+    if (result === 'success') {
+      dispatch(updateLoginUser({ profileImageUrl: imageUrl }))
+    }
   }
 
   return (
@@ -65,10 +63,10 @@ const ChangeImagePage = () => {
       <AuthLayout>
         <StyledH>프로필 이미지 변경</StyledH>
         <StyledForm onSubmit={uploadImage}>
-          {imagePreview.length === 0 ? (
+          {imageUrl.length === 0 ? (
             <StyledIcon onClick={selectImage} />
           ) : (
-            <StyledImage src={imagePreview} onClick={selectImage} />
+            <StyledImage src={imageUrl} onClick={selectImage} />
           )}
           <StyledInput
             type="file"
