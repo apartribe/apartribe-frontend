@@ -82,6 +82,30 @@ export const user = {
     }
   },
 
+  async updateImage(profileImageUrl: string): Promise<ResultWithMessage> {
+    try {
+      await instance('/api/member/update/image', {
+        method: 'PUT',
+        data: {
+          profileImageUrl: profileImageUrl,
+        },
+      })
+      return {
+        result: 'success',
+        message: '프로필 이미지가 변경되었습니다.',
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return {
+          result: 'fail',
+          message: '프로필 이미지 변경에 실패했습니다. 다시 시도해주세요.',
+        }
+      } else {
+        throw new Error('different error than axios')
+      }
+    }
+  },
+
   async myArticle(
     size: number,
     page: number,
