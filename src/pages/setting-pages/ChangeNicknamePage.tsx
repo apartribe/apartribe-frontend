@@ -9,6 +9,8 @@ import { PAGE_SETTING } from 'constants/setting/path'
 import { user } from 'services/user'
 import MessageModal from 'components/common/MessageModal'
 import { Message } from 'types/auth'
+import { updateLoginUser } from 'redux/store/userSlice'
+import { useDispatch } from 'react-redux'
 
 const ChangeNicknamePage = () => {
   const [newNickname, setNewNickname] = useState<string>('')
@@ -18,6 +20,7 @@ const ChangeNicknamePage = () => {
     message: '',
   })
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const isNewNicknameValid = signupValidation.nickname.validator(newNickname)
@@ -43,6 +46,10 @@ const ChangeNicknamePage = () => {
 
     const { result, message } = await user.updateNickname(newNickname)
     openModal(result, message)
+
+    if (result === 'success') {
+      dispatch(updateLoginUser({ nickname: newNickname }))
+    }
   }
 
   return (
