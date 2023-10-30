@@ -16,7 +16,28 @@ const DetailTogetherPage = () => {
 
   const { aptId, postId } = useParams()
 
-  const [postData, setPostData] = useState<TogetherDetailType | null>(null)
+  const [postData, setPostData] = useState<TogetherDetailType>({
+    // 찝찝
+    id: 0,
+    category: '',
+    title: '',
+    content: '',
+    createdAt: '',
+    createdBy: '',
+    liked: 0,
+    saw: 0,
+    commentCounts: 0,
+    thumbnail: '',
+    recruitFrom: '',
+    recruitTo: '',
+    meetTime: '',
+    location: '',
+    target: '',
+    contributeStatus: false,
+    recruitStatus: '',
+    memberLiked: false,
+    profileImage: '',
+  })
 
   useEffect(() => {
     const getPost = async () => {

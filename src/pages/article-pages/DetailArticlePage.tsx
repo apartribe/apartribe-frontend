@@ -13,7 +13,21 @@ const DetailArticlePage = () => {
 
   const { aptId, postId } = useParams()
 
-  const [postData, setPostData] = useState<ArticleDetailType | null>(null)
+  const [postData, setPostData] = useState<ArticleDetailType>({
+    // 찝찝
+    id: 0,
+    category: '',
+    title: '',
+    content: '',
+    createdAt: '',
+    createdBy: '',
+    liked: 0,
+    saw: 0,
+    commentCounts: 0,
+    thumbnail: '',
+    memberLiked: false,
+    profileImage: '',
+  })
 
   useEffect(() => {
     const getPost = async () => {
