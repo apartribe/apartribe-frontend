@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { MyInfo } from 'types/setting'
 
 const initialState = {
   userInfo: {
@@ -18,8 +19,13 @@ const userSlice = createSlice({
     loginUser(state, action) {
       state.userInfo = action.payload
     },
+    updateLoginUser(state, action) {
+      const payloadKey = Object.keys(action.payload)[0] as string
+      const payloadValue = Object.values(action.payload)[0] as string
+      state.userInfo[payloadKey as keyof MyInfo] = payloadValue
+    },
   },
 })
 
-export const { loginUser } = userSlice.actions
+export const { loginUser, updateLoginUser } = userSlice.actions
 export default userSlice.reducer
