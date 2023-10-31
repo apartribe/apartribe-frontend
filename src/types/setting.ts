@@ -16,11 +16,14 @@ export type ChangePwInputValue = {
 
 export type MyArticle = {
   id: number
+  boardId: number
   boardType: string
-  liked: number
-  saw: number
+  category?: string
+  level?: string
   title: string
   content: string
+  liked: number
+  saw: number
   thumbnail: string
   commentCounts: number
   createdAt: string
@@ -29,11 +32,14 @@ export type MyArticle = {
 
 export type MyComment = {
   id: number
+  boardId: number
+  boardType: string
+  category?: string
+  level?: string
+  boardTitle: string
   content: string
   createdBy: string
   createdAt: string
-  boardType: string
-  boardId: number
 }
 
 export type ResultWithMessage = {
@@ -44,4 +50,19 @@ export type ResultWithMessage = {
 export type ResultWithData = {
   result: 'success'
   data: any
+}
+
+export type Result = {
+  result: 'success' | 'fail'
+  message: string
+}
+
+export type ContactInputValue = {
+  dataCollectAgree: boolean
+  name: string
+  nonAuth: boolean
+  email: string
+  code: string
+  title: string
+  content: string
 }
