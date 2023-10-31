@@ -1,7 +1,7 @@
 import React, { Dispatch, MouseEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
-import { Board } from 'types/community-type/postDataType'
+import { AddArticleType } from 'types/community-type/ArticleType'
 
 interface Props<T> {
   selectedValue: T
@@ -9,7 +9,8 @@ interface Props<T> {
   dropdownList: string[]
 }
 
-const DropdownCategory = <T extends Board>({
+const DropdownCategory = <T extends AddArticleType>({
+  // 왜 extend해야하는거지?
   selectedValue,
   setSelectedValue,
   dropdownList,

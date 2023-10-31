@@ -1,6 +1,7 @@
 export { ReactComponent as FaviconOriginal } from 'assets/logos/favicon_original.svg'
 export { ReactComponent as LogoHeaderBlack } from 'assets/logos/logo_header_black.svg'
 export { ReactComponent as LogoHeaderGradation } from 'assets/logos/logo_header_gradation.svg'
+export { ReactComponent as LogoHeaderGradationKorean } from 'assets/logos/logo_header_gradation_korean.svg'
 export { ReactComponent as LogoHeaderWhite } from 'assets/logos/logo_header_white.svg'
 export { ReactComponent as LogoMainBlack } from 'assets/logos/logo_main_black.svg'
 export { ReactComponent as LogoMainWhite } from 'assets/logos/logo_main_white.svg'
