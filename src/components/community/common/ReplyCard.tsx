@@ -81,7 +81,7 @@ const ReplyCard: FC<Props> = ({
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
         </StyledDiv>
-        <StyledDiv className="row start gap full">
+        <StyledDiv className="row start full">
           {!memberCreated ||
             (!editMode && (
               <>
@@ -126,7 +126,7 @@ const ReplyCard: FC<Props> = ({
 export default ReplyCard
 
 const StyledWrapper = styled.div`
-  padding: 20px 0 0 10px;
+  padding: 10px 0 10px 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -173,16 +173,16 @@ const StyledButton = styled.button`
 
   &.mini {
     border: none;
-    height: 15px;
-    width: 25px;
+    height: 25px;
+    width: 40px;
     padding: 0px;
     font-size: 12px;
     color: #303030;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   &:hover {
-    transform: scale(1.05);
+    filter: brightness(0.95);
   }
 `
 const StyledParagraph = styled.p`
