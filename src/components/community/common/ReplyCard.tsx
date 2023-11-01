@@ -9,6 +9,7 @@ import EditReply from './EditReply'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 import { likeService } from 'services/community/likeService'
+import { toast } from 'react-toastify'
 
 interface Props {
   reply: Reply
@@ -59,13 +60,22 @@ const ReplyCard: FC<Props> = ({
       })
       return result
     })
+    toast.success(
+      newMemberLiked ? '답글에 좋아요를 남겼습니다.' : '좋아요를 취소했습니다.',
+    )
   }
   const editReply = () => {
     setEditMode(true)
   }
 
   const deleteReply = () => {
-    alert('답글 삭제')
+    const userConfirmed = confirm(
+      '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
+    )
+    if (userConfirmed) {
+      toast.success('답글이 삭제 되었습니다.')
+    }
+    return
   }
 
   return (
