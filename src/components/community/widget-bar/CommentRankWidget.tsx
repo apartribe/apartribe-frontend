@@ -1,12 +1,27 @@
 import WidgetTitleArea from 'components/community/widget-bar/WidgetTitleArea'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Img, P, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { FaRankingStar } from 'react-icons/fa6'
-import { COMMENT_RANK_MOCK } from 'mock/commentRankData'
 import { styled } from 'styled-components'
 import { FaTrophy } from 'react-icons/fa'
+import { useParams } from 'react-router-dom'
+import { widgetService } from 'services/community/widgetSevice'
+import dafaultAvatar from 'assets/users/defaultAvatar.png'
 
 const CommentRankWidget = () => {
+  const { aptId } = useParams()
+
+  const [rankList, setRankList] = useState([])
+
+  useEffect(() => {
+    const getCommentRank = async () => {
+      const response = await widgetService.getCommentRank({ aptId: aptId as string })
+      setRankList(response.data)
+    }
+
+    getCommentRank()
+  }, [])
+
   const decideIcon = (index: number) => {
     if (index === 0) return <FaTrophy color="#D5A11E" />
     if (index === 1) return <FaTrophy color="#A3A3A3" />
@@ -21,24 +36,29 @@ const CommentRankWidget = () => {
         title="지난 주 댓글 랭킹"
         hasSeeMore={false}
       />
-      {/* {COMMENT_RANK_MOCK?.length === 0 ? <StyledParagraph className='noData'>표시할 게시물이 없습니다.</StyledParagraph>: */}
-      <>
-        {COMMENT_RANK_MOCK.data.map((item, index) => (
-          <StyledWrapper key={item.nickname}>
-            <StyledDiv className="rank">{decideIcon(index)}</StyledDiv>
-            <Img src={item.avatar} $width="40px" $height="40px" />
-            <StyledDiv>
-              <P $fontWeight="700" $lineHeight="25px">
-                {item.nickname}
-              </P>
-              <P $fontSize="11px" $lineHeight="15px">
-                댓글 {item.commentCount}개
-              </P>
-            </StyledDiv>
-          </StyledWrapper>
-        ))}
-      </>
-      {/* } */}
+      {rankList.length === 0 ? (
+        <StyledParagraph className="noData">
+          {' '}
+          댓글을 남긴 사용자가 없습니다.
+        </StyledParagraph>
+      ) : (
+        <>
+          {rankList.map(({ id, nickname, commentCount }, index) => (
+            <StyledWrapper key={nickname}>
+              <StyledDiv className="rank">{decideIcon(index)}</StyledDiv>
+              <Img src={dafaultAvatar} $width="40px" $height="40px" />
+              <StyledDiv>
+                <P $fontWeight="700" $lineHeight="25px">
+                  {nickname}
+                </P>
+                <P $fontSize="11px" $lineHeight="15px">
+                  댓글 {commentCount}개
+                </P>
+              </StyledDiv>
+            </StyledWrapper>
+          ))}
+        </>
+      )}
     </ShadowBox>
   )
 }
@@ -57,5 +77,14 @@ const StyledDiv = styled.div`
     width: 20px;
     font-weight: 700;
     color: #303030;
+  }
+`
+
+const StyledParagraph = styled.div`
+  &.noData {
+    border-top: none;
+    line-height: 20px;
+    font-size: 12px;
+    padding-left: 25px;
   }
 `
