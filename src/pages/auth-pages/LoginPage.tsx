@@ -67,17 +67,18 @@ const LoginPage = () => {
     setIsChecked((prev) => !prev)
   }
 
-  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+  const openModal = ({ status, message, goTo }: Message) => {
     setModal((prev) => !prev)
-    setModalMessage({ status, message })
+    setModalMessage({ status, message, goTo })
   }
 
   const submitSigninForm = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const { result, message } = await auth.signin(email, password)
-    openModal(result, message)
-    navigate('/')
+    const path: string = result === 'success' ? '/' : ''
+    // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
+    openModal({ status: result, message, goTo: path })
 
     if (result === 'success') {
       const showMemberResult = await user.showMember(email)
@@ -86,9 +87,6 @@ const LoginPage = () => {
       if (result === 'success') {
         dispatch(loginUser(data))
       }
-
-      // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
-      //navigate()
     }
   }
 
@@ -126,9 +124,9 @@ const LoginPage = () => {
       </StyledForm>
 
       <div>
-        <Link to={PAGE_FIND_ID}>아이디 찾기</Link>
+        <StyledNoneStyleLink to={PAGE_FIND_ID}>아이디 찾기</StyledNoneStyleLink>
         <span>&nbsp;|&nbsp;</span>
-        <Link to={PAGE_FIND_PW}>비밀번호 찾기</Link>
+        <StyledNoneStyleLink to={PAGE_FIND_PW}>비밀번호 찾기</StyledNoneStyleLink>
       </div>
 
       <p className="span 2">간편 로그인/회원가입</p>
@@ -147,9 +145,9 @@ const LoginPage = () => {
 
       <p>
         아직 회원이 아니라면
-        <Link to={PAGE_SIGNUP_SELECT}>
+        <StyledNoneStyleLink to={PAGE_SIGNUP_SELECT}>
           <StyledSpan>&nbsp;회원가입</StyledSpan>
-        </Link>
+        </StyledNoneStyleLink>
       </p>
 
       {modal && (
@@ -225,6 +223,7 @@ const StyledLink = styled(Link)`
   grid-column: ${(props) => props.className || 'span 1'};
   justify-self: center;
   align-self: center;
+  color: black;
 `
 
 const StyledP = styled.p`
@@ -241,4 +240,9 @@ const StyledP = styled.p`
 const StyledSpan = styled.span`
   font-weight: 900;
   font-size: medium;
+`
+
+const StyledNoneStyleLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `

@@ -174,11 +174,15 @@ const ContactPage = () => {
                       <Label>
                         이메일<StyledSpan>필수</StyledSpan>
                       </Label>
-                      <Input name="email" value={email} onChange={changeInputValue} />
-                      <StyledButton onClick={requestEmailAuth}>인증요청</StyledButton>
+                      <StyledDiv className="row">
+                        <Input name="email" value={email} onChange={changeInputValue} />
+                        <StyledButton onClick={requestEmailAuth}>인증요청</StyledButton>
+                      </StyledDiv>
                     </StyledDiv>
                     <StyledDiv>
-                      <Label>인증코드</Label>
+                      <Label>
+                        인증코드<StyledSpan>필수</StyledSpan>
+                      </Label>
                       <StyledDiv className="row">
                         <Input name="code" value={code} onChange={changeInputValue} />
                         <StyledButton onClick={confirmEmailAuth}>인증</StyledButton>
