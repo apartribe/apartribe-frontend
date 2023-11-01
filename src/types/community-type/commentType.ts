@@ -9,7 +9,6 @@ export interface Comment {
   memberLiked: boolean
   profileImage: string
   children: Reply[]
-  id?: number // 임시로 사용.
 }
 
 export interface Reply {
@@ -22,5 +21,4 @@ export interface Reply {
   memberLiked: boolean
   parentId: number
   profileImage: string
-  id?: number // 임시로 사용.
 }
