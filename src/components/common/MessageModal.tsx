@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useRef, MouseEvent } from 'react'
 import { AiOutlineCheckCircle } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { Modal, ModalBackground } from 'styles/reusable-style/elementStyle'
 import { Message } from 'types/auth'
@@ -12,12 +13,14 @@ type MessageModalProps = {
 
 const MessageModal = ({ modal, setModal, modalMessage }: MessageModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
-  const { status, message } = modalMessage
+  const { status, message, goTo } = modalMessage
 
   const closeModal = (e: MouseEvent<HTMLDivElement>) => {
     if (modalRef.current === e.target) {
       setModal(!modal)
+      goTo && navigate(goTo)
     }
   }
 
