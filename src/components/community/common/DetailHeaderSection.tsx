@@ -1,4 +1,4 @@
-import React, { FC, Dispatch, SetStateAction } from 'react'
+import React, { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 import { AiOutlineEye, AiOutlineLike, AiOutlineDelete } from 'react-icons/ai'
@@ -13,6 +13,7 @@ import { TogetherDetailType } from 'types/community-type/togetherType'
 import { likeService } from 'services/community/likeService'
 import { Img } from 'styles/reusable-style/elementStyle'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import { commentService } from 'services/community/commentService'
 
 // 타입 수정 요망!
 interface Props<T> {
@@ -33,7 +34,6 @@ const DetailHeaderSection = <
     createdBy,
     liked,
     saw,
-    commentCounts,
     memberLiked,
     profileImage,
   },
@@ -41,6 +41,8 @@ const DetailHeaderSection = <
 }: Props<T>) => {
   const { aptId, postId } = useParams()
   const navigate = useNavigate()
+
+  const [commentCount, setCommentsCount] = useState<number | null>(null)
 
   const isCommunity = /article/
   const isAnnouncement = /announce/
@@ -90,6 +92,18 @@ const DetailHeaderSection = <
     }))
   }
 
+  useEffect(() => {
+    const getCommentCount = async () => {
+      const response = await commentService.getCommentCount({
+        aptId: aptId as string,
+        postId: postId as string,
+      })
+      setCommentsCount(response.data.commentCount)
+    }
+
+    getCommentCount()
+  }, [])
+
   return (
     <StyledWrapper>
       <StyledDiv className="between">
@@ -121,7 +135,7 @@ const DetailHeaderSection = <
           </StyledParagraph>
           <StyledParagraph className="sm">
             <BiConversation />
-            {commentCounts}
+            {commentCount}
           </StyledParagraph>
         </StyledDiv>
         <StyledDiv>
