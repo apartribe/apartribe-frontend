@@ -61,7 +61,9 @@ const TogetherWidget = () => {
         seeMorePath={`/community/${aptId}/together`}
       />
       {postList?.length === 0 ? (
-        <StyledParagraph className="noData">표시할 게시물이 없습니다.</StyledParagraph>
+        <StyledParagraph className="noData">
+          현재 모집중인 공고가 없습니다.
+        </StyledParagraph>
       ) : (
         <Slider {...settings}>
           {postList.map(({ id, thumbnail, title, createdBy, createdAt, description }) => (
