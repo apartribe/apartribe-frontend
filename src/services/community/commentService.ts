@@ -1,4 +1,10 @@
+import { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
+
+interface GetParam {
+  aptId: string
+  postId: string
+}
 
 interface AddParam {
   aptId: string
@@ -14,10 +20,21 @@ interface UpdateParam {
 }
 
 export const commentService = {
+  // 주의! 단일 조회가 아닌 리스트
+  async getComments(param: GetParam) {
+    const { aptId, postId } = param
+    try {
+      const response: AxiosResponse = await instance(`/api/${aptId}/${postId}/comment`)
+      return response.data.data
+    } catch (error) {
+      console.error(error)
+    }
+  },
+
   async addComment(param: AddParam) {
     const { aptId, postId, content } = param
     try {
-      const response = await instance(`/api/${aptId}/${postId}/comment`, {
+      const response: AxiosResponse = await instance(`/api/${aptId}/${postId}/comment`, {
         method: 'post',
         data: {
           content,
@@ -32,7 +49,7 @@ export const commentService = {
   async updateComment(param: UpdateParam) {
     const { aptId, postId, commentId, content } = param
     try {
-      const response = await instance(`api/${aptId}/${postId}/comment`, {
+      const response: AxiosResponse = await instance(`api/${aptId}/${postId}/comment`, {
         method: 'put',
         data: {
           commentId,
