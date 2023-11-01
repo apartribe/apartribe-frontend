@@ -183,7 +183,7 @@ const CommentCard: FC<Props> = ({
           className="sm bold mainColor"
           onClick={() => setRepliseVisible(true)}
         >
-          답글 {replies.length}개 보기 <IoIosArrowDown />
+          답글 {childCounts}개 보기 <IoIosArrowDown />
         </StyledParagraph>
       )}
     </StyledWrapper>
