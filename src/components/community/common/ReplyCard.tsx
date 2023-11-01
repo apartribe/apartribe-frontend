@@ -6,7 +6,7 @@ import { timeAgo } from 'utils/timeAgo'
 import { Img } from 'styles/reusable-style/elementStyle'
 import { Comment, Reply } from 'types/community-type/commentType'
 import EditReply from './EditReply'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 import { likeService } from 'services/community/likeService'
 
@@ -72,7 +72,7 @@ const ReplyCard: FC<Props> = ({
     <StyledWrapper>
       <StyledDiv className="row gap center">
         <Img
-          src={profileImage || dafaultAvatar}
+          src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"

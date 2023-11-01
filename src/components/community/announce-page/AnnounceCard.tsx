@@ -8,7 +8,7 @@ import { AnnounceCardType } from 'types/community-type/announceType'
 import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
 import { tagRemover } from 'utils/tagRemover'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
   post: AnnounceCardType
@@ -46,7 +46,7 @@ const AnnounceCard: FC<Props> = ({
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
-        src={profileImage || dafaultAvatar}
+        src={profileImage || defaultAvatar}
         $width="40px"
         $height="40px"
         $borderRadius="50%"
