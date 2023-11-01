@@ -64,8 +64,7 @@ const CommentCard: FC<Props> = ({
     const newReply: Reply = response?.data
 
     if (newReply) {
-      // TODO : 서버에서 id -> commentId로 바꿔주면 assertion 제거할 것.
-      const { content, createdAt, createdBy, id, profileImage } = newReply
+      const { content, createdAt, createdBy, profileImage } = newReply
       setComments((prevState) => {
         const result = prevState.map((item) => {
           if (item.commentId === commentId) {
@@ -73,7 +72,7 @@ const CommentCard: FC<Props> = ({
               ...item,
               children: [
                 {
-                  commentId: id as number,
+                  commentId: newReply.commentId, // commentId 중복되므로 이렇게 사용함.
                   content,
                   createdAt,
                   createdBy,

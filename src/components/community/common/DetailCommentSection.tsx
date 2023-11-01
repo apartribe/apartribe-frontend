@@ -40,12 +40,11 @@ const DetailCommentSection = () => {
     const newComment: Comment = response?.data
 
     if (newComment) {
-      // TODO : 서버에서 id -> commentId로 바꿔주면 assertion 제거할 것.
-      const { content, createdAt, createdBy, id, profileImage } = newComment
+      const { content, createdAt, createdBy, commentId, profileImage } = newComment
       setComments((prevState) => [
         {
           childCounts: 0,
-          commentId: id as number,
+          commentId,
           content,
           createdAt,
           createdBy,
