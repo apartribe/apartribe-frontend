@@ -8,6 +8,7 @@ import { Comment, Reply } from 'types/community-type/commentType'
 import EditReply from './EditReply'
 import dafaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
+import { likeService } from 'services/community/likeService'
 
 interface Props {
   reply: Reply
@@ -28,13 +29,37 @@ const ReplyCard: FC<Props> = ({
   },
   setComments,
 }) => {
-  const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
+  const { aptId, postId } = useParams()
+
+  const [like, setLike] = useState(memberLiked)
   const [editMode, setEditMode] = useState(false)
 
-  const toggleLike = () => {
-    setLike((prev) => !prev)
+  const toggleLike = async () => {
+    const response = await likeService.commentLike({
+      aptId: aptId as string,
+      postId: postId as string,
+      commentId,
+    })
+    setLike(response.data.liked)
+    const newMemberLiked: boolean = response.data.liked
+    setComments((prevState) => {
+      const result = prevState.map((item) => {
+        if (item.commentId === parentId) {
+          const test = item.children.map((item) => {
+            if (item.commentId === commentId) {
+              return { ...item, liked: newMemberLiked ? item.liked + 1 : item.liked - 1 }
+            } else {
+              return item
+            }
+          })
+          return { ...item, children: test }
+        } else {
+          return item
+        }
+      })
+      return result
+    })
   }
-
   const editReply = () => {
     setEditMode(true)
   }
@@ -71,7 +96,12 @@ const ReplyCard: FC<Props> = ({
         </StyledDiv>
         <StyledDiv className="column center">
           {like ? (
-            <AiFillHeart fontSize="20px" cursor="pointer" onClick={toggleLike} />
+            <AiFillHeart
+              fontSize="20px"
+              cursor="pointer"
+              color="#EA1616"
+              onClick={toggleLike}
+            />
           ) : (
             <AiOutlineHeart fontSize="20px" cursor="pointer" onClick={toggleLike} />
           )}
