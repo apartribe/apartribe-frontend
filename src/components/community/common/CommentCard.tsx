@@ -104,7 +104,7 @@ const CommentCard: FC<Props> = ({
     <StyledWrapper>
       <StyledDiv className="row gap center">
         <Img
-          src={dafaultAvatar} //{ avater || dafaultAvatar}
+          src={profileImage || dafaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"
@@ -171,7 +171,6 @@ const CommentCard: FC<Props> = ({
               replies.map((reply) => (
                 <ReplyCard
                   key={reply.commentId}
-                  // parentId={commentId}
                   reply={reply}
                   setComments={setComments}
                 />
