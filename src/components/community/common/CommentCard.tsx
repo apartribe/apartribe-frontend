@@ -18,6 +18,8 @@ import { Comment, Reply } from 'types/community-type/commentType'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 import { likeService } from 'services/community/likeService'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 interface Props {
   comment: Comment
@@ -68,10 +70,15 @@ const CommentCard: FC<Props> = ({
       })
       return result
     })
+    toast.success(
+      newMemberLiked ? '댓글에 좋아요를 남겼습니다.' : '좋아요를 취소했습니다.',
+    )
   }
 
   const submitReply = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!inputValue) return toast.warn('답글 내용을 입력해주세요.')
+
     const response = await replyService.addReply({
       aptId: aptId as string,
       postId: postId as string,
@@ -108,12 +115,19 @@ const CommentCard: FC<Props> = ({
         })
         return result
       })
+      toast.success('답글이 등록 되었습니다.')
+      setInputValue('')
     }
-    setInputValue('')
   }
 
   const deleteComment = () => {
-    alert('답글 삭제')
+    const userConfirmed = confirm(
+      '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
+    )
+    if (userConfirmed) {
+      toast.success('댓글이 삭제 되었습니다.')
+    }
+    return
   }
 
   return (

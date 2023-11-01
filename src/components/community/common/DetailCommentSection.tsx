@@ -7,6 +7,7 @@ import { commentService } from 'services/community/commentService'
 import { MoonLoader } from 'react-spinners'
 import { Comment } from 'types/community-type/commentType'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
+import { toast } from 'react-toastify'
 
 const CURRENT_USER_MOCK = {
   avatar:
@@ -32,6 +33,7 @@ const DetailCommentSection = () => {
 
   const submitComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!inputValue) return toast.warn('댓글 내용을 입력해주세요.')
     const response = await commentService.addComment({
       aptId: aptId as string,
       postId: postId as string,
@@ -56,8 +58,9 @@ const DetailCommentSection = () => {
         },
         ...prevState,
       ])
+      toast.success('댓글이 등록 되었습니다.')
+      setInputValue('')
     }
-    setInputValue('')
   }
 
   useEffect(() => {

@@ -11,6 +11,8 @@ import { commentService } from 'services/community/commentService'
 import { styled } from 'styled-components'
 import { Input } from 'styles/reusable-style/elementStyle'
 import { Comment } from 'types/community-type/commentType'
+import { toast, ToastContainer } from 'react-toastify'
+// import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
   commentId: number
@@ -48,7 +50,9 @@ const EditComment: FC<Props> = ({ commentId, content, setComments, setEditMode }
       })
       return result
     })
+    toast.success('댓글이 수정 되었습니다.')
     setEditMode(false)
+    setInputValue('')
   }
 
   return (
