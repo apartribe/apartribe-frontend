@@ -15,7 +15,7 @@ import ReplyCard from './ReplyCard'
 import { replyService } from 'services/community/replyService'
 import EditComment from './EditComment'
 import { Comment, Reply } from 'types/community-type/commentType'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 import { likeService } from 'services/community/likeService'
 
@@ -120,7 +120,7 @@ const CommentCard: FC<Props> = ({
     <StyledWrapper>
       <StyledDiv className="row gap center">
         <Img
-          src={profileImage || dafaultAvatar}
+          src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"

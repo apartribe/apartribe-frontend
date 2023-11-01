@@ -6,7 +6,7 @@ import { styled } from 'styled-components'
 import { FaTrophy } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 
 const CommentRankWidget = () => {
   const { aptId } = useParams()
@@ -46,7 +46,7 @@ const CommentRankWidget = () => {
           {rankList.map(({ id, nickname, commentCount }, index) => (
             <StyledWrapper key={nickname}>
               <StyledDiv className="rank">{decideIcon(index)}</StyledDiv>
-              <Img src={dafaultAvatar} $width="40px" $height="40px" />
+              <Img src={defaultAvatar} $width="40px" $height="40px" />
               <StyledDiv>
                 <P $fontWeight="700" $lineHeight="25px">
                   {nickname}

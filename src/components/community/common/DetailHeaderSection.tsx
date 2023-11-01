@@ -12,7 +12,7 @@ import { AnnounceDetailType } from 'types/community-type/announceType'
 import { TogetherDetailType } from 'types/community-type/togetherType'
 import { likeService } from 'services/community/likeService'
 import { Img } from 'styles/reusable-style/elementStyle'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { commentService } from 'services/community/commentService'
 
 // 타입 수정 요망!
@@ -151,7 +151,7 @@ const DetailHeaderSection = <
       </StyledDiv>
       <StyledDiv>
         <Img
-          src={profileImage || dafaultAvatar}
+          src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"
