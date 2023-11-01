@@ -31,6 +31,18 @@ export const commentService = {
     }
   },
 
+  async getCommentCount(param: GetParam) {
+    const { aptId, postId } = param
+    try {
+      const response: AxiosResponse = await instance(
+        `/api/${aptId}/${postId}/comment/total`,
+      )
+      return response.data
+    } catch (error) {
+      console.error(error)
+    }
+  },
+
   async addComment(param: AddParam) {
     const { aptId, postId, content } = param
     try {
