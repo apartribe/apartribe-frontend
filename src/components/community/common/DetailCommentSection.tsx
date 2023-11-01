@@ -2,7 +2,6 @@ import React, { FormEvent, useState, useEffect, ChangeEvent, useRef } from 'reac
 import { styled } from 'styled-components'
 import { Img, Input } from 'styles/reusable-style/elementStyle'
 import CommentCard from './CommentCard'
-import { commentsService } from 'services/community/commentsService'
 import { useParams } from 'react-router-dom'
 import { commentService } from 'services/community/commentService'
 import { MoonLoader } from 'react-spinners'
@@ -63,19 +62,26 @@ const DetailCommentSection = () => {
   }
 
   useEffect(() => {
-    const getNewPage = async () => {
+    const getComments = async () => {
       setLoading(true)
-      const response = await commentsService.getComments({
+      const response = await commentService.getComments({
         aptId: aptId as string,
         postId: postId as string,
       })
-      if (!response) return
-
       setComments(response)
       setLoading(false)
     }
 
-    getNewPage()
+    const getCommentCount = async () => {
+      const response = await commentService.getCommentCount({
+        aptId: aptId as string,
+        postId: postId as string,
+      })
+      setCommentsCount(response.data.commentCount)
+    }
+
+    getComments()
+    getCommentCount()
   }, [])
 
   if (!comments) return <p></p>
