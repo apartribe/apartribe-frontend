@@ -15,6 +15,10 @@ interface SearchPostParam {
   keyword: string
 }
 
+interface CommentRank {
+  aptId: string
+}
+
 export const widgetService = {
   async getVaildAnnounce(param: ValidAnnounce) {
     const { aptId } = param
@@ -54,5 +58,13 @@ export const widgetService = {
     } catch (error) {
       console.error(error)
     }
+  },
+
+  async getCommentRank(param: CommentRank) {
+    const { aptId } = param
+    const response: AxiosResponse = await instance(`/api/${aptId}/comment/best`, {
+      method: 'get',
+    })
+    return response.data
   },
 }
