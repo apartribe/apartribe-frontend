@@ -27,7 +27,7 @@ const ChangeImagePage = () => {
     fileInput.current?.click()
   }
 
-  const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
+  /* const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
 
@@ -35,6 +35,10 @@ const ChangeImagePage = () => {
       const pdfUrl = URL.createObjectURL(blob)
       setImageUrl(pdfUrl)
     }
+  } */
+  const uploadToS3 = async (e: ChangeEvent<HTMLInputElement>) => {
+    /* const resopnse = await uploadS3(e.target.files[0])
+    setImageUrl(resposne.Location) */
   }
 
   const cancelChangeImage = () => {
@@ -54,6 +58,7 @@ const ChangeImagePage = () => {
     openModal(result, message)
 
     if (result === 'success') {
+      console.log('imageUrl', imageUrl)
       dispatch(updateLoginUser({ profileImageUrl: imageUrl }))
     }
   }
@@ -72,9 +77,10 @@ const ChangeImagePage = () => {
             type="file"
             accept="image/jpg,impge/png,image/jpeg"
             name="image"
-            onChange={changeImage}
+            onChange={/* changeImage */ uploadToS3}
             ref={fileInput}
           />
+          <span>위 이미지를 클릭해 새로운 프로필을 등록하세요</span>
           <StyledDiv>
             <StyledCancelButton type="button" onClick={cancelChangeImage}>
               취소
