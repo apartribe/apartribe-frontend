@@ -89,7 +89,7 @@ export default EditReply
 const StyledForm = styled.form`
   display: flex;
   gap: 10px;
-  margin: 20px 0 10px 0;
+  margin: 10px 0;
 `
 
 const StyledButton = styled.button`
