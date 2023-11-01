@@ -1,13 +1,12 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useEffect } from 'react'
 import { styled } from 'styled-components'
 import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import SignupInputArea from 'components/auth/SignupInputArea'
 import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
-import { Message, SignupInputValue } from 'types/auth'
+import { Message, SignupInputValue, TermsAndConditionsValue } from 'types/auth'
 import MessageModal from 'components/common/MessageModal'
 import { auth } from 'services/auth'
-import { useNavigate } from 'react-router-dom'
 import { PAGE_LOGIN } from 'constants/auth/path'
 
 const SignupLocalPage = () => {
@@ -19,29 +18,49 @@ const SignupLocalPage = () => {
     name: '',
     nickname: '',
   })
+  const [termsAndConditionsValue, setTermsAndConditionsValue] =
+    useState<TermsAndConditionsValue>({
+      goeFourteen: false,
+      confirmCopyright: false,
+      useAgree: false,
+      dataCollectAgree: false,
+      advertiseAgree: false,
+    })
+
   const [isSignupPossible, setIsSignupPossible] = useState<boolean>(false)
+  const [isSignupInputAreaValid, setIsSignupInputAreaValid] = useState<boolean>(false)
+
   const [modal, setModal] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<Message>({
     status: 'waiting',
     message: '',
   })
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    const newValue = { ...termsAndConditionsValue }
+    delete newValue.advertiseAgree
 
-  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+    const termsAndConditionsValueList = Object.values(newValue)
+    const isTermsAndConditionsValueValid = termsAndConditionsValueList.reduce(
+      (prev, current) => prev && current,
+    )
+
+    setIsSignupPossible(isSignupInputAreaValid && isTermsAndConditionsValueValid)
+  }, [isSignupInputAreaValid, termsAndConditionsValue])
+
+  const openModal = ({ status, message, goTo }: Message) => {
     setModal((prev) => !prev)
-    setModalMessage({ status, message })
+    setModalMessage({ status, message, goTo })
   }
 
   const submitSignupForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { result, message } = await auth.signup(inputValue)
-    openModal(result, message)
-
-    if (result === 'success') {
-      navigate(PAGE_LOGIN)
-    }
+    const { result, message } = await auth.signup({
+      ...inputValue,
+      ...termsAndConditionsValue,
+    })
+    openModal({ status: result, message, goTo: PAGE_LOGIN })
   }
 
   return (
@@ -52,9 +71,11 @@ const SignupLocalPage = () => {
           <SignupInputArea
             inputValue={inputValue}
             setInputValue={setInputValue}
-            setIsSignupPossible={setIsSignupPossible}
+            setIsSignupInputAreaValid={setIsSignupInputAreaValid}
           />
-          <TermsAndConditionArea />
+          <TermsAndConditionArea
+            setTermsAndConditionsValue={setTermsAndConditionsValue}
+          />
           <Button type="submit" disabled={!isSignupPossible}>
             회원가입
           </Button>

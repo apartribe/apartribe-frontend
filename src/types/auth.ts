@@ -5,7 +5,14 @@ export type SignupInputValue = {
   passwordConfirm: string
   name: string
   nickname: string
-  terms_and_conditions?: boolean
+}
+
+export type TermsAndConditionsValue = {
+  goeFourteen: boolean
+  confirmCopyright: boolean
+  useAgree: boolean
+  dataCollectAgree: boolean
+  advertiseAgree?: boolean
 }
 
 export type SigninInputValue = {
@@ -32,6 +39,7 @@ export type Message = {
   status: 'waiting' | 'success' | 'fail'
   message: string
   todo?: () => void
+  goTo?: string
 }
 
 export type SigninResult = Result
