@@ -40,7 +40,7 @@ const EditComment: FC<Props> = ({ commentId, content, setComments, setEditMode }
 
     setComments((prevState) => {
       const result = prevState.map((item) => {
-        if (item.id === commentId) {
+        if (item.commentId === commentId) {
           return { ...item, content: editedComment }
         } else {
           return item

@@ -10,14 +10,24 @@ import dafaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 
 interface Props {
-  parentId: number
+  // parentId: number
   reply: Reply
   setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const ReplyCard: FC<Props> = ({
-  parentId,
-  reply: { /* avatar, */ id, createdBy, createdAt, like: liked, content },
+  // parentId,
+  reply: {
+    commentId,
+    content,
+    createdAt,
+    createdBy,
+    liked,
+    memberCreated,
+    memberLiked,
+    parentId,
+    profileImage,
+  },
   setComments,
 }) => {
   const { aptId, postId } = useParams()
@@ -74,7 +84,7 @@ const ReplyCard: FC<Props> = ({
       {editMode ? (
         <EditReply
           parentId={parentId}
-          commentId={id}
+          commentId={commentId}
           content={content}
           setComments={setComments}
           setEditMode={setEditMode}

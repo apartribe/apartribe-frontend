@@ -25,11 +25,15 @@ interface Props {
 
 const CommentCard: FC<Props> = ({
   comment: {
-    /* avatar, */ id,
-    createdBy,
-    createdAt,
+    childCounts,
+    commentId,
     content,
-    like: liked,
+    createdAt,
+    createdBy,
+    liked,
+    memberCreated,
+    memberLiked,
+    profileImage,
     children: replies,
   },
   setComments,
@@ -54,16 +58,34 @@ const CommentCard: FC<Props> = ({
     const response = await replyService.addReply({
       aptId: aptId as string,
       postId: postId as string,
-      parentId: id,
+      parentId: commentId,
       content: inputValue,
     })
     const newReply: Reply = response?.data
 
     if (newReply) {
+      // TODO : 서버에서 id -> commentId로 바꿔주면 assertion 제거할 것.
+      const { content, createdAt, createdBy, id, profileImage } = newReply
       setComments((prevState) => {
         const result = prevState.map((item) => {
-          if (item.id === id) {
-            return { ...item, children: [newReply, ...item.children] }
+          if (item.commentId === commentId) {
+            return {
+              ...item,
+              children: [
+                {
+                  commentId: id as number,
+                  content,
+                  createdAt,
+                  createdBy,
+                  liked: 0,
+                  memberCreated: true,
+                  memberLiked: false,
+                  profileImage,
+                  parentId: commentId,
+                },
+                ...item.children,
+              ],
+            }
           } else {
             return item
           }
@@ -119,7 +141,7 @@ const CommentCard: FC<Props> = ({
       </StyledDiv>
       {editMode ? (
         <EditComment
-          commentId={id}
+          commentId={commentId}
           content={content}
           setComments={setComments}
           setEditMode={setEditMode}
@@ -148,8 +170,8 @@ const CommentCard: FC<Props> = ({
             {replies &&
               replies.map((reply) => (
                 <ReplyCard
-                  key={reply.id}
-                  parentId={id}
+                  key={reply.commentId}
+                  // parentId={commentId}
                   reply={reply}
                   setComments={setComments}
                 />

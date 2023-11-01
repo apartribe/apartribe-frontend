@@ -11,7 +11,7 @@ export const replyService = {
   async addReply(param: AddParam) {
     const { aptId, postId, parentId, content } = param
     try {
-      const response = await instance(`/api/${aptId}/board/${postId}/comment/reply`, {
+      const response = await instance(`/api/${aptId}/${postId}/comment/reply`, {
         method: 'post',
         data: {
           parentId,

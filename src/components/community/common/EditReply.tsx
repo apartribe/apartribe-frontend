@@ -48,9 +48,9 @@ const EditReply: FC<Props> = ({
     if (editedReply) {
       setComments((prevState) => {
         const result = prevState.map((item) => {
-          if (item.id === parentId) {
+          if (item.commentId === parentId) {
             const test = item.children.map((item) => {
-              if (item.id === commentId) {
+              if (item.commentId === commentId) {
                 return { ...item, content: editedReply }
               } else {
                 return item
