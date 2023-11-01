@@ -21,7 +21,6 @@ const DetailCommentSection = () => {
   const [loading, setLoading] = useState(false)
   const [nothingToload, setNothingToload] = useState(false)
   const LoadingTargetRef = useRef(null)
-  const pageCountRef = useRef(0)
 
   const param = useParams()
   const { aptId, postId } = param
@@ -42,55 +41,42 @@ const DetailCommentSection = () => {
     const newComment: Comment = response?.data
 
     if (newComment) {
-      const { content, createdAt, createdBy, id } = newComment
+      // TODO : 서버에서 id -> commentId로 바꿔주면 assertion 제거할 것.
+      const { content, createdAt, createdBy, id, profileImage } = newComment
       setComments((prevState) => [
-        { content, createdAt, createdBy, id, like: 0, children: [] },
+        {
+          childCounts: 0,
+          commentId: id as number,
+          content,
+          createdAt,
+          createdBy,
+          liked: 0,
+          memberCreated: true,
+          memberLiked: false,
+          profileImage,
+          children: [],
+        },
         ...prevState,
       ])
     }
     setInputValue('')
   }
 
-  // 무한 스크롤 ======추후 커스텀 훅으로 모듈화 고려
   useEffect(() => {
     const getNewPage = async () => {
       setLoading(true)
-      pageCountRef.current = pageCountRef.current + 1
       const response = await commentsService.getComments({
+        aptId: aptId as string,
         postId: postId as string,
-        page: pageCountRef.current,
       })
       if (!response) return
-      setCommentsCount(response.totalCount)
-      if (response.results.length === 0) return setNothingToload(true)
+
+      setComments(response)
       setLoading(false)
-      setComments((prev) => [...prev, ...response.results])
     }
 
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 1,
-    }
-
-    const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !loading) {
-          getNewPage()
-        }
-      })
-    }
-
-    const observer = new IntersectionObserver(callback, options)
-    if (LoadingTargetRef.current) {
-      observer.observe(LoadingTargetRef.current)
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [loading, postId])
-  //======
+    getNewPage()
+  }, [])
 
   if (!comments) return <p></p>
 
@@ -120,7 +106,11 @@ const DetailCommentSection = () => {
       <StyledDiv className="column">
         {comments &&
           comments.map((comment: Comment) => (
-            <CommentCard key={comment.id} comment={comment} setComments={setComments} />
+            <CommentCard
+              key={comment.commentId}
+              comment={comment}
+              setComments={setComments}
+            />
           ))}
       </StyledDiv>
       {nothingToload ? (

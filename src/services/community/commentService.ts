@@ -17,7 +17,7 @@ export const commentService = {
   async addComment(param: AddParam) {
     const { aptId, postId, content } = param
     try {
-      const response = await instance(`/api/${aptId}/board/${postId}/comment`, {
+      const response = await instance(`/api/${aptId}/${postId}/comment`, {
         method: 'post',
         data: {
           content,
@@ -32,7 +32,7 @@ export const commentService = {
   async updateComment(param: UpdateParam) {
     const { aptId, postId, commentId, content } = param
     try {
-      const response = await instance(`api/${aptId}/board/${postId}/comment`, {
+      const response = await instance(`api/${aptId}/${postId}/comment`, {
         method: 'put',
         data: {
           commentId,
