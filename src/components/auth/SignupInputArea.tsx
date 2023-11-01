@@ -12,13 +12,13 @@ import MessageModal from '../common/MessageModal'
 type SigninupInputAreaProps<T> = {
   inputValue: T
   setInputValue: Dispatch<React.SetStateAction<T>>
-  setIsSignupPossible: Dispatch<React.SetStateAction<boolean>>
+  setIsSignupInputAreaValid: Dispatch<React.SetStateAction<boolean>>
 }
 
 const SignupInputArea = <T extends SignupInputValue>({
   inputValue,
   setInputValue,
-  setIsSignupPossible,
+  setIsSignupInputAreaValid,
 }: SigninupInputAreaProps<T>) => {
   const [passwordType, setPasswordType] = useState<PasswordType>({
     type: 'password',
@@ -75,13 +75,13 @@ const SignupInputArea = <T extends SignupInputValue>({
       (prev, current) => prev && current,
     )
 
-    setIsSignupPossible(isAllValueValid && isAllResponseValueSuccess)
+    setIsSignupInputAreaValid(isAllValueValid && isAllResponseValueSuccess)
   }, [
     isPasswordValid,
     isPasswordConfirmValid,
     isNameValid,
     responseSuccessValues,
-    setIsSignupPossible,
+    setIsSignupInputAreaValid,
   ])
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {

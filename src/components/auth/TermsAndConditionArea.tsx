@@ -1,29 +1,43 @@
-import { MouseEvent, ChangeEvent, useState } from 'react'
+import { MouseEvent, ChangeEvent, useState, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { AiOutlineRight } from 'react-icons/ai'
 import { Input } from 'styles/reusable-style/elementStyle'
 import TermsAndConditionModal from './TermsAndConditionModal'
 import { TERMS_AND_CONDITIONS_LIST } from 'constants/auth/termsAndConditions'
+import { TermsAndConditionsValue } from 'types/auth'
 
-const TermsAndConditionArea = () => {
-  const [checkList, setCheckList] = useState<number[]>([])
+type TermsAndConditionAreaProps<T> = {
+  setTermsAndConditionsValue: Dispatch<SetStateAction<T>>
+}
+
+const TermsAndConditionArea = <T extends TermsAndConditionsValue>({
+  setTermsAndConditionsValue,
+}: TermsAndConditionAreaProps<T>) => {
+  const [checkList, setCheckList] = useState<string[]>([])
   const [showDetail, setShowDetail] = useState<string>('')
   const [modal, setModal] = useState<boolean>(false)
 
   const checkAll = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.currentTarget.checked) {
-      setCheckList(TERMS_AND_CONDITIONS_LIST.map(({ id }) => id))
+    if (e.target.checked) {
+      setCheckList(TERMS_AND_CONDITIONS_LIST.map(({ name }) => name))
     } else {
       setCheckList([])
     }
+
+    const newArray: any = []
+    TERMS_AND_CONDITIONS_LIST.map(({ name }) => (newArray[name] = e.target.checked))
+
+    const newObject = Object.assign({}, newArray)
+    setTermsAndConditionsValue(newObject)
   }
 
   const check = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.currentTarget.checked) {
-      setCheckList([...checkList, Number(e.currentTarget.value)])
+    if (e.target.checked) {
+      setCheckList([...checkList, e.target.name])
     } else {
-      setCheckList(checkList.filter((item) => item !== Number(e.currentTarget.value)))
+      setCheckList(checkList.filter((item) => item !== e.target.name))
     }
+    setTermsAndConditionsValue((prev) => ({ ...prev, [e.target.name]: e.target.checked }))
   }
 
   const openModal = (e: MouseEvent<HTMLButtonElement>) => {
@@ -43,12 +57,12 @@ const TermsAndConditionArea = () => {
         전체 동의
       </StyledLabel>
 
-      {TERMS_AND_CONDITIONS_LIST.map(({ id, isMandatory, title, fileName }) => (
+      {TERMS_AND_CONDITIONS_LIST.map(({ id, name, isMandatory, title, fileName }) => (
         <StyledLabel key={id}>
           <StyledCheckbox
             type="checkbox"
-            value={id}
-            checked={checkList.includes(id) ? true : false}
+            name={name}
+            checked={checkList.includes(name) ? true : false}
             onChange={check}
           />
           <StyledSpan>{isMandatory}</StyledSpan>
