@@ -15,6 +15,7 @@ import { AptSearch } from 'types/community-type/aptType'
 import { useGeolocation } from 'hooks/useGeolocation'
 import { externalAptSearchService } from 'services/apt/externalAptSearchService'
 import { aptService } from 'services/apt/aptService'
+import { toast } from 'react-toastify'
 
 const AptSearchBar = () => {
   const navigate = useNavigate()
@@ -111,7 +112,7 @@ const AptSearchBar = () => {
 
   const moveToCommunityEnter = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!inputValue.id) return alert('목록에서 아파트를 선택해주세요.')
+    if (!inputValue.id) return toast.warn('목록에서 아파트를 선택해주세요.')
     const response = await aptService.aptExists({ aptId: inputValue.id })
     if (response.apartExists) {
       return navigate(`/community/${inputValue.id}`)
