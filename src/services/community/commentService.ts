@@ -24,7 +24,9 @@ export const commentService = {
   async getComments(param: GetParam) {
     const { aptId, postId } = param
     try {
-      const response: AxiosResponse = await instance(`/api/${aptId}/${postId}/comment`)
+      const response: AxiosResponse = await instance(`/api/${aptId}/${postId}/comment`, {
+        method: 'get',
+      })
       return response.data.data
     } catch (error) {
       console.error(error)
@@ -36,6 +38,9 @@ export const commentService = {
     try {
       const response: AxiosResponse = await instance(
         `/api/${aptId}/${postId}/comment/total`,
+        {
+          method: 'get',
+        },
       )
       return response.data
     } catch (error) {
