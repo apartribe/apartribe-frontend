@@ -129,7 +129,7 @@ const CommentCard: FC<Props> = ({
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
         </StyledDiv>
-        <StyledDiv className="row gap full">
+        <StyledDiv className="row full">
           {!memberCreated ||
             (!editMode && (
               <>
@@ -209,7 +209,7 @@ const CommentCard: FC<Props> = ({
 export default CommentCard
 
 const StyledWrapper = styled.div`
-  padding: 30px 0;
+  padding: 15px 0 20px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -264,16 +264,16 @@ const StyledButton = styled.button`
 
   &.mini {
     border: none;
-    height: 15px;
-    width: 25px;
+    height: 25px;
+    width: 40px;
     padding: 0px;
     font-size: 12px;
     color: #303030;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   &:hover {
-    transform: scale(1.05);
+    filter: brightness(0.95);
   }
 `
 const StyledParagraph = styled.p`
