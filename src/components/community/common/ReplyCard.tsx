@@ -10,13 +10,11 @@ import dafaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 
 interface Props {
-  // parentId: number
   reply: Reply
   setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const ReplyCard: FC<Props> = ({
-  // parentId,
   reply: {
     commentId,
     content,
@@ -30,8 +28,6 @@ const ReplyCard: FC<Props> = ({
   },
   setComments,
 }) => {
-  const { aptId, postId } = useParams()
-
   const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
   const [editMode, setEditMode] = useState(false)
 
@@ -51,7 +47,7 @@ const ReplyCard: FC<Props> = ({
     <StyledWrapper>
       <StyledDiv className="row gap center">
         <Img
-          src={dafaultAvatar} // { avater || dafaultAvatar}
+          src={profileImage || dafaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"
