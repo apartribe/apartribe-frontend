@@ -1,5 +1,5 @@
 import CkEditor from 'components/community/CkEditor'
-import { useState, ChangeEvent, FormEvent, MouseEvent } from 'react'
+import { useState, useEffect, ChangeEvent, FormEvent, MouseEvent } from 'react'
 import { styled } from 'styled-components'
 import ReactMarkdown from 'react-markdown'
 import { signupValidation } from 'constants/auth/signupValidation'
@@ -7,40 +7,71 @@ import { useTimer } from 'hooks/useTimer'
 import { Button, Input, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import contact from 'assets/terms_and_conditions/contact.md'
-
-type ContactInputValue = {
-  termsAndConditions: boolean
-  name: string
-  email: string
-  code: string
-  nonMember: boolean
-  title: string
-  content: string
-}
+import { ContactInputValue } from 'types/setting'
+import { advertise } from 'services/advertise'
+import { Message } from 'types/auth'
 
 const ContactPage = () => {
   const [inputValue, setInputValue] = useState<ContactInputValue>({
-    termsAndConditions: false,
+    dataCollectAgree: false,
     name: '',
+    nonAuth: false,
     email: '',
     code: '',
-    nonMember: false,
     title: '',
     content: '',
   })
+  console.log('inputValue', inputValue)
   const [termsAndConditionsContent, setTermsAndConditionsContent] = useState<string>('')
 
-  const { termsAndConditions, name, email, code, nonMember, title, content } = inputValue
-  const isEmailAuthCodeValid = signupValidation.code.validator(code)
+  const [confirmEmailResponseMessage, setConfirmEmailResponseMessage] = useState<Message>(
+    {
+      status: 'waiting',
+      message: '',
+    },
+  )
 
-  const { startTimer, secondsLeft, formattedTimeLeft } = useTimer('')
+  const [modal, setModal] = useState<boolean>(false)
+  const [modalMessage, setModalMessage] = useState<Message>({
+    status: 'waiting',
+    message: '',
+  })
+
+  const { dataCollectAgree, name, nonAuth, email, code, title, content } = inputValue
+
+  const [responseSuccessValues, setResponseSuccessValues] = useState({
+    email: false,
+    code: false,
+  })
+  console.log('responseSuccessValues', responseSuccessValues)
+  const [isRegisterPossible, setIsRegisterPossible] = useState<boolean>(false)
+
+  const { startTimer, secondsLeft, resetTimer, formattedTimeLeft } = useTimer(
+    '3분 이내에 인증번호를 입력해주세요. 남은시간:',
+  )
   const TIMER_SECONDS = 180
 
+  useEffect(() => {
+    fetch(contact)
+      .then((res) => res.text())
+      .then((text) => setTermsAndConditionsContent(text))
+  }, [])
+
+  useEffect(() => {
+    const responseSuccessList = Object.values(responseSuccessValues)
+    const isAllResponseValueSuccess = responseSuccessList.reduce(
+      (prev, current) => prev && current,
+    )
+
+    setIsRegisterPossible(isAllResponseValueSuccess)
+  }, [responseSuccessValues])
+
+  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+    setModal((prev) => !prev)
+    setModalMessage({ status, message })
+  }
+
   const check = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'nonMember') {
-      //TODO: 서버요청
-      startTimer(TIMER_SECONDS)
-    }
     setInputValue((prev) => ({
       ...prev,
       [e.target.name]: e.target.checked,
@@ -54,110 +85,141 @@ const ContactPage = () => {
     }))
   }
 
-  const checkEmailAuth = (e: MouseEvent<HTMLButtonElement>) => {
-    //TODO: 서버요청
+  const checkNonAuth = () => {
+    setInputValue((prev) => ({ ...prev, nonAuth: true }))
   }
 
-  const submitContactForm = (e: FormEvent<HTMLFormElement>) => {
+  const requestEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //TODO: 서버요청
+
+    const { result, message } = await advertise.sendEmail(name, email)
+    openModal(result, message)
+
+    if (result === 'success') {
+      startTimer(TIMER_SECONDS)
+      setConfirmEmailResponseMessage({ status: 'waiting', message: formattedTimeLeft })
+      setResponseSuccessValues((prev) => ({ ...prev, email: true }))
+    }
   }
 
-  fetch(contact)
-    .then((res) => res.text())
-    .then((text) => setTermsAndConditionsContent(text))
+  const confirmEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    const { result, message } = await advertise.confirmEmail(name, email, code)
+    resetTimer()
+    setConfirmEmailResponseMessage({ status: result, message: message })
+
+    if (result === 'success') {
+      setResponseSuccessValues((prev) => ({ ...prev, code: true }))
+    }
+  }
+
+  const submitContactForm = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const { result, message } = await advertise.addAdvertise(inputValue)
+    console.log(result, message)
+  }
 
   return (
-    <Container>
-      <Inner
-        className="fullScreen"
-        $display="flex"
-        $flexDirection="column"
-        $alignItems="center"
-      >
-        <StyledH>광고/제휴 문의</StyledH>
-        <ShadowBox $display="flex">
-          <StyledForm onSubmit={submitContactForm}>
-            <div>
-              <StyledDiv>
-                <StyledDiv className="row">
-                  <StyledCheckbox
-                    type="checkbox"
-                    id="termsAndConditions"
-                    name="termsAndConditions"
-                    checked={termsAndConditions}
-                    onChange={check}
-                  />
-                  <StyledSpan>필수</StyledSpan>
-                  <Label htmlFor="termsAndConditions">
-                    광고 및 제휴문의를 위한 정보 수집 및 이용동의
-                  </Label>
-                </StyledDiv>
-                <StyledReactMarkdown>{termsAndConditionsContent}</StyledReactMarkdown>
-              </StyledDiv>
-              <StyledDiv>
-                <Label>
-                  이름<StyledSpan>필수</StyledSpan>
-                </Label>
-                <Input name="name" value={name} onChange={changeInputValue} />
-              </StyledDiv>
-              <StyledDiv>
-                <Label>
-                  이메일<StyledSpan>필수</StyledSpan>
-                </Label>
-                <Input name="email" value={email} onChange={changeInputValue} />
-                <StyledDiv className="row">
-                  <StyledCheckbox
-                    type="checkbox"
-                    id="nonMember"
-                    name="nonMember"
-                    checked={nonMember}
-                    onChange={check}
-                  />
-                  <StyledLabel htmlFor="nonMember">
-                    비회원일경우 선택해주세요. 이메일 인증이 필요합니다.
-                  </StyledLabel>
-                </StyledDiv>
-              </StyledDiv>
-              <StyledDiv>
-                <Label>인증코드</Label>
-                <StyledDiv className="row">
-                  <Input name="code" value={code} onChange={changeInputValue} />
-                  <StyledButton onClick={checkEmailAuth} disabled={!isEmailAuthCodeValid}>
-                    인증
-                  </StyledButton>
-                </StyledDiv>
-                {secondsLeft > 0 && (
-                  <StyledP className="waiting">
-                    이메일이 발송되었습니다. 3분 이내에 인증번호를 입력해주세요. 남은시간{' '}
-                    {formattedTimeLeft}
-                  </StyledP>
-                )}
-                {/* <StyledP className='success'>인증이 완료되었습니다.</StyledP>
-                <StyledP className='fail'>이메일이 일치하지 않습니다. 다시 확인해주세요. 남은시간: 2:30</StyledP> */}
-              </StyledDiv>
-            </div>
-            <div>
-              <StyledDiv>
-                <Label>
-                  제목<StyledSpan>필수</StyledSpan>
-                </Label>
-                <Input name="title" value={title} onChange={changeInputValue} />
-              </StyledDiv>
-              <StyledDiv>
-                <Label>
-                  문의내용<StyledSpan>필수</StyledSpan>
-                </Label>
-                <CkEditor setInputValue={setInputValue} />
-              </StyledDiv>
-              <Button type="submit" disabled $margin="20px 0 0 0">
-                제출하기
-              </Button>
-            </div>
-          </StyledForm>
-        </ShadowBox>
-      </Inner>
-    </Container>
+    <>
+      {termsAndConditionsContent.length !== 0 && (
+        <Container>
+          <Inner
+            className="fullScreen"
+            $display="flex"
+            $flexDirection="column"
+            $alignItems="center"
+          >
+            <StyledH>광고/제휴 문의</StyledH>
+            <ShadowBox $display="flex">
+              <StyledForm onSubmit={submitContactForm}>
+                <div>
+                  <StyledDiv>
+                    <StyledDiv className="row">
+                      <StyledCheckbox
+                        type="checkbox"
+                        id="dataCollectAgree"
+                        name="dataCollectAgree"
+                        checked={dataCollectAgree}
+                        onChange={check}
+                      />
+                      <StyledSpan>필수</StyledSpan>
+                      <Label htmlFor="dataCollectAgree">
+                        광고 및 제휴문의를 위한 정보 수집 및 이용동의
+                      </Label>
+                    </StyledDiv>
+                    <StyledReactMarkdown>{termsAndConditionsContent}</StyledReactMarkdown>
+                  </StyledDiv>
+                  <StyledDiv>
+                    <Label>
+                      이름<StyledSpan>필수</StyledSpan>
+                    </Label>
+                    <Input name="name" value={name} onChange={changeInputValue} />
+                    <StyledDiv className="row" onClick={checkNonAuth}>
+                      <StyledCheckbox
+                        type="checkbox"
+                        id="nonAuth"
+                        name="nonAuth"
+                        checked={nonAuth}
+                        onChange={check}
+                      />
+                      <StyledLabel htmlFor="nonAuth">
+                        비회원일경우 선택해주세요. 이메일 인증이 필요합니다.
+                      </StyledLabel>
+                    </StyledDiv>
+                  </StyledDiv>
+                  <StyledNonAuthDiv className={nonAuth ? 'show' : 'hidden'}>
+                    <StyledDiv>
+                      <Label>
+                        이메일<StyledSpan>필수</StyledSpan>
+                      </Label>
+                      <Input name="email" value={email} onChange={changeInputValue} />
+                      <StyledButton onClick={requestEmailAuth}>인증요청</StyledButton>
+                    </StyledDiv>
+                    <StyledDiv>
+                      <Label>인증코드</Label>
+                      <StyledDiv className="row">
+                        <Input name="code" value={code} onChange={changeInputValue} />
+                        <StyledButton onClick={confirmEmailAuth}>인증</StyledButton>
+                      </StyledDiv>
+                      {secondsLeft > 0 && (
+                        <StyledP className={confirmEmailResponseMessage.status}>
+                          {secondsLeft > 0
+                            ? formattedTimeLeft
+                            : confirmEmailResponseMessage.message}
+                        </StyledP>
+                      )}
+                    </StyledDiv>
+                  </StyledNonAuthDiv>
+                </div>
+                <div>
+                  <StyledDiv>
+                    <Label>
+                      제목<StyledSpan>필수</StyledSpan>
+                    </Label>
+                    <Input name="title" value={title} onChange={changeInputValue} />
+                  </StyledDiv>
+                  <StyledDiv>
+                    <Label>
+                      문의내용<StyledSpan>필수</StyledSpan>
+                    </Label>
+                    <CkEditor setInputValue={setInputValue} />
+                  </StyledDiv>
+                  <Button
+                    type="submit"
+                    disabled={!isRegisterPossible}
+                    $margin="20px 0 0 0"
+                  >
+                    제출하기
+                  </Button>
+                </div>
+              </StyledForm>
+            </ShadowBox>
+          </Inner>
+        </Container>
+      )}
+    </>
   )
 }
 
@@ -228,4 +290,11 @@ const StyledButton = styled(Button)`
   width: 100px;
   margin-left: 10px;
   height: 50px;
+`
+
+const StyledNonAuthDiv = styled.div`
+  display: ${(props) => {
+    if (props.className === 'show') return 'block'
+    else if (props.className === 'hidden') return 'none'
+  }};
 `
