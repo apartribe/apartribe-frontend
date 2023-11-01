@@ -57,16 +57,17 @@ const ReplyCard: FC<Props> = ({
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
         </StyledDiv>
         <StyledDiv className="row start gap full">
-          {!editMode && (
-            <>
-              <StyledButton className="mini" onClick={editReply}>
-                수정
-              </StyledButton>
-              <StyledButton className="mini" onClick={deleteReply}>
-                삭제
-              </StyledButton>
-            </>
-          )}
+          {!memberCreated ||
+            (!editMode && (
+              <>
+                <StyledButton className="mini" onClick={editReply}>
+                  수정
+                </StyledButton>
+                <StyledButton className="mini" onClick={deleteReply}>
+                  삭제
+                </StyledButton>
+              </>
+            ))}
         </StyledDiv>
         <StyledDiv className="column center">
           {like ? (
