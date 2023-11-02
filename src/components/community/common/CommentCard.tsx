@@ -12,7 +12,7 @@ import { timeAgo } from 'utils/timeAgo'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import ReplyCard from './ReplyCard'
-import { replyService } from 'services/community/replyService'
+import { commentService } from 'services/community/commentService'
 import EditComment from './EditComment'
 import { Comment, Reply } from 'types/community-type/commentType'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
@@ -79,7 +79,7 @@ const CommentCard: FC<Props> = ({
     e.preventDefault()
     if (!inputValue) return toast.warn('답글 내용을 입력해주세요.')
 
-    const response = await replyService.addReply({
+    const response = await commentService.addReply({
       aptId: aptId as string,
       postId: postId as string,
       parentId: commentId,
