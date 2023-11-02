@@ -7,11 +7,12 @@ import { FaTrophy } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
+import { CommentRank } from 'types/community-type/widgetType'
 
 const CommentRankWidget = () => {
   const { aptId } = useParams()
 
-  const [rankList, setRankList] = useState([])
+  const [rankList, setRankList] = useState<CommentRank[]>([])
 
   useEffect(() => {
     const getCommentRank = async () => {
@@ -38,15 +39,14 @@ const CommentRankWidget = () => {
       />
       {rankList.length === 0 ? (
         <StyledParagraph className="noData">
-          {' '}
           댓글을 남긴 사용자가 없습니다.
         </StyledParagraph>
       ) : (
         <>
-          {rankList.map(({ id, nickname, commentCount }, index) => (
-            <StyledWrapper key={nickname}>
+          {rankList.map(({ id, nickname, commentCount, profileImage }, index) => (
+            <StyledWrapper key={id}>
               <StyledDiv className="rank">{decideIcon(index)}</StyledDiv>
-              <Img src={defaultAvatar} $width="40px" $height="40px" />
+              <Img src={profileImage || defaultAvatar} $width="40px" $height="40px" />
               <StyledDiv>
                 <P $fontWeight="700" $lineHeight="25px">
                   {nickname}
