@@ -26,6 +26,7 @@ export interface ArticleDetailType {
   thumbnail: string
   memberLiked: boolean
   profileImage: string
+  memberCreated: boolean
   // protected: boolean
 }
 

@@ -37,6 +37,7 @@ export interface TogetherDetailType {
   recruitStatus: string
   memberLiked: boolean
   profileImage: string
+  memberCreated: boolean
   // protected: boolean
 }
 
