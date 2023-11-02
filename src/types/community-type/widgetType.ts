@@ -14,3 +14,10 @@ export interface VaildAnnounce {
   level: string
   title: string
 }
+
+export interface CommentRank {
+  id: number
+  nickname: string
+  commentCount: number
+  profileImage: string
+}
