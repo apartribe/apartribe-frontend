@@ -31,6 +31,7 @@ const DetailAnnouncePage = () => {
     floatTo: '',
     memberLiked: false,
     profileImage: '',
+    memberCreated: false,
   })
 
   useEffect(() => {

@@ -37,6 +37,7 @@ const DetailTogetherPage = () => {
     recruitStatus: '',
     memberLiked: false,
     profileImage: '',
+    memberCreated: false,
   })
 
   useEffect(() => {

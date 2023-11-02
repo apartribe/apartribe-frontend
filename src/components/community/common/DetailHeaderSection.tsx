@@ -37,6 +37,7 @@ const DetailHeaderSection = <
     saw,
     memberLiked,
     profileImage,
+    memberCreated,
   },
   setPostData,
 }: Props<T>) => {
@@ -112,14 +113,18 @@ const DetailHeaderSection = <
         <StyledParagraph className="md">
           {decidePath()} &nbsp;&gt;&nbsp; {category}
         </StyledParagraph>
-        <StyledDiv>
-          <StyledButton className="lg" onClick={moveToEditPage}>
-            <PiPencilSimpleLineDuotone />
-          </StyledButton>
-          <StyledButton className="lg" onClick={deletePost}>
-            <AiOutlineDelete />
-          </StyledButton>
-        </StyledDiv>
+        {memberCreated ? (
+          <StyledDiv>
+            <StyledButton className="lg" onClick={moveToEditPage}>
+              <PiPencilSimpleLineDuotone />
+            </StyledButton>
+            <StyledButton className="lg" onClick={deletePost}>
+              <AiOutlineDelete />
+            </StyledButton>
+          </StyledDiv>
+        ) : (
+          ''
+        )}
       </StyledDiv>
       <StyledDiv>
         <StyledParagraph className="xl">{title}</StyledParagraph>
