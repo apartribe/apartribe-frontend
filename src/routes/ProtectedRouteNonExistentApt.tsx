@@ -11,12 +11,14 @@ interface Props {
 const ProtectedRouteNonExistentApt = ({ children }: Props) => {
   const { aptId } = useParams()
   const navigate = useNavigate()
-  const [isExistentApt, setIsExistentApt] = useState(true)
+  const [isExistentApt, setIsExistentApt] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const checkAptExistence = async () => {
       const { apartExists } = await aptService.aptExists({ aptId: aptId as string })
       setIsExistentApt(apartExists)
+      setLoading(false)
     }
 
     checkAptExistence()
@@ -29,6 +31,8 @@ const ProtectedRouteNonExistentApt = ({ children }: Props) => {
       { title: '뒤로 가기', action: () => navigate(-1) },
     ],
   }
+
+  if (loading) return <div>아파트 존재 유무 확인중...</div>
 
   return isExistentApt ? <>{children}</> : <FlexibleModal modalProps={modalProps} />
 }
