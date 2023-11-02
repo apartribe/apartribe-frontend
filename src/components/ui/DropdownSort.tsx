@@ -1,16 +1,17 @@
 import React, { Dispatch, FC, MouseEvent, useState } from 'react'
 import { styled } from 'styled-components'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
+import { SORT_DROPDOWN_LIST } from 'constants/sortList'
+import { Sort } from 'types/community-type/sortType'
 
 interface Props {
-  selectedValue: string
-  setSelectedValue: Dispatch<React.SetStateAction<string>>
-  dropdownList: string[]
+  selectedValue: Sort
+  setSelectedValue: Dispatch<React.SetStateAction<Sort>>
 }
 
-const DropdownSort: FC<Props> = ({ selectedValue, setSelectedValue, dropdownList }) => {
-  const changeSelectedSort = (e: MouseEvent<HTMLButtonElement>) => {
-    setSelectedValue(e.currentTarget.innerText)
+const DropdownSort: FC<Props> = ({ selectedValue, setSelectedValue }) => {
+  const changeSelectedSort = (option: Sort) => {
+    setSelectedValue(option)
     setVisible(false)
   }
 
@@ -23,14 +24,14 @@ const DropdownSort: FC<Props> = ({ selectedValue, setSelectedValue, dropdownList
   return (
     <StyledWrapper>
       <StyledDiv className="view" onClick={toggleDropDown}>
-        {selectedValue}
+        {selectedValue.title}
         {visible ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
       </StyledDiv>
       {visible ? (
         <StyledDiv className="select">
-          {dropdownList.map((list, index) => (
-            <StyledButton key={index} onClick={changeSelectedSort}>
-              {list}
+          {SORT_DROPDOWN_LIST.map((option, index) => (
+            <StyledButton key={index} onClick={() => changeSelectedSort(option)}>
+              {option.title}
             </StyledButton>
           ))}
         </StyledDiv>
@@ -48,7 +49,7 @@ const StyledWrapper = styled.div`
 `
 
 const StyledDiv = styled.div`
-  width: 70px;
+  width: 100px;
   color: #303030;
   display: flex;
   border: 1px solid #b3b3b3;

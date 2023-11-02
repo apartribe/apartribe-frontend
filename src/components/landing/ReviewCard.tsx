@@ -1,13 +1,7 @@
 import React, { FC } from 'react'
 import { styled } from 'styled-components'
 import { Img } from 'styles/reusable-style/elementStyle'
-
-interface ReviewData {
-  contents: string
-  avatar: string
-  nickname: string
-  info: string
-}
+import { ReviewData } from 'types/landingType'
 
 interface Props {
   index: number

@@ -2,6 +2,7 @@ import { styled } from 'styled-components'
 import { reusableStyleProps } from 'types/style-type/reusableStyleType'
 
 export const P = styled.p<reusableStyleProps>`
+  word-break: break-all;
   margin: 0;
   line-height: ${(props) => props.$lineHeight || '25px'};
   font-size: ${(props) => props.$fontSize || '15px'};
@@ -14,7 +15,7 @@ export const P = styled.p<reusableStyleProps>`
 export const Button = styled.button<reusableStyleProps>`
   border: none;
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: ${(props) => props.$cursor || 'pointer'};
   background: ${(props) => props.$background || '#2B7F75'};
   width: ${(props) => props.$width || '100%'};
   height: ${(props) => props.$height || '55px'};
@@ -60,6 +61,7 @@ export const Input = styled.input<reusableStyleProps>`
 
 export const ShadowBox = styled.div<reusableStyleProps>`
   box-sizing: border-box;
+  overflow: ${(props) => props.$overflow || 'hidden'};
   background: ${(props) => props.$background || '#FFFFFF'};
   box-shadow: ${(props) => props.$boxShadow || '5px 5px 4px -1px rgba(0, 0, 0, 0.25)'};
   position: ${(props) => props.$position || 'relative'};
@@ -97,10 +99,10 @@ export const ShadowBox = styled.div<reusableStyleProps>`
 
 export const ModalBackground = styled.div<reusableStyleProps>`
   z-index: 1;
-  background: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
+  background: ${(props) => props.$background || 'rgba(0, 0, 0, 0.5)'};
   width: ${(props) => props.$width || '100vw'};
   height: ${(props) => props.$height || '100vh'};
 `
