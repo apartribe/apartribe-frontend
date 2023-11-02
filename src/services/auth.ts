@@ -151,7 +151,8 @@ export const auth = {
       if (axios.isAxiosError(error)) {
         return { statusCode: 500, message: '토큰 갱신에 실패하였습니다.' }
       } else {
-        throw new Error('different error than axios')
+        return { statusCode: 401, message: '토큰 갱신에 실패하였습니다.' }
+        // throw new Error('different error than axios')
       }
     }
   },

@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
 import uploadS3 from 'utils/uploadS3'
+import { toast } from 'react-toastify'
 
 const AddTogetherPage = () => {
   const BOARD_TYPE = 'together'
@@ -55,19 +56,38 @@ const AddTogetherPage = () => {
   // }
 
   const savePost = async () => {
-    const { statusCode, message } = await togetherService.addPost({
-      aptId: aptId as string,
-      boardType: BOARD_TYPE,
-      data: inputValue,
-    })
-    if (statusCode === 201) {
-      const userConfirmed = confirm('정말 등록 하시겠습니까?')
-      if (userConfirmed) {
-        alert(message)
+    const {
+      category,
+      title,
+      content,
+      thumbnail,
+      description,
+      recruitFrom,
+      recruitTo,
+      meetTime,
+      target,
+      location,
+    } = inputValue
+    if (!category) return toast.warn('카테고리를 선택해주세요.')
+    if (!title) return toast.warn('제목을 입력해주세요')
+    if (!thumbnail) return toast.warn('썸네일을 추가해주세요.')
+    if (!description) return toast.warn('한 줄 설명을 입력해주세요.')
+    if (!recruitFrom || !recruitTo) return toast.warn('모집 기간을 선택해주세요.')
+    if (!meetTime) return toast.warn('활동 시간을 입력해주세요.')
+    if (!location) return toast.warn('활동 장소를 입력해주세요.')
+    if (!target) return toast.warn('모집 대상을 입력해주세요.')
+    if (!content) return toast.warn('내용을 입력해주세요')
+    const userConfirmed = confirm('정말 등록 하시겠습니까?')
+    if (userConfirmed) {
+      const statusCode = await togetherService.addPost({
+        aptId: aptId as string,
+        boardType: BOARD_TYPE,
+        data: inputValue,
+      })
+      if (statusCode === 201) {
+        toast.success('게시물이 등록되었습니다.')
         navigate(`/community/${aptId}/together`)
-        return
       }
-      return
     }
   }
 
@@ -249,11 +269,7 @@ const AddTogetherPage = () => {
         <P $fontWeight="700" $lineHeight="30px">
           상세 정보
         </P>
-        <CkEditor
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          doNotSaveThumbnail
-        />
+        <CkEditor setInputValue={setInputValue} doNotSaveThumbnail />
       </div>
       <StyledWrapper>
         <Button

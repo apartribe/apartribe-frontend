@@ -8,6 +8,8 @@ import { articleService } from 'services/community/articleService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
+import { toast } from 'react-toastify'
+import { AxiosError, AxiosResponse } from 'axios'
 
 const AddArticlePage = () => {
   const BOARD_TYPE = 'article'
@@ -47,26 +49,22 @@ const AddArticlePage = () => {
   // }
 
   const savePost = async () => {
-    if (!inputValue.category) return alert('카테고리를 선택해주세요')
-    if (!inputValue.title) return alert('제목을 입력해주세요')
-    if (!inputValue.content) return alert('내용을 입력해주세요')
+    const { category, title, content } = inputValue
+    if (!category) return toast.warn('카테고리를 선택해주세요.')
+    if (!title) return toast.warn('제목을 입력해주세요')
+    if (!content) return toast.warn('내용을 입력해주세요.')
     const userConfirmed = confirm('정말 등록 하시겠습니까?')
     if (userConfirmed) {
-      const { statusCode, message } = await articleService.addPost({
+      const statusCode = await articleService.addPost({
         aptId: aptId as string,
         boardType: BOARD_TYPE,
         data: inputValue,
-      }) // 아이디 돌려받아서 해당 게시물로 이동 로직 추가 요망
+      })
       if (statusCode === 201) {
-        alert(message)
+        toast.success('게시물이 등록되었습니다.')
         navigate(`/community/${aptId}`)
-        return
-      } else {
-        alert(message)
-        return
       }
     }
-    return
   }
 
   const cancelPost = () => {
@@ -131,7 +129,7 @@ const AddArticlePage = () => {
         <P $fontWeight="700" $lineHeight="30px">
           상세 정보
         </P>
-        <CkEditor inputValue={inputValue} setInputValue={setInputValue} />
+        <CkEditor setInputValue={setInputValue} />
       </div>
       <StyledDiv>
         <Button

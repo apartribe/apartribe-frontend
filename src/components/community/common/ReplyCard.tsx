@@ -6,42 +6,83 @@ import { timeAgo } from 'utils/timeAgo'
 import { Img } from 'styles/reusable-style/elementStyle'
 import { Comment, Reply } from 'types/community-type/commentType'
 import EditReply from './EditReply'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
+import { likeService } from 'services/community/likeService'
+import { toast } from 'react-toastify'
 
 interface Props {
-  parentId: number
   reply: Reply
   setComments: Dispatch<SetStateAction<Comment[]>>
 }
 
 const ReplyCard: FC<Props> = ({
-  parentId,
-  reply: { /* avatar, */ id, createdBy, createdAt, like: liked, content },
+  reply: {
+    commentId,
+    content,
+    createdAt,
+    createdBy,
+    liked,
+    memberCreated,
+    memberLiked,
+    parentId,
+    profileImage,
+  },
   setComments,
 }) => {
   const { aptId, postId } = useParams()
 
-  const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
+  const [like, setLike] = useState(memberLiked)
   const [editMode, setEditMode] = useState(false)
 
-  const toggleLike = () => {
-    setLike((prev) => !prev)
+  const toggleLike = async () => {
+    const response = await likeService.commentLike({
+      aptId: aptId as string,
+      postId: postId as string,
+      commentId,
+    })
+    setLike(response.data.liked)
+    const newMemberLiked: boolean = response.data.liked
+    setComments((prevState) => {
+      const result = prevState.map((item) => {
+        if (item.commentId === parentId) {
+          const test = item.children.map((item) => {
+            if (item.commentId === commentId) {
+              return { ...item, liked: newMemberLiked ? item.liked + 1 : item.liked - 1 }
+            } else {
+              return item
+            }
+          })
+          return { ...item, children: test }
+        } else {
+          return item
+        }
+      })
+      return result
+    })
+    toast.success(
+      newMemberLiked ? '답글에 좋아요를 남겼습니다.' : '좋아요를 취소했습니다.',
+    )
   }
-
   const editReply = () => {
     setEditMode(true)
   }
 
   const deleteReply = () => {
-    alert('답글 삭제')
+    const userConfirmed = confirm(
+      '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
+    )
+    if (userConfirmed) {
+      toast.success('답글이 삭제 되었습니다.')
+    }
+    return
   }
 
   return (
     <StyledWrapper>
       <StyledDiv className="row gap center">
         <Img
-          src={dafaultAvatar} // { avater || dafaultAvatar}
+          src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"
@@ -50,21 +91,27 @@ const ReplyCard: FC<Props> = ({
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
         </StyledDiv>
-        <StyledDiv className="row start gap full">
-          {!editMode && (
-            <>
-              <StyledButton className="mini" onClick={editReply}>
-                수정
-              </StyledButton>
-              <StyledButton className="mini" onClick={deleteReply}>
-                삭제
-              </StyledButton>
-            </>
-          )}
+        <StyledDiv className="row start full">
+          {!memberCreated ||
+            (!editMode && (
+              <>
+                <StyledButton className="mini" onClick={editReply}>
+                  수정
+                </StyledButton>
+                <StyledButton className="mini" onClick={deleteReply}>
+                  삭제
+                </StyledButton>
+              </>
+            ))}
         </StyledDiv>
         <StyledDiv className="column center">
           {like ? (
-            <AiFillHeart fontSize="20px" cursor="pointer" onClick={toggleLike} />
+            <AiFillHeart
+              fontSize="20px"
+              cursor="pointer"
+              color="#EA1616"
+              onClick={toggleLike}
+            />
           ) : (
             <AiOutlineHeart fontSize="20px" cursor="pointer" onClick={toggleLike} />
           )}
@@ -74,7 +121,7 @@ const ReplyCard: FC<Props> = ({
       {editMode ? (
         <EditReply
           parentId={parentId}
-          commentId={id}
+          commentId={commentId}
           content={content}
           setComments={setComments}
           setEditMode={setEditMode}
@@ -89,7 +136,7 @@ const ReplyCard: FC<Props> = ({
 export default ReplyCard
 
 const StyledWrapper = styled.div`
-  padding: 20px 0 0 10px;
+  padding: 10px 0 10px 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -136,16 +183,16 @@ const StyledButton = styled.button`
 
   &.mini {
     border: none;
-    height: 15px;
-    width: 25px;
+    height: 25px;
+    width: 40px;
     padding: 0px;
     font-size: 12px;
     color: #303030;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   &:hover {
-    transform: scale(1.05);
+    filter: brightness(0.95);
   }
 `
 const StyledParagraph = styled.p`

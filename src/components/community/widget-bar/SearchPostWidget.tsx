@@ -12,6 +12,7 @@ import { styled } from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import { widgetService } from 'services/community/widgetSevice'
 import { AptSearch } from 'types/community-type/widgetType'
+import { toast } from 'react-toastify'
 
 const SearchPostWidget = () => {
   const navigate = useNavigate()
@@ -101,7 +102,7 @@ const SearchPostWidget = () => {
 
   const moveToCommunityEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!inputValue.id) return alert('목록에서 게시물을 선택해주세요.')
+    if (!inputValue.id) return toast.warn('목록에서 게시물을 선택해주세요.')
     navigate(`/community/${aptId}/article/${inputValue.id}/detail`) // 전체 검색으로 변경 예정
   }
 

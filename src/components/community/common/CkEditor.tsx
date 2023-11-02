@@ -6,15 +6,18 @@ import { AddArticleType } from 'types/community-type/ArticleType'
 import { AddAnnounceType } from 'types/community-type/announceType'
 import { AddTogetherType } from 'types/community-type/togetherType'
 import uploadS3 from 'utils/uploadS3'
+import { ContactInputValue } from 'types/setting'
 
 interface Props<T> {
-  inputValue: T
+  inputValue?: T
   setInputValue: Dispatch<SetStateAction<T>>
   doNotSaveThumbnail?: boolean
 }
 
 // 제네릭 클래스 함수 컴포넌트
-const CkEditor = <T extends AddArticleType | AddAnnounceType | AddTogetherType>({
+const CkEditor = <
+  T extends AddArticleType | AddAnnounceType | AddTogetherType | ContactInputValue,
+>({
   inputValue,
   setInputValue,
   doNotSaveThumbnail,
@@ -61,7 +64,7 @@ const CkEditor = <T extends AddArticleType | AddAnnounceType | AddTogetherType>(
         extraPlugins: [uploadPlugin],
       }}
       data={
-        inputValue.content ||
+        inputValue?.content ||
         '<p>작성하실 내용을 입력해주세요.</p><p>이미지를 붙여넣거나, 드래그하여 첨부할 수 있습니다.</p>'
       }
       // onReady={(editor) => {

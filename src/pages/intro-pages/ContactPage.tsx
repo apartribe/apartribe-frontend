@@ -1,4 +1,3 @@
-import CkEditor from 'components/community/CkEditor'
 import { useState, useEffect, ChangeEvent, FormEvent, MouseEvent } from 'react'
 import { styled } from 'styled-components'
 import ReactMarkdown from 'react-markdown'
@@ -10,6 +9,7 @@ import contact from 'assets/terms_and_conditions/contact.md'
 import { ContactInputValue } from 'types/setting'
 import { advertise } from 'services/advertise'
 import { Message } from 'types/auth'
+import CkEditor from 'components/community/common/CkEditor'
 
 const ContactPage = () => {
   const [inputValue, setInputValue] = useState<ContactInputValue>({

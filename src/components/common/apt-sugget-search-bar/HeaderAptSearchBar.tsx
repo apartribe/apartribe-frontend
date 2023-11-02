@@ -12,14 +12,14 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import { styled } from 'styled-components'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AptSearch } from 'types/community-type/aptType'
 import { BiSearchAlt } from 'react-icons/bi'
 import { TiDelete } from 'react-icons/ti'
 import { aptService } from 'services/apt/aptService'
 import { useGeolocation } from 'hooks/useGeolocation'
 import { externalAptSearchService } from 'services/apt/externalAptSearchService'
-import { Modal, ModalBackground } from 'styles/reusable-style/elementStyle'
+import { toast } from 'react-toastify'
 
 interface Props {
   searchMode: boolean
@@ -136,7 +136,7 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
 
   const moveToCommunityEnter = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!inputValue.id) return alert('목록에서 아파트를 선택해주세요.')
+    if (!inputValue.id) return toast.warn('목록에서 아파트를 선택해주세요.')
     const response = await aptService.aptExists({ aptId: inputValue.id })
     finishSearch()
 
