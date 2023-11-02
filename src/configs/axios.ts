@@ -48,7 +48,7 @@ instance.interceptors.response.use(
         toast.error('서버에 내부에 문제가 발생하였습니다.')
         break
       case 502:
-        toast.error('서버에 접근할 수 없습니다.')
+      toast.error('서버에 접근할 수 없습니다.')
         break
       default:
         return
