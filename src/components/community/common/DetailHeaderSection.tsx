@@ -67,9 +67,10 @@ const DetailHeaderSection = <
     if (userConfirmed) {
       const statusCode = await articleService.deletePost({
         boardType,
+        aptId: aptId as string,
         postId: postId as string,
       })
-      if (statusCode === 204) {
+      if (statusCode === 200) {
         toast.success('게시물이 삭제 되었습니다.')
         navigate(`/community/${aptId}`)
       }
