@@ -9,6 +9,7 @@ import SelectPosition from 'components/verify-apt/SelectPosition'
 import SelectVerifyMethod from 'components/verify-apt/SelectVerifyMethod'
 import { aptService } from 'services/apt/aptService'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const VerifyAptPage = () => {
   const navigate = useNavigate()
@@ -35,9 +36,11 @@ const VerifyAptPage = () => {
   }
 
   const temporaryAuthentication = async () => {
-    const { statusCode, message } = await aptService.verifyApt({ aptId, aptName })
-    alert(message)
-    if (statusCode === 201) return navigate(`/`) // 추후에 아파트 존재하는지 확인하고 바로 보내줘도 좋을 듯
+    const statusCode = await aptService.verifyApt({ aptId, aptName })
+    if (statusCode === 201) {
+      toast.success('아파트 인증이 완료되었습니다.')
+      navigate(`/`) // TODO: 추후에 아파트 존재하는지 확인하고 바로 보내줘도 좋을 듯
+    }
   }
 
   return (

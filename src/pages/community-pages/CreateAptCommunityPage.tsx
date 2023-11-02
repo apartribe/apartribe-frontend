@@ -12,16 +12,16 @@ const CreateAptCommunityPage = () => {
   const navigate = useNavigate()
   const [visibleModal, setVisibleModal] = useState(false)
 
-  // 사용자가 직접 주소로 접근한 경우, 아래 정보과 없으므로 에러발생. 추후 직접 접근 감시 로직 추가 요망
+  // 사용자가 직접 주소로 접근한 경우, 아래 정보가 없으므로 에러발생. 추후 직접 접근 감시 로직 추가 요망
   const {
     state: { aptId: aptId = undefined, aptName: aptName = undefined },
   } = useLocation()
 
   const createAptCommunity = async () => {
-    setVisibleModal(true)
-    const { statusCode, message } = await aptService.createCommunity({ aptId, aptName })
-    alert(message)
-    if (statusCode === 201) return navigate(`/community/${aptId}`)
+    const statusCode = await aptService.createCommunity({ aptId, aptName })
+    if (statusCode === 201) {
+      setVisibleModal(true)
+    }
   }
 
   const modalProps = {
