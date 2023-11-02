@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
 
 export type BoardType = 'article' | 'announce' | 'together'
@@ -15,7 +14,7 @@ interface Param {
 export const postsService = {
   async getPosts(param: Param) {
     const { aptId, boardType, category, sort, order, page } = param
-    let response: AxiosResponse
+    let response
 
     try {
       const mappedCategory = category === '전체' ? '' : category

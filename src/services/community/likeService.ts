@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios'
 import { BoardType } from './postsService'
 import { instance } from 'configs/axios'
 
@@ -18,12 +17,9 @@ export const likeService = {
   async postLike(param: PostLikeParam) {
     const { aptId, boardType, postId } = param
     try {
-      const response: AxiosResponse = await instance(
-        `/api/${aptId}/${boardType}/${postId}/like`,
-        {
-          method: 'get',
-        },
-      )
+      const response = await instance(`/api/${aptId}/${boardType}/${postId}/like`, {
+        method: 'get',
+      })
       return response.data
     } catch (error) {
       console.error(error)
@@ -33,7 +29,7 @@ export const likeService = {
   async commentLike(param: CommentLikeParam) {
     const { aptId, postId, commentId } = param
     try {
-      const response: AxiosResponse = await instance(
+      const response = await instance(
         `/api/${aptId}/${postId}/${commentId}/comment/like`,
         {
           method: 'get',

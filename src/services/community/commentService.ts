@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
 
 interface GetParam {
@@ -31,7 +30,7 @@ export const commentService = {
   async getComments(param: GetParam) {
     const { aptId, postId } = param
     try {
-      const response: AxiosResponse = await instance(`/api/${aptId}/${postId}/comment`, {
+      const response = await instance(`/api/${aptId}/${postId}/comment`, {
         method: 'get',
       })
       return response.data.data
@@ -43,12 +42,9 @@ export const commentService = {
   async getCommentCount(param: GetParam) {
     const { aptId, postId } = param
     try {
-      const response: AxiosResponse = await instance(
-        `/api/${aptId}/${postId}/comment/total`,
-        {
-          method: 'get',
-        },
-      )
+      const response = await instance(`/api/${aptId}/${postId}/comment/total`, {
+        method: 'get',
+      })
       return response.data
     } catch (error) {
       console.error(error)
@@ -58,7 +54,7 @@ export const commentService = {
   async addComment(param: AddCommentParam) {
     const { aptId, postId, content } = param
     try {
-      const response: AxiosResponse = await instance(`/api/${aptId}/${postId}/comment`, {
+      const response = await instance(`/api/${aptId}/${postId}/comment`, {
         method: 'post',
         data: {
           content,
@@ -89,7 +85,7 @@ export const commentService = {
   async updateComment(param: UpdateParam) {
     const { aptId, postId, commentId, content } = param
     try {
-      const response: AxiosResponse = await instance(`api/${aptId}/${postId}/comment`, {
+      const response = await instance(`api/${aptId}/${postId}/comment`, {
         method: 'put',
         data: {
           commentId,
