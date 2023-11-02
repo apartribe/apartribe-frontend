@@ -155,7 +155,7 @@ const AddAnnouncePage = () => {
         <P $fontWeight="700" $lineHeight="30px">
           상세 정보
         </P>
-        <CkEditor inputValue={inputValue} setInputValue={setInputValue} />
+        <CkEditor setInputValue={setInputValue} />
       </div>
       <StyledDiv>
         <Button

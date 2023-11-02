@@ -208,7 +208,7 @@ const ContactPage = () => {
                     <Label>
                       문의내용<StyledSpan>필수</StyledSpan>
                     </Label>
-                    {/* <CkEditor setInputValue={setInputValue} /> */}
+                    <CkEditor setInputValue={setInputValue} />
                   </StyledDiv>
                   <Button
                     type="submit"
