@@ -1,21 +1,24 @@
-import { useState, ChangeEvent, MouseEvent, Dispatch } from 'react'
+import { useState, useEffect, ChangeEvent, MouseEvent, Dispatch } from 'react'
 import { styled } from 'styled-components'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { Button } from 'styles/reusable-style/elementStyle'
 import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
-import { SignupInputValue, PasswordType } from 'types/auth'
+import { SignupInputValue, PasswordType, Message } from 'types/auth'
 import { auth } from 'services/auth'
+import MessageModal from '../common/MessageModal'
 
 type SigninupInputAreaProps<T> = {
   inputValue: T
   setInputValue: Dispatch<React.SetStateAction<T>>
+  setIsSignupInputAreaValid: Dispatch<React.SetStateAction<boolean>>
 }
 
 const SignupInputArea = <T extends SignupInputValue>({
   inputValue,
   setInputValue,
+  setIsSignupInputAreaValid,
 }: SigninupInputAreaProps<T>) => {
   const [passwordType, setPasswordType] = useState<PasswordType>({
     type: 'password',
@@ -24,6 +27,27 @@ const SignupInputArea = <T extends SignupInputValue>({
   const [passwordConfirmType, setPasswordConfirmType] = useState<PasswordType>({
     type: 'password',
     visible: false,
+  })
+  const [responseSuccessValues, setResponseSuccessValues] = useState({
+    email: false,
+    code: false,
+    nickname: false,
+  })
+  const [confirmEmailResponseMessage, setConfirmEmailResponseMessage] = useState<Message>(
+    {
+      status: 'waiting',
+      message: '',
+    },
+  )
+  const [checkNicknameResponseMessage, setCheckNicknameResponseMessage] =
+    useState<Message>({
+      status: 'waiting',
+      message: '',
+    })
+  const [modal, setModal] = useState<boolean>(false)
+  const [modalMessage, setModalMessage] = useState<Message>({
+    status: 'waiting',
+    message: '',
   })
 
   const { email, code, password, passwordConfirm, name, nickname } = inputValue
@@ -35,10 +59,30 @@ const SignupInputArea = <T extends SignupInputValue>({
     password,
     passwordConfirm,
   )
+  const isNameValid = signupValidation.name.validator(name)
   const isNicknameValid = signupValidation.nickname.validator(nickname)
 
-  const { startTimer, secondsLeft, formattedTimeLeft } = useTimer()
+  const { startTimer, secondsLeft, resetTimer, formattedTimeLeft } = useTimer(
+    '3분 이내에 인증번호를 입력해주세요. 남은시간:',
+  )
   const TIMER_SECONDS = 180
+
+  useEffect(() => {
+    const isAllValueValid = isPasswordValid && isPasswordConfirmValid && isNameValid
+
+    const responseSuccessList = Object.values(responseSuccessValues)
+    const isAllResponseValueSuccess = responseSuccessList.reduce(
+      (prev, current) => prev && current,
+    )
+
+    setIsSignupInputAreaValid(isAllValueValid && isAllResponseValueSuccess)
+  }, [
+    isPasswordValid,
+    isPasswordConfirmValid,
+    isNameValid,
+    responseSuccessValues,
+    setIsSignupInputAreaValid,
+  ])
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prev) => ({
@@ -47,23 +91,48 @@ const SignupInputArea = <T extends SignupInputValue>({
     }))
   }
 
+  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+    setModal((prev) => !prev)
+    setModalMessage({ status, message })
+  }
+
   const requestEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const { message } = await auth.sendEmail(email)
-    alert(message)
-    startTimer(TIMER_SECONDS) //TODO: reqeust성공했을때 타이머가도록 수정
+
+    const { result, message } = await auth.sendEmail(email)
+    openModal(result, message)
+
+    if (result === 'success') {
+      startTimer(TIMER_SECONDS)
+      setConfirmEmailResponseMessage({
+        status: 'waiting',
+        message: formattedTimeLeft,
+      })
+      setResponseSuccessValues((prev) => ({ ...prev, email: true }))
+    }
   }
 
   const confirmEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const { message } = await auth.confirmEmail(email, code)
-    alert(message)
+
+    const { result, message } = await auth.confirmEmail(email, code)
+    resetTimer()
+    setConfirmEmailResponseMessage({ status: result, message: message })
+
+    if (result === 'success') {
+      setResponseSuccessValues((prev) => ({ ...prev, code: true }))
+    }
   }
 
   const clickCheckNickname = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const { message } = await auth.checkNickname(nickname)
-    alert(message)
+
+    const { result, message } = await auth.checkNickname(nickname)
+    setCheckNicknameResponseMessage({ status: result, message: message })
+
+    if (result === 'success') {
+      setResponseSuccessValues((prev) => ({ ...prev, nickname: true }))
+    }
   }
 
   const changePasswordType = (e: MouseEvent<HTMLSpanElement>) => {
@@ -94,13 +163,9 @@ const SignupInputArea = <T extends SignupInputValue>({
         isValid={isEmailValid}
         invalidMessage={signupValidation.email.invalidMessage}
       >
-        <Button
-          onClick={requestEmailAuth}
-          disabled={!isEmailValid}
-          $letterSpacing="normal"
-        >
+        <StyledButton onClick={requestEmailAuth} disabled={!isEmailValid}>
           인증요청
-        </Button>
+        </StyledButton>
       </SignupInput>
 
       <SignupInput
@@ -112,21 +177,12 @@ const SignupInputArea = <T extends SignupInputValue>({
         placeholder="인증번호를 입력하세요"
         isValid={isEmailAuthCodeValid}
       >
-        <Button
-          onClick={confirmEmailAuth}
-          disabled={!isEmailAuthCodeValid}
-          $letterSpacing="normal"
-        >
+        <StyledButton onClick={confirmEmailAuth} disabled={!isEmailAuthCodeValid}>
           인증
-        </Button>
-        {secondsLeft > 0 && (
-          <StyledP className="waiting">
-            이메일이 발송되었습니다. 3분 이내에 인증번호를 입력해주세요. 남은시간{' '}
-            {formattedTimeLeft}
-          </StyledP>
-        )}
-        {/* <StyledP className='success'>인증이 완료되었습니다.</StyledP>
-          <StyledP className='fail'>이메일이 일치하지 않습니다. 다시 확인해주세요. 남은시간: 2:30</StyledP> */}
+        </StyledButton>
+        <StyledP className={confirmEmailResponseMessage.status}>
+          {secondsLeft > 0 ? formattedTimeLeft : confirmEmailResponseMessage.message}
+        </StyledP>
       </SignupInput>
 
       <SignupInput
@@ -169,6 +225,7 @@ const SignupInputArea = <T extends SignupInputValue>({
         value={name}
         onChange={changeInputValue}
         placeholder="이름을 입력하세요"
+        isValid={isNameValid}
       />
 
       <SignupInput
@@ -178,19 +235,20 @@ const SignupInputArea = <T extends SignupInputValue>({
         name="nickname"
         value={nickname}
         onChange={changeInputValue}
-        isValid={isNicknameValid}
         placeholder="닉네임을 입력하세요"
+        isValid={isNicknameValid}
       >
-        <Button
-          onClick={clickCheckNickname}
-          disabled={!isNicknameValid}
-          $letterSpacing="normal"
-        >
+        <StyledButton onClick={clickCheckNickname} disabled={!isNicknameValid}>
           중복확인
-        </Button>
-        {/* <StyledP className='success'>사용 가능한 닉네임입니다.</StyledP>
-          <StyledP className='fail'>이미 존재하는 닉네임입니다.</StyledP> */}
+        </StyledButton>
+        <StyledP className={checkNicknameResponseMessage.status}>
+          {checkNicknameResponseMessage.message}
+        </StyledP>
       </SignupInput>
+
+      {modal && (
+        <MessageModal modal={modal} setModal={setModal} modalMessage={modalMessage} />
+      )}
     </>
   )
 }
@@ -220,4 +278,9 @@ const StyledSpan = styled.span`
   font-size: 20px;
   grid-column: 10 / span 1;
   grid-row: 1;
+`
+
+const StyledButton = styled(Button)`
+  letter-spacing: normal;
+  font-size: 15px;
 `
