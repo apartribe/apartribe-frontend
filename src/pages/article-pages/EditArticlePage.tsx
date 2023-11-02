@@ -8,6 +8,7 @@ import { articleService } from 'services/community/articleService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
+import { toast } from 'react-toastify'
 
 const EditArticlePage = () => {
   const BOARD_TYPE = 'article'
@@ -65,27 +66,23 @@ const EditArticlePage = () => {
   // }
 
   const savePost = async () => {
-    if (!inputValue.category) return alert('카테고리를 선택해주세요')
-    if (!inputValue.title) return alert('제목을 입력해주세요')
-    if (!inputValue.content) return alert('내용을 입력해주세요')
+    const { category, title, content } = inputValue
+    if (!category) return toast.warn('카테고리를 선택해주세요.')
+    if (!title) return toast.warn('제목을 입력해주세요')
+    if (!content) return toast.warn('내용을 입력해주세요.')
     const userConfirmed = confirm('정말 수정 하시겠습니까?')
     if (userConfirmed) {
-      const { statusCode, message } = await articleService.updatePost({
+      const statusCode = await articleService.updatePost({
         aptId: aptId as string,
         boardType: BOARD_TYPE,
         data: inputValue,
         postId: postId as string,
       })
       if (statusCode === 201) {
-        alert(message)
+        toast.success('게시물이 수정되었습니다.')
         navigate(`/community/${aptId}/article/${postId}/detail`)
-        return
-      } else {
-        alert(message)
-        return
       }
     }
-    return
   }
 
   const cancelPost = () => {

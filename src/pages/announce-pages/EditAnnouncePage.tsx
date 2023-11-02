@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { announceService } from 'services/community/announceService'
 import AnnounceRangeDatePicker from 'components/community/announce-page/AnnounceRangeDatePicker'
+import { toast } from 'react-toastify'
 
 const AddAnnouncePage = () => {
   const BOARD_TYPE = 'announce'
@@ -36,7 +37,6 @@ const AddAnnouncePage = () => {
         postId: postId as string,
       })
       const { level, title, content, thumbnail, floatFrom, floatTo } = response.data
-      console.log('뭐지..', response.data)
 
       setInputValue({
         category: level,
@@ -81,20 +81,23 @@ const AddAnnouncePage = () => {
   }
 
   const savePost = async () => {
-    const { statusCode, message } = await announceService.updatePost({
-      aptId: aptId as string,
-      boardType: BOARD_TYPE,
-      postId: postId as string,
-      data: inputValue,
-    })
-    if (statusCode === 201) {
-      const userConfirmed = confirm('정말 수정 하시겠습니까?')
-      if (userConfirmed) {
-        alert(message)
+    const { category, floatFrom, floatTo, title, content } = inputValue
+    if (!category) return toast.warn('긴급도를 선택해주세요.')
+    if (!floatFrom || !floatTo) return toast.warn('위젯 노출 기간을 선택해주세요.')
+    if (!title) return toast.warn('제목을 입력해주세요')
+    if (!content) return toast.warn('내용을 입력해주세요.')
+    const userConfirmed = confirm('정말 수정 하시겠습니까?')
+    if (userConfirmed) {
+      const statusCode = await announceService.updatePost({
+        aptId: aptId as string,
+        boardType: BOARD_TYPE,
+        postId: postId as string,
+        data: inputValue,
+      })
+      if (statusCode === 201) {
+        toast.success('공지사항이 수정되었습니다.')
         navigate(`/community/${aptId}/announce/${postId}/detail`)
-        return
       }
-      return
     }
   }
 

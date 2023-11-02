@@ -14,6 +14,7 @@ import { likeService } from 'services/community/likeService'
 import { Img } from 'styles/reusable-style/elementStyle'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { commentService } from 'services/community/commentService'
+import { toast } from 'react-toastify'
 
 // 타입 수정 요망!
 interface Props<T> {
@@ -64,17 +65,14 @@ const DetailHeaderSection = <
       '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
     )
     if (userConfirmed) {
-      const { statusCode, message } = await articleService.deletePost({
+      const statusCode = await articleService.deletePost({
         boardType,
         postId: postId as string,
       })
       if (statusCode === 204) {
-        alert(message)
+        toast.success('게시물이 삭제 되었습니다.')
         navigate(`/community/${aptId}`)
-        return
       }
-      alert(message)
-      return
     }
   }
 
@@ -90,6 +88,9 @@ const DetailHeaderSection = <
       memberLiked: newMemberLiked,
       liked: newMemberLiked ? prevState.liked + 1 : prevState.liked - 1,
     }))
+    toast.success(
+      newMemberLiked ? '게시물에 좋아요를 남겼습니다.' : '좋아요를 취소했습니다.',
+    )
   }
 
   useEffect(() => {
