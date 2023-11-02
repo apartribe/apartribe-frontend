@@ -79,7 +79,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     return () => {
       observer.disconnect()
     }
-  }, [loading, boardType, selectedSort, selectedCategory])
+  }, [loading, boardType, selectedSort, selectedCategory, aptId])
   //======
 
   // if (firstLoading) return <PostsLoading />
