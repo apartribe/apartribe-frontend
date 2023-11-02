@@ -6,9 +6,16 @@ interface GetParam {
   postId: string
 }
 
-interface AddParam {
+interface AddCommentParam {
   aptId: string
   postId: string
+  content: string
+}
+
+interface AddReplyParam {
+  aptId: string
+  postId: string
+  parentId: number
   content: string
 }
 
@@ -48,7 +55,7 @@ export const commentService = {
     }
   },
 
-  async addComment(param: AddParam) {
+  async addComment(param: AddCommentParam) {
     const { aptId, postId, content } = param
     try {
       const response: AxiosResponse = await instance(`/api/${aptId}/${postId}/comment`, {
@@ -58,6 +65,22 @@ export const commentService = {
         },
       })
       return response.data // 쿠키없을 때로 에러 아니고 정성응답 주는 듯 참고
+    } catch (error) {
+      console.error(error)
+    }
+  },
+
+  async addReply(param: AddReplyParam) {
+    const { aptId, postId, parentId, content } = param
+    try {
+      const response = await instance(`/api/${aptId}/${postId}/comment/reply`, {
+        method: 'post',
+        data: {
+          parentId,
+          content,
+        },
+      })
+      return response.data
     } catch (error) {
       console.error(error)
     }
