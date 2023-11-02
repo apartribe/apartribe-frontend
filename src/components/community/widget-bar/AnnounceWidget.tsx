@@ -54,7 +54,9 @@ const AnnounceWidget = () => {
         seeMorePath={`/community/${aptId}/announce`}
       />
       {vaildAnnounceList?.length === 0 ? (
-        <StyledParagraph className="noData">표시할 게시물이 없습니다.</StyledParagraph>
+        <StyledParagraph className="noData">
+          현재 게시중인 공지사항이 없습니다.
+        </StyledParagraph>
       ) : (
         <Slider {...settings}>
           {vaildAnnounceList?.map(({ id, level, title }: VaildAnnounce) => (

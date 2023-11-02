@@ -7,6 +7,8 @@ import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { styled } from 'styled-components'
 import { FixedButtonList } from 'components/community/common/FixedButtonList'
 import { useInView } from 'react-intersection-observer'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const CommunityHomePage = () => {
   const { ref: backToTopRef, inView: isInViewport } = useInView()
@@ -26,6 +28,14 @@ const CommunityHomePage = () => {
         <FixedButtonList isInViewport={isInViewport} />
         <Footer />
       </Container>
+      <ToastContainer
+        toastStyle={{
+          boxShadow: 'none',
+          backgroundColor: '#303030',
+          color: '#ffffff',
+          fontSize: '12px',
+        }}
+      />
     </>
   )
 }

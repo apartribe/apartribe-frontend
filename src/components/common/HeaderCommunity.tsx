@@ -5,8 +5,6 @@ import { NavLink, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
-import { useAppSelector } from 'hooks/useRedux'
-import { Img } from 'styles/reusable-style/elementStyle'
 import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
 import { aptService } from 'services/apt/aptService'
 import Slider from 'react-slick'
@@ -16,7 +14,6 @@ interface Props {
 }
 
 const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
-  const { profileImageUrl } = useAppSelector((state) => state.user?.userInfo)
   const { aptId } = useParams()
 
   const [searchMode, setSearchMode] = useState<boolean>(false)
@@ -87,11 +84,7 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
             </StyledNavLink>
           ))}
           <StyledNavLink to="/setting">
-            {profileImageUrl.length !== 0 ? (
-              <StyledImg src={profileImageUrl} />
-            ) : (
-              <StyledIcon />
-            )}
+            <IoPersonCircle fontSize="40px" color="#B3B3B3" cursor="pointer" />
           </StyledNavLink>
         </StyledDiv>
       </Inner>
@@ -136,20 +129,6 @@ const StyledNavLink = styled(NavLink)`
   }
 `
 
-const StyledImg = styled(Img)`
-  width: 40px;
-  height: 40px;
-  border: 1px solid #dadada;
-  border-radius: 50%;
-`
-
-const StyledIcon = styled(IoPersonCircle)`
-  width: 40px;
-  height: 40px;
-  color: #b3b3b3;
-  margin: -10px;
-  cursor: pointer;
-
 const StyledLogoBox = styled.div`
   width: 170px;
 `
@@ -166,5 +145,4 @@ const StyledParagraph = styled.p`
     font-size: 12px;
     transition: 0.2s ease-in-out;
   }
-
 `

@@ -9,7 +9,7 @@ import { BoardType } from 'services/community/postsService'
 import { ArticleCardType } from 'types/community-type/ArticleType'
 import { BiConversation } from 'react-icons/bi'
 import { tagRemover } from 'utils/tagRemover'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
   post: ArticleCardType
@@ -39,7 +39,7 @@ const ArticleCard: FC<Props> = ({
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
       <Img
-        src={profileImage || dafaultAvatar}
+        src={profileImage || defaultAvatar}
         $width="40px"
         $height="40px"
         $borderRadius="50%"

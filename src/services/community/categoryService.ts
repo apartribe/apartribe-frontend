@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
 import { BoardType } from './postsService'
 
@@ -16,15 +15,12 @@ interface addParam {
 export const categoryService = {
   async addCategory(param: addParam) {
     const { aptId, boardType, data } = param
-    const response: AxiosResponse = await instance(
-      `/api/${aptId}/category/${boardType}/add`,
-      {
-        method: 'post',
-        data: {
-          category: data,
-        },
+    const response = await instance(`/api/${aptId}/category/${boardType}/add`, {
+      method: 'post',
+      data: {
+        category: data,
       },
-    )
+    })
     return response.data
   },
 
@@ -38,12 +34,9 @@ export const categoryService = {
           { categoryName: '비상' },
         ],
       }
-    const response: AxiosResponse = await instance(
-      `/api/${aptId}/category/${boardType}/list`,
-      {
-        method: 'get',
-      },
-    )
+    const response = await instance(`/api/${aptId}/category/${boardType}/list`, {
+      method: 'get',
+    })
     return response.data
   },
 }

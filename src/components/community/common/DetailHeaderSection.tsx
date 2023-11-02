@@ -1,4 +1,4 @@
-import React, { FC, Dispatch, SetStateAction } from 'react'
+import React, { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 import { AiOutlineEye, AiOutlineLike, AiOutlineDelete } from 'react-icons/ai'
@@ -12,7 +12,9 @@ import { AnnounceDetailType } from 'types/community-type/announceType'
 import { TogetherDetailType } from 'types/community-type/togetherType'
 import { likeService } from 'services/community/likeService'
 import { Img } from 'styles/reusable-style/elementStyle'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
+import { commentService } from 'services/community/commentService'
+import { toast } from 'react-toastify'
 
 // 타입 수정 요망!
 interface Props<T> {
@@ -33,7 +35,6 @@ const DetailHeaderSection = <
     createdBy,
     liked,
     saw,
-    commentCounts,
     memberLiked,
     profileImage,
   },
@@ -41,6 +42,8 @@ const DetailHeaderSection = <
 }: Props<T>) => {
   const { aptId, postId } = useParams()
   const navigate = useNavigate()
+
+  const [commentCount, setCommentsCount] = useState<number | null>(null)
 
   const isCommunity = /article/
   const isAnnouncement = /announce/
@@ -62,17 +65,14 @@ const DetailHeaderSection = <
       '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
     )
     if (userConfirmed) {
-      const { statusCode, message } = await articleService.deletePost({
+      const statusCode = await articleService.deletePost({
         boardType,
         postId: postId as string,
       })
       if (statusCode === 204) {
-        alert(message)
+        toast.success('게시물이 삭제 되었습니다.')
         navigate(`/community/${aptId}`)
-        return
       }
-      alert(message)
-      return
     }
   }
 
@@ -88,7 +88,22 @@ const DetailHeaderSection = <
       memberLiked: newMemberLiked,
       liked: newMemberLiked ? prevState.liked + 1 : prevState.liked - 1,
     }))
+    toast.success(
+      newMemberLiked ? '게시물에 좋아요를 남겼습니다.' : '좋아요를 취소했습니다.',
+    )
   }
+
+  useEffect(() => {
+    const getCommentCount = async () => {
+      const response = await commentService.getCommentCount({
+        aptId: aptId as string,
+        postId: postId as string,
+      })
+      setCommentsCount(response.data.commentCount)
+    }
+
+    getCommentCount()
+  }, [])
 
   return (
     <StyledWrapper>
@@ -121,7 +136,7 @@ const DetailHeaderSection = <
           </StyledParagraph>
           <StyledParagraph className="sm">
             <BiConversation />
-            {commentCounts}
+            {commentCount}
           </StyledParagraph>
         </StyledDiv>
         <StyledDiv>
@@ -137,7 +152,7 @@ const DetailHeaderSection = <
       </StyledDiv>
       <StyledDiv>
         <Img
-          src={profileImage || dafaultAvatar}
+          src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"

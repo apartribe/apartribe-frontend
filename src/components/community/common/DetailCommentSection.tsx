@@ -2,12 +2,12 @@ import React, { FormEvent, useState, useEffect, ChangeEvent, useRef } from 'reac
 import { styled } from 'styled-components'
 import { Img, Input } from 'styles/reusable-style/elementStyle'
 import CommentCard from './CommentCard'
-import { commentsService } from 'services/community/commentsService'
 import { useParams } from 'react-router-dom'
 import { commentService } from 'services/community/commentService'
 import { MoonLoader } from 'react-spinners'
 import { Comment } from 'types/community-type/commentType'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
+import { toast } from 'react-toastify'
 
 const CURRENT_USER_MOCK = {
   avatar:
@@ -21,7 +21,6 @@ const DetailCommentSection = () => {
   const [loading, setLoading] = useState(false)
   const [nothingToload, setNothingToload] = useState(false)
   const LoadingTargetRef = useRef(null)
-  const pageCountRef = useRef(0)
 
   const param = useParams()
   const { aptId, postId } = param
@@ -34,6 +33,7 @@ const DetailCommentSection = () => {
 
   const submitComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!inputValue) return toast.warn('댓글 내용을 입력해주세요.')
     const response = await commentService.addComment({
       aptId: aptId as string,
       postId: postId as string,
@@ -42,55 +42,49 @@ const DetailCommentSection = () => {
     const newComment: Comment = response?.data
 
     if (newComment) {
-      const { content, createdAt, createdBy, id } = newComment
+      const { content, createdAt, createdBy, commentId, profileImage } = newComment
       setComments((prevState) => [
-        { content, createdAt, createdBy, id, like: 0, children: [] },
+        {
+          childCounts: 0,
+          commentId,
+          content,
+          createdAt,
+          createdBy,
+          liked: 0,
+          memberCreated: true,
+          memberLiked: false,
+          profileImage,
+          children: [],
+        },
         ...prevState,
       ])
+      toast.success('댓글이 등록 되었습니다.')
+      setInputValue('')
     }
-    setInputValue('')
   }
 
-  // 무한 스크롤 ======추후 커스텀 훅으로 모듈화 고려
   useEffect(() => {
-    const getNewPage = async () => {
+    const getComments = async () => {
       setLoading(true)
-      pageCountRef.current = pageCountRef.current + 1
-      const response = await commentsService.getComments({
+      const response = await commentService.getComments({
+        aptId: aptId as string,
         postId: postId as string,
-        page: pageCountRef.current,
       })
-      if (!response) return
-      setCommentsCount(response.totalCount)
-      if (response.results.length === 0) return setNothingToload(true)
+      setComments(response)
       setLoading(false)
-      setComments((prev) => [...prev, ...response.results])
     }
 
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 1,
-    }
-
-    const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !loading) {
-          getNewPage()
-        }
+    const getCommentCount = async () => {
+      const response = await commentService.getCommentCount({
+        aptId: aptId as string,
+        postId: postId as string,
       })
+      setCommentsCount(response.data.commentCount)
     }
 
-    const observer = new IntersectionObserver(callback, options)
-    if (LoadingTargetRef.current) {
-      observer.observe(LoadingTargetRef.current)
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [loading, postId])
-  //======
+    getComments()
+    getCommentCount()
+  }, [])
 
   if (!comments) return <p></p>
 
@@ -100,7 +94,7 @@ const DetailCommentSection = () => {
       <StyledDiv className="column gap">
         <StyledDiv className="row gap">
           <Img
-            src={dafaultAvatar} //{ avater || dafaultAvatar}
+            src={defaultAvatar} //{ avater || defaultAvatar}
             alt="로그인 회원 아바타"
             $width="50px"
             $height="50px"
@@ -120,7 +114,11 @@ const DetailCommentSection = () => {
       <StyledDiv className="column">
         {comments &&
           comments.map((comment: Comment) => (
-            <CommentCard key={comment.id} comment={comment} setComments={setComments} />
+            <CommentCard
+              key={comment.commentId}
+              comment={comment}
+              setComments={setComments}
+            />
           ))}
       </StyledDiv>
       {nothingToload ? (

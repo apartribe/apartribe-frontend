@@ -12,11 +12,14 @@ import { timeAgo } from 'utils/timeAgo'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import ReplyCard from './ReplyCard'
-import { replyService } from 'services/community/replyService'
+import { commentService } from 'services/community/commentService'
 import EditComment from './EditComment'
 import { Comment, Reply } from 'types/community-type/commentType'
-import dafaultAvatar from 'assets/users/defaultAvatar.png'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
+import { likeService } from 'services/community/likeService'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 interface Props {
   comment: Comment
@@ -25,11 +28,15 @@ interface Props {
 
 const CommentCard: FC<Props> = ({
   comment: {
-    /* avatar, */ id,
-    createdBy,
-    createdAt,
+    childCounts,
+    commentId,
     content,
-    like: liked,
+    createdAt,
+    createdBy,
+    liked,
+    memberCreated,
+    memberLiked,
+    profileImage,
     children: replies,
   },
   setComments,
@@ -37,7 +44,7 @@ const CommentCard: FC<Props> = ({
   const { aptId, postId } = useParams()
 
   const [repliseVisible, setRepliseVisible] = useState(false)
-  const [like, setLike] = useState(false) // 추후 저장값으로 대체 필요
+  const [like, setLike] = useState(memberLiked)
   const [inputValue, setInputValue] = useState('')
   const [editMode, setEditMode] = useState(false)
 
@@ -45,44 +52,89 @@ const CommentCard: FC<Props> = ({
     setInputValue(e.target.value)
   }
 
-  const toggleLike = () => {
-    setLike((prev) => !prev)
+  const toggleLike = async () => {
+    const response = await likeService.commentLike({
+      aptId: aptId as string,
+      postId: postId as string,
+      commentId,
+    })
+    setLike(response.data.liked)
+    const newMemberLiked: boolean = response.data.liked
+    setComments((prevState) => {
+      const result = prevState.map((item) => {
+        if (item.commentId === commentId) {
+          return { ...item, liked: newMemberLiked ? item.liked + 1 : item.liked - 1 }
+        } else {
+          return item
+        }
+      })
+      return result
+    })
+    toast.success(
+      newMemberLiked ? '댓글에 좋아요를 남겼습니다.' : '좋아요를 취소했습니다.',
+    )
   }
 
   const submitReply = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const response = await replyService.addReply({
+    if (!inputValue) return toast.warn('답글 내용을 입력해주세요.')
+
+    const response = await commentService.addReply({
       aptId: aptId as string,
       postId: postId as string,
-      parentId: id,
+      parentId: commentId,
       content: inputValue,
     })
     const newReply: Reply = response?.data
 
     if (newReply) {
+      const { content, createdAt, createdBy, profileImage } = newReply
       setComments((prevState) => {
         const result = prevState.map((item) => {
-          if (item.id === id) {
-            return { ...item, children: [newReply, ...item.children] }
+          if (item.commentId === commentId) {
+            return {
+              ...item,
+              children: [
+                {
+                  commentId: newReply.commentId, // commentId 중복되므로 이렇게 사용함.
+                  content,
+                  createdAt,
+                  createdBy,
+                  liked: 0,
+                  memberCreated: true,
+                  memberLiked: false,
+                  profileImage,
+                  parentId: commentId,
+                },
+                ...item.children,
+              ],
+            }
           } else {
             return item
           }
         })
         return result
       })
+      toast.success('답글이 등록 되었습니다.')
+      setInputValue('')
     }
-    setInputValue('')
   }
 
   const deleteComment = () => {
-    alert('답글 삭제')
+    const userConfirmed = confirm(
+      '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
+    )
+    if (userConfirmed) {
+      toast.success('댓글이 삭제 되었습니다.')
+    }
+    return
   }
 
   return (
     <StyledWrapper>
       <StyledDiv className="row gap center">
         <Img
-          src={dafaultAvatar} //{ avater || dafaultAvatar}
+          src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
           height="40px"
@@ -91,17 +143,18 @@ const CommentCard: FC<Props> = ({
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
           <StyledParagraph className="sm">{timeAgo(createdAt)}</StyledParagraph>
         </StyledDiv>
-        <StyledDiv className="row gap full">
-          {!editMode && (
-            <>
-              <StyledButton className="mini" onClick={() => setEditMode(true)}>
-                수정
-              </StyledButton>
-              <StyledButton className="mini" onClick={deleteComment}>
-                삭제
-              </StyledButton>
-            </>
-          )}
+        <StyledDiv className="row full">
+          {!memberCreated ||
+            (!editMode && (
+              <>
+                <StyledButton className="mini" onClick={() => setEditMode(true)}>
+                  수정
+                </StyledButton>
+                <StyledButton className="mini" onClick={deleteComment}>
+                  삭제
+                </StyledButton>
+              </>
+            ))}
         </StyledDiv>
         <StyledDiv className="column center">
           {like ? (
@@ -119,7 +172,7 @@ const CommentCard: FC<Props> = ({
       </StyledDiv>
       {editMode ? (
         <EditComment
-          commentId={id}
+          commentId={commentId}
           content={content}
           setComments={setComments}
           setEditMode={setEditMode}
@@ -148,8 +201,7 @@ const CommentCard: FC<Props> = ({
             {replies &&
               replies.map((reply) => (
                 <ReplyCard
-                  key={reply.id}
-                  parentId={id}
+                  key={reply.commentId}
                   reply={reply}
                   setComments={setComments}
                 />
@@ -161,7 +213,7 @@ const CommentCard: FC<Props> = ({
           className="sm bold mainColor"
           onClick={() => setRepliseVisible(true)}
         >
-          답글 {replies.length}개 보기 <IoIosArrowDown />
+          답글 {childCounts}개 보기 <IoIosArrowDown />
         </StyledParagraph>
       )}
     </StyledWrapper>
@@ -171,7 +223,7 @@ const CommentCard: FC<Props> = ({
 export default CommentCard
 
 const StyledWrapper = styled.div`
-  padding: 30px 0;
+  padding: 15px 0 20px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -226,16 +278,16 @@ const StyledButton = styled.button`
 
   &.mini {
     border: none;
-    height: 15px;
-    width: 25px;
+    height: 25px;
+    width: 40px;
     padding: 0px;
     font-size: 12px;
     color: #303030;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   &:hover {
-    transform: scale(1.05);
+    filter: brightness(0.95);
   }
 `
 const StyledParagraph = styled.p`
