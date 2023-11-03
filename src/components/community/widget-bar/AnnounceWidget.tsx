@@ -58,7 +58,7 @@ const AnnounceWidget = () => {
           현재 게시중인 공지사항이 없습니다.
         </StyledParagraph>
       ) : (
-        <Slider {...settings}>
+        <StyledSlider {...settings}>
           {vaildAnnounceList?.map(({ id, level, title }: VaildAnnounce) => (
             <div key={id}>
               <StyledDiv onClick={() => moveToDetail(id)}>
@@ -69,7 +69,7 @@ const AnnounceWidget = () => {
               </StyledDiv>
             </div>
           ))}
-        </Slider>
+        </StyledSlider>
       )}
     </ShadowBox>
   )
@@ -99,5 +99,11 @@ const StyledParagraph = styled.p`
     line-height: 20px;
     font-size: 12px;
     padding-left: 30px;
+  }
+`
+
+const StyledSlider = styled(Slider)`
+  .slick-list {
+    height: 28px;
   }
 `
