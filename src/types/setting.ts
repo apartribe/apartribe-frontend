@@ -3,9 +3,7 @@ export type MyInfo = {
   name: string
   nickname: string
   profileImageUrl: string
-  //TODO: 아파트명, 인증여부 백엔드에서 값 넘겨주면 아래 주석 제거해서 변수명 수정
-  /* aptName: string 
-  badge: string  */
+  apartName: string
 }
 
 export type ChangePwInputValue = {
@@ -16,7 +14,6 @@ export type ChangePwInputValue = {
 
 export type MyArticle = {
   id: number
-  boardId: number
   boardType: string
   category?: string
   level?: string

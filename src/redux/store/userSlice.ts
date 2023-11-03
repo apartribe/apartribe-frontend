@@ -7,8 +7,8 @@ const initialState = {
     name: '',
     nickname: '',
     profileImageUrl: '',
-    /*  aptName: '', 
-    badge: '' */
+    apartCode: '',
+    apartName: '',
   },
 }
 

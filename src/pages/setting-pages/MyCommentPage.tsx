@@ -7,6 +7,9 @@ import { MyComment, ResultWithData } from 'types/setting'
 import { timeAgo } from 'utils/timeAgo'
 import { SIZE_OPTION } from 'constants/setting/pagination'
 import Pagination from 'components/common/Pagination'
+import { useAppSelector } from 'hooks/useRedux'
+import { useNavigate } from 'react-router-dom'
+import { PAGE_ARTICLE_DETAIL } from 'constants/setting/path'
 
 const MyCommentPage = () => {
   const [myCommentList, setMyCommentList] = useState<MyComment[]>([])
@@ -15,6 +18,9 @@ const MyCommentPage = () => {
   const [totalPages, setTotalPages] = useState<number>(0)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [indexList, setIndexList] = useState<number[][]>([])
+
+  const navigate = useNavigate()
+  const { apartCode } = useAppSelector((state) => state.user.userInfo)
 
   useEffect(() => {
     const viewMyComment = async () => {
@@ -54,17 +60,21 @@ const MyCommentPage = () => {
     setSize(Number(e.target.value))
   }
 
-  const viewComment = (e: MouseEvent<HTMLLIElement>) => {
-    //TODO: 게시물 페이지로 navigate
+  const viewArticle = (e: MouseEvent<HTMLLIElement>) => {
+    const boardId = e.currentTarget.value
+    navigate(PAGE_ARTICLE_DETAIL(apartCode, boardId))
   }
 
   return (
-    <>
-      {myCommentList && indexList.length !== 0 && (
-        <Container>
-          <Inner className="fullScreen" $padding="30px">
-            <h2>내가 쓴 댓글</h2>
-            <ShadowBox>
+    <Container>
+      <Inner className="fullScreen" $padding="30px">
+        <h2>내가 쓴 댓글</h2>
+        <ShadowBox>
+          {indexList.length === 0 && (
+            <StyledDivNoArticle>아직 작성한 댓글이 없습니다.</StyledDivNoArticle>
+          )}
+          {myCommentList && indexList.length !== 0 && (
+            <>
               <StyledDiv>
                 <StyledFlexDiv>
                   <span>총 {totalCount}개</span>
@@ -91,8 +101,7 @@ const MyCommentPage = () => {
                       },
                       index,
                     ) => (
-                      /* TODO: 클릭시 해당 게시판으로 이동하려고 boardId 얘 가져옴 */
-                      <StyledLi key={id} id={String(id)} onClick={viewComment}>
+                      <StyledLi key={id} value={boardId} onClick={viewArticle}>
                         <StyledSpan className="1">
                           {indexList && indexList[page - 1][index]}
                         </StyledSpan>
@@ -117,15 +126,21 @@ const MyCommentPage = () => {
                 page={page}
                 setPage={setPage}
               />
-            </ShadowBox>
-          </Inner>
-        </Container>
-      )}
-    </>
+            </>
+          )}
+        </ShadowBox>
+      </Inner>
+    </Container>
   )
 }
 
 export default MyCommentPage
+
+const StyledDivNoArticle = styled.div`
+  padding: 50px 0;
+  justify-content: center;
+  display: flex;
+`
 
 const StyledDiv = styled.div`
   padding: 20px;

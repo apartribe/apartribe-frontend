@@ -7,6 +7,9 @@ import { MyArticle, ResultWithData } from 'types/setting'
 import { timeAgo } from 'utils/timeAgo'
 import { SIZE_OPTION } from 'constants/setting/pagination'
 import Pagination from 'components/common/Pagination'
+import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from 'hooks/useRedux'
+import { PAGE_ARTICLE_DETAIL } from 'constants/setting/path'
 
 const MyArticlePage = () => {
   const [myArticleList, setMyArticleList] = useState<MyArticle[]>([])
@@ -15,6 +18,9 @@ const MyArticlePage = () => {
   const [totalPages, setTotalPages] = useState<number>(0)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [indexList, setIndexList] = useState<number[][]>([])
+
+  const navigate = useNavigate()
+  const { apartCode } = useAppSelector((state) => state.user.userInfo)
 
   useEffect(() => {
     const viewMyArticle = async () => {
@@ -55,16 +61,20 @@ const MyArticlePage = () => {
   }
 
   const viewArticle = (e: MouseEvent<HTMLLIElement>) => {
-    //TODO: 게시물 페이지로 navigate
+    const boardId = e.currentTarget.value
+    navigate(PAGE_ARTICLE_DETAIL(apartCode, boardId))
   }
 
   return (
-    <>
-      {myArticleList && indexList.length !== 0 && (
-        <Container>
-          <Inner className="fullScreen" $padding="30px">
-            <h2>내가 쓴 게시물</h2>
-            <ShadowBox>
+    <Container>
+      <Inner className="fullScreen" $padding="30px">
+        <h2>내가 쓴 게시물</h2>
+        <ShadowBox>
+          {indexList.length === 0 && (
+            <StyledDivNoArticle>아직 작성한 게시물이 없습니다.</StyledDivNoArticle>
+          )}
+          {myArticleList && indexList.length !== 0 && (
+            <>
               <StyledDiv>
                 <StyledFlexDiv>
                   <span>총 {totalCount}개</span>
@@ -79,19 +89,10 @@ const MyArticlePage = () => {
                 <StyledUl>
                   {myArticleList?.map(
                     (
-                      {
-                        id,
-                        boardId,
-                        boardType,
-                        category,
-                        level,
-                        title,
-                        commentCounts,
-                        createdAt,
-                      },
+                      { id, boardType, category, level, title, commentCounts, createdAt },
                       index,
                     ) => (
-                      <StyledLi key={id} id={String(id)} onClick={viewArticle}>
+                      <StyledLi key={id} value={id} onClick={viewArticle}>
                         <StyledSpan className="1">
                           {indexList && indexList[page - 1][index]}
                         </StyledSpan>
@@ -116,15 +117,21 @@ const MyArticlePage = () => {
                 page={page}
                 setPage={setPage}
               />
-            </ShadowBox>
-          </Inner>
-        </Container>
-      )}
-    </>
+            </>
+          )}
+        </ShadowBox>
+      </Inner>
+    </Container>
   )
 }
 
 export default MyArticlePage
+
+const StyledDivNoArticle = styled.div`
+  padding: 50px 0;
+  justify-content: center;
+  display: flex;
+`
 
 const StyledDiv = styled.div`
   padding: 20px;
@@ -165,6 +172,7 @@ const StyledLi = styled.li`
 
 const StyledSpan = styled.span`
   grid-column: ${(props) => `span ${props.className}`};
+  white-space: nowrap;
 `
 
 const StyledSpanContainer = styled.div`
@@ -183,4 +191,5 @@ const StyledBoldSpan = styled.span`
 const StyledText = styled.span`
   color: #2b7f75;
   font-size: 13px;
+  width: fit-content;
 `
