@@ -33,7 +33,7 @@ const AnnounceWidget = () => {
     }
 
     getVaildAnnounce()
-  }, [])
+  }, [aptId])
 
   const moveToDetail = (postId: number) => {
     navigate(`/community/${aptId}/announce/${postId}/detail`)

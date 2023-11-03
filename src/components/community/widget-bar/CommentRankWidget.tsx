@@ -21,7 +21,7 @@ const CommentRankWidget = () => {
     }
 
     getCommentRank()
-  }, [])
+  }, [aptId])
 
   const decideIcon = (index: number) => {
     if (index === 0) return <FaTrophy color="#D5A11E" />

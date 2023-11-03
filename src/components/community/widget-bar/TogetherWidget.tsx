@@ -35,7 +35,7 @@ const TogetherWidget = () => {
     }
 
     getPost()
-  }, [])
+  }, [aptId])
 
   const moveToDetail = (id: number) => {
     navigate(`/community/${aptId}/together/${id}/detail`) // 추후 경로 수정

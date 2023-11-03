@@ -37,7 +37,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     setPostList([])
     setNothingToload(false)
     setLoading(false)
-  }, [selectedCategory, selectedSort])
+  }, [selectedCategory, selectedSort, aptId])
 
   useEffect(() => {
     const getNewPage = async () => {
