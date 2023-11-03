@@ -118,19 +118,20 @@ export default PostListSection
 const StyledDiv = styled.div`
   position: relative;
   width: 100%;
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   flex-wrap: wrap;
 `
 
 const StyledParagraph = styled.p`
   width: 870px;
-  margin: 50px 0;
+  height: 130px;
+  padding-top: 50px;
   text-align: center;
 `
 const StyledTarget = styled.div`
   width: 100%;
-  height: 130px;
+  height: 160px;
   display: flex;
   align-items: center;
 `
