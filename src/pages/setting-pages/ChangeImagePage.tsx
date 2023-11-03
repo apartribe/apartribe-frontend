@@ -46,16 +46,16 @@ const ChangeImagePage = () => {
     navigate(PAGE_SETTING)
   }
 
-  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+  const openModal = ({ status, message, goTo }: Message) => {
     setModal((prev) => !prev)
-    setModalMessage({ status, message })
+    setModalMessage({ status, message, goTo })
   }
 
   const uploadImage = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const { result, message } = await user.updateImage(imageUrl)
-    openModal(result, message)
+    openModal({ status: result, message, goTo: PAGE_SETTING })
 
     if (result === 'success') {
       console.log('imageUrl', imageUrl)

@@ -34,9 +34,9 @@ const ChangeNicknamePage = () => {
     navigate(PAGE_SETTING)
   }
 
-  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+  const openModal = ({ status, message, goTo }: Message) => {
     setModal((prev) => !prev)
-    setModalMessage({ status, message })
+    setModalMessage({ status, message, goTo })
   }
 
   const changeNickname = async (e: MouseEvent<HTMLFormElement>) => {
@@ -45,7 +45,7 @@ const ChangeNicknamePage = () => {
     if (!isNewNicknameValid) return
 
     const { result, message } = await user.updateNickname(newNickname)
-    openModal(result, message)
+    openModal({ status: result, message, goTo: PAGE_SETTING })
 
     if (result === 'success') {
       dispatch(updateLoginUser({ nickname: newNickname }))

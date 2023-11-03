@@ -51,9 +51,9 @@ const ChangePwPage = () => {
     navigate(PAGE_SETTING)
   }
 
-  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+  const openModal = ({ status, message, goTo }: Message) => {
     setModal((prev) => !prev)
-    setModalMessage({ status, message })
+    setModalMessage({ status, message, goTo })
   }
 
   const changePw = async (e: MouseEvent<HTMLFormElement>) => {
@@ -62,7 +62,7 @@ const ChangePwPage = () => {
     if (!isChangePwPossible) return
 
     const { result, message } = await user.updatePassword(inputValue)
-    openModal(result, message)
+    openModal({ status: result, message, goTo: PAGE_SETTING })
   }
 
   return (
