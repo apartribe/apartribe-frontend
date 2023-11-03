@@ -109,12 +109,12 @@ const MyCommentPage = () => {
                           {convertedBoardType(boardType)}
                         </StyledSpan>
                         <StyledSpanContainer className="6">
-                          <span>
+                          <StyledSpan>
                             {boardType === 'ANNOUNCE' ? level : category}&gt;{boardTitle}
-                          </span>
+                          </StyledSpan>
                           <StyledBoldSpan>{content}</StyledBoldSpan>
                         </StyledSpanContainer>
-                        <StyledSpan className="1">{timeAgo(createdAt)}</StyledSpan>
+                        <StyledSpan className="1 time">{timeAgo(createdAt)}</StyledSpan>
                       </StyledLi>
                     ),
                   )}
@@ -184,6 +184,11 @@ const StyledSpan = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
+  &.time {
+    text-overflow: unset;
+    overflow: unset;
+  }
 `
 
 const StyledSpanContainer = styled.div`

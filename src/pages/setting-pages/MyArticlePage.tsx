@@ -100,12 +100,15 @@ const MyArticlePage = () => {
                           {convertedBoardType(boardType)}
                         </StyledSpan>
                         <StyledSpanContainer className="6">
-                          <span>{boardType === 'ANNOUNCE' ? level : category}</span>
-                          <StyledBoldSpan>
-                            {title} <StyledText>[{commentCounts}]</StyledText>
-                          </StyledBoldSpan>
+                          <StyledSpan>
+                            {boardType === 'ANNOUNCE' ? level : category}
+                          </StyledSpan>
+                          <StyledBoldDiv>
+                            <StyledSpan>{title}</StyledSpan>
+                            <StyledText>[{commentCounts}]</StyledText>
+                          </StyledBoldDiv>
                         </StyledSpanContainer>
-                        <StyledSpan className="1">{timeAgo(createdAt)}</StyledSpan>
+                        <StyledSpan className="1 time">{timeAgo(createdAt)}</StyledSpan>
                       </StyledLi>
                     ),
                   )}
@@ -172,7 +175,14 @@ const StyledLi = styled.li`
 
 const StyledSpan = styled.span`
   grid-column: ${(props) => `span ${props.className}`};
+  text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
+
+  &.time {
+    text-overflow: unset;
+    overflow: unset;
+  }
 `
 
 const StyledSpanContainer = styled.div`
@@ -181,11 +191,15 @@ const StyledSpanContainer = styled.div`
   flex-direction: column;
 `
 
-const StyledBoldSpan = styled.span`
+const StyledBoldDiv = styled.div`
+  display: flex;
   font-weight: 700;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  align-items: center;
+  gap: 3px;
+
+  & > span {
+    align-self: center;
+  }
 `
 
 const StyledText = styled.span`
