@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { useAppSelector } from 'hooks/useRedux'
-import { user } from 'services/user'
 import { auth } from 'services/auth'
 import { P, Img, ShadowBox, Badge } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
@@ -13,6 +12,7 @@ import {
   PAGE_CHANGE_PW,
   PAGE_MY_ARTICLE,
   PAGE_MY_COMMENT,
+  PAGE_VERIFY_APT,
 } from 'constants/setting/path'
 import { MyInfo } from 'types/setting'
 import { Message } from 'types/auth'
@@ -26,8 +26,7 @@ const SettingPage = () => {
     name: '',
     nickname: '',
     profileImageUrl: '',
-    /*  aptName: '', 
-    badge: '' */
+    apartName: '',
   })
   const [modal, setModal] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<Message>({
@@ -38,8 +37,7 @@ const SettingPage = () => {
 
   const userInfo = useAppSelector((state) => state.user?.userInfo)
 
-  const { email, name, nickname, profileImageUrl /* , aptName, badge */ } = myInfo
-  const aptName = '아파트명'
+  const { email, name, nickname, profileImageUrl, apartName } = myInfo
   const badge = '미인증'
 
   const dispatch = useDispatch()
@@ -93,7 +91,7 @@ const SettingPage = () => {
                       {name} / {nickname}
                     </P>
                     <StyledDiv className="row">
-                      <P>{aptName}</P>
+                      <P>{apartName === 'EMPTY' ? '인증된 아파트 없음' : apartName}</P>
                       <StyledBadge className={badge}>{badge}</StyledBadge>
                     </StyledDiv>
                   </StyledDiv>
@@ -102,7 +100,7 @@ const SettingPage = () => {
               <StyledShadowBox>
                 <h3>계정</h3>
                 <StyledLinkContainer>
-                  <StyledLink to="">아파트 인증</StyledLink>
+                  <StyledLink to={PAGE_VERIFY_APT}>아파트 인증</StyledLink>
                   <StyledLink to={PAGE_CHANGE_PW}>비밀번호 변경</StyledLink>
                   <StyledLink to={PAGE_CHANGE_NICKNAME}>닉네임 변경</StyledLink>
                   <StyledLink to={PAGE_CHANGE_IMAGE}>프로필 이미지 변경</StyledLink>
