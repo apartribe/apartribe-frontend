@@ -10,6 +10,7 @@ import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 import { likeService } from 'services/community/likeService'
 import { toast } from 'react-toastify'
+import { commentService } from 'services/community/commentService'
 
 interface Props {
   reply: Reply
@@ -68,14 +69,32 @@ const ReplyCard: FC<Props> = ({
     setEditMode(true)
   }
 
-  const deleteReply = () => {
+  const deleteReply = async () => {
     const userConfirmed = confirm(
       '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
     )
     if (userConfirmed) {
-      toast.success('답글이 삭제 되었습니다.')
+      const statusCode = await commentService.deleteComment({
+        aptId: aptId as string,
+        postId: postId as string,
+        commentId,
+      })
+      if (statusCode === 200) {
+        toast.success('답글이 삭제 되었습니다.')
+        setComments((prevState) => [
+          ...prevState.map((item) => {
+            if (item.commentId === parentId) {
+              return {
+                ...item,
+                children: item.children.filter((item) => item.commentId !== commentId),
+              }
+            } else {
+              return item
+            }
+          }),
+        ])
+      }
     }
-    return
   }
 
   return (
