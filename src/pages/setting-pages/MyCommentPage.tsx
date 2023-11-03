@@ -1,5 +1,5 @@
 import { useState, useEffect, MouseEvent, ChangeEvent } from 'react'
-import { user } from 'services/user'
+import { userService } from 'services/auth/userService'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
@@ -24,7 +24,7 @@ const MyCommentPage = () => {
 
   useEffect(() => {
     const viewMyComment = async () => {
-      const myCommentResult = await user.MyComment(size, page)
+      const myCommentResult = await userService.MyComment(size, page)
       const { data } = myCommentResult as ResultWithData
       setTotalPages(data.totalPages)
       setMyCommentList(data.results)

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 import { instance } from 'configs/axios'
 import { Result, ContactInputValue } from 'types/setting'
 
-export const advertise = {
+export const advertiseService = {
   async sendEmail(name: string, email: string): Promise<Result> {
     try {
       await instance('/api/advertise/email/send', {

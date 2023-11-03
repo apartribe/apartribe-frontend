@@ -4,7 +4,7 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import Router from 'routes/Router'
 import { Provider } from 'react-redux'
-import { auth } from 'services/auth'
+import { authService } from 'services/auth/authService'
 import {
   getRefreshToken,
   removeAccessToken,
@@ -13,13 +13,12 @@ import {
 import { store, persistor } from 'redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
 
-
 const root = createRoot(document.getElementById('root') as HTMLElement)
 
 const reIssue = async () => {
   if (!getRefreshToken()) return
 
-  const { statusCode } = await auth.reissueToken()
+  const { statusCode } = await authService.reissueToken()
 
   if (statusCode === 401) {
     removeAccessToken()
@@ -28,7 +27,7 @@ const reIssue = async () => {
   }
 
   const timer = setInterval(() => {
-    auth.reissueToken()
+    authService.reissueToken()
   }, 360000)
 
   return () => {

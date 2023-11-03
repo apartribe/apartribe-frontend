@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { useAppSelector } from 'hooks/useRedux'
-import { auth } from 'services/auth'
+import { authService } from 'services/auth/authService'
 import { P, Img, ShadowBox, Badge } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import {
@@ -61,7 +61,7 @@ const SettingPage = () => {
 
   const logout = () => {
     const toDo = () => {
-      auth.logout()
+      authService.logout()
       dispatch(loginUser(null))
     }
     openModal('waiting', '로그아웃 하시겠습니까? 확인을 누르면 로그아웃 됩니다.', toDo)

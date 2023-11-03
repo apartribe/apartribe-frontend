@@ -2,7 +2,7 @@ import axios from 'axios'
 import { instance } from 'configs/axios'
 import { ResultWithData, ResultWithMessage, ChangePwInputValue } from 'types/setting'
 
-export const user = {
+export const userService = {
   async showMember(email: string): Promise<ResultWithData | ResultWithMessage> {
     try {
       const response = await instance.get(`/api/member/${email}`)

@@ -16,7 +16,7 @@ import {
   setRefreshToken,
 } from 'utils/localStorage'
 
-export const auth = {
+export const authService = {
   async sendEmail(email: string): Promise<SendEmailResult> {
     try {
       await instance('/api/auth/email/send', {

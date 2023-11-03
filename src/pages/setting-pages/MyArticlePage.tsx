@@ -1,5 +1,5 @@
 import { useState, useEffect, MouseEvent, ChangeEvent } from 'react'
-import { user } from 'services/user'
+import { userService } from 'services/auth/userService'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
@@ -24,7 +24,7 @@ const MyArticlePage = () => {
 
   useEffect(() => {
     const viewMyArticle = async () => {
-      const myArticleResult = await user.myArticle(size, page)
+      const myArticleResult = await userService.myArticle(size, page)
       const { data } = myArticleResult as ResultWithData
       setTotalPages(data.totalPages)
       setMyArticleList(data.results)

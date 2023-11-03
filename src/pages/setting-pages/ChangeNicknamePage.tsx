@@ -6,7 +6,7 @@ import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { Button } from 'styles/reusable-style/elementStyle'
 import { PAGE_SETTING } from 'constants/setting/path'
-import { user } from 'services/user'
+import { userService } from 'services/auth/userService'
 import MessageModal from 'components/common/MessageModal'
 import { Message } from 'types/auth'
 import { updateLoginUser } from 'redux/store/userSlice'
@@ -44,7 +44,7 @@ const ChangeNicknamePage = () => {
 
     if (!isNewNicknameValid) return
 
-    const { result, message } = await user.updateNickname(newNickname)
+    const { result, message } = await userService.updateNickname(newNickname)
     openModal({ status: result, message, goTo: PAGE_SETTING })
 
     if (result === 'success') {

@@ -6,7 +6,7 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import { ChangePwInputValue } from 'types/setting'
 import { useNavigate } from 'react-router-dom'
 import { PAGE_SETTING } from 'constants/setting/path'
-import { user } from 'services/user'
+import { userService } from 'services/auth/userService'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { Message } from 'types/auth'
 import MessageModal from 'components/common/MessageModal'
@@ -61,7 +61,7 @@ const ChangePwPage = () => {
 
     if (!isChangePwPossible) return
 
-    const { result, message } = await user.updatePassword(inputValue)
+    const { result, message } = await userService.updatePassword(inputValue)
     openModal({ status: result, message, goTo: PAGE_SETTING })
   }
 
