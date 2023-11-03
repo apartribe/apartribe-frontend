@@ -7,6 +7,7 @@ export interface BestPost {
 export interface AptSearch {
   title: string
   id: string
+  boardType: string
 }
 
 export interface VaildAnnounce {
