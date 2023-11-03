@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
-import { IoPersonCircle } from 'react-icons/io5'
 import { useAppSelector } from 'hooks/useRedux'
 import { auth } from 'services/auth'
 import { P, Img, ShadowBox, Badge } from 'styles/reusable-style/elementStyle'
@@ -19,6 +18,7 @@ import { Message } from 'types/auth'
 import QuestionModal from 'components/common/QuestionModal'
 import { loginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 
 const SettingPage = () => {
   const [myInfo, setMyInfo] = useState<MyInfo>({
@@ -80,11 +80,14 @@ const SettingPage = () => {
                   <StyledButtonBlack onClick={logout}>로그아웃</StyledButtonBlack>
                 </StyledDiv>
                 <StyledMyInfoDiv>
-                  {profileImageUrl.length !== 0 ? (
-                    <StyledImg src={profileImageUrl} />
-                  ) : (
-                    <StyledIcon />
-                  )}
+                  <Img
+                    src={profileImageUrl || defaultAvatar}
+                    $width="100px"
+                    $height="100px"
+                    $borderRadius="50%"
+                    $lineHeight="12px"
+                    $margin="5px 0"
+                  />
                   <StyledDiv className="column">
                     <StyledP>{email}</StyledP>
                     <P>
@@ -153,20 +156,6 @@ const StyledMyInfoDiv = styled.div`
   display: flex;
   column-gap: 15px;
   align-items: center;
-`
-
-const StyledImg = styled(Img)`
-  width: 120px;
-  height: 120px;
-  border: 1px solid #dadada;
-  border-radius: 50%;
-`
-
-const StyledIcon = styled(IoPersonCircle)`
-  width: 110px;
-  height: 110px;
-  color: #dadada;
-  margin: -10px;
 `
 
 const StyledButtonBlack = styled.button`

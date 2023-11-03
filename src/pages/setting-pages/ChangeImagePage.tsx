@@ -3,16 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import AuthLayout from 'components/auth/AuthLayout'
 import { Message } from 'types/auth'
-import { Button } from 'styles/reusable-style/elementStyle'
+import { Button, Img } from 'styles/reusable-style/elementStyle'
 import { PAGE_SETTING } from 'constants/setting/path'
 import MessageModal from 'components/common/MessageModal'
 import { user } from 'services/user'
-import { IoPersonCircle } from 'react-icons/io5'
 import { updateLoginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
+import { useAppSelector } from 'hooks/useRedux'
 
 const ChangeImagePage = () => {
-  const [imageUrl, setImageUrl] = useState<string>('')
+  const { profileImageUrl } = useAppSelector((state) => state.user.userInfo)
+
+  const [newProfileImageUrl, setNewProfileImageUrl] = useState<string>(profileImageUrl)
   const [modal, setModal] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<Message>({
     status: 'waiting',
@@ -33,16 +36,17 @@ const ChangeImagePage = () => {
 
       const blob = new Blob([file as File])
       const pdfUrl = URL.createObjectURL(blob)
-      setImageUrl(pdfUrl)
+      console.log(file, blob, pdfUrl)
+      setNewProfileImageUrl(pdfUrl)
     }
   } */
   const uploadToS3 = async (e: ChangeEvent<HTMLInputElement>) => {
     /* const resopnse = await uploadS3(e.target.files[0])
-    setImageUrl(resposne.Location) */
+    setNewProfileImageUrl(resposne.Location) */
   }
 
   const cancelChangeImage = () => {
-    setImageUrl('')
+    setNewProfileImageUrl('')
     navigate(PAGE_SETTING)
   }
 
@@ -54,12 +58,12 @@ const ChangeImagePage = () => {
   const uploadImage = async (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { result, message } = await user.updateImage(imageUrl)
+    const { result, message } = await user.updateImage(newProfileImageUrl)
     openModal({ status: result, message, goTo: PAGE_SETTING })
 
     if (result === 'success') {
-      console.log('imageUrl', imageUrl)
-      dispatch(updateLoginUser({ profileImageUrl: imageUrl }))
+      console.log('newProfileImageUrl', newProfileImageUrl)
+      dispatch(updateLoginUser({ profileImageUrl: newProfileImageUrl }))
     }
   }
 
@@ -68,11 +72,15 @@ const ChangeImagePage = () => {
       <AuthLayout>
         <StyledH>프로필 이미지 변경</StyledH>
         <StyledForm onSubmit={uploadImage}>
-          {imageUrl.length === 0 ? (
-            <StyledIcon onClick={selectImage} />
-          ) : (
-            <StyledImage src={imageUrl} onClick={selectImage} />
-          )}
+          <Img
+            src={newProfileImageUrl || defaultAvatar}
+            onClick={selectImage}
+            $width="100px"
+            $height="100px"
+            $borderRadius="50%"
+            $lineHeight="12px"
+            $margin="5px 0"
+          />
           <StyledInput
             type="file"
             accept="image/jpg,impge/png,image/jpeg"
@@ -111,21 +119,6 @@ const StyledForm = styled.form`
   & > * {
     margin: auto;
   }
-`
-
-const StyledIcon = styled(IoPersonCircle)`
-  width: 200px;
-  height: 200px;
-  color: #dadada;
-  cursor: pointer;
-`
-
-const StyledImage = styled.img`
-  width: 200px;
-  height: 200px;
-  padding: 18px;
-  border-radius: 50%;
-  cursor: pointer;
 `
 
 const StyledInput = styled.input`
