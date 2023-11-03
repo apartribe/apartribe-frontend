@@ -29,7 +29,7 @@ const DetailHeaderSection = <
   boardType,
   postData: {
     category,
-    // level, 하..
+    level,
     title,
     createdAt,
     createdBy,
@@ -112,6 +112,7 @@ const DetailHeaderSection = <
       <StyledDiv className="between">
         <StyledParagraph className="md">
           {decidePath()} &nbsp;&gt;&nbsp; {category}
+          {level}
         </StyledParagraph>
         {memberCreated ? (
           <StyledDiv>
