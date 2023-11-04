@@ -78,7 +78,7 @@ const EditArticlePage = () => {
         data: inputValue,
         postId: postId as string,
       })
-      if (statusCode === 201) {
+      if (statusCode === 200) {
         toast.success('게시물이 수정되었습니다.')
         navigate(`/community/${aptId}/article/${postId}/detail`)
       }
