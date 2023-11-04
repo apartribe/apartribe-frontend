@@ -42,7 +42,7 @@ export interface AnnounceDetailType {
   memberLiked: boolean
   profileImage: string
   memberCreated: boolean
-  // protected: boolean
+  onlyApartUser: boolean
 }
 
 export interface AddAnnounceType {
@@ -53,4 +53,5 @@ export interface AddAnnounceType {
   thumbnail: string
   floatFrom: Date
   floatTo: Date
+  onlyApartUser: boolean
 }

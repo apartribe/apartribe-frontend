@@ -28,7 +28,7 @@ export interface ArticleDetailType {
   memberLiked: boolean
   profileImage: string
   memberCreated: boolean
-  // protected: boolean
+  onlyApartUser: boolean
 }
 
 export interface AddArticleType {
@@ -36,5 +36,5 @@ export interface AddArticleType {
   title: string
   content: string
   thumbnail: string
-  // protected: boolean
+  onlyApartUser: boolean
 }
