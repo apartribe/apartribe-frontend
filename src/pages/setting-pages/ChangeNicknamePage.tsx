@@ -8,7 +8,7 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import { PAGE_SETTING } from 'constants/setting/path'
 import { userService } from 'services/auth/userService'
 import MessageModal from 'components/common/MessageModal'
-import { Message } from 'types/auth'
+import { Message } from 'types/authType'
 import { updateLoginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
 

@@ -5,7 +5,7 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
-import { SignupInputValue, PasswordType, Message } from 'types/auth'
+import { SignupInputValue, PasswordType, Message } from 'types/authType'
 import { authService } from 'services/auth/authService'
 import MessageModal from '../common/MessageModal'
 

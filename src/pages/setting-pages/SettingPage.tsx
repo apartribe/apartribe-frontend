@@ -13,8 +13,8 @@ import {
   PAGE_MY_COMMENT,
   PAGE_VERIFY_APT,
 } from 'constants/setting/path'
-import { MyInfo } from 'types/setting'
-import { Message } from 'types/auth'
+import { MyInfo } from 'types/settingType'
+import { Message } from 'types/authType'
 import QuestionModal from 'components/common/QuestionModal'
 import { loginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'

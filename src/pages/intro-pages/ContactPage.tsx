@@ -6,9 +6,9 @@ import { useTimer } from 'hooks/useTimer'
 import { Button, Input, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import contact from 'assets/terms_and_conditions/contact.md'
-import { ContactInputValue } from 'types/setting'
+import { ContactInputValue } from 'types/advertiseType'
 import { advertiseService } from 'services/apt/advertiseService'
-import { Message } from 'types/auth'
+import { Message } from 'types/authType'
 import CkEditor from 'components/community/common/CkEditor'
 
 const ContactPage = () => {

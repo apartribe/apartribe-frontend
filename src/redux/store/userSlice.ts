@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { MyInfo } from 'types/setting'
+import { MyInfo } from 'types/settingType'
 
 const initialState = {
   userInfo: {
