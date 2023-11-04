@@ -24,7 +24,7 @@ const BestPostsWidget = () => {
     }
 
     getBestPosts()
-  }, [])
+  }, [aptId])
 
   return (
     <ShadowBox>

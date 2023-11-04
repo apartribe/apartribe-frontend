@@ -20,7 +20,7 @@ const SearchPostWidget = () => {
 
   const [suggestVisible, setSuggestVisible] = useState(false)
   const [focusIndex, setFocusIndex] = useState(-1)
-  const [inputValue, setInputValue] = useState({ title: '', id: '' })
+  const [inputValue, setInputValue] = useState({ title: '', id: '', boardType: '' })
   const [suggestApts, setSuggestApts] = useState<AptSearch[]>([])
   const liRef = useRef<HTMLElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -45,14 +45,14 @@ const SearchPostWidget = () => {
         if (focusIndex <= 0) {
           setFocusIndex(suggestApts.length - 1)
           setInputValue(() => {
-            const { id, title } = suggestApts[suggestApts.length - 1]
-            return { id, title }
+            const { id, title, boardType } = suggestApts[suggestApts.length - 1]
+            return { id, title, boardType }
           })
         } else {
           setFocusIndex((prev) => prev - 1)
           setInputValue(() => {
-            const { id, title } = suggestApts[focusIndex - 1]
-            return { id, title }
+            const { id, title, boardType } = suggestApts[focusIndex - 1]
+            return { id, title, boardType }
           })
         }
         break
@@ -62,14 +62,14 @@ const SearchPostWidget = () => {
         if (focusIndex >= suggestApts.length - 1) {
           setFocusIndex(0)
           setInputValue(() => {
-            const { id, title } = suggestApts[0]
-            return { id, title }
+            const { id, title, boardType } = suggestApts[0]
+            return { id, title, boardType }
           })
         } else {
           setFocusIndex((prev) => prev + 1)
           setInputValue(() => {
-            const { id, title } = suggestApts[focusIndex + 1]
-            return { id, title }
+            const { id, title, boardType } = suggestApts[focusIndex + 1]
+            return { id, title, boardType }
           })
         }
         break
@@ -96,14 +96,14 @@ const SearchPostWidget = () => {
     }
   }
 
-  const moveToCommunityClick = (postId: string) => {
-    navigate(`/community/${aptId}/article/${postId}/detail`)
+  const moveToCommunityClick = (postId: string, boardType: string) => {
+    navigate(`/community/${aptId}/${boardType}/${postId}/detail`)
   }
 
   const moveToCommunityEnter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!inputValue.id) return toast.warn('목록에서 게시물을 선택해주세요.')
-    navigate(`/community/${aptId}/article/${inputValue.id}/detail`) // 전체 검색으로 변경 예정
+    navigate(`/community/${aptId}/${inputValue.boardType}/${inputValue.id}/detail`) // 전체 검색으로 변경 예정
   }
 
   useEffect(() => {
@@ -133,12 +133,12 @@ const SearchPostWidget = () => {
             <StyledUl>
               {suggestApts &&
                 suggestApts.map((suggestApt, index) => {
-                  const { id, title } = suggestApt
+                  const { id, title, boardType } = suggestApt
                   return (
                     <StyledLi
                       key={id}
                       tabIndex={-1}
-                      onClick={() => moveToCommunityClick(id)}
+                      onClick={() => moveToCommunityClick(id, boardType)}
                       className={index === focusIndex ? 'focus' : ''}
                       ref={(el) => {
                         if (index === focusIndex) {
