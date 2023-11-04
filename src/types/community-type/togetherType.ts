@@ -19,7 +19,8 @@ export interface TogetherCardType {
 
 export interface TogetherDetailType {
   id: number
-  category: string
+  category?: string
+  level?: string
   title: string
   content: string
   createdAt: string
@@ -37,6 +38,7 @@ export interface TogetherDetailType {
   recruitStatus: string
   memberLiked: boolean
   profileImage: string
+  memberCreated: boolean
   // protected: boolean
 }
 

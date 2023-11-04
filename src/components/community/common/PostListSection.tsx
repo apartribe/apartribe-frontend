@@ -37,7 +37,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     setPostList([])
     setNothingToload(false)
     setLoading(false)
-  }, [selectedCategory, selectedSort])
+  }, [selectedCategory, selectedSort, aptId])
 
   useEffect(() => {
     const getNewPage = async () => {
@@ -60,7 +60,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     const options = {
       root: null,
       rootMargin: '0px',
-      threshold: 1,
+      threshold: 0.1,
     }
 
     const callback = (entries: IntersectionObserverEntry[]) => {
@@ -79,7 +79,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     return () => {
       observer.disconnect()
     }
-  }, [loading, boardType, selectedSort, selectedCategory])
+  }, [loading, boardType, selectedSort, selectedCategory, aptId])
   //======
 
   // if (firstLoading) return <PostsLoading />
@@ -118,19 +118,20 @@ export default PostListSection
 const StyledDiv = styled.div`
   position: relative;
   width: 100%;
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   flex-wrap: wrap;
 `
 
 const StyledParagraph = styled.p`
   width: 870px;
-  margin: 50px 0;
+  height: 130px;
+  padding-top: 50px;
   text-align: center;
 `
 const StyledTarget = styled.div`
   width: 100%;
-  height: 130px;
+  height: 160px;
   display: flex;
   align-items: center;
 `

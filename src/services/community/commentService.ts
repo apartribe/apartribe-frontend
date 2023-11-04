@@ -25,6 +25,12 @@ interface UpdateParam {
   content: string
 }
 
+interface deleteParam {
+  aptId: string
+  postId: string
+  commentId: number
+}
+
 export const commentService = {
   // 주의! 단일 조회가 아닌 리스트
   async getComments(param: GetParam) {
@@ -97,5 +103,15 @@ export const commentService = {
       console.error(error)
     }
   },
-  // deleteComment(){}
+  async deleteComment(param: deleteParam) {
+    const { aptId, postId, commentId } = param
+    try {
+      const response = await instance(`api/${aptId}/${postId}/${commentId}/comment`, {
+        method: 'delete',
+      })
+      return response.status
+    } catch (error) {
+      console.error(error)
+    }
+  },
 }

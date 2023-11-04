@@ -27,6 +27,7 @@ const DetailArticlePage = () => {
     thumbnail: '',
     memberLiked: false,
     profileImage: '',
+    memberCreated: false,
   })
 
   useEffect(() => {

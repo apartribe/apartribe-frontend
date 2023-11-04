@@ -29,7 +29,7 @@ const DetailHeaderSection = <
   boardType,
   postData: {
     category,
-    // level, 하..
+    level,
     title,
     createdAt,
     createdBy,
@@ -37,6 +37,7 @@ const DetailHeaderSection = <
     saw,
     memberLiked,
     profileImage,
+    memberCreated,
   },
   setPostData,
 }: Props<T>) => {
@@ -67,9 +68,10 @@ const DetailHeaderSection = <
     if (userConfirmed) {
       const statusCode = await articleService.deletePost({
         boardType,
+        aptId: aptId as string,
         postId: postId as string,
       })
-      if (statusCode === 204) {
+      if (statusCode === 200) {
         toast.success('게시물이 삭제 되었습니다.')
         navigate(`/community/${aptId}`)
       }
@@ -110,15 +112,20 @@ const DetailHeaderSection = <
       <StyledDiv className="between">
         <StyledParagraph className="md">
           {decidePath()} &nbsp;&gt;&nbsp; {category}
+          {level}
         </StyledParagraph>
-        <StyledDiv>
-          <StyledButton className="lg" onClick={moveToEditPage}>
-            <PiPencilSimpleLineDuotone />
-          </StyledButton>
-          <StyledButton className="lg" onClick={deletePost}>
-            <AiOutlineDelete />
-          </StyledButton>
-        </StyledDiv>
+        {memberCreated ? (
+          <StyledDiv>
+            <StyledButton className="lg" onClick={moveToEditPage}>
+              <PiPencilSimpleLineDuotone />
+            </StyledButton>
+            <StyledButton className="lg" onClick={deletePost}>
+              <AiOutlineDelete />
+            </StyledButton>
+          </StyledDiv>
+        ) : (
+          ''
+        )}
       </StyledDiv>
       <StyledDiv>
         <StyledParagraph className="xl">{title}</StyledParagraph>

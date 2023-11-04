@@ -22,12 +22,6 @@ interface updateParam {
   data: AddAnnounceType
 }
 
-interface deleteParam {
-  aptId: string
-  boardType: 'announce'
-  postId: string
-}
-
 export const announceService = {
   async addPost(param: addParam) {
     const { aptId, boardType, data } = param
@@ -76,22 +70,6 @@ export const announceService = {
           thumbnail,
           floatFrom: dateformat(floatFrom.toString()),
           floatTo: dateformat(floatTo.toString()),
-        },
-      })
-      return response.status
-    } catch (error) {
-      console.error(error)
-    }
-  },
-
-  async deletePost(param: deleteParam) {
-    const { aptId, boardType, postId } = param
-    try {
-      const response = await instance(`/api/${aptId}/${boardType}`, {
-        method: 'delete',
-        params: {
-          boardType,
-          postId,
         },
       })
       return response.status

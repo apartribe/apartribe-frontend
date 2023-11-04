@@ -40,7 +40,7 @@ const CategorySection: FC<Props> = ({
     }
 
     getCategory()
-  }, [boardType])
+  }, [boardType, aptId])
 
   //=======
 

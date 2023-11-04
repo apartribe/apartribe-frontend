@@ -16,20 +16,10 @@ import { PersistGate } from 'redux-persist/integration/react'
 const root = createRoot(document.getElementById('root') as HTMLElement)
 
 const reIssue = async () => {
-  if (!getRefreshToken()) return
-
-  const { statusCode } = await authService.reissueToken()
-
-  if (statusCode === 401) {
-    removeAccessToken()
-    removeRefreshToken()
-    return
-  }
-
   const timer = setInterval(() => {
+    if (!getRefreshToken()) return
     authService.reissueToken()
-  }, 360000)
-
+  }, 1000000) // 16 분 40초 (안전하게 20분 되기 이전에 미리 수행)
   return () => {
     clearInterval(timer)
   }
