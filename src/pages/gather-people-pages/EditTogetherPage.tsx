@@ -20,6 +20,7 @@ const EditTogetherPage = () => {
 
   const [inputValue, setInputValue] = useState<UpdateTogetherType>({
     category: '',
+    onlyApartUser: false,
     title: '',
     content: '',
     thumbnail: '',
@@ -44,6 +45,7 @@ const EditTogetherPage = () => {
       })
       const {
         category,
+        onlyApartUser,
         title,
         content,
         thumbnail,
@@ -58,6 +60,7 @@ const EditTogetherPage = () => {
       } = response.data
       setInputValue({
         category,
+        onlyApartUser,
         title,
         content,
         thumbnail,
@@ -96,11 +99,13 @@ const EditTogetherPage = () => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
-  // }
+  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prevState) => ({ ...prevState, onlyApartUser: e.target.checked }))
+  }
 
   const toggleEarlyClosing = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('왜')
+
     const recruitStatus = e.target.checked ? '모집 완료' : '모집중'
     setInputValue((prevState) => ({ ...prevState, recruitStatus }))
   }
@@ -158,6 +163,8 @@ const EditTogetherPage = () => {
     setInputValue((prevState) => ({ ...prevState, thumbnail: response.Location }))
   }
 
+  console.log('df0', inputValue)
+
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
       <StyledWrapper>
@@ -168,13 +175,13 @@ const EditTogetherPage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          {/* <input
+          <input
             type="checkbox"
             id="toggle"
-            checked={inputValue.protected}
+            checked={inputValue.onlyApartUser}
             onChange={toggleCheckValue}
             hidden
-          /> */}
+          />
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>
