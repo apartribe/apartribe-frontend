@@ -25,6 +25,7 @@ interface updateParam {
 interface deleteParam {
   boardType: BoardType
   postId: string
+  aptId: string
 }
 
 export const articleService = {
@@ -81,9 +82,9 @@ export const articleService = {
   },
 
   async deletePost(param: deleteParam) {
-    const { boardType, postId } = param
+    const { aptId, boardType, postId } = param
     try {
-      const response = await instance(`/api/${boardType}?${boardType}Id=${postId}`, {
+      const response = await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'delete',
       })
       return response.status

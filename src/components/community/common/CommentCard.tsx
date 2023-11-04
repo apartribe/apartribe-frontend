@@ -120,14 +120,23 @@ const CommentCard: FC<Props> = ({
     }
   }
 
-  const deleteComment = () => {
+  const deleteComment = async () => {
     const userConfirmed = confirm(
       '정말 삭제 하시겠습니까? 삭제 후에는 복구할 수 없습니다.',
     )
     if (userConfirmed) {
-      toast.success('댓글이 삭제 되었습니다.')
+      const statusCode = await commentService.deleteComment({
+        aptId: aptId as string,
+        postId: postId as string,
+        commentId,
+      })
+      if (statusCode === 200) {
+        toast.success('댓글이 삭제 되었습니다.')
+        setComments((prevState) => [
+          ...prevState.filter((item) => item.commentId !== commentId),
+        ])
+      }
     }
-    return
   }
 
   return (

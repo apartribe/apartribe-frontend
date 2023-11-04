@@ -22,11 +22,6 @@ interface updateParam {
   postId: string
 }
 
-interface deleteParam {
-  boardType: BoardType
-  postId: string
-}
-
 export const togetherService = {
   async addPost(param: addParam) {
     const { aptId, boardType, data } = param
@@ -114,18 +109,6 @@ export const togetherService = {
           contributeStatus,
           recruitStatus,
         },
-      })
-      return response.status
-    } catch (error) {
-      console.error(error)
-    }
-  },
-
-  async deletePost(param: deleteParam) {
-    const { boardType, postId } = param
-    try {
-      const response = await instance(`/api/${boardType}?${boardType}Id=${postId}`, {
-        method: 'delete',
       })
       return response.status
     } catch (error) {

@@ -15,7 +15,8 @@ export interface ArticleCardType {
 
 export interface ArticleDetailType {
   id: number
-  category: string
+  category?: string
+  level?: string
   title: string
   content: string
   createdAt: string
@@ -26,6 +27,7 @@ export interface ArticleDetailType {
   thumbnail: string
   memberLiked: boolean
   profileImage: string
+  memberCreated: boolean
   // protected: boolean
 }
 
