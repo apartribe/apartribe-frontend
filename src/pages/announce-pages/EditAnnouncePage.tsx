@@ -94,7 +94,7 @@ const AddAnnouncePage = () => {
         postId: postId as string,
         data: inputValue,
       })
-      if (statusCode === 201) {
+      if (statusCode === 200) {
         toast.success('공지사항이 수정되었습니다.')
         navigate(`/community/${aptId}/announce/${postId}/detail`)
       }
