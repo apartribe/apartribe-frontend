@@ -27,6 +27,11 @@ const HeaderLanding = () => {
   }
 
   const userInfo = useAppSelector((state) => state.user.userInfo)
+  console.log(userInfo)
+  const newArray: string[] = Object.values(userInfo)
+  const isNewArrayEmpty = newArray
+    .map((item) => item.length === 0)
+    .reduce((prev, current) => prev && current)
 
   return (
     <Container $background="#FFFFFF">
@@ -63,7 +68,11 @@ const HeaderLanding = () => {
               {item.title}
             </StyledNavLink>
           ))}
-          {userInfo ? (
+          {isNewArrayEmpty ? (
+            <StyledNavLink to={PAGE_LOGIN} className="login">
+              로그인
+            </StyledNavLink>
+          ) : (
             <StyledNavLink to={PAGE_SETTING}>
               <Img
                 src={userInfo.profileImageUrl || defaultAvatar}
@@ -73,10 +82,6 @@ const HeaderLanding = () => {
                 $lineHeight="12px"
                 $margin="5px 0"
               />
-            </StyledNavLink>
-          ) : (
-            <StyledNavLink to={PAGE_LOGIN} className="login">
-              로그인
             </StyledNavLink>
           )}
         </StyledDiv>

@@ -17,7 +17,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser(state, action) {
-      state.userInfo = action.payload
+      state.userInfo = action.payload === null ? initialState.userInfo : action.payload
     },
     updateLoginUser(state, action) {
       const payloadKey = Object.keys(action.payload)[0] as string
