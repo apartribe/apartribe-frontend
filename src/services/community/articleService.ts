@@ -31,7 +31,7 @@ interface deleteParam {
 export const articleService = {
   async addPost(param: addParam) {
     const { aptId, boardType, data } = param
-    const { category, title, content, thumbnail } = data
+    const { category, title, content, thumbnail, onlyApartUser } = data
     try {
       const response = await instance(`/api/${aptId}/${boardType}`, {
         method: 'post',
@@ -40,6 +40,7 @@ export const articleService = {
           title,
           content,
           thumbnail,
+          onlyApartUser,
         },
       })
       return response.status
@@ -55,6 +56,8 @@ export const articleService = {
       const response = await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'get',
       })
+      console.log('헤이', response.data)
+
       return response.data
     } catch (error) {
       console.error(error)
@@ -63,7 +66,7 @@ export const articleService = {
 
   async updatePost(param: updateParam) {
     const { aptId, boardType, data, postId } = param
-    const { category, title, content, thumbnail } = data
+    const { category, title, content, thumbnail, onlyApartUser } = data
 
     try {
       const response = await instance(`/api/${aptId}/${boardType}/${postId}`, {
@@ -73,6 +76,7 @@ export const articleService = {
           title,
           content,
           thumbnail,
+          onlyApartUser,
         },
       })
       return response.status

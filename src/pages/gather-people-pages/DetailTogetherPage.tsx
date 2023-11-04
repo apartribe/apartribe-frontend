@@ -20,6 +20,7 @@ const DetailTogetherPage = () => {
     // 찝찝
     id: 0,
     category: '',
+    onlyApartUser: false,
     title: '',
     content: '',
     createdAt: '',

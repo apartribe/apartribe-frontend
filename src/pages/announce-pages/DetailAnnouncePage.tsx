@@ -18,6 +18,7 @@ const DetailAnnouncePage = () => {
     // 찝찝
     id: 0,
     category: '',
+    onlyApartUser: false,
     level: '',
     title: '',
     content: '',

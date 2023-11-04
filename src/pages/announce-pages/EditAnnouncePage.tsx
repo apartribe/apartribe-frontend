@@ -22,6 +22,7 @@ const AddAnnouncePage = () => {
     category: '',
     title: '',
     content: '',
+    onlyApartUser: false,
     thumbnail: '',
     floatFrom: new Date(),
     floatTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7일 뒤
@@ -36,12 +37,14 @@ const AddAnnouncePage = () => {
         boardType: BOARD_TYPE,
         postId: postId as string,
       })
-      const { level, title, content, thumbnail, floatFrom, floatTo } = response.data
+      const { level, title, content, onlyApartUser, thumbnail, floatFrom, floatTo } =
+        response.data
 
       setInputValue({
         category: level,
         title,
         content,
+        onlyApartUser,
         thumbnail,
         floatFrom: new Date(floatFrom),
         floatTo: new Date(floatTo),
@@ -72,9 +75,9 @@ const AddAnnouncePage = () => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
-  // }
+  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prevState) => ({ ...prevState, onlyApartUser: e.target.checked }))
+  }
 
   const selectRadioValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, category: e.target.name }))
@@ -124,13 +127,13 @@ const AddAnnouncePage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          {/* <input
+          <input
             type="checkbox"
             id="toggle"
-            checked={inputValue.protected}
+            checked={inputValue.onlyApartUser}
             onChange={toggleCheckValue}
             hidden
-          /> */}
+          />
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>

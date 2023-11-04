@@ -25,7 +25,8 @@ interface updateParam {
 export const announceService = {
   async addPost(param: addParam) {
     const { aptId, boardType, data } = param
-    const { category, title, content, thumbnail, floatFrom, floatTo } = data
+    const { category, title, content, thumbnail, floatFrom, floatTo, onlyApartUser } =
+      data
     try {
       const response = await instance(`/api/${aptId}/${boardType}`, {
         method: 'post',
@@ -36,6 +37,7 @@ export const announceService = {
           thumbnail,
           floatFrom: dateformat(floatFrom.toString()),
           floatTo: dateformat(floatTo.toString()),
+          onlyApartUser,
         },
       })
       return response.status
@@ -59,7 +61,8 @@ export const announceService = {
 
   async updatePost(param: updateParam) {
     const { aptId, postId, boardType, data } = param
-    const { category, title, content, thumbnail, floatFrom, floatTo } = data
+    const { category, title, content, thumbnail, floatFrom, floatTo, onlyApartUser } =
+      data
     try {
       const response = await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'put',
@@ -70,6 +73,7 @@ export const announceService = {
           thumbnail,
           floatFrom: dateformat(floatFrom.toString()),
           floatTo: dateformat(floatTo.toString()),
+          onlyApartUser,
         },
       })
       return response.status
