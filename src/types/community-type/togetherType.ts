@@ -39,7 +39,7 @@ export interface TogetherDetailType {
   memberLiked: boolean
   profileImage: string
   memberCreated: boolean
-  // protected: boolean
+  onlyApartUser: boolean
 }
 
 export interface AddTogetherType {
@@ -54,7 +54,7 @@ export interface AddTogetherType {
   target: string
   location: string
   contributeStatus: boolean
-  // protected: boolean
+  onlyApartUser: boolean
 }
 
 export interface UpdateTogetherType {
@@ -70,5 +70,5 @@ export interface UpdateTogetherType {
   location: string
   contributeStatus: boolean
   recruitStatus: '모집 예정' | '모집중' | '모집 완료' // AddTogetherType와 차이점.
-  // protected: boolean
+  onlyApartUser: boolean
 }
