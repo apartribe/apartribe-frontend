@@ -1,13 +1,14 @@
 import React, { FC, useEffect, useState } from 'react'
 import { LogoHeaderGradation, LogoHeaderGradationKorean } from 'assets/logos'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
-import { NavLink, useParams } from 'react-router-dom'
+import { Link, NavLink, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { IoPersonCircle } from 'react-icons/io5'
 import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
 import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
 import { aptService } from 'services/apt/aptService'
 import Slider from 'react-slick'
+import { useAppSelector } from 'hooks/useRedux'
 
 interface Props {
   backToTopRef: (node?: Element | null | undefined) => void
@@ -16,6 +17,7 @@ interface Props {
 const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
   const { aptId } = useParams()
 
+  const userInfo = useAppSelector((state) => state.user?.userInfo)
   const [searchMode, setSearchMode] = useState<boolean>(false)
   const [aptName, setAptName] = useState<string>('')
 
@@ -77,9 +79,18 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
           ))}
         </StyledDiv>
         <StyledDiv className="interval">
+          {LANDING_NAV_LIST.slice(1, 2).map((item, index) => (
+            <StyledLink
+              className={searchMode ? 'disappear' : 'appear'}
+              key={index}
+              to={item.path(userInfo?.apartCode)}
+            >
+              {item.title}
+            </StyledLink>
+          ))}
           <HeaderAptSearchBar searchMode={searchMode} setSearchMode={setSearchMode} />
-          {LANDING_NAV_LIST.slice(3).map((item, index) => (
-            <StyledNavLink key={index} to={item.path}>
+          {LANDING_NAV_LIST.slice(2).map((item, index) => (
+            <StyledNavLink key={index} to={item.path('')}>
               {item.title}
             </StyledNavLink>
           ))}
@@ -126,6 +137,25 @@ const StyledNavLink = styled(NavLink)`
   &.active {
     font-weight: 900;
     color: #2b7f75;
+  }
+`
+
+const StyledLink = styled(Link)`
+  color: #303030;
+
+  &.disappear {
+    font-size: 0;
+    /* transition: .2s ease-in-out; */
+  }
+
+  &.appear {
+    font-size: 12px;
+    transition: 0.2s ease-in-out;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 0s;
   }
 `
 

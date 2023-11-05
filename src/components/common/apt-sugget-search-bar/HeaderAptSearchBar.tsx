@@ -222,7 +222,7 @@ const StyledForm = styled.form`
   position: relative;
   color: #303030;
   &.stretch {
-    width: 900px;
+    width: 860px;
   }
 
   &.shorten {
@@ -303,7 +303,7 @@ const StyledInput = styled.input`
   transition: 0.3s ease-in-out;
 
   &.stretch {
-    width: 900px;
+    width: 860px;
   }
 
   &.shorten {
