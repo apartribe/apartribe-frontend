@@ -177,12 +177,12 @@ const EditTogetherPage = () => {
           </P>
           <input
             type="checkbox"
-            id="toggle"
+            id="toggleSecret"
             checked={inputValue.onlyApartUser}
             onChange={toggleCheckValue}
             hidden
           />
-          <label htmlFor="toggle" className="toggleSwitch">
+          <label htmlFor="toggleSecret" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>
         </StyledWrapper>
