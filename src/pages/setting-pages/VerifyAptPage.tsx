@@ -9,10 +9,13 @@ import SelectPosition from 'components/verify-apt/SelectPosition'
 import SelectVerifyMethod from 'components/verify-apt/SelectVerifyMethod'
 import { aptService } from 'services/apt/aptService'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
+import { updateLoginUser } from 'redux/store/userSlice'
 
 const VerifyAptPage = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [formValue, setFormValue] = useState<Verification>({
     aptId: '',
@@ -37,7 +40,13 @@ const VerifyAptPage = () => {
 
   const temporaryAuthentication = async () => {
     const statusCode = await aptService.verifyApt({ aptId, aptName })
-    if (statusCode === 201) {
+    if (statusCode === 200) {
+      dispatch(
+        updateLoginUser({
+          apartCode: aptId,
+          apartName: aptName,
+        }),
+      )
       toast.success('아파트 인증이 완료되었습니다.')
       navigate(`/`) // TODO: 추후에 아파트 존재하는지 확인하고 바로 보내줘도 좋을 듯
     }

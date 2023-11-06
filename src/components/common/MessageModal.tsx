@@ -3,7 +3,7 @@ import { AiOutlineCheckCircle } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { Modal, ModalBackground } from 'styles/reusable-style/elementStyle'
-import { Message } from 'types/auth'
+import { Message } from 'types/authType'
 
 type MessageModalProps = {
   modal: boolean
