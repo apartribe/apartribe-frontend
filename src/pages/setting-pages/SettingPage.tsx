@@ -1,24 +1,25 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
-import { IoPersonCircle } from 'react-icons/io5'
 import { useAppSelector } from 'hooks/useRedux'
-import { user } from 'services/user'
-import { auth } from 'services/auth'
+import { authService } from 'services/auth/authService'
 import { P, Img, ShadowBox, Badge } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import {
   PAGE_CHANGE_IMAGE,
   PAGE_CHANGE_NICKNAME,
   PAGE_CHANGE_PW,
+  PAGE_DELETE_MEMBER,
   PAGE_MY_ARTICLE,
   PAGE_MY_COMMENT,
+  PAGE_VERIFY_APT,
 } from 'constants/setting/path'
-import { MyInfo } from 'types/setting'
-import { Message } from 'types/auth'
+import { MyInfo } from 'types/settingType'
+import { Message } from 'types/authType'
 import QuestionModal from 'components/common/QuestionModal'
 import { loginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 
 const SettingPage = () => {
   const [myInfo, setMyInfo] = useState<MyInfo>({
@@ -26,8 +27,8 @@ const SettingPage = () => {
     name: '',
     nickname: '',
     profileImageUrl: '',
-    /*  aptName: '', 
-    badge: '' */
+    apartCode: '',
+    apartName: '',
   })
   const [modal, setModal] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<Message>({
@@ -38,8 +39,7 @@ const SettingPage = () => {
 
   const userInfo = useAppSelector((state) => state.user?.userInfo)
 
-  const { email, name, nickname, profileImageUrl /* , aptName, badge */ } = myInfo
-  const aptName = '아파트명'
+  const { email, name, nickname, profileImageUrl, apartName } = myInfo
   const badge = '미인증'
 
   const dispatch = useDispatch()
@@ -62,7 +62,7 @@ const SettingPage = () => {
 
   const logout = () => {
     const toDo = () => {
-      auth.logout()
+      authService.logout()
       dispatch(loginUser(null))
     }
     openModal('waiting', '로그아웃 하시겠습니까? 확인을 누르면 로그아웃 됩니다.', toDo)
@@ -81,18 +81,21 @@ const SettingPage = () => {
                   <StyledButtonBlack onClick={logout}>로그아웃</StyledButtonBlack>
                 </StyledDiv>
                 <StyledMyInfoDiv>
-                  {profileImageUrl.length !== 0 ? (
-                    <StyledImg src={profileImageUrl} />
-                  ) : (
-                    <StyledIcon />
-                  )}
+                  <Img
+                    src={profileImageUrl || defaultAvatar}
+                    $width="100px"
+                    $height="100px"
+                    $borderRadius="50%"
+                    $lineHeight="12px"
+                    $margin="5px 0"
+                  />
                   <StyledDiv className="column">
                     <StyledP>{email}</StyledP>
                     <P>
                       {name} / {nickname}
                     </P>
                     <StyledDiv className="row">
-                      <P>{aptName}</P>
+                      <P>{apartName === 'EMPTY' ? '인증된 아파트 없음' : apartName}</P>
                       <StyledBadge className={badge}>{badge}</StyledBadge>
                     </StyledDiv>
                   </StyledDiv>
@@ -101,7 +104,7 @@ const SettingPage = () => {
               <StyledShadowBox>
                 <h3>계정</h3>
                 <StyledLinkContainer>
-                  <StyledLink to="">아파트 인증</StyledLink>
+                  <StyledLink to={PAGE_VERIFY_APT}>아파트 인증</StyledLink>
                   <StyledLink to={PAGE_CHANGE_PW}>비밀번호 변경</StyledLink>
                   <StyledLink to={PAGE_CHANGE_NICKNAME}>닉네임 변경</StyledLink>
                   <StyledLink to={PAGE_CHANGE_IMAGE}>프로필 이미지 변경</StyledLink>
@@ -124,7 +127,7 @@ const SettingPage = () => {
               </StyledShadowBox>
               <StyledShadowBox>
                 <h3>기타</h3>
-                <StyledLink to="">회원 탈퇴</StyledLink>
+                <StyledLink to={PAGE_DELETE_MEMBER}>회원 탈퇴</StyledLink>
               </StyledShadowBox>
             </StyledDiv>
           </Inner>
@@ -154,20 +157,6 @@ const StyledMyInfoDiv = styled.div`
   display: flex;
   column-gap: 15px;
   align-items: center;
-`
-
-const StyledImg = styled(Img)`
-  width: 120px;
-  height: 120px;
-  border: 1px solid #dadada;
-  border-radius: 50%;
-`
-
-const StyledIcon = styled(IoPersonCircle)`
-  width: 110px;
-  height: 110px;
-  color: #dadada;
-  margin: -10px;
 `
 
 const StyledButtonBlack = styled.button`

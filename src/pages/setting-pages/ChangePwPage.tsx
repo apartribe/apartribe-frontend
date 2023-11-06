@@ -3,12 +3,12 @@ import AuthLayout from 'components/auth/AuthLayout'
 import SignupInput from 'components/auth/SignupInput'
 import { styled } from 'styled-components'
 import { Button } from 'styles/reusable-style/elementStyle'
-import { ChangePwInputValue } from 'types/setting'
+import { ChangePwInputValue } from 'types/settingType'
 import { useNavigate } from 'react-router-dom'
 import { PAGE_SETTING } from 'constants/setting/path'
-import { user } from 'services/user'
+import { userService } from 'services/auth/userService'
 import { signupValidation } from 'constants/auth/signupValidation'
-import { Message } from 'types/auth'
+import { Message } from 'types/authType'
 import MessageModal from 'components/common/MessageModal'
 
 const ChangePwPage = () => {
@@ -51,9 +51,9 @@ const ChangePwPage = () => {
     navigate(PAGE_SETTING)
   }
 
-  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+  const openModal = ({ status, message, goTo }: Message) => {
     setModal((prev) => !prev)
-    setModalMessage({ status, message })
+    setModalMessage({ status, message, goTo })
   }
 
   const changePw = async (e: MouseEvent<HTMLFormElement>) => {
@@ -61,8 +61,8 @@ const ChangePwPage = () => {
 
     if (!isChangePwPossible) return
 
-    const { result, message } = await user.updatePassword(inputValue)
-    openModal(result, message)
+    const { result, message } = await userService.updatePassword(inputValue)
+    openModal({ status: result, message, goTo: PAGE_SETTING })
   }
 
   return (

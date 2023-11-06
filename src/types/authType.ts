@@ -25,15 +25,15 @@ export type PasswordType = {
   visible: boolean
 }
 
-type Result = {
+export type ResultWithMessage = {
   result: 'success' | 'fail'
   message: string
 }
 
-export type SendEmailResult = Result
-export type ConfirmEmailResult = Result
-export type CheckNicknameResult = Result
-export type SignupResult = Result
+export type ResultWithData = {
+  result: 'success'
+  data: any
+}
 
 export type Message = {
   status: 'waiting' | 'success' | 'fail'
@@ -41,8 +41,6 @@ export type Message = {
   todo?: () => void
   goTo?: string
 }
-
-export type SigninResult = Result
 
 export type FindIdPwInputValue = {
   email: string

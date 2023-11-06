@@ -6,9 +6,9 @@ import { useTimer } from 'hooks/useTimer'
 import { Button, Input, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import contact from 'assets/terms_and_conditions/contact.md'
-import { ContactInputValue } from 'types/setting'
-import { advertise } from 'services/advertise'
-import { Message } from 'types/auth'
+import { ContactInputValue } from 'types/advertiseType'
+import { advertiseService } from 'services/apt/advertiseService'
+import { Message } from 'types/authType'
 import CkEditor from 'components/community/common/CkEditor'
 
 const ContactPage = () => {
@@ -90,7 +90,7 @@ const ContactPage = () => {
   const requestEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    const { result, message } = await advertise.sendEmail(name, email)
+    const { result, message } = await advertiseService.sendEmail(name, email)
     openModal(result, message)
 
     if (result === 'success') {
@@ -103,7 +103,7 @@ const ContactPage = () => {
   const confirmEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    const { result, message } = await advertise.confirmEmail(name, email, code)
+    const { result, message } = await advertiseService.confirmEmail(name, email, code)
     resetTimer()
     setConfirmEmailResponseMessage({ status: result, message: message })
 
@@ -114,7 +114,9 @@ const ContactPage = () => {
 
   const submitContactForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { result, message } = await advertise.addAdvertise(inputValue)
+
+    const { result, message } = await advertiseService.addAdvertise(inputValue)
+    console.log(result, message)
   }
 
   return (
