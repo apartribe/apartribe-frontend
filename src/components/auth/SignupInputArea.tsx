@@ -5,8 +5,8 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
-import { SignupInputValue, PasswordType, Message } from 'types/auth'
-import { auth } from 'services/auth'
+import { SignupInputValue, PasswordType, Message } from 'types/authType'
+import { authService } from 'services/auth/authService'
 import MessageModal from '../common/MessageModal'
 
 type SigninupInputAreaProps<T> = {
@@ -99,7 +99,7 @@ const SignupInputArea = <T extends SignupInputValue>({
   const requestEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    const { result, message } = await auth.sendEmail(email)
+    const { result, message } = await authService.sendEmail(email)
     openModal(result, message)
 
     if (result === 'success') {
@@ -115,7 +115,7 @@ const SignupInputArea = <T extends SignupInputValue>({
   const confirmEmailAuth = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    const { result, message } = await auth.confirmEmail(email, code)
+    const { result, message } = await authService.confirmEmail(email, code)
     resetTimer()
     setConfirmEmailResponseMessage({ status: result, message: message })
 
@@ -127,7 +127,7 @@ const SignupInputArea = <T extends SignupInputValue>({
   const clickCheckNickname = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    const { result, message } = await auth.checkNickname(nickname)
+    const { result, message } = await authService.checkNickname(nickname)
     setCheckNicknameResponseMessage({ status: result, message: message })
 
     if (result === 'success') {

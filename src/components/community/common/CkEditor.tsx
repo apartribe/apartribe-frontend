@@ -6,7 +6,7 @@ import { AddArticleType } from 'types/community-type/ArticleType'
 import { AddAnnounceType } from 'types/community-type/announceType'
 import { AddTogetherType } from 'types/community-type/togetherType'
 import uploadS3 from 'utils/uploadS3'
-import { ContactInputValue } from 'types/setting'
+import { ContactInputValue } from 'types/advertiseType'
 
 interface Props<T> {
   inputValue?: T

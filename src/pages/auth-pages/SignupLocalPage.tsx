@@ -4,9 +4,9 @@ import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import SignupInputArea from 'components/auth/SignupInputArea'
 import TermsAndConditionArea from 'components/auth/TermsAndConditionArea'
-import { Message, SignupInputValue, TermsAndConditionsValue } from 'types/auth'
+import { Message, SignupInputValue, TermsAndConditionsValue } from 'types/authType'
 import MessageModal from 'components/common/MessageModal'
-import { auth } from 'services/auth'
+import { authService } from 'services/auth/authService'
 import { PAGE_LOGIN } from 'constants/auth/path'
 
 const SignupLocalPage = () => {
@@ -56,7 +56,7 @@ const SignupLocalPage = () => {
   const submitSignupForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { result, message } = await auth.signup({
+    const { result, message } = await authService.signup({
       ...inputValue,
       ...termsAndConditionsValue,
     })

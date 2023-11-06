@@ -6,7 +6,7 @@ import SignupInput from 'components/auth/SignupInput'
 import { PAGE_LOGIN } from 'constants/auth/path'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { Button } from 'styles/reusable-style/elementStyle'
-import { PasswordType, ResetPwInputValue } from 'types/auth'
+import { PasswordType, ResetPwInputValue } from 'types/authType'
 
 type ResetPwFormProps = {
   resetPw: (e: MouseEvent<HTMLButtonElement>) => void

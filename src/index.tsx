@@ -4,7 +4,7 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import Router from 'routes/Router'
 import { Provider } from 'react-redux'
-import { auth } from 'services/auth'
+import { authService } from 'services/auth/authService'
 import {
   getRefreshToken,
   removeAccessToken,
@@ -18,7 +18,7 @@ const root = createRoot(document.getElementById('root') as HTMLElement)
 const reIssue = async () => {
   const timer = setInterval(() => {
     if (!getRefreshToken()) return
-    auth.reissueToken()
+    authService.reissueToken()
   }, 1000000) // 16 분 40초 (안전하게 20분 되기 이전에 미리 수행)
   return () => {
     clearInterval(timer)
