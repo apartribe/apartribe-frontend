@@ -10,6 +10,20 @@ import Pagination from 'components/common/Pagination'
 import { useNavigate } from 'react-router-dom'
 import { PAGE_ARTICLE_DETAIL } from 'constants/setting/path'
 
+const makeIndexList = (totalCount: number, size: number) => {
+  const indexArray = Array(totalCount)
+    .fill(undefined)
+    .map((_, index) => index + 1)
+    .reverse()
+
+  const newArray: number[][] = []
+  for (let i = 0; i < indexArray.length; i += size) {
+    newArray.push(indexArray.slice(i, i + size))
+  }
+
+  return newArray
+}
+
 const MyCommentPage = () => {
   const [myCommentList, setMyCommentList] = useState<MyComment[]>([])
   const [page, setPage] = useState<number>(1)
@@ -24,29 +38,16 @@ const MyCommentPage = () => {
     const viewMyComment = async () => {
       const myCommentResult = await userService.MyComment(size, page)
       const { data } = myCommentResult as ResultWithData
-      setTotalPages(data.totalPages)
-      setMyCommentList(data.results)
-      setTotalCount(data.totalCount)
+      const { totalPages, totalCount, results } = data
+
+      setTotalPages(totalPages)
+      setIndexList(makeIndexList(totalCount, size))
+      setTotalCount(totalCount)
+      setMyCommentList(results)
     }
 
     viewMyComment()
   }, [page, size])
-
-  useEffect(() => {
-    if (!totalCount) return
-
-    const indexArray = Array(totalCount)
-      .fill(undefined)
-      .map((_, index) => index + 1)
-      .reverse()
-
-    const newArray: number[][] = []
-    for (let i = 0; i < indexArray.length; i += size) {
-      newArray.push(indexArray.slice(i, i + size))
-    }
-
-    setIndexList(newArray)
-  }, [totalCount, size])
 
   const convertedBoardType = (boardType: string) => {
     if (boardType === 'ARTICLE') return '커뮤니티'
