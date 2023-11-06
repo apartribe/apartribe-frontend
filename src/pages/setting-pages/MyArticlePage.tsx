@@ -37,10 +37,6 @@ const MyArticlePage = () => {
   useEffect(() => {
     const viewMyArticle = async () => {
       const myArticleResult = await userService.myArticle(size, page)
-      //10개씩보기 마지막페이지(예>14페이지) -> 30개씩보기 클릭하면 당연히 페이지수는 줄어들게 되는데 아직 14페이지로 남아있어서 에러
-      //size변하면 page도 알아서 바껴야하는데, 이때 30개씩보기로 바꼈을때 10개씩보기의 첫번째아이템이 몇페이지에 있는지는 어떻게 알수있지
-      //이거어떻게 하냐고 도대체??????????????????
-
       const { data } = myArticleResult as ResultWithData
       const { totalPages, totalCount, results } = data
 
@@ -61,6 +57,7 @@ const MyArticlePage = () => {
 
   const selectSize = (e: ChangeEvent<HTMLSelectElement>) => {
     setSize(Number(e.target.value))
+    setPage(1)
   }
 
   const viewArticle = (apartCode: string, boardId: number) => {

@@ -57,6 +57,7 @@ const MyCommentPage = () => {
 
   const selectSize = (e: ChangeEvent<HTMLSelectElement>) => {
     setSize(Number(e.target.value))
+    setPage(1)
   }
 
   const viewArticle = (apartCode: string, boardId: number) => {
