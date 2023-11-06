@@ -1,5 +1,6 @@
 import { instance } from 'configs/axios'
 import { ResultWithData, ResultWithMessage, ChangePwInputValue } from 'types/settingType'
+import { removeAccessToken, removeRefreshToken } from 'utils/localStorage'
 
 export const userService = {
   async showMember(email: string): Promise<ResultWithData | ResultWithMessage> {
@@ -138,6 +139,29 @@ export const userService = {
       return {
         result: 'success',
         data: response.data.data,
+      }
+    } else {
+      return {
+        result: 'fail',
+        message: '조회에 실패했습니다. 다시 시도해주세요.',
+      }
+    }
+  },
+
+  async deleteMember(email: string): Promise<ResultWithMessage> {
+    const response = await instance('/api/member/delete', {
+      method: 'DELETE',
+      headers: {
+        EMAIL: email,
+      },
+    })
+    console.log('response', response)
+    if (response.status === 200) {
+      removeAccessToken()
+      removeRefreshToken()
+      return {
+        result: 'success',
+        message: '회원정보가 삭제되었습니다.',
       }
     } else {
       return {

@@ -9,6 +9,7 @@ import {
   PAGE_CHANGE_IMAGE,
   PAGE_CHANGE_NICKNAME,
   PAGE_CHANGE_PW,
+  PAGE_DELETE_MEMBER,
   PAGE_MY_ARTICLE,
   PAGE_MY_COMMENT,
   PAGE_VERIFY_APT,
@@ -126,7 +127,7 @@ const SettingPage = () => {
               </StyledShadowBox>
               <StyledShadowBox>
                 <h3>기타</h3>
-                <StyledLink to="">회원 탈퇴</StyledLink>
+                <StyledLink to={PAGE_DELETE_MEMBER}>회원 탈퇴</StyledLink>
               </StyledShadowBox>
             </StyledDiv>
           </Inner>

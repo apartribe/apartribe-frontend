@@ -26,6 +26,7 @@ import NotFoundPage from 'pages/intro-pages/NotFoundPage'
 import ChangeImagePage from 'pages/setting-pages/ChangeImagePage'
 import MyArticlePage from 'pages/setting-pages/MyArticlePage'
 import MyCommentPage from 'pages/setting-pages/MyCommentPage'
+import DeleteMemberPage from 'pages/setting-pages/DeleteMemberPage'
 import ChangeNicknamePage from 'pages/setting-pages/ChangeNicknamePage'
 import ChangePwPage from 'pages/setting-pages/ChangePwPage'
 import SettingPage from 'pages/setting-pages/SettingPage'
@@ -155,11 +156,27 @@ const Router = createBrowserRouter([
       },
       {
         path: '/setting/my-article',
-        element: <MyArticlePage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <MyArticlePage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/setting/my-comment',
-        element: <MyCommentPage />,
+        element: (
+          <ProtectedRouteLoggedIn>
+            <MyCommentPage />
+          </ProtectedRouteLoggedIn>
+        ),
+      },
+      {
+        path: '/setting/member/delete',
+        element: (
+          <ProtectedRouteLoggedIn>
+            <DeleteMemberPage />
+          </ProtectedRouteLoggedIn>
+        ),
       },
       {
         path: '/community/:aptId/create',
