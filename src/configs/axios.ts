@@ -43,23 +43,23 @@ instance.interceptors.response.use(
     switch (error.response.status) {
       case 400:
         toast.error('400 : 잘못된 요청입니다. 다시 확인해주세요.')
-        return error
+        return error.response
       case 401:
-        return error
+        return error.response
       case 403:
         toast.error('403 : 접근할 수 있는 권한이 없습니다.')
-        return error
+        return error.response
       case 404:
         toast.error('404 : 잘못된 접근입니다.')
-        return error
+        return error.response
       case 500:
         toast.error('500 : 서버에 내부에 문제가 발생하였습니다.')
-        return error
+        return error.response
       case 502:
         toast.error('502 : 서버에 접근할 수 없습니다.')
-        return error
+        return error.response
       default:
-        return error
+        return error.response
     }
   },
 )

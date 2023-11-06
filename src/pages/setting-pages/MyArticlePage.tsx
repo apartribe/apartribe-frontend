@@ -1,12 +1,28 @@
 import { useState, useEffect, MouseEvent, ChangeEvent } from 'react'
-import { user } from 'services/user'
+import { userService } from 'services/auth/userService'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
-import { MyArticle, ResultWithData } from 'types/setting'
+import { MyArticle, ResultWithData } from 'types/settingType'
 import { timeAgo } from 'utils/timeAgo'
 import { SIZE_OPTION } from 'constants/setting/pagination'
 import Pagination from 'components/common/Pagination'
+import { useNavigate } from 'react-router-dom'
+import { PAGE_ARTICLE_DETAIL } from 'constants/setting/path'
+
+const makeIndexList = (totalCount: number, size: number) => {
+  const indexArray = Array(totalCount)
+    .fill(undefined)
+    .map((_, index) => index + 1)
+    .reverse()
+
+  const newArray: number[][] = []
+  for (let i = 0; i < indexArray.length; i += size) {
+    newArray.push(indexArray.slice(i, i + size))
+  }
+
+  return newArray
+}
 
 const MyArticlePage = () => {
   const [myArticleList, setMyArticleList] = useState<MyArticle[]>([])
@@ -16,33 +32,22 @@ const MyArticlePage = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const [indexList, setIndexList] = useState<number[][]>([])
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     const viewMyArticle = async () => {
-      const myArticleResult = await user.myArticle(size, page)
+      const myArticleResult = await userService.myArticle(size, page)
       const { data } = myArticleResult as ResultWithData
-      setTotalPages(data.totalPages)
-      setMyArticleList(data.results)
-      setTotalCount(data.totalCount)
+      const { totalPages, totalCount, results } = data
+
+      setTotalPages(totalPages)
+      setIndexList(makeIndexList(totalCount, size))
+      setTotalCount(totalCount)
+      setMyArticleList(results)
     }
 
     viewMyArticle()
   }, [page, size])
-
-  useEffect(() => {
-    if (!totalCount) return
-
-    const indexArray = Array(totalCount)
-      .fill(undefined)
-      .map((_, index) => index + 1)
-      .reverse()
-
-    const newArray: number[][] = []
-    for (let i = 0; i < indexArray.length; i += size) {
-      newArray.push(indexArray.slice(i, i + size))
-    }
-
-    setIndexList(newArray)
-  }, [totalCount, size])
 
   const convertedBoardType = (boardType: string) => {
     if (boardType === 'ARTICLE') return '커뮤니티'
@@ -52,19 +57,23 @@ const MyArticlePage = () => {
 
   const selectSize = (e: ChangeEvent<HTMLSelectElement>) => {
     setSize(Number(e.target.value))
+    setPage(1)
   }
 
-  const viewArticle = (e: MouseEvent<HTMLLIElement>) => {
-    //TODO: 게시물 페이지로 navigate
+  const viewArticle = (apartCode: string, boardId: number) => {
+    navigate(PAGE_ARTICLE_DETAIL(apartCode, boardId))
   }
 
   return (
-    <>
-      {myArticleList && indexList.length !== 0 && (
-        <Container>
-          <Inner className="fullScreen" $padding="30px">
-            <h2>내가 쓴 게시물</h2>
-            <ShadowBox>
+    <Container>
+      <Inner className="fullScreen" $padding="30px">
+        <h2>내가 쓴 게시물</h2>
+        <ShadowBox>
+          {indexList.length === 0 && (
+            <StyledDivNoArticle>아직 작성한 게시물이 없습니다.</StyledDivNoArticle>
+          )}
+          {myArticleList && indexList.length !== 0 && (
+            <>
               <StyledDiv>
                 <StyledFlexDiv>
                   <span>총 {totalCount}개</span>
@@ -81,7 +90,7 @@ const MyArticlePage = () => {
                     (
                       {
                         id,
-                        boardId,
+                        apartCode,
                         boardType,
                         category,
                         level,
@@ -91,7 +100,7 @@ const MyArticlePage = () => {
                       },
                       index,
                     ) => (
-                      <StyledLi key={id} id={String(id)} onClick={viewArticle}>
+                      <StyledLi key={id} onClick={() => viewArticle(apartCode, id)}>
                         <StyledSpan className="1">
                           {indexList && indexList[page - 1][index]}
                         </StyledSpan>
@@ -99,12 +108,15 @@ const MyArticlePage = () => {
                           {convertedBoardType(boardType)}
                         </StyledSpan>
                         <StyledSpanContainer className="6">
-                          <span>{boardType === 'ANNOUNCE' ? level : category}</span>
-                          <StyledBoldSpan>
-                            {title} <StyledText>[{commentCounts}]</StyledText>
-                          </StyledBoldSpan>
+                          <StyledSpan>
+                            {boardType === 'ANNOUNCE' ? level : category}
+                          </StyledSpan>
+                          <StyledBoldDiv>
+                            <StyledSpan>{title}</StyledSpan>
+                            <StyledText>[{commentCounts}]</StyledText>
+                          </StyledBoldDiv>
                         </StyledSpanContainer>
-                        <StyledSpan className="1">{timeAgo(createdAt)}</StyledSpan>
+                        <StyledSpan className="1 time">{timeAgo(createdAt)}</StyledSpan>
                       </StyledLi>
                     ),
                   )}
@@ -116,15 +128,21 @@ const MyArticlePage = () => {
                 page={page}
                 setPage={setPage}
               />
-            </ShadowBox>
-          </Inner>
-        </Container>
-      )}
-    </>
+            </>
+          )}
+        </ShadowBox>
+      </Inner>
+    </Container>
   )
 }
 
 export default MyArticlePage
+
+const StyledDivNoArticle = styled.div`
+  padding: 50px 0;
+  justify-content: center;
+  display: flex;
+`
 
 const StyledDiv = styled.div`
   padding: 20px;
@@ -165,6 +183,14 @@ const StyledLi = styled.li`
 
 const StyledSpan = styled.span`
   grid-column: ${(props) => `span ${props.className}`};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &.time {
+    text-overflow: unset;
+    overflow: unset;
+  }
 `
 
 const StyledSpanContainer = styled.div`
@@ -173,14 +199,19 @@ const StyledSpanContainer = styled.div`
   flex-direction: column;
 `
 
-const StyledBoldSpan = styled.span`
+const StyledBoldDiv = styled.div`
+  display: flex;
   font-weight: 700;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  align-items: center;
+  gap: 3px;
+
+  & > span {
+    align-self: center;
+  }
 `
 
 const StyledText = styled.span`
   color: #2b7f75;
   font-size: 13px;
+  width: fit-content;
 `

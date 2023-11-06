@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { Button, Input } from 'styles/reusable-style/elementStyle'
 import { PAGE_FIND_ID, PAGE_FIND_PW, PAGE_LOGIN } from 'constants/auth/path'
-import { FindIdPwInputValue } from 'types/auth'
+import { FindIdPwInputValue } from 'types/authType'
 
 type FindIdPwFormProps = {
   findWhat: string

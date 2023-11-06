@@ -4,7 +4,7 @@ import { AiOutlineRight } from 'react-icons/ai'
 import { Input } from 'styles/reusable-style/elementStyle'
 import TermsAndConditionModal from './TermsAndConditionModal'
 import { TERMS_AND_CONDITIONS_LIST } from 'constants/auth/termsAndConditions'
-import { TermsAndConditionsValue } from 'types/auth'
+import { TermsAndConditionsValue } from 'types/authType'
 
 type TermsAndConditionAreaProps<T> = {
   setTermsAndConditionsValue: Dispatch<SetStateAction<T>>

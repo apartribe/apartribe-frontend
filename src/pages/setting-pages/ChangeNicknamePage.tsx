@@ -6,9 +6,9 @@ import SignupInput from 'components/auth/SignupInput'
 import { signupValidation } from 'constants/auth/signupValidation'
 import { Button } from 'styles/reusable-style/elementStyle'
 import { PAGE_SETTING } from 'constants/setting/path'
-import { user } from 'services/user'
+import { userService } from 'services/auth/userService'
 import MessageModal from 'components/common/MessageModal'
-import { Message } from 'types/auth'
+import { Message } from 'types/authType'
 import { updateLoginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
 
@@ -34,9 +34,9 @@ const ChangeNicknamePage = () => {
     navigate(PAGE_SETTING)
   }
 
-  const openModal = (status: 'waiting' | 'success' | 'fail', message: string) => {
+  const openModal = ({ status, message, goTo }: Message) => {
     setModal((prev) => !prev)
-    setModalMessage({ status, message })
+    setModalMessage({ status, message, goTo })
   }
 
   const changeNickname = async (e: MouseEvent<HTMLFormElement>) => {
@@ -44,8 +44,8 @@ const ChangeNicknamePage = () => {
 
     if (!isNewNicknameValid) return
 
-    const { result, message } = await user.updateNickname(newNickname)
-    openModal(result, message)
+    const { result, message } = await userService.updateNickname(newNickname)
+    openModal({ status: result, message, goTo: PAGE_SETTING })
 
     if (result === 'success') {
       dispatch(updateLoginUser({ nickname: newNickname }))
