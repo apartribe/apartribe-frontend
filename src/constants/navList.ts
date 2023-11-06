@@ -1,8 +1,7 @@
 export const LANDING_NAV_LIST = [
-  { title: '아파트라이브 소개', path: '/about' },
-  { title: '우리 아파트 바로가기', path: '/community/dyWaf' },
-  { title: '아파트 커뮤니티 검색', path: '/search-apartment' },
-  { title: '광고 / 제휴 문의', path: '/contact' },
+  { title: '아파트라이브 소개', path: (aptId: string) => '/about' },
+  { title: '우리 아파트 바로가기', path: (aptId: string) => `/community/${aptId}` },
+  { title: '광고 / 제휴 문의', path: (aptId: string) => '/contact' },
 ]
 
 // 경로 수정 필요

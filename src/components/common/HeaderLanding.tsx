@@ -7,8 +7,10 @@ import { IoPersonCircle } from 'react-icons/io5'
 import { LANDING_NAV_LIST } from 'constants/navList'
 import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
 import Slider from 'react-slick'
+import { useAppSelector } from 'hooks/useRedux'
 
 const HeaderLanding = () => {
+  const userInfo = useAppSelector((state) => state.user?.userInfo)
   const [searchMode, setSearchMode] = useState<boolean>(false)
 
   const settings = {
@@ -46,14 +48,14 @@ const HeaderLanding = () => {
             <StyledNavLink
               className={searchMode ? 'disappear' : 'appear'}
               key={index}
-              to={item.path}
+              to={item.path(userInfo?.apartCode)}
             >
               {item.title}
             </StyledNavLink>
           ))}
           <HeaderAptSearchBar searchMode={searchMode} setSearchMode={setSearchMode} />
-          {LANDING_NAV_LIST.slice(3).map((item, index) => (
-            <StyledNavLink key={index} to={item.path}>
+          {LANDING_NAV_LIST.slice(2).map((item, index) => (
+            <StyledNavLink key={index} to={item.path(userInfo?.apartCode)}>
               {item.title}
             </StyledNavLink>
           ))}

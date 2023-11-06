@@ -20,6 +20,7 @@ const EditTogetherPage = () => {
 
   const [inputValue, setInputValue] = useState<UpdateTogetherType>({
     category: '',
+    onlyApartUser: false,
     title: '',
     content: '',
     thumbnail: '',
@@ -44,6 +45,7 @@ const EditTogetherPage = () => {
       })
       const {
         category,
+        onlyApartUser,
         title,
         content,
         thumbnail,
@@ -58,6 +60,7 @@ const EditTogetherPage = () => {
       } = response.data
       setInputValue({
         category,
+        onlyApartUser,
         title,
         content,
         thumbnail,
@@ -90,15 +93,15 @@ const EditTogetherPage = () => {
     }
 
     getCategory()
-  }, [])
+  }, [aptId])
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
-  // }
+  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prevState) => ({ ...prevState, onlyApartUser: e.target.checked }))
+  }
 
   const toggleEarlyClosing = (e: ChangeEvent<HTMLInputElement>) => {
     const recruitStatus = e.target.checked ? '모집 완료' : '모집중'
@@ -168,14 +171,14 @@ const EditTogetherPage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          {/* <input
+          <input
             type="checkbox"
-            id="toggle"
-            checked={inputValue.protected}
+            id="toggleSecret"
+            checked={inputValue.onlyApartUser}
             onChange={toggleCheckValue}
             hidden
-          /> */}
-          <label htmlFor="toggle" className="toggleSwitch">
+          />
+          <label htmlFor="toggleSecret" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>
         </StyledWrapper>

@@ -29,7 +29,6 @@ export const advertise = {
   },
 
   async confirmEmail(name: string, email: string, code: string): Promise<Result> {
-    console.log(name, email, code)
     try {
       /* const response: AxiosResponse =  */ await instance(
         '/api/advertise/email/confirm',
