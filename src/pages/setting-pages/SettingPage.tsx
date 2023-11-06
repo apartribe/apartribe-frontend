@@ -27,6 +27,7 @@ const SettingPage = () => {
     name: '',
     nickname: '',
     profileImageUrl: '',
+    apartCode: '',
     apartName: '',
   })
   const [modal, setModal] = useState<boolean>(false)

@@ -3,6 +3,7 @@ export type MyInfo = {
   name: string
   nickname: string
   profileImageUrl: string
+  apartCode: string
   apartName: string
 }
 

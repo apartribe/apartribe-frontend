@@ -20,9 +20,12 @@ const userSlice = createSlice({
       state.userInfo = action.payload === null ? initialState.userInfo : action.payload
     },
     updateLoginUser(state, action) {
-      const payloadKey = Object.keys(action.payload)[0] as string
-      const payloadValue = Object.values(action.payload)[0] as string
-      state.userInfo[payloadKey as keyof MyInfo] = payloadValue
+      const newArray = Object.entries(action.payload)
+      newArray.map((_, index) => {
+        const payloadKey = Object.keys(action.payload)[index] as string
+        const payloadValue = Object.values(action.payload)[index] as string
+        state.userInfo[payloadKey as keyof MyInfo] = payloadValue
+      })
     },
   },
 })
