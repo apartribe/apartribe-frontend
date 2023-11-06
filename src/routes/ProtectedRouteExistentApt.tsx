@@ -8,7 +8,7 @@ interface Props {
 }
 
 // 존재하지 않는 아파트 주소로 직접 접근하는 행위를 차단하는 라우트
-const ProtectedRouteNonExistentApt = ({ children }: Props) => {
+const ProtectedRouteExistentApt = ({ children }: Props) => {
   const { aptId } = useParams()
   const navigate = useNavigate()
 
@@ -67,4 +67,4 @@ const ProtectedRouteNonExistentApt = ({ children }: Props) => {
   return isExistentApt ? <>{children}</> : <FlexibleModal modalProps={decideModal()} />
 }
 
-export default ProtectedRouteNonExistentApt
+export default ProtectedRouteExistentApt
