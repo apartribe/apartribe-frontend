@@ -78,8 +78,6 @@ const AddArticlePage = () => {
     return
   }
 
-  console.log('dd', inputValue)
-
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
       <StyledDiv>

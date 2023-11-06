@@ -56,7 +56,6 @@ export const articleService = {
       const response = await instance(`/api/${aptId}/${boardType}/${postId}`, {
         method: 'get',
       })
-      console.log('헤이', response.data)
 
       return response.data
     } catch (error) {

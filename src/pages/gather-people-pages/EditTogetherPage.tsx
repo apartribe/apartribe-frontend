@@ -104,8 +104,6 @@ const EditTogetherPage = () => {
   }
 
   const toggleEarlyClosing = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('왜')
-
     const recruitStatus = e.target.checked ? '모집 완료' : '모집중'
     setInputValue((prevState) => ({ ...prevState, recruitStatus }))
   }
@@ -162,8 +160,6 @@ const EditTogetherPage = () => {
     const response = await uploadS3(e.target.files?.[0])
     setInputValue((prevState) => ({ ...prevState, thumbnail: response.Location }))
   }
-
-  console.log('df0', inputValue)
 
   return (
     <ShadowBox $display="flex" $flexDirection="column" $gap="20px" $padding="30px">
