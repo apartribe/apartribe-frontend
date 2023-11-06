@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
 import { toast } from 'react-toastify'
-import { AxiosError, AxiosResponse } from 'axios'
 
 const AddArticlePage = () => {
   const BOARD_TYPE = 'article'
@@ -38,7 +37,7 @@ const AddArticlePage = () => {
     }
 
     getCategory()
-  }, [])
+  }, [aptId])
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))

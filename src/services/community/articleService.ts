@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { BoardType } from './postsService'
 import { instance } from 'configs/axios'
 import { AddArticleType } from 'types/community-type/ArticleType'
