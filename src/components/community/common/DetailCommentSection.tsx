@@ -8,12 +8,7 @@ import { MoonLoader } from 'react-spinners'
 import { Comment } from 'types/community-type/commentType'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { toast } from 'react-toastify'
-
-const CURRENT_USER_MOCK = {
-  avatar:
-    'https://res.cloudinary.com/dh6tdcdyj/image/upload/v1695016765/KakaoTalk_20230918_145710613_id4fua.png',
-  nickname: '화해방',
-}
+import { useAppSelector } from 'hooks/useRedux'
 
 const DetailCommentSection = () => {
   const [comments, setComments] = useState<Comment[]>([])
@@ -21,6 +16,8 @@ const DetailCommentSection = () => {
   const [loading, setLoading] = useState(false)
   const [nothingToload, setNothingToload] = useState(false)
   const LoadingTargetRef = useRef(null)
+
+  const userInfo = useAppSelector((state) => state.user.userInfo)
 
   const param = useParams()
   const { aptId, postId } = param
@@ -94,12 +91,12 @@ const DetailCommentSection = () => {
       <StyledDiv className="column gap">
         <StyledDiv className="row gap">
           <Img
-            src={defaultAvatar} //{ avater || defaultAvatar}
+            src={userInfo?.profileImageUrl || defaultAvatar}
             alt="로그인 회원 아바타"
             $width="50px"
             $height="50px"
           />
-          <p>{CURRENT_USER_MOCK.nickname}</p>
+          <p>{userInfo?.nickname}</p>
         </StyledDiv>
         <StyledForm onSubmit={submitComment}>
           <Input

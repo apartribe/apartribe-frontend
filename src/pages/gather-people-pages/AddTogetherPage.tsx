@@ -20,6 +20,7 @@ const AddTogetherPage = () => {
 
   const [inputValue, setInputValue] = useState<AddTogetherType>({
     category: '',
+    onlyApartUser: false,
     title: '',
     content: '',
     thumbnail: '',
@@ -51,9 +52,9 @@ const AddTogetherPage = () => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
-  // }
+  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prevState) => ({ ...prevState, onlyApartUser: e.target.checked }))
+  }
 
   const savePost = async () => {
     const {
@@ -70,7 +71,7 @@ const AddTogetherPage = () => {
     } = inputValue
     if (!category) return toast.warn('카테고리를 선택해주세요.')
     if (!title) return toast.warn('제목을 입력해주세요')
-    if (!thumbnail) return toast.warn('썸네일을 추가해주세요.')
+    // if (!thumbnail) return toast.warn('썸네일을 추가해주세요.')
     if (!description) return toast.warn('한 줄 설명을 입력해주세요.')
     if (!recruitFrom || !recruitTo) return toast.warn('모집 기간을 선택해주세요.')
     if (!meetTime) return toast.warn('활동 시간을 입력해주세요.')
@@ -117,13 +118,13 @@ const AddTogetherPage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          {/* <input
+          <input
             type="checkbox"
             id="toggle"
-            checked={inputValue.protected}
+            checked={inputValue.onlyApartUser}
             onChange={toggleCheckValue}
             hidden
-          /> */}
+          />
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>

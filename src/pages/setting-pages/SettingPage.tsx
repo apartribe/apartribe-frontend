@@ -56,7 +56,6 @@ const SettingPage = () => {
     message: string,
     todo: () => void,
   ) => {
-    console.log(todo)
     setModal((prev) => !prev)
     setModalMessage({ status, message, todo })
   }

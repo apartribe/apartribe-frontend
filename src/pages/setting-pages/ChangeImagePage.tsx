@@ -58,7 +58,6 @@ const ChangeImagePage = () => {
     openModal(result, message)
 
     if (result === 'success') {
-      console.log('imageUrl', imageUrl)
       dispatch(updateLoginUser({ profileImageUrl: imageUrl }))
     }
   }

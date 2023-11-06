@@ -37,6 +37,7 @@ export const togetherService = {
       target,
       location,
       contributeStatus,
+      onlyApartUser,
     } = data
 
     try {
@@ -46,7 +47,7 @@ export const togetherService = {
           category,
           title,
           content,
-          thumbnail,
+          thumbnail: 'https://miro.medium.com/v2/resize:fit:1200/0*8IQEdpp7lezZZ6To.png',
           description,
           recruitFrom: dateformat(recruitFrom.toString()),
           recruitTo: dateformat(recruitTo.toString()),
@@ -54,6 +55,7 @@ export const togetherService = {
           target,
           location,
           contributeStatus,
+          onlyApartUser,
         },
       })
       return response.status
@@ -90,6 +92,7 @@ export const togetherService = {
       location,
       contributeStatus,
       recruitStatus,
+      onlyApartUser,
     } = data
 
     try {
@@ -108,6 +111,7 @@ export const togetherService = {
           location,
           contributeStatus,
           recruitStatus,
+          onlyApartUser,
         },
       })
       return response.status

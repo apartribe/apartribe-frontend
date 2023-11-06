@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AddArticleType } from 'types/community-type/ArticleType'
 import { Category } from 'types/community-type/categoryType'
 import { toast } from 'react-toastify'
-import { AxiosError, AxiosResponse } from 'axios'
 
 const AddArticlePage = () => {
   const BOARD_TYPE = 'article'
@@ -19,7 +18,7 @@ const AddArticlePage = () => {
 
   const [inputValue, setInputValue] = useState<AddArticleType>({
     category: '',
-    // protected: false,
+    onlyApartUser: false,
     title: '',
     content: '',
     thumbnail: '',
@@ -38,15 +37,15 @@ const AddArticlePage = () => {
     }
 
     getCategory()
-  }, [])
+  }, [aptId])
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
-  // }
+  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prevState) => ({ ...prevState, onlyApartUser: e.target.checked }))
+  }
 
   const savePost = async () => {
     const { category, title, content } = inputValue
@@ -88,13 +87,13 @@ const AddArticlePage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          {/* <input
+          <input
             type="checkbox"
             id="toggle"
-            checked={inputValue.protected}
+            checked={inputValue.onlyApartUser}
             onChange={toggleCheckValue}
             hidden
-          /> */}
+          />
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>

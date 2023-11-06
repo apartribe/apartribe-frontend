@@ -32,11 +32,7 @@ const CommentRankWidget = () => {
 
   return (
     <ShadowBox>
-      <WidgetTitleArea
-        Icon={FaRankingStar}
-        title="지난 주 댓글 랭킹"
-        hasSeeMore={false}
-      />
+      <WidgetTitleArea Icon={FaRankingStar} title="실시간 댓글 순위" hasSeeMore={false} />
       {rankList.length === 0 ? (
         <StyledParagraph className="noData">
           댓글을 남긴 사용자가 없습니다.

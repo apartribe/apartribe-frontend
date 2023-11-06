@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { AiOutlineCheckCircle } from 'react-icons/ai'
 import { styled } from 'styled-components'
 import { ModalBackground } from 'styles/reusable-style/elementStyle'
 
@@ -57,6 +58,8 @@ const StyledDiv = styled.div`
     align-items: center;
     padding: 50px;
     white-space: pre-line; // 템플릿 리터럴 줄 바꿈시, 줄바꿈 인식해줌.
+    text-align: center;
+    line-height: 30px;
   }
 
   &.buttonSection {
