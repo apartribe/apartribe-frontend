@@ -7,7 +7,6 @@ import { MyComment, ResultWithData } from 'types/settingType'
 import { timeAgo } from 'utils/timeAgo'
 import { SIZE_OPTION } from 'constants/setting/pagination'
 import Pagination from 'components/common/Pagination'
-import { useAppSelector } from 'hooks/useRedux'
 import { useNavigate } from 'react-router-dom'
 import { PAGE_ARTICLE_DETAIL } from 'constants/setting/path'
 
@@ -20,7 +19,6 @@ const MyCommentPage = () => {
   const [indexList, setIndexList] = useState<number[][]>([])
 
   const navigate = useNavigate()
-  const { apartCode } = useAppSelector((state) => state.user.userInfo)
 
   useEffect(() => {
     const viewMyComment = async () => {
@@ -60,8 +58,7 @@ const MyCommentPage = () => {
     setSize(Number(e.target.value))
   }
 
-  const viewArticle = (e: MouseEvent<HTMLLIElement>) => {
-    const boardId = e.currentTarget.value
+  const viewArticle = (apartCode: string, boardId: number) => {
     navigate(PAGE_ARTICLE_DETAIL(apartCode, boardId))
   }
 
@@ -91,6 +88,7 @@ const MyCommentPage = () => {
                     (
                       {
                         id,
+                        apartCode,
                         boardId,
                         boardType,
                         category,
@@ -101,7 +99,7 @@ const MyCommentPage = () => {
                       },
                       index,
                     ) => (
-                      <StyledLi key={id} value={boardId} onClick={viewArticle}>
+                      <StyledLi key={id} onClick={() => viewArticle(apartCode, boardId)}>
                         <StyledSpan className="1">
                           {indexList && indexList[page - 1][index]}
                         </StyledSpan>

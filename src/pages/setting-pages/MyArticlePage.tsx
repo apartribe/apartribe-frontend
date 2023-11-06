@@ -8,7 +8,6 @@ import { timeAgo } from 'utils/timeAgo'
 import { SIZE_OPTION } from 'constants/setting/pagination'
 import Pagination from 'components/common/Pagination'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from 'hooks/useRedux'
 import { PAGE_ARTICLE_DETAIL } from 'constants/setting/path'
 
 const MyArticlePage = () => {
@@ -20,7 +19,6 @@ const MyArticlePage = () => {
   const [indexList, setIndexList] = useState<number[][]>([])
 
   const navigate = useNavigate()
-  const { apartCode } = useAppSelector((state) => state.user.userInfo)
 
   useEffect(() => {
     const viewMyArticle = async () => {
@@ -60,8 +58,7 @@ const MyArticlePage = () => {
     setSize(Number(e.target.value))
   }
 
-  const viewArticle = (e: MouseEvent<HTMLLIElement>) => {
-    const boardId = e.currentTarget.value
+  const viewArticle = (apartCode: string, boardId: number) => {
     navigate(PAGE_ARTICLE_DETAIL(apartCode, boardId))
   }
 
@@ -89,10 +86,19 @@ const MyArticlePage = () => {
                 <StyledUl>
                   {myArticleList?.map(
                     (
-                      { id, boardType, category, level, title, commentCounts, createdAt },
+                      {
+                        id,
+                        apartCode,
+                        boardType,
+                        category,
+                        level,
+                        title,
+                        commentCounts,
+                        createdAt,
+                      },
                       index,
                     ) => (
-                      <StyledLi key={id} value={id} onClick={viewArticle}>
+                      <StyledLi key={id} onClick={() => viewArticle(apartCode, id)}>
                         <StyledSpan className="1">
                           {indexList && indexList[page - 1][index]}
                         </StyledSpan>

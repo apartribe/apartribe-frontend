@@ -14,6 +14,7 @@ export type ChangePwInputValue = {
 
 export type MyArticle = {
   id: number
+  apartCode: string
   boardType: string
   category?: string
   level?: string
@@ -29,6 +30,7 @@ export type MyArticle = {
 
 export type MyComment = {
   id: number
+  apartCode: string
   boardId: number
   boardType: string
   category?: string
