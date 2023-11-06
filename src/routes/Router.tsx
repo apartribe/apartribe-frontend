@@ -34,11 +34,12 @@ import VerifyAptPage from 'pages/setting-pages/VerifyAptPage'
 // import VerifyManagerPage from 'pages/setting-pages/VerifyManagerPage' // 추후 인증 모듈 개발 시 복구
 // import VerifyResidentPage from 'pages/setting-pages/VerifyResidentPage' // 추후 인증 모듈 개발 시 복구
 import { createBrowserRouter } from 'react-router-dom'
-import ProtectedRouteOnlyNotLoggedIn from './ProtectedRouteOnlyNotLoggedIn'
+import ProtectedRouteNotLoggedIn from './ProtectedRouteNotLoggedIn'
 import ProtectedRouteLoggedIn from './ProtectedRouteLoggedIn'
 import ProtectedRouteOnlyManager from './ProtectedRouteOnlyManager'
 import ProtectedRoutePresentAptVerified from './ProtectedRoutePresentAptVerified'
-import ProtectedRouteNonExistentApt from './ProtectedRouteNonExistentApt'
+import ProtectedRouteExistentApt from './ProtectedRouteExistentApt'
+import ProtectedRouteAptVerified from './ProtectedRouteAptVerified'
 
 const Router = createBrowserRouter([
   {
@@ -53,49 +54,49 @@ const Router = createBrowserRouter([
       {
         path: '/signup/select',
         element: (
-          <ProtectedRouteOnlyNotLoggedIn>
+          <ProtectedRouteNotLoggedIn>
             <SignupSelectPage />
-          </ProtectedRouteOnlyNotLoggedIn>
+          </ProtectedRouteNotLoggedIn>
         ),
       },
       {
         path: '/signup/local',
         element: (
-          <ProtectedRouteOnlyNotLoggedIn>
+          <ProtectedRouteNotLoggedIn>
             <SignupLocalPage />,
-          </ProtectedRouteOnlyNotLoggedIn>
+          </ProtectedRouteNotLoggedIn>
         ),
       },
       {
         path: '/login',
         element: (
-          <ProtectedRouteOnlyNotLoggedIn>
+          <ProtectedRouteNotLoggedIn>
             <LoginPage />
-          </ProtectedRouteOnlyNotLoggedIn>
+          </ProtectedRouteNotLoggedIn>
         ),
       },
       {
         path: '/find/id',
         element: (
-          <ProtectedRouteOnlyNotLoggedIn>
+          <ProtectedRouteNotLoggedIn>
             <FindIdPage />
-          </ProtectedRouteOnlyNotLoggedIn>
+          </ProtectedRouteNotLoggedIn>
         ),
       },
       {
         path: '/find/pw',
         element: (
-          <ProtectedRouteOnlyNotLoggedIn>
+          <ProtectedRouteNotLoggedIn>
             <FindPwPage />
-          </ProtectedRouteOnlyNotLoggedIn>
+          </ProtectedRouteNotLoggedIn>
         ),
       },
       {
         path: '/find/pw/reset',
         element: (
-          <ProtectedRouteOnlyNotLoggedIn>
+          <ProtectedRouteNotLoggedIn>
             <ResetPwPage />
-          </ProtectedRouteOnlyNotLoggedIn>
+          </ProtectedRouteNotLoggedIn>
         ),
       },
       {
@@ -187,9 +188,9 @@ const Router = createBrowserRouter([
   {
     path: '/community/:aptId', // article를 붙이는게 일관성이 있으나, nest 구조상 불가
     element: (
-      <ProtectedRouteNonExistentApt>
+      <ProtectedRouteExistentApt>
         <CommunityHomePage />
-      </ProtectedRouteNonExistentApt>
+      </ProtectedRouteExistentApt>
     ),
     children: [
       {
@@ -199,9 +200,11 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/article/add',
         element: (
-          <ProtectedRoutePresentAptVerified>
-            <AddArticlePage />
-          </ProtectedRoutePresentAptVerified>
+          <ProtectedRouteAptVerified>
+            <ProtectedRoutePresentAptVerified>
+              <AddArticlePage />
+            </ProtectedRoutePresentAptVerified>
+          </ProtectedRouteAptVerified>
         ),
       },
       {
@@ -215,9 +218,11 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/article/:postId/edit',
         element: (
-          <ProtectedRoutePresentAptVerified>
-            <EditArticlePage />
-          </ProtectedRoutePresentAptVerified>
+          <ProtectedRouteAptVerified>
+            <ProtectedRoutePresentAptVerified>
+              <EditArticlePage />
+            </ProtectedRoutePresentAptVerified>
+          </ProtectedRouteAptVerified>
         ),
       },
       {
@@ -228,7 +233,13 @@ const Router = createBrowserRouter([
         path: '/community/:aptId/announce/add',
         element: (
           <ProtectedRouteOnlyManager>
-            <AddAnnouncePage />
+            <ProtectedRouteAptVerified>
+              {' '}
+              {/* 아파트를 인증하지 않은 관리자는 있을 수 없긴함. */}
+              <ProtectedRoutePresentAptVerified>
+                <AddAnnouncePage />
+              </ProtectedRoutePresentAptVerified>
+            </ProtectedRouteAptVerified>
           </ProtectedRouteOnlyManager>
         ),
       },
@@ -244,7 +255,11 @@ const Router = createBrowserRouter([
         path: '/community/:aptId/announce/:postId/edit',
         element: (
           <ProtectedRouteOnlyManager>
-            <EditAnnouncePage />
+            <ProtectedRouteAptVerified>
+              <ProtectedRoutePresentAptVerified>
+                <EditAnnouncePage />
+              </ProtectedRoutePresentAptVerified>
+            </ProtectedRouteAptVerified>
           </ProtectedRouteOnlyManager>
         ),
       },
@@ -255,9 +270,11 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/together/add',
         element: (
-          <ProtectedRoutePresentAptVerified>
-            <AddTogetherPage />
-          </ProtectedRoutePresentAptVerified>
+          <ProtectedRouteAptVerified>
+            <ProtectedRoutePresentAptVerified>
+              <AddTogetherPage />
+            </ProtectedRoutePresentAptVerified>
+          </ProtectedRouteAptVerified>
         ),
       },
       {
@@ -271,9 +288,11 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/together/:postId/edit',
         element: (
-          <ProtectedRoutePresentAptVerified>
-            <EditTogetherPage />,
-          </ProtectedRoutePresentAptVerified>
+          <ProtectedRouteAptVerified>
+            <ProtectedRoutePresentAptVerified>
+              <EditTogetherPage />,
+            </ProtectedRoutePresentAptVerified>
+          </ProtectedRouteAptVerified>
         ),
       },
     ],

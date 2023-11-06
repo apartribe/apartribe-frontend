@@ -13,6 +13,7 @@ import { useAppSelector } from 'hooks/useRedux'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 
 const HeaderLanding = () => {
+  const userInfo = useAppSelector((state) => state.user?.userInfo)
   const [searchMode, setSearchMode] = useState<boolean>(false)
 
   const settings = {
@@ -26,8 +27,6 @@ const HeaderLanding = () => {
     autoplaySpeed: 10000,
   }
 
-  const userInfo = useAppSelector((state) => state.user.userInfo)
-  console.log(userInfo)
   const newArray: string[] = Object.values(userInfo)
   const isNewArrayEmpty = newArray
     .map((item) => item.length === 0)
@@ -57,14 +56,14 @@ const HeaderLanding = () => {
             <StyledNavLink
               className={searchMode ? 'disappear' : 'appear'}
               key={index}
-              to={item.path}
+              to={item.path(userInfo?.apartCode)}
             >
               {item.title}
             </StyledNavLink>
           ))}
           <HeaderAptSearchBar searchMode={searchMode} setSearchMode={setSearchMode} />
-          {LANDING_NAV_LIST.slice(3).map((item, index) => (
-            <StyledNavLink key={index} to={item.path}>
+          {LANDING_NAV_LIST.slice(2).map((item, index) => (
+            <StyledNavLink key={index} to={item.path(userInfo?.apartCode)}>
               {item.title}
             </StyledNavLink>
           ))}

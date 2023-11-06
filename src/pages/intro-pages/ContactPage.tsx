@@ -21,7 +21,6 @@ const ContactPage = () => {
     title: '',
     content: '',
   })
-  console.log('inputValue', inputValue)
   const [termsAndConditionsContent, setTermsAndConditionsContent] = useState<string>('')
 
   const [confirmEmailResponseMessage, setConfirmEmailResponseMessage] = useState<Message>(
@@ -43,7 +42,6 @@ const ContactPage = () => {
     email: false,
     code: false,
   })
-  console.log('responseSuccessValues', responseSuccessValues)
   const [isRegisterPossible, setIsRegisterPossible] = useState<boolean>(false)
 
   const { startTimer, secondsLeft, resetTimer, formattedTimeLeft } = useTimer(

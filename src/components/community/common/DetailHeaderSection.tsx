@@ -4,6 +4,7 @@ import { timeAgo } from 'utils/timeAgo'
 import { AiOutlineEye, AiOutlineLike, AiOutlineDelete } from 'react-icons/ai'
 import { BiConversation, BiShareAlt } from 'react-icons/bi'
 import { PiPencilSimpleLineDuotone } from 'react-icons/pi'
+import { BsFillShieldLockFill } from 'react-icons/bs'
 import { useNavigate, useParams } from 'react-router-dom'
 import { articleService } from 'services/community/articleService'
 import { BoardType } from 'services/community/postsService'
@@ -38,6 +39,7 @@ const DetailHeaderSection = <
     memberLiked,
     profileImage,
     memberCreated,
+    onlyApartUser,
   },
   setPostData,
 }: Props<T>) => {
@@ -112,20 +114,27 @@ const DetailHeaderSection = <
       <StyledDiv className="between">
         <StyledParagraph className="md">
           {decidePath()} &nbsp;&gt;&nbsp; {category}
-          {level}
+          {level} &nbsp;&nbsp;
         </StyledParagraph>
-        {memberCreated ? (
-          <StyledDiv>
-            <StyledButton className="lg" onClick={moveToEditPage}>
-              <PiPencilSimpleLineDuotone />
-            </StyledButton>
-            <StyledButton className="lg" onClick={deletePost}>
-              <AiOutlineDelete />
-            </StyledButton>
-          </StyledDiv>
-        ) : (
-          ''
+        {onlyApartUser && (
+          <StyledParagraph className="sm yellow">
+            <BsFillShieldLockFill />
+            우리 아파트 회원만 볼 수 있는 게시물입니다.
+          </StyledParagraph>
         )}
+
+        <StyledDiv>
+          {memberCreated && (
+            <>
+              <StyledButton className="lg" onClick={moveToEditPage}>
+                <PiPencilSimpleLineDuotone />
+              </StyledButton>
+              <StyledButton className="lg" onClick={deletePost}>
+                <AiOutlineDelete />
+              </StyledButton>
+            </>
+          )}
+        </StyledDiv>
       </StyledDiv>
       <StyledDiv>
         <StyledParagraph className="xl">{title}</StyledParagraph>
@@ -216,6 +225,10 @@ const StyledParagraph = styled.p`
   &.xl {
     font-size: 30px;
     font-weight: 900;
+  }
+
+  &.yellow {
+    color: #ffa409;
   }
 `
 

@@ -49,14 +49,11 @@ const HeaderAptSearchBar: FC<Props> = ({ searchMode, setSearchMode }) => {
     setSuggestVisible(false)
     setSearchMode(false)
     setFocusIndex(0)
-    // 재검색 시, 기 검색된 아이디가 남아있으면 존재하지 않는 아파트로 접근할 수 있게됨.
-    // 따라서 검색이 완료되면, id 값을 초기화함. name값은 남아있는 것이 사용자 경험이 좋다고 판단됨.
-    setInputValue((prevState) => ({ ...prevState, id: '' }))
   }
 
   const changeInputvalue = async (e: ChangeEvent<HTMLInputElement>) => {
     startSearch()
-    setInputValue((prevState) => ({ ...prevState, name: e.target.value }))
+    setInputValue((prevState) => ({ ...prevState, name: e.target.value, id: '' })) // 기존 아이디 잔존 현상 방지
     setFocusIndex(-1)
     if (!e.target.value) return
     const response = await externalAptSearchService.search({
@@ -225,7 +222,7 @@ const StyledForm = styled.form`
   position: relative;
   color: #303030;
   &.stretch {
-    width: 900px;
+    width: 750px;
   }
 
   &.shorten {
@@ -306,7 +303,7 @@ const StyledInput = styled.input`
   transition: 0.3s ease-in-out;
 
   &.stretch {
-    width: 900px;
+    width: 750px;
   }
 
   &.shorten {

@@ -19,7 +19,7 @@ const AddAnnouncePage = () => {
 
   const [inputValue, setInputValue] = useState<AddAnnounceType>({
     category: '일반',
-    // protected: false,
+    onlyApartUser: false,
     title: '',
     content: '',
     thumbnail: '',
@@ -46,9 +46,9 @@ const AddAnnouncePage = () => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
-  // const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue((prevState) => ({ ...prevState, protected: e.target.checked }))
-  // }
+  const toggleCheckValue = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue((prevState) => ({ ...prevState, onlyApartUser: e.target.checked }))
+  }
 
   const selectRadioValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, category: e.target.name }))
@@ -95,13 +95,13 @@ const AddAnnouncePage = () => {
           <P $fontWeight="700" $fontSize="12px" $lineHeight="35px">
             우리 아파트 주민에게만 공개
           </P>
-          {/* <input
+          <input
             type="checkbox"
             id="toggle"
-            checked={inputValue.protected}
+            checked={inputValue.onlyApartUser}
             onChange={toggleCheckValue}
             hidden
-          /> */}
+          />
           <label htmlFor="toggle" className="toggleSwitch">
             <span className="toggleButton"></span>
           </label>
