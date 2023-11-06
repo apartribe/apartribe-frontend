@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { MyInfo } from 'types/setting'
+import { MyInfo } from 'types/settingType'
 
 const initialState = {
   userInfo: {
@@ -8,7 +8,7 @@ const initialState = {
     nickname: '',
     profileImageUrl: '',
     apartCode: '',
-    /*badge: '' */
+    apartName: '',
   },
 }
 
@@ -17,12 +17,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser(state, action) {
-      state.userInfo = action.payload
+      state.userInfo = action.payload === null ? initialState.userInfo : action.payload
     },
     updateLoginUser(state, action) {
-      const payloadKey = Object.keys(action.payload)[0] as string
-      const payloadValue = Object.values(action.payload)[0] as string
-      state.userInfo[payloadKey as keyof MyInfo] = payloadValue
+      const newArray = Object.entries(action.payload)
+      newArray.map((_, index) => {
+        const payloadKey = Object.keys(action.payload)[index] as string
+        const payloadValue = Object.values(action.payload)[index] as string
+        state.userInfo[payloadKey as keyof MyInfo] = payloadValue
+      })
     },
   },
 })
