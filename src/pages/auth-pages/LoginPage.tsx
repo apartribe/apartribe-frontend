@@ -10,7 +10,6 @@ import {
   GOOGLE_AUTH_URL,
   KAKAO_AUTH_URL,
   NAVER_AUTH_URL,
-  PAGE_FIND_ID,
   PAGE_FIND_PW,
   PAGE_SIGNUP_SELECT,
 } from 'constants/auth/path'
@@ -115,19 +114,21 @@ const LoginPage = () => {
         <StyledButton type="submit" disabled={!isSigninPossible}>
           로그인
         </StyledButton>
-        <StyledP onClick={rememberMe}>
+        <StyledSpan className="rememberMe" onClick={rememberMe}>
           {isChecked ? <BsCheckCircle size={20} /> : <BsCircle size={20} />}
           로그인 상태 유지
-        </StyledP>
+        </StyledSpan>
       </StyledForm>
 
       <div>
-        <StyledNoneStyleLink to={PAGE_FIND_ID}>아이디 찾기</StyledNoneStyleLink>
-        <span>&nbsp;|&nbsp;</span>
         <StyledNoneStyleLink to={PAGE_FIND_PW}>비밀번호 찾기</StyledNoneStyleLink>
       </div>
 
-      <p className="span 2">간편 로그인/회원가입</p>
+      <p className="span 2">
+        <StyledHr />
+        간편 로그인/회원가입
+        <StyledHr />
+      </p>
 
       <StyledDiv>
         <StyledLink to={KAKAO_AUTH_URL} className="span 2">
@@ -224,23 +225,31 @@ const StyledLink = styled(Link)`
   color: black;
 `
 
-const StyledP = styled.p`
-  margin: 0;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: 5px;
-  font-weight: 700;
-  color: #303030;
-  width: fit-content;
-`
-
 const StyledSpan = styled.span`
   font-weight: 900;
   font-size: medium;
+
+  &.rememberMe {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #303030;
+    width: fit-content;
+  }
 `
 
 const StyledNoneStyleLink = styled(Link)`
   text-decoration: none;
   color: black;
+`
+
+const StyledHr = styled.hr`
+  display: inline-block;
+  width: 200px;
+  vertical-align: middle;
+  margin: 0 5px;
 `
