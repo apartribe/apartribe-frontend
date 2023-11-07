@@ -184,7 +184,8 @@ export const userService = {
     if (response.status === 200) {
       return {
         result: 'success',
-        message: '이메일로 비밀번호 변경 정보가 전송되었습니다. 메일함을 확인해주세요.',
+        message:
+          '이메일로 비밀번호 변경 정보가 전송되었습니다. \n 메일함을 확인해주세요.',
       }
     } else {
       return {
