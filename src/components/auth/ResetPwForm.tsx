@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react'
+import { ChangeEvent, MouseEvent, useState, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
@@ -10,13 +10,11 @@ import { PasswordType, ResetPwInputValue } from 'types/authType'
 
 type ResetPwFormProps = {
   resetPw: (e: MouseEvent<HTMLButtonElement>) => void
+  inputValue: ResetPwInputValue
+  setInputValue: Dispatch<SetStateAction<ResetPwInputValue>>
 }
 
-const ResetPwForm = ({ resetPw }: ResetPwFormProps) => {
-  const [inputValue, setInputValue] = useState<ResetPwInputValue>({
-    password: '',
-    passwordConfirm: '',
-  })
+const ResetPwForm = ({ resetPw, inputValue, setInputValue }: ResetPwFormProps) => {
   const [passwordType, setPasswordType] = useState<PasswordType>({
     type: 'password',
     visible: false,
@@ -85,13 +83,13 @@ const ResetPwForm = ({ resetPw }: ResetPwFormProps) => {
         </SignupInput>
 
         <SignupInput
-          labelText="새 비밀번호 입력"
+          labelText="비밀번호 확인"
           id="passwordConfirm"
           type={passwordConfirmType.type}
           name="passwordConfirm"
           value={passwordConfirm}
           onChange={changeInputValue}
-          placeholder="영문, 숫자, 특수문자 혼합 8~20자"
+          placeholder="비밀번호를 한 번 더 입력해주세요"
           isValid={isPasswordConfirmValid}
           invalidMessage={signupValidation.passwordConfirm.invalidMessage}
         >
@@ -102,8 +100,12 @@ const ResetPwForm = ({ resetPw }: ResetPwFormProps) => {
 
         <StyledDiv>
           <StyledCancelButton onClick={cancelResetPw}>취소</StyledCancelButton>
-          <Button type="submit" onClick={resetPw}>
-            비밀번호 찾기
+          <Button
+            type="submit"
+            onClick={resetPw}
+            disabled={!(isPasswordValid && isPasswordConfirmValid)}
+          >
+            비밀번호 변경
           </Button>
         </StyledDiv>
       </StyledForm>
@@ -113,7 +115,7 @@ const ResetPwForm = ({ resetPw }: ResetPwFormProps) => {
 
 export default ResetPwForm
 
-const StyledH = styled.h1`
+const StyledH = styled.h2`
   display: flex;
   justify-content: center;
 `
