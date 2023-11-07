@@ -21,7 +21,7 @@ const ProtectedRouteLoggedIn = ({ children }: Props) => {
     ],
   }
 
-  return userInfo === null ? (
+  return userInfo.email === '' ? (
     <FlexibleModal modalProps={notLoggedInModal} />
   ) : (
     <>{children}</>

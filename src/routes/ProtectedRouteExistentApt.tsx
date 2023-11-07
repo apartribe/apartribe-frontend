@@ -53,7 +53,7 @@ const ProtectedRouteExistentApt = ({ children }: Props) => {
 
   const decideModal = () => {
     switch (aptId) {
-      case 'undefined':
+      case 'not-logged-in':
         return notLoggedInModal
       case 'EMPTY':
         return noAptInfoModal
