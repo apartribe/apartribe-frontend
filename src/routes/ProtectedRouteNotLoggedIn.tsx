@@ -10,7 +10,7 @@ interface Props {
 const ProtectedRouteNotLoggedIn = ({ children }: Props) => {
   const userInfo = useAppSelector((status) => status.user.userInfo)
 
-  return userInfo === null ? <>{children}</> : <Navigate to="/" />
+  return userInfo.email === '' ? <>{children}</> : <Navigate to="/" />
 }
 
 export default ProtectedRouteNotLoggedIn

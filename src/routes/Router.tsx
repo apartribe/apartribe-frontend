@@ -200,11 +200,13 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/article/add',
         element: (
-          <ProtectedRouteAptVerified>
-            <ProtectedRoutePresentAptVerified>
-              <AddArticlePage />
-            </ProtectedRoutePresentAptVerified>
-          </ProtectedRouteAptVerified>
+          <ProtectedRouteLoggedIn>
+            <ProtectedRouteAptVerified>
+              <ProtectedRoutePresentAptVerified>
+                <AddArticlePage />
+              </ProtectedRoutePresentAptVerified>
+            </ProtectedRouteAptVerified>
+          </ProtectedRouteLoggedIn>
         ),
       },
       {
@@ -218,11 +220,13 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/article/:postId/edit',
         element: (
-          <ProtectedRouteAptVerified>
-            <ProtectedRoutePresentAptVerified>
-              <EditArticlePage />
-            </ProtectedRoutePresentAptVerified>
-          </ProtectedRouteAptVerified>
+          <ProtectedRouteLoggedIn>
+            <ProtectedRouteAptVerified>
+              <ProtectedRoutePresentAptVerified>
+                <EditArticlePage />
+              </ProtectedRoutePresentAptVerified>
+            </ProtectedRouteAptVerified>
+          </ProtectedRouteLoggedIn>
         ),
       },
       {
@@ -232,15 +236,15 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/announce/add',
         element: (
-          <ProtectedRouteOnlyManager>
-            <ProtectedRouteAptVerified>
-              {' '}
-              {/* 아파트를 인증하지 않은 관리자는 있을 수 없긴함. */}
-              <ProtectedRoutePresentAptVerified>
-                <AddAnnouncePage />
-              </ProtectedRoutePresentAptVerified>
-            </ProtectedRouteAptVerified>
-          </ProtectedRouteOnlyManager>
+          <ProtectedRouteLoggedIn>
+            <ProtectedRouteOnlyManager>
+              <ProtectedRouteAptVerified>
+                <ProtectedRoutePresentAptVerified>
+                  <AddAnnouncePage />
+                </ProtectedRoutePresentAptVerified>
+              </ProtectedRouteAptVerified>
+            </ProtectedRouteOnlyManager>
+          </ProtectedRouteLoggedIn>
         ),
       },
       {
@@ -254,13 +258,15 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/announce/:postId/edit',
         element: (
-          <ProtectedRouteOnlyManager>
-            <ProtectedRouteAptVerified>
-              <ProtectedRoutePresentAptVerified>
-                <EditAnnouncePage />
-              </ProtectedRoutePresentAptVerified>
-            </ProtectedRouteAptVerified>
-          </ProtectedRouteOnlyManager>
+          <ProtectedRouteLoggedIn>
+            <ProtectedRouteOnlyManager>
+              <ProtectedRouteAptVerified>
+                <ProtectedRoutePresentAptVerified>
+                  <EditAnnouncePage />
+                </ProtectedRoutePresentAptVerified>
+              </ProtectedRouteAptVerified>
+            </ProtectedRouteOnlyManager>
+          </ProtectedRouteLoggedIn>
         ),
       },
       {
@@ -270,11 +276,13 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/together/add',
         element: (
-          <ProtectedRouteAptVerified>
-            <ProtectedRoutePresentAptVerified>
-              <AddTogetherPage />
-            </ProtectedRoutePresentAptVerified>
-          </ProtectedRouteAptVerified>
+          <ProtectedRouteLoggedIn>
+            <ProtectedRouteAptVerified>
+              <ProtectedRoutePresentAptVerified>
+                <AddTogetherPage />
+              </ProtectedRoutePresentAptVerified>
+            </ProtectedRouteAptVerified>
+          </ProtectedRouteLoggedIn>
         ),
       },
       {
@@ -288,11 +296,13 @@ const Router = createBrowserRouter([
       {
         path: '/community/:aptId/together/:postId/edit',
         element: (
-          <ProtectedRouteAptVerified>
-            <ProtectedRoutePresentAptVerified>
-              <EditTogetherPage />,
-            </ProtectedRoutePresentAptVerified>
-          </ProtectedRouteAptVerified>
+          <ProtectedRouteLoggedIn>
+            <ProtectedRouteAptVerified>
+              <ProtectedRoutePresentAptVerified>
+                <EditTogetherPage />,
+              </ProtectedRoutePresentAptVerified>
+            </ProtectedRouteAptVerified>
+          </ProtectedRouteLoggedIn>
         ),
       },
     ],
