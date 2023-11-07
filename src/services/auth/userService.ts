@@ -1,6 +1,7 @@
 import { instance } from 'configs/axios'
 import { ResultWithData, ResultWithMessage, ChangePwInputValue } from 'types/settingType'
 import { removeAccessToken, removeRefreshToken } from 'utils/localStorage'
+import { ResetPwInputValue, FindPwInputValue } from 'types/authType'
 
 export const userService = {
   async showMember(email: string): Promise<ResultWithData | ResultWithMessage> {
@@ -155,7 +156,7 @@ export const userService = {
         EMAIL: email,
       },
     })
-    console.log('response', response)
+
     if (response.status === 200) {
       removeAccessToken()
       removeRefreshToken()
@@ -167,6 +168,53 @@ export const userService = {
       return {
         result: 'fail',
         message: '조회에 실패했습니다. 다시 시도해주세요.',
+      }
+    }
+  },
+
+  async findPw({ email, name }: FindPwInputValue): Promise<ResultWithMessage> {
+    const response = await instance('/api/auth/forgot/password', {
+      method: 'POST',
+      data: {
+        email,
+        name,
+      },
+    })
+    console.log('response', response)
+    if (response.status === 200) {
+      return {
+        result: 'success',
+        message: '이메일로 비밀번호 변경 정보가 전송되었습니다. 메일함을 확인해주세요.',
+      }
+    } else {
+      return {
+        result: 'fail',
+        message: '이메일 전송에 실패했습니다. 다시 시도해주세요.',
+      }
+    }
+  },
+
+  async resetPw({
+    password,
+    passwordConfirm,
+  }: ResetPwInputValue): Promise<ResultWithMessage> {
+    const response = await instance('api/auth/forgot/password/confirm', {
+      method: 'POST',
+      data: {
+        password,
+        passwordConfirm,
+      },
+    })
+    console.log('response', response)
+    if (response.status === 200) {
+      return {
+        result: 'success',
+        message: '비밀번호 재설정이 완료되었습니다.',
+      }
+    } else {
+      return {
+        result: 'fail',
+        message: '비밀번호 재설정에 실패했습니다. 다시 시도해주세요.',
       }
     }
   },

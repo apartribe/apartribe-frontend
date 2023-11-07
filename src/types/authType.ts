@@ -42,7 +42,7 @@ export type Message = {
   goTo?: string
 }
 
-export type FindIdPwInputValue = {
+export type FindPwInputValue = {
   email: string
   name: string
 }
