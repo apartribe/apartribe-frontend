@@ -17,7 +17,7 @@ const ProtectedRoutePresentAptVerified = ({ children }: Props) => {
     buttons: [{ title: '확인', action: () => navigate(-1) }],
   }
 
-  return userInfo.apartCode === aptId ? (
+  return userInfo?.apartCode === aptId ? (
     <>{children}</>
   ) : (
     <FlexibleModal modalProps={notMyAptModal} />

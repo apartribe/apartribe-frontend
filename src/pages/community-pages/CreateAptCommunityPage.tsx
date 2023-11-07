@@ -81,7 +81,8 @@ const CreateAptCommunityPage = () => {
 
   const decideContents = () => {
     if (userInfo?.apartCode === aptId) return forVerifiedUser
-    if (userInfo === null || userInfo?.apartCode === 'EMPTY') return forNotVerifiedUser
+    if (userInfo.email === '' || userInfo?.apartCode === 'EMPTY')
+      return forNotVerifiedUser
     return forOtherAptUser
   }
 
