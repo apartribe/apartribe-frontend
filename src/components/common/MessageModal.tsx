@@ -24,13 +24,20 @@ const MessageModal = ({ modal, setModal, modalMessage }: MessageModalProps) => {
     }
   }
 
+  const convertedMessage = message.split('\n').map((item) => (
+    <>
+      {item}
+      <br />
+    </>
+  ))
+
   return (
     <>
       {modal && (
         <ModalBackground ref={modalRef} onClick={closeModal}>
           <StyledModal>
             <StyledIcon className={status} />
-            <StyledSpan>{message}</StyledSpan>
+            <StyledSpan>{convertedMessage}</StyledSpan>
           </StyledModal>
         </ModalBackground>
       )}
@@ -43,7 +50,7 @@ export default MessageModal
 const StyledModal = styled(Modal)`
   height: 200px;
   width: 400px;
-  padding: 0;
+  padding: 10px;
   gap: 20px;
   flex-direction: column;
   justify-content: center;

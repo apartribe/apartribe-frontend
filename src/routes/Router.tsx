@@ -3,7 +3,6 @@ import AddAnnouncePage from 'pages/announce-pages/AddAnnouncePage'
 import AnnouncePage from 'pages/announce-pages/AnnouncePage'
 import DetailAnnouncePage from 'pages/announce-pages/DetailAnnouncePage'
 import EditAnnouncePage from 'pages/announce-pages/EditAnnouncePage'
-import FindIdPage from 'pages/auth-pages/FindIdPage'
 import FindPwPage from 'pages/auth-pages/FindPwPage'
 import LoginPage from 'pages/auth-pages/LoginPage'
 import ResetPwPage from 'pages/auth-pages/ResetPwPage'
@@ -72,14 +71,6 @@ const Router = createBrowserRouter([
         element: (
           <ProtectedRouteNotLoggedIn>
             <LoginPage />
-          </ProtectedRouteNotLoggedIn>
-        ),
-      },
-      {
-        path: '/find/id',
-        element: (
-          <ProtectedRouteNotLoggedIn>
-            <FindIdPage />
           </ProtectedRouteNotLoggedIn>
         ),
       },
