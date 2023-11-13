@@ -29,13 +29,20 @@ const QuestionModal = ({ modal, setModal, modalMessage }: QuestionModalProps) =>
     navigate('/')
   }
 
+  const convertedMessage = message.split('\n').map((item) => (
+    <>
+      {item}
+      <br />
+    </>
+  ))
+
   return (
     <>
       {modal && (
         <ModalBackground ref={modalRef} onClick={closeModal}>
           <StyledModal>
             <StyledIcon className={status} />
-            <StyledSpan>{message.replace(/\n/, '<br />')}</StyledSpan>
+            <StyledSpan>{convertedMessage}</StyledSpan>
             <StyledButton onClick={confirm}>확인</StyledButton>
           </StyledModal>
         </ModalBackground>
