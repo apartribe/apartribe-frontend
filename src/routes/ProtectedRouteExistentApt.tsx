@@ -17,8 +17,10 @@ const ProtectedRouteExistentApt = ({ children }: Props) => {
 
   useEffect(() => {
     const checkAptExistence = async () => {
-      const { apartExists } = await aptService.aptExists({ aptId: aptId as string })
-      setIsExistentApt(apartExists)
+      const response = await aptService.aptExists({ aptId: aptId as string })
+      if (response?.apartExists) {
+        setIsExistentApt(response.apartExists)
+      }
       setLoading(false)
     }
 
