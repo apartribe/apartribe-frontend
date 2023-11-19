@@ -9,6 +9,10 @@ import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
 import { aptService } from 'services/apt/aptService'
 import Slider from 'react-slick'
 import { useAppSelector } from 'hooks/useRedux'
+import { PAGE_LOGIN } from 'constants/auth/path'
+import { PAGE_SETTING } from 'constants/setting/path'
+import { Img } from 'styles/reusable-style/elementStyle'
+import defaultAvatar from 'assets/users/defaultAvatar.png'
 
 interface Props {
   backToTopRef: (node?: Element | null | undefined) => void
@@ -29,6 +33,11 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
 
     getAptName()
   }, [aptId])
+
+  const newArray: string[] = Object.values(userInfo)
+  const isNewArrayEmpty = newArray
+    .map((item) => item?.length === 0)
+    .reduce((prev, current) => prev && current)
 
   const settings = {
     dots: false,
@@ -94,9 +103,22 @@ const HeaderCommunity: FC<Props> = ({ backToTopRef }) => {
               {item.title}
             </StyledNavLink>
           ))}
-          <StyledNavLink to="/setting">
-            <IoPersonCircle fontSize="40px" color="#B3B3B3" cursor="pointer" />
-          </StyledNavLink>
+          {isNewArrayEmpty ? (
+            <StyledNavLink to={PAGE_LOGIN} className="login">
+              로그인
+            </StyledNavLink>
+          ) : (
+            <StyledNavLink to={PAGE_SETTING}>
+              <Img
+                src={userInfo.profileImageUrl || defaultAvatar}
+                $width="40px"
+                $height="40px"
+                $borderRadius="50%"
+                $lineHeight="12px"
+                $margin="5px 0"
+              />
+            </StyledNavLink>
+          )}
         </StyledDiv>
       </Inner>
     </Container>
@@ -117,6 +139,7 @@ const StyledDiv = styled.div`
 `
 
 const StyledNavLink = styled(NavLink)`
+  font-size: 12px;
   color: #303030;
 
   &.disappear {
