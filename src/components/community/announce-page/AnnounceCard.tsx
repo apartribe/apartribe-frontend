@@ -9,6 +9,8 @@ import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
 import { tagRemover } from 'utils/tagRemover'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
+import { useAppSelector } from 'hooks/useRedux'
+import { BsFillShieldLockFill } from 'react-icons/bs'
 
 interface Props {
   post: AnnounceCardType
@@ -27,12 +29,18 @@ const AnnounceCard: FC<Props> = ({
     commentCounts,
     thumbnail,
     profileImage,
+    onlyApartUser,
   },
 }) => {
   const { aptId } = useParams()
   const navigate = useNavigate()
 
+  const userInfo = useAppSelector((state) => state.user?.userInfo)
+
+  const notMyApt = aptId !== userInfo.apartCode
+
   const moveToDetail = () => {
+    if (onlyApartUser && notMyApt) return
     navigate(`/community/${aptId}/announce/${id}/detail`) // 추후 경로 수정
   }
 
@@ -45,6 +53,12 @@ const AnnounceCard: FC<Props> = ({
 
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
+      {onlyApartUser && notMyApt && (
+        <NoPermissionBlock>
+          <BsFillShieldLockFill />
+          아파트 주민에게만 공개된 게시물입니다.
+        </NoPermissionBlock>
+      )}
       <Img
         src={profileImage || defaultAvatar}
         $width="40px"
@@ -65,7 +79,15 @@ const AnnounceCard: FC<Props> = ({
           </div>
           <StyledDiv className="row">
             <Badge $background={badgeColor(category)}>{category}</Badge>
-            <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
+            <StyledParagraph className="singleLineEclips">
+              {onlyApartUser && (
+                <>
+                  <BsFillShieldLockFill fontSize={12} />
+                  &nbsp;
+                </>
+              )}
+              {title}
+            </StyledParagraph>
           </StyledDiv>
           <StyledParagraph className="doubleLineEclips">
             {tagRemover(content)}
@@ -100,6 +122,7 @@ const AnnounceCard: FC<Props> = ({
 export default AnnounceCard
 
 const StyledWrapper = styled.div`
+  position: relative;
   max-width: 870px;
   width: 100%;
   height: 170px;
@@ -161,4 +184,22 @@ const StyledImgWrapper = styled.div`
 const StyledImg = styled.img`
   width: 150px;
   height: auto;
+`
+
+const NoPermissionBlock = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(3px);
+  font-weight: 700;
+  cursor: not-allowed;
+  z-index: 10;
 `
