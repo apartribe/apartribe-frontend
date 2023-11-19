@@ -178,6 +178,7 @@ const StyledImgWrapper = styled.div`
 const StyledImg = styled.img`
   width: 150px;
   height: auto;
+  transform: scale(1.2);
 `
 
 const NoPermissionBlock = styled.div`
