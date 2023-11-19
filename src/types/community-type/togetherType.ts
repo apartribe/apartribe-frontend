@@ -40,6 +40,7 @@ export interface TogetherDetailType {
   profileImage: string
   memberCreated: boolean
   onlyApartUser: boolean
+  position?: string
 }
 
 export interface AddTogetherType {
