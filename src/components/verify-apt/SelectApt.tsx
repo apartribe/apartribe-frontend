@@ -105,8 +105,13 @@ const SelectApt: FC<Props> = ({ setFormValue }) => {
     }
   }
 
-  const moveToCommunityClick = async (aptId: string, aptName: string) => {
+  const moveToCommunityClick = async (
+    aptId: string,
+    aptName: string,
+    address: string,
+  ) => {
     setFormValue((prevState) => ({ ...prevState, aptId, aptName }))
+    setInputValue({ name: aptName, id: aptId, address })
     setSuggestVisible(false)
     setFocusIndex(0)
   }
@@ -160,7 +165,7 @@ const SelectApt: FC<Props> = ({ setFormValue }) => {
                       <StyledLi
                         key={id}
                         tabIndex={-1}
-                        onClick={() => moveToCommunityClick(id, name)}
+                        onClick={() => moveToCommunityClick(id, name, address)}
                         className={index === focusIndex ? 'focus' : ''}
                         ref={(el) => {
                           if (index === focusIndex) {
