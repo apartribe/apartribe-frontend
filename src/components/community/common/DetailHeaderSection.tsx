@@ -40,6 +40,7 @@ const DetailHeaderSection = <
     profileImage,
     memberCreated,
     onlyApartUser,
+    position,
   },
   setPostData,
 }: Props<T>) => {
@@ -173,13 +174,13 @@ const DetailHeaderSection = <
           $width="40px"
           height="40px"
         />
-        {/* {job ? (
+        {position ? (
           <p>
-            [직업 정보 필요] {createdBy}
+            [{position}] {createdBy}
           </p>
-        ) : ( */}
-        <p>{createdBy}</p>
-        {/* )} */}
+        ) : (
+          <p>{createdBy}</p>
+        )}
       </StyledDiv>
     </StyledWrapper>
   )
