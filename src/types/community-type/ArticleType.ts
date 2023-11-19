@@ -10,7 +10,7 @@ export interface ArticleCardType {
   commentCounts: number
   thumbnail: string
   profileImage: string
-  // protected: boolean
+  onlyApartUser: boolean
 }
 
 export interface ArticleDetailType {
