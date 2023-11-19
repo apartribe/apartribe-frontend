@@ -15,7 +15,6 @@ const DetailAnnouncePage = () => {
   const { aptId, postId } = param
 
   const [postData, setPostData] = useState<AnnounceDetailType>({
-    // 찝찝
     id: 0,
     category: '',
     onlyApartUser: false,
@@ -33,6 +32,7 @@ const DetailAnnouncePage = () => {
     memberLiked: false,
     profileImage: '',
     memberCreated: false,
+    position: '',
   })
 
   useEffect(() => {
