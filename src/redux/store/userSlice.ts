@@ -9,6 +9,7 @@ const initialState = {
     profileImageUrl: '',
     apartCode: '',
     apartName: '',
+    userType: '',
   },
 }
 
