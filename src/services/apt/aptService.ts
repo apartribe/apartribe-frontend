@@ -3,6 +3,8 @@ import { instance } from 'configs/axios'
 interface AptVerifyParam {
   aptId: string
   aptName: string
+  userType: string
+  position: string
 }
 
 interface AptExistsParam {
@@ -20,13 +22,15 @@ interface getAptNameParam {
 
 export const aptService = {
   async verifyApt(param: AptVerifyParam) {
-    const { aptId, aptName } = param
+    const { aptId, aptName, userType, position } = param
     try {
       const response = await instance('/api/apartment/auth', {
         method: 'post',
         data: {
           code: aptId,
           name: aptName,
+          userType,
+          position,
         },
       })
       return response.status

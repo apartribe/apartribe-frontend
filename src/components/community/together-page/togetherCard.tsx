@@ -5,19 +5,35 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { TogetherCardType } from 'types/community-type/togetherType'
 import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
+import { BsFillShieldLockFill } from 'react-icons/bs'
+import { useAppSelector } from 'hooks/useRedux'
 
 interface Props {
   post: TogetherCardType
 }
 
 const TogetherCard: FC<Props> = ({
-  post: { id, createdBy, createdAt, recruitStatus, title, description, thumbnail },
+  post: {
+    id,
+    createdBy,
+    createdAt,
+    recruitStatus,
+    title,
+    description,
+    thumbnail,
+    onlyApartUser,
+  },
 }) => {
   const { aptId } = useParams()
   const navigate = useNavigate()
 
+  const userInfo = useAppSelector((state) => state.user?.userInfo)
+
+  const notMyApt = aptId !== userInfo.apartCode
+
   const moveToDetail = () => {
-    navigate(`/community/${aptId}/together/${id}/detail`) // 추후 경로 수정
+    if (onlyApartUser && notMyApt) return
+    navigate(`/community/${aptId}/together/${id}/detail`)
   }
 
   const badgeColor = (urgency: string): string => {
@@ -27,6 +43,12 @@ const TogetherCard: FC<Props> = ({
 
   return (
     <StyledBox onClick={moveToDetail}>
+      {onlyApartUser && notMyApt && (
+        <NoPermissionBlock>
+          <BsFillShieldLockFill />
+          아파트 주민에게만 공개된 게시물입니다.
+        </NoPermissionBlock>
+      )}
       <Badge
         $position="absolute"
         $top="10px"
@@ -35,12 +57,19 @@ const TogetherCard: FC<Props> = ({
       >
         {recruitStatus}
       </Badge>
-      {/* {url ? <Img src={url} $width="150px" $height="130spx" $borderRadius="5px" /> : ''}*/}
       <StyledImgWrapper>
         <StyledImg src={thumbnail} alt="썸네일" />
       </StyledImgWrapper>
       <StyledDiv className="column">
-        <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
+        <StyledParagraph className="singleLineEclips">
+          {onlyApartUser && (
+            <>
+              <BsFillShieldLockFill fontSize={12} />
+              &nbsp;
+            </>
+          )}
+          {title}
+        </StyledParagraph>
         <P $fontSize="12px" $lineHeight="20px" $fontWeight="700">
           {createdBy}
         </P>
@@ -104,7 +133,6 @@ const StyledDiv = styled.div`
   &.column {
     display: flex;
     flex-direction: column;
-    /* gap: 10px; */
   }
 `
 
@@ -142,4 +170,22 @@ const StyledImgWrapper = styled.div`
 const StyledImg = styled.img`
   width: 150px;
   height: 150px;
+`
+
+const NoPermissionBlock = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(3px);
+  font-weight: 700;
+  cursor: not-allowed;
+  z-index: 10;
 `
