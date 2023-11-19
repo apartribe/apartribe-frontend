@@ -43,6 +43,7 @@ export interface AnnounceDetailType {
   profileImage: string
   memberCreated: boolean
   onlyApartUser: boolean
+  position: string
 }
 
 export interface AddAnnounceType {
