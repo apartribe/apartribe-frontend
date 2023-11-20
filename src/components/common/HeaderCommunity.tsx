@@ -3,7 +3,6 @@ import { LogoHeaderGradation, LogoHeaderGradationKorean } from 'assets/logos'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { Link, NavLink, useParams } from 'react-router-dom'
 import { styled } from 'styled-components'
-import { IoPersonCircle } from 'react-icons/io5'
 import { COMMUNITY_NAV_LIST, LANDING_NAV_LIST } from 'constants/navList'
 import HeaderAptSearchBar from './apt-sugget-search-bar/HeaderAptSearchBar'
 import { aptService } from 'services/apt/aptService'
@@ -144,7 +143,6 @@ const StyledNavLink = styled(NavLink)`
 
   &.disappear {
     font-size: 0;
-    /* transition: .2s ease-in-out; */
   }
 
   &.appear {

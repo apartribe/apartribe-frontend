@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect, ChangeEvent, useRef } from 'react'
+import React, { FormEvent, useState, useEffect, ChangeEvent } from 'react'
 import { styled } from 'styled-components'
 import { Img, Input } from 'styles/reusable-style/elementStyle'
 import CommentCard from './CommentCard'
@@ -14,8 +14,6 @@ const DetailCommentSection = () => {
   const [comments, setComments] = useState<Comment[]>([])
   const [commentCount, setCommentsCount] = useState<number | null>(null)
   const [loading, setLoading] = useState(false)
-  const [nothingToload, setNothingToload] = useState(false)
-  const LoadingTargetRef = useRef(null)
 
   const userInfo = useAppSelector((state) => state.user.userInfo)
 
@@ -81,7 +79,7 @@ const DetailCommentSection = () => {
 
     getComments()
     getCommentCount()
-  }, [])
+  }, [aptId, postId])
 
   if (!comments) return <p></p>
 
@@ -118,18 +116,8 @@ const DetailCommentSection = () => {
             />
           ))}
       </StyledDiv>
-      {nothingToload ? (
-        <StyledParagraph>더이상 불러 올 댓글이 없습니다.</StyledParagraph>
-      ) : (
-        <div ref={LoadingTargetRef}>
-          {loading && (
-            <MoonLoader
-              color="#36d7b7"
-              size="40px"
-              cssOverride={{ margin: '10px auto' }}
-            />
-          )}
-        </div>
+      {loading && (
+        <MoonLoader color="#36d7b7" size="40px" cssOverride={{ margin: '10px auto' }} />
       )}
     </StyledWrapper>
   )
@@ -182,7 +170,4 @@ const StyledButton = styled.button`
   &:hover {
     transform: scale(1.05);
   }
-`
-const StyledParagraph = styled.p`
-  text-align: center;
 `

@@ -1,19 +1,15 @@
 import React, { FC } from 'react'
 import { Img, P } from 'styles/reusable-style/elementStyle'
 import { AiOutlineEye, AiOutlineLike } from 'react-icons/ai'
-// import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import { timeAgo } from 'utils/timeAgo'
-import { BoardType } from 'services/community/postsService'
 import { ArticleCardType } from 'types/community-type/ArticleType'
 import { BiConversation } from 'react-icons/bi'
 import { tagRemover } from 'utils/tagRemover'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { BsFillShieldLockFill } from 'react-icons/bs'
-import { useSelector } from 'react-redux'
 import { useAppSelector } from 'hooks/useRedux'
-import { off } from 'process'
 
 interface Props {
   post: ArticleCardType
