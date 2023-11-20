@@ -5,6 +5,7 @@ import { IoIosArrowUp } from 'react-icons/io'
 import { PiPencilSimpleLineDuotone } from 'react-icons/pi'
 import { FIXED_BUTTON_LISTS } from 'constants/fixedButtonList'
 import { Link, useParams } from 'react-router-dom'
+import { useAppSelector } from 'hooks/useRedux'
 
 interface Props {
   isInViewport: boolean
@@ -12,6 +13,7 @@ interface Props {
 
 export const FixedButtonList: FC<Props> = ({ isInViewport }) => {
   const { aptId } = useParams()
+  const userInfo = useAppSelector((state) => state.user.userInfo)
 
   const clickBackToTop = () => {
     window.scrollTo({
@@ -23,12 +25,14 @@ export const FixedButtonList: FC<Props> = ({ isInViewport }) => {
   return (
     <StyledWrapper>
       <StyledSubWrapper>
-        {FIXED_BUTTON_LISTS.map((list, index) => (
-          <StyledLink key={index} to={list.path(aptId as string)}>
-            <PiPencilSimpleLineDuotone />
-            {list.option}
-          </StyledLink>
-        ))}
+        {FIXED_BUTTON_LISTS.slice(userInfo.userType !== 'manager' ? 1 : 0).map(
+          (list, index) => (
+            <StyledLink key={index} to={list.path(aptId as string)}>
+              <PiPencilSimpleLineDuotone />
+              {list.option}
+            </StyledLink>
+          ),
+        )}
         <StyledDiv>
           <PiPencilSimpleLineDuotone />글 쓰기
         </StyledDiv>

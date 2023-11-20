@@ -29,7 +29,7 @@ const HeaderLanding = () => {
 
   const newArray: string[] = Object.values(userInfo)
   const isNewArrayEmpty = newArray
-    .map((item) => item.length === 0)
+    .map((item) => item?.length === 0)
     .reduce((prev, current) => prev && current)
 
   return (

@@ -5,10 +5,11 @@ import { BiConversation } from 'react-icons/bi'
 import { styled } from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AnnounceCardType } from 'types/community-type/announceType'
-import { BoardType } from 'services/community/postsService'
 import { timeAgo } from 'utils/timeAgo'
 import { tagRemover } from 'utils/tagRemover'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
+import { useAppSelector } from 'hooks/useRedux'
+import { BsFillShieldLockFill } from 'react-icons/bs'
 
 interface Props {
   post: AnnounceCardType
@@ -27,12 +28,18 @@ const AnnounceCard: FC<Props> = ({
     commentCounts,
     thumbnail,
     profileImage,
+    onlyApartUser,
   },
 }) => {
   const { aptId } = useParams()
   const navigate = useNavigate()
 
+  const userInfo = useAppSelector((state) => state.user?.userInfo)
+
+  const notMyApt = aptId !== userInfo.apartCode
+
   const moveToDetail = () => {
+    if (onlyApartUser && notMyApt) return
     navigate(`/community/${aptId}/announce/${id}/detail`) // 추후 경로 수정
   }
 
@@ -45,6 +52,12 @@ const AnnounceCard: FC<Props> = ({
 
   return (
     <StyledWrapper className="flex" onClick={moveToDetail}>
+      {onlyApartUser && notMyApt && (
+        <NoPermissionBlock>
+          <BsFillShieldLockFill />
+          아파트 주민에게만 공개된 게시물입니다.
+        </NoPermissionBlock>
+      )}
       <Img
         src={profileImage || defaultAvatar}
         $width="40px"
@@ -65,24 +78,32 @@ const AnnounceCard: FC<Props> = ({
           </div>
           <StyledDiv className="row">
             <Badge $background={badgeColor(category)}>{category}</Badge>
-            <StyledParagraph className="singleLineEclips">{title}</StyledParagraph>
+            <StyledParagraph className="singleLineEclips">
+              {onlyApartUser && (
+                <>
+                  <BsFillShieldLockFill fontSize={12} />
+                  &nbsp;
+                </>
+              )}
+              {title}
+            </StyledParagraph>
           </StyledDiv>
           <StyledParagraph className="doubleLineEclips">
             {tagRemover(content)}
           </StyledParagraph>
           <StyledDiv className="row">
-            <P $fontSize="12px">
+            <StyledParagraph className="count">
               <AiOutlineEye />
               &nbsp;{saw}
-            </P>
-            <P $fontSize="12px">
+            </StyledParagraph>
+            <StyledParagraph className="count">
               <AiOutlineLike />
               &nbsp;{liked}
-            </P>
-            <P $fontSize="12px">
+            </StyledParagraph>
+            <StyledParagraph className="count">
               <BiConversation />
               &nbsp;{commentCounts}
-            </P>
+            </StyledParagraph>
           </StyledDiv>
         </StyledDiv>
       </StyledDiv>
@@ -100,6 +121,7 @@ const AnnounceCard: FC<Props> = ({
 export default AnnounceCard
 
 const StyledWrapper = styled.div`
+  position: relative;
   max-width: 870px;
   width: 100%;
   height: 170px;
@@ -127,8 +149,16 @@ const StyledDiv = styled.div`
 `
 
 const StyledParagraph = styled.p`
+  margin: 0;
+  word-break: break-all;
+
+  &.count {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+  }
+
   &.singleLineEclips {
-    margin: 0;
     font-size: 20px;
     overflow: hidden;
     display: -webkit-box;
@@ -140,7 +170,6 @@ const StyledParagraph = styled.p`
   }
 
   &.doubleLineEclips {
-    margin: 0;
     font-size: 12px;
     overflow: hidden;
     display: -webkit-box;
@@ -161,4 +190,23 @@ const StyledImgWrapper = styled.div`
 const StyledImg = styled.img`
   width: 150px;
   height: auto;
+  transform: scale(1.2);
+`
+
+const NoPermissionBlock = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(3px);
+  font-weight: 700;
+  cursor: not-allowed;
+  z-index: 10;
 `

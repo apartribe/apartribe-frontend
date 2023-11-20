@@ -32,34 +32,37 @@ const VerifyAptPage = () => {
 
   const hasEmptyValue = Object.values(formValue).includes('')
 
-  const submitFormValue = () => {
+  const submitFormValue = async () => {
     if (hasEmptyValue) {
       alert('작성되지 않은 항목이 있습니다. 다시 확인해주세요')
-    } else alert('제출')
-  }
-
-  const temporaryAuthentication = async () => {
-    const statusCode = await aptService.verifyApt({ aptId, aptName })
-    if (statusCode === 200) {
-      dispatch(
-        updateLoginUser({
-          apartCode: aptId,
-          apartName: aptName,
-        }),
-      )
-      toast.success('아파트 인증이 완료되었습니다.')
-      navigate(`/`) // TODO: 추후에 아파트 존재하는지 확인하고 바로 보내줘도 좋을 듯
+    } else {
+      const statusCode = await aptService.verifyApt({
+        aptId,
+        aptName,
+        userType,
+        position,
+      })
+      if (statusCode === 200) {
+        dispatch(
+          updateLoginUser({
+            apartCode: aptId,
+            apartName: aptName,
+            userType,
+            position,
+          }),
+        )
+        toast.success('아파트 인증이 완료되었습니다.')
+        navigate(`/`) // TODO: 추후에 아파트 존재하는지 확인하고 바로 보내줘도 좋을 듯
+      }
     }
   }
+
+  console.log(formValue)
 
   return (
     <Container $padding="30px">
       <Inner $padding="0 200px">
         <StyledH1>아파트 인증</StyledH1>
-        <button onClick={temporaryAuthentication}>
-          임시 인증 버튼! 여기에요 여기!!!! 아래에서 아파트만 하나 선택해서 버튼
-          눌러주세요
-        </button>
         <SelectAptModule setFormValue={setFormValue} />
         {aptId && <SelectUserType formValue={formValue} setFormValue={setFormValue} />}
         {userType && <SelectPosition formValue={formValue} setFormValue={setFormValue} />}
