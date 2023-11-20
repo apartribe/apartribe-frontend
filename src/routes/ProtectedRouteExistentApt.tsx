@@ -1,7 +1,8 @@
 import React, { ReactNode, useState, useEffect } from 'react'
 import FlexibleModal from 'components/common/FlexibleModal'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { aptService } from 'services/apt/aptService'
+import { useAppSelector } from 'hooks/useRedux'
 
 interface Props {
   children: ReactNode
@@ -11,14 +12,18 @@ interface Props {
 const ProtectedRouteExistentApt = ({ children }: Props) => {
   const { aptId } = useParams()
   const navigate = useNavigate()
+  const userInfo = useAppSelector((state) => state.user.userInfo)
+  const isNotVerifiedAptUser = userInfo.apartCode === '' || userInfo.apartCode === 'EMPTY'
 
   const [isExistentApt, setIsExistentApt] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const checkAptExistence = async () => {
-      const { apartExists } = await aptService.aptExists({ aptId: aptId as string })
-      setIsExistentApt(apartExists)
+      const response = await aptService.aptExists({ aptId: aptId as string })
+      if (response?.apartExists) {
+        setIsExistentApt(response.apartExists)
+      }
       setLoading(false)
     }
 
@@ -63,6 +68,13 @@ const ProtectedRouteExistentApt = ({ children }: Props) => {
   }
 
   if (loading) return <div>아파트 존재 유무 확인중...</div>
+  if (!isNotVerifiedAptUser && !isExistentApt)
+    return (
+      <Navigate
+        to={`/community/${userInfo.apartCode}/create`}
+        state={{ aptId: userInfo.apartCode, aptName: userInfo.apartName }}
+      />
+    )
 
   return isExistentApt ? <>{children}</> : <FlexibleModal modalProps={decideModal()} />
 }

@@ -5,6 +5,7 @@ export type MyInfo = {
   profileImageUrl: string
   apartCode: string
   apartName: string
+  userType: string
 }
 
 export type ChangePwInputValue = {

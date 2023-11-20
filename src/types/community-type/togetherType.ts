@@ -14,7 +14,7 @@ export interface TogetherCardType {
   commentCounts: number
   description: string
   thumbnail: string
-  // protected: boolean
+  onlyApartUser: boolean
 }
 
 export interface TogetherDetailType {
@@ -40,6 +40,7 @@ export interface TogetherDetailType {
   profileImage: string
   memberCreated: boolean
   onlyApartUser: boolean
+  position?: string
 }
 
 export interface AddTogetherType {

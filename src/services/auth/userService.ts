@@ -5,7 +5,7 @@ import { ResetPwInputValue, FindPwInputValue } from 'types/authType'
 
 export const userService = {
   async showMember(email: string): Promise<ResultWithData | ResultWithMessage> {
-    const response = await instance.get(`/api/member/${email}`)
+    const response = await instance.get(`/api/member/single`)
 
     if (response.status === 200) {
       return {

@@ -22,7 +22,7 @@ export interface AnnounceCardType {
   commentCounts: number
   thumbnail: string
   profileImage: string
-  // protected: boolean
+  onlyApartUser: boolean
 }
 
 export interface AnnounceDetailType {
@@ -43,6 +43,7 @@ export interface AnnounceDetailType {
   profileImage: string
   memberCreated: boolean
   onlyApartUser: boolean
+  position: string
 }
 
 export interface AddAnnounceType {

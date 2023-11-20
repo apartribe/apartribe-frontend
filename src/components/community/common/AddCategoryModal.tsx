@@ -64,15 +64,15 @@ const AddCategoryModal: FC<Props> = ({
         $flexDirection="column"
         $justifyContent="center"
         $width="350px"
-        $height="350px"
+        $height="300px"
         $gap="30px"
       >
         <form onSubmit={submitCategory}>
-          <P $fontSize="20px" $fontWeight="700">
-            새 카테고리 생성
-          </P>
-
           <StyledDiv>
+            <P $fontSize="20px" $fontWeight="700">
+              새 카테고리 생성
+            </P>
+
             <P $fontSize="15px" $lineHeight="30px">
               잠깐!
             </P>
@@ -89,6 +89,7 @@ const AddCategoryModal: FC<Props> = ({
               placeholder="생성하실 카테고리명을 입력해주세요."
               $width="300px"
               $height="40px"
+              $margin="10px 0"
             />
             <P $fontSize="12px" $color="#EA1616">
               &nbsp; ※ 부적절한 카테고리는 경고 없이 삭제될 수 있습니다.
@@ -117,8 +118,12 @@ export default AddCategoryModal
 
 const StyledDiv = styled.div`
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
   &.flex {
-    display: flex;
+    flex-direction: row;
     gap: 10px;
   }
 `
