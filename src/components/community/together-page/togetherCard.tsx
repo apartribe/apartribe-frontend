@@ -76,21 +76,6 @@ const TogetherCard: FC<Props> = ({
         <P $fontSize="10px" $color="#b3b3b3" $lineHeight="10px">
           {timeAgo(createdAt)}
         </P>
-        {/* 추후 필요시 사용 */}
-        {/* <StyledDiv className="row">
-          <P $fontSize="12px">
-            <AiOutlineEye />
-            &nbsp;{saw}
-          </P>
-          <P $fontSize="12px">
-            <AiOutlineLike />
-            &nbsp;{liked}
-          </P>
-          <P $fontSize="12px">
-            <BiConversation />
-            &nbsp;{commentCounts}
-          </P>
-        </StyledDiv> */}
         <StyledParagraph className="doubleLineEclips">{description}</StyledParagraph>
       </StyledDiv>
     </StyledBox>
@@ -137,8 +122,10 @@ const StyledDiv = styled.div`
 `
 
 const StyledParagraph = styled.p`
+  margin: 0;
+  word-break: break-all;
+
   &.singleLineEclips {
-    margin: 0;
     font-size: 20px;
     line-height: 30px;
     overflow: hidden;
