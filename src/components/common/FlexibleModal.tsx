@@ -21,18 +21,21 @@ const FlexibleModal: FC<ModalProps> = ({
   noBackground,
 }) => {
   return (
-    <ModalBackground $background={noBackground ? 'none' : ''}>
-      <StyledWrapper>
-        <StyledDiv className="textSection">{text}</StyledDiv>
-        <StyledDiv className="buttonSection">
-          {buttons.map(({ title, action }, index) => (
-            <StyledButton key={index} onClick={action}>
-              {title}
-            </StyledButton>
-          ))}
-        </StyledDiv>
-      </StyledWrapper>
-    </ModalBackground>
+    <>
+      <StyledSpace></StyledSpace>
+      <ModalBackground $background={noBackground ? 'none' : ''}>
+        <StyledWrapper>
+          <StyledDiv className="textSection">{text}</StyledDiv>
+          <StyledDiv className="buttonSection">
+            {buttons.map(({ title, action }, index) => (
+              <StyledButton key={index} onClick={action}>
+                {title}
+              </StyledButton>
+            ))}
+          </StyledDiv>
+        </StyledWrapper>
+      </ModalBackground>
+    </>
   )
 }
 
@@ -76,4 +79,8 @@ const StyledButton = styled.button`
   &:hover {
     filter: brightness(0.9);
   }
+`
+
+const StyledSpace = styled.div`
+  height: calc(100vh - 50px);
 `
