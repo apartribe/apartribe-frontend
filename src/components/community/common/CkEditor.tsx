@@ -7,6 +7,8 @@ import { AddAnnounceType } from 'types/community-type/announceType'
 import { AddTogetherType } from 'types/community-type/togetherType'
 import uploadS3 from 'utils/uploadS3'
 import { ContactInputValue } from 'types/advertiseType'
+import { utilService } from 'services/community/utilService'
+import { useParams } from 'react-router-dom'
 
 interface Props<T> {
   inputValue?: T
@@ -22,26 +24,35 @@ const CkEditor = <
   setInputValue,
   doNotSaveThumbnail,
 }: Props<T>) => {
+  const { aptId } = useParams()
+
   const customUploadAdapter = (loader: any) => {
     return {
       upload: () => {
         return new Promise((resolve, reject) => {
           try {
-            const body = new FormData()
+            const formData = new FormData()
             loader.file.then(async (file: File) => {
-              body.append('files', file)
+              formData.append('file', file)
+              console.log('formData', formData)
+              console.log('니 어떻게 생겼는데', [...formData])
+              console.log('파일이 이상한가', file)
 
-              const response = await uploadS3(file)
+              const response = await utilService.getImgUrl({
+                aptId: aptId as string,
+                file: formData,
+              })
+              // const response = await uploadS3(file)
               // 현재 로직상 가장 마지막 이미지가 썸네일에 저장됨.
 
-              resolve({
-                default: response.Location,
-              })
-              if (doNotSaveThumbnail) return
-              setInputValue((prevState) => ({
-                ...prevState,
-                thumbnail: response.Location,
-              }))
+              // resolve({
+              //   default: response.Location,
+              // })
+              // if (doNotSaveThumbnail) return
+              // setInputValue((prevState) => ({
+              //   ...prevState,
+              //   thumbnail: response.Location,
+              // }))
             })
           } catch (error) {
             reject(error)
