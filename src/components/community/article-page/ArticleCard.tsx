@@ -85,18 +85,18 @@ const ArticleCard: FC<Props> = ({
             {tagRemover(content)}
           </StyledParagraph>
           <StyledDiv className="row">
-            <P $fontSize="12px">
+            <StyledParagraph className="count">
               <AiOutlineEye />
               &nbsp;{saw}
-            </P>
-            <P $fontSize="12px">
+            </StyledParagraph>
+            <StyledParagraph className="count">
               <AiOutlineLike />
               &nbsp;{liked}
-            </P>
-            <P $fontSize="12px">
+            </StyledParagraph>
+            <StyledParagraph className="count">
               <BiConversation />
               &nbsp;{commentCounts}
-            </P>
+            </StyledParagraph>
           </StyledDiv>
         </StyledDiv>
       </StyledDiv>
@@ -141,10 +141,16 @@ const StyledDiv = styled.div`
 `
 
 const StyledParagraph = styled.p`
+  margin: 0;
   word-break: break-all;
 
+  &.count {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+  }
+
   &.singleLineEclips {
-    margin: 0;
     font-size: 20px;
     overflow: hidden;
     display: -webkit-box;
@@ -156,7 +162,6 @@ const StyledParagraph = styled.p`
   }
 
   &.doubleLineEclips {
-    margin: 0;
     font-size: 12px;
     overflow: hidden;
     display: -webkit-box;
