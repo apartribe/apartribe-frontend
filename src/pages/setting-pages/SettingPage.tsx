@@ -30,6 +30,8 @@ const SettingPage = () => {
     apartCode: '',
     apartName: '',
     userType: '',
+    position: '',
+    authStatus: '',
   })
   const [modal, setModal] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<Message>({
@@ -40,8 +42,7 @@ const SettingPage = () => {
 
   const userInfo = useAppSelector((state) => state.user?.userInfo)
 
-  const { email, name, nickname, profileImageUrl, apartName } = myInfo
-  const badge = '미인증'
+  const { email, name, nickname, profileImageUrl, apartName, authStatus } = myInfo
 
   const dispatch = useDispatch()
 
@@ -97,7 +98,7 @@ const SettingPage = () => {
                     </P>
                     <StyledDiv className="row">
                       <P>{apartName === 'EMPTY' ? '인증된 아파트 없음' : apartName}</P>
-                      <StyledBadge className={badge}>{badge}</StyledBadge>
+                      <StyledBadge className={authStatus}>{authStatus}</StyledBadge>
                     </StyledDiv>
                   </StyledDiv>
                 </StyledMyInfoDiv>
@@ -163,15 +164,25 @@ const StyledMyInfoDiv = styled.div`
 const StyledButtonBlack = styled.button`
   background: #303030;
   color: #fff;
-  border-radius: 20px;
+  border-radius: 15px;
   width: 100px;
-  padding: 5px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  font-size: 13.5px;
 `
 
 const StyledBadge = styled(Badge)`
-  width: 70px;
+  width: fit-content;
+  padding: 0 15px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto 0 -10px;
+  font-size: 13px;
   background-color: ${(props) => {
     if (props.className === '인증 완료') return '#0B2A08'
     else if (props.className === '창립멤버') return '#C9AB0C'
