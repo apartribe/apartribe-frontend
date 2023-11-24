@@ -15,6 +15,8 @@ const initialState: InitialState = {
     apartCode: '',
     apartName: '',
     userType: '',
+    position: '',
+    authStatus: '',
   },
   isDelete: false,
 }
