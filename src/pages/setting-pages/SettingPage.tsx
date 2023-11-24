@@ -17,7 +17,7 @@ import {
 import { MyInfo } from 'types/settingType'
 import { Message } from 'types/authType'
 import QuestionModal from 'components/common/QuestionModal'
-import { loginUser } from 'redux/store/userSlice'
+import { setLogout } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 
@@ -64,7 +64,7 @@ const SettingPage = () => {
   const logout = () => {
     const toDo = () => {
       authService.logout()
-      dispatch(loginUser(null))
+      dispatch(setLogout())
     }
     openModal('waiting', '로그아웃 하시겠습니까? 확인을 누르면 로그아웃 됩니다.', toDo)
   }

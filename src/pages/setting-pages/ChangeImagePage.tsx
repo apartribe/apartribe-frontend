@@ -7,7 +7,7 @@ import { Button, Img } from 'styles/reusable-style/elementStyle'
 import { PAGE_SETTING } from 'constants/setting/path'
 import MessageModal from 'components/common/MessageModal'
 import { userService } from 'services/auth/userService'
-import { updateLoginUser } from 'redux/store/userSlice'
+import { setLoginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useAppSelector } from 'hooks/useRedux'
@@ -63,7 +63,7 @@ const ChangeImagePage = () => {
 
     if (result === 'success') {
       console.log('newProfileImageUrl', newProfileImageUrl)
-      dispatch(updateLoginUser({ profileImageUrl: newProfileImageUrl }))
+      dispatch(setLoginUser({ profileImageUrl: newProfileImageUrl }))
     }
   }
 
