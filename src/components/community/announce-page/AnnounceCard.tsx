@@ -29,6 +29,7 @@ const AnnounceCard: FC<Props> = ({
     thumbnail,
     profileImage,
     onlyApartUser,
+    position,
   },
 }) => {
   const { aptId } = useParams()
@@ -70,7 +71,7 @@ const AnnounceCard: FC<Props> = ({
         <StyledDiv className="column">
           <div>
             <P $fontSize="12px" $fontWeight="700">
-              [직책정보필요] {createdBy}
+              [{position}] {createdBy}
             </P>
             <P $fontSize="10px" $color="#b3b3b3" $lineHeight="12px">
               {timeAgo(createdAt)}
