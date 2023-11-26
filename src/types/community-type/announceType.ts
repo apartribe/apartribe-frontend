@@ -23,6 +23,7 @@ export interface AnnounceCardType {
   thumbnail: string
   profileImage: string
   onlyApartUser: boolean
+  position: string
 }
 
 export interface AnnounceDetailType {

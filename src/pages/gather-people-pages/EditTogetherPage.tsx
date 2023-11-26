@@ -9,8 +9,8 @@ import { categoryService } from 'services/community/categoryService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
-import uploadS3 from 'utils/uploadS3'
 import { toast } from 'react-toastify'
+import { utilService } from 'services/community/utilService'
 
 const EditTogetherPage = () => {
   const BOARD_TYPE = 'together'
@@ -156,9 +156,16 @@ const EditTogetherPage = () => {
     return
   }
 
-  const uploadToS3 = async (e: ChangeEvent<HTMLInputElement>) => {
-    const response = await uploadS3(e.target.files?.[0])
-    setInputValue((prevState) => ({ ...prevState, thumbnail: response.Location }))
+  const getImgUrl = async (e: ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData()
+    if (e.target.files?.[0]) formData.append('file', e.target.files?.[0])
+
+    const response = await utilService.getImgUrl({
+      aptId: aptId as string,
+      file: formData,
+    })
+
+    setInputValue((prevState) => ({ ...prevState, thumbnail: response }))
   }
 
   return (
@@ -225,7 +232,7 @@ const EditTogetherPage = () => {
           type="file"
           id="thumbnail"
           name="profileImage"
-          onChange={uploadToS3}
+          onChange={getImgUrl}
           hidden
         />
         <StyledLabel htmlFor="thumbnail">파일 선택</StyledLabel>

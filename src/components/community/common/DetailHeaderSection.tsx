@@ -117,12 +117,6 @@ const DetailHeaderSection = <
           {decidePath()} &nbsp;&gt;&nbsp; {category}
           {level} &nbsp;&nbsp;
         </StyledParagraph>
-        {onlyApartUser && (
-          <StyledParagraph className="sm yellow">
-            <BsFillShieldLockFill />
-            우리 아파트 회원만 볼 수 있는 게시물입니다.
-          </StyledParagraph>
-        )}
 
         <StyledDiv>
           {memberCreated && (
@@ -137,6 +131,12 @@ const DetailHeaderSection = <
           )}
         </StyledDiv>
       </StyledDiv>
+      {onlyApartUser && (
+        <StyledParagraph className="sm yellow">
+          <BsFillShieldLockFill />
+          우리 아파트 회원만 볼 수 있는 게시물입니다.
+        </StyledParagraph>
+      )}
       <StyledDiv>
         <StyledParagraph className="xl">{title}</StyledParagraph>
       </StyledDiv>
