@@ -9,8 +9,8 @@ import { categoryService } from 'services/community/categoryService'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Category } from 'types/community-type/categoryType'
 import { togetherService } from 'services/community/togetherService'
-import uploadS3 from 'utils/uploadS3'
 import { toast } from 'react-toastify'
+import { utilService } from 'services/community/utilService'
 
 const AddTogetherPage = () => {
   const BOARD_TYPE = 'together'
@@ -71,7 +71,7 @@ const AddTogetherPage = () => {
     } = inputValue
     if (!category) return toast.warn('카테고리를 선택해주세요.')
     if (!title) return toast.warn('제목을 입력해주세요')
-    // if (!thumbnail) return toast.warn('썸네일을 추가해주세요.')
+    if (!thumbnail) return toast.warn('썸네일을 추가해주세요.')
     if (!description) return toast.warn('한 줄 설명을 입력해주세요.')
     if (!recruitFrom || !recruitTo) return toast.warn('모집 기간을 선택해주세요.')
     if (!meetTime) return toast.warn('활동 시간을 입력해주세요.')
@@ -103,9 +103,16 @@ const AddTogetherPage = () => {
     return
   }
 
-  const uploadToS3 = async (e: ChangeEvent<HTMLInputElement>) => {
-    const response = await uploadS3(e.target.files?.[0])
-    setInputValue((prevState) => ({ ...prevState, thumbnail: response.Location }))
+  const getImgUrl = async (e: ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData()
+    if (e.target.files?.[0]) formData.append('file', e.target.files?.[0])
+
+    const response = await utilService.getImgUrl({
+      aptId: aptId as string,
+      file: formData,
+    })
+
+    setInputValue((prevState) => ({ ...prevState, thumbnail: response }))
   }
 
   return (
@@ -172,7 +179,7 @@ const AddTogetherPage = () => {
           type="file"
           id="thumbnail"
           name="profileImage"
-          onChange={uploadToS3}
+          onChange={getImgUrl}
           hidden
         />
         <StyledLabel htmlFor="thumbnail">파일 선택</StyledLabel>
