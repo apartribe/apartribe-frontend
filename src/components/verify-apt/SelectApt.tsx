@@ -178,7 +178,7 @@ const SelectApt: FC<Props> = ({ setFormValue }) => {
                       </StyledLi>
                     )
                   })}
-                {suggestApts.length === 0 ? (
+                {suggestApts?.length === 0 || !suggestApts ? (
                   <StyledParagraph className="nothing">
                     일치하는 검색어가 없습니다.
                   </StyledParagraph>
