@@ -1,3 +1,5 @@
+![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/cfc0b00a-beb2-43e9-8dae-bec7f5375d8f)
+
 # 1. 프로젝트 개요 (Desciption)
 
 ## 1.1. 서비스 소개
