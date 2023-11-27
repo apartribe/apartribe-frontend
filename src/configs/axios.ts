@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { getAccessToken } from 'utils/localStorage'
 import { toast } from 'react-toastify'
+import { setLogout } from 'redux/store/userSlice'
+import { store } from 'redux/store'
 
 export const instance = axios.create({
   baseURL: 'http://ec2-15-165-196-198.ap-northeast-2.compute.amazonaws.com:8080',
@@ -37,6 +39,8 @@ instance.interceptors.response.use(
       errorMessage === '토큰 에러'
     ) {
       toast.error('401 : 세션이 만료 되었습니다. 다시 로그인해주세요.')
+      store.dispatch(setLogout())
+
       return error
     }
 
