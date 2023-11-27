@@ -85,7 +85,41 @@
 ![image](https://github.com/HWAHAEBANG/apartribe-frontend/assets/101491870/26913ca5-9473-4bd8-9341-1ba442621b08)
 
 
-## 2.2 디렉터리 구조
+## 2.2 페이지 라우팅 경로
+| NO | PAGE NAME | PATH |
+| --- | --- | --- |
+| 1 | 랜딩 | / |
+| 2 | 회원가입 선택   | /signup/select |
+| 3 | 로컬 회원가입 | /signup/local |
+| 4 | 로그인 | /login |
+| 5 | 아이디 찾기 | /find/id |
+| 6 | 비밀번호 찾기 | /find/pw |
+| 7 | 비밀번호 재설정 | /find/pw/reset |
+| 8 | 사이트 소개 | /about |
+| 9 | 광고 및 제휴 문의 | /contact |
+| 10 | 아파트 검색 (삭제) | /search-apartment |
+| 11 | 설정 | /setting |
+| 12 | 아파트 인증 선택 | /setting/apartment-verification |
+| 13 | 거주민 인증(보류) | /setting/apartment-verification/resident |
+| 14 | 관리인 인증(보류) | /setting/apartment-verification/manager |
+| 15 | 비밀번호 변경 | /setting/pw/change |
+| 16 | 닉네임 변경 | /setting/nickname/change |
+| 17 | 프로필 사진 변경 | /setting/image/change |
+| 18 | 커뮤니티 생성 | /community/:aptId/create |
+| 19 | 게시물 목록 | /community/:aptId (article 쓰는게 더 일관성 있으나 nest 구조로 인해 제한) |
+| 20 | 게시물 추가 | /community/:aptId/article/add |
+| 21 | 게시물 디테일 | /community/:aptId/article/:postId/detail |
+| 22 | 게시물 수정 | /community/:aptId/article/:postId/edit |
+| 23 | 공지사항 목록 | /community/:aptId/announce |
+| 24 | 공지사항 추가 | /community/:aptId/announce/add |
+| 25 | 공지사항 디테일 | /community/:aptId/announce/:postId/detail |
+| 26 | 공지사항 수정 | /community/:aptId/announce/:postId/edit |
+| 27 | 구인 공고 목록 | /community/:aptId/together |
+| 28 | 구인 공고 추가 | /community/:aptId/together/add |
+| 29 | 구인공고 디테일 | /community/:aptId/together/:postId/detail |
+| 30 | 구인공고 수정 | /community/:aptId/together/:postId/edit |
+
+## 2.3 디렉터리 구조
 ```
 📦src
  ┣ 📂assets
@@ -300,9 +334,34 @@
  ┣ 📜markdown.d.ts
  ┗ 📜react-app-env.d.ts
 ```
+## 2.4. 주요 종속성
+```
+    "typescript": "^4.9.5",
+    "redux": "^4.2.1",
+    "react-redux": "^8.1.3",
+    "redux-persist": "^6.0.0",
+    "@reduxjs/toolkit": "^1.9.7",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "axios": "^1.5.0",
+    "react-icons": "^4.11.0",
+    "styled-components": "^6.0.8",
+    "@ckeditor/ckeditor5-react": "^6.1.0", // 텍스트 에디터
+    "html-react-parser": "^4.2.2", // html 파서
+    "react-markdown": "^8.0.7", // 마크다운 파서
+    "react-datepicker": "^4.18.0", // 날짜 선택기
+    "timeago.js": "^4.0.2", // 날짜 포매터
+    "react-intersection-observer": "^9.5.2", // 인터섹션 옵저버
+    "react-slick": "^0.29.0", // 캐러셸 라이브러리
+    "slick-carousel": "^1.8.1", // 캐러셸 라이브러리
+    "react-toastify": "^9.1.3", // 토스트 메시지 라이브러리
+    "react-youtube": "^10.1.0", // 유튜브 재생 라이브러리
+    "react-canvas-confetti": "^1.4.0", // 빵빠레 효과
+    "react-content-loader": "^6.2.1", // 로딩 효과
+    "react-spinners": "^0.13.8", // 로딩 효과
+```
 
-
-## 2.3. 기술 스택
+## 2.5. 기술 스택
 
 <br/>
 <div align="center">
@@ -325,10 +384,8 @@
 
 # 3. 실행환경 (Environment)
 
-## 배포 환경 : https://apartribe.com
-<br/>
-
-## 개발 환경 : npm
+## 3.1. 배포 환경 : https://apartribe.com
+## 3.2. 개발 환경 : npm
 ```
 // 로컬 클라이언트 실행 방법
 
@@ -341,8 +398,19 @@ $ npm start
 <br/>
 
 # 4. 핵심 로직
+## 4.1. params을 기반으로 한 아파트 별 공간 분리
+![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/300bc3f0-5e2e-4058-864e-948b52d29a4b)
 
-TODO: 추가 필요
+<br/>
+
+## 4.2. protected route를 통한 권한별 접근 가능 페이지 제한
+- '파일 이름 == 통과 조건' 입니다.
+![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/8d28d57e-55f9-46ef-9952-90cb349f7c5f)
+- 조건에 맞으면 children을 리턴하고, 조건에 맞지 많으면 리다이렉트를 유도하는 FlexibleModal을 띄워줍니다.
+- 각 라우터는 router.tsx. 파일에서 element 프로퍼티에 중첩하는 형태로 감싸 사용이 가능합니다. 가장 먼저 체크하고 싶은 protectedRouted을 가장 상위에 위치시키면 됩니다. 예를 들면 다음과 같습니다
+![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/650a165f-743f-4bda-85a6-9803f9f437a6)
+
+
 
 # 5. 버그
 
