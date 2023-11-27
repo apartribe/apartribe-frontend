@@ -7,10 +7,10 @@ import { Button, Img } from 'styles/reusable-style/elementStyle'
 import { PAGE_SETTING } from 'constants/setting/path'
 import MessageModal from 'components/common/MessageModal'
 import { userService } from 'services/auth/userService'
+import { utilService } from 'services/community/utilService'
 import { setLoginUser } from 'redux/store/userSlice'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch, useAppSelector } from 'hooks/useRedux'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
-import { useAppSelector } from 'hooks/useRedux'
 
 const ChangeImagePage = () => {
   const { profileImageUrl } = useAppSelector((state) => state.user.userInfo)
@@ -23,26 +23,25 @@ const ChangeImagePage = () => {
   })
   const fileInput = useRef<HTMLInputElement>(null)
 
-  const dispatch = useDispatch()
+  const { apartCode } = useAppSelector((state) => state.user.userInfo)
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const selectImage = () => {
     fileInput.current?.click()
   }
 
-  /* const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-
-      const blob = new Blob([file as File])
-      const pdfUrl = URL.createObjectURL(blob)
-      console.log(file, blob, pdfUrl)
-      setNewProfileImageUrl(pdfUrl)
-    }
-  } */
   const uploadToS3 = async (e: ChangeEvent<HTMLInputElement>) => {
-    /* const resopnse = await uploadS3(e.target.files[0])
-    setNewProfileImageUrl(resposne.Location) */
+    if (e.target.files && e.target.files[0]) {
+      const formData = new FormData()
+      formData.append('file', e.target.files[0])
+
+      const getImgUrlResult = await utilService.getImgUrl({
+        aptId: apartCode,
+        file: formData,
+      })
+      setNewProfileImageUrl(getImgUrlResult)
+    }
   }
 
   const cancelChangeImage = () => {
@@ -62,7 +61,6 @@ const ChangeImagePage = () => {
     openModal({ status: result, message, goTo: PAGE_SETTING })
 
     if (result === 'success') {
-      console.log('newProfileImageUrl', newProfileImageUrl)
       dispatch(setLoginUser({ profileImageUrl: newProfileImageUrl }))
     }
   }
@@ -85,7 +83,7 @@ const ChangeImagePage = () => {
             type="file"
             accept="image/jpg,impge/png,image/jpeg"
             name="image"
-            onChange={/* changeImage */ uploadToS3}
+            onChange={uploadToS3}
             ref={fileInput}
           />
           <span>위 이미지를 클릭해 새로운 프로필을 등록하세요</span>
