@@ -16,7 +16,7 @@ import {
 import { Message, ResultWithData, SigninInputValue } from 'types/authType'
 import { authService } from 'services/auth/authService'
 import MessageModal from 'components/common/MessageModal'
-import { loginUser } from 'redux/store/userSlice'
+import { setLogin } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
 import { userService } from 'services/auth/userService'
 
@@ -74,7 +74,6 @@ const LoginPage = () => {
     e.preventDefault()
     const { result, message } = await authService.signin(email, password)
     const path: string = result === 'success' ? '/' : ''
-    // TODO: 아파트 인증 여부에 따라, 메인 홈(미인증 사용자) 또는 커뮤니티 홈(인증 사용자)으로 리다이렉트 추가 예정
     openModal({ status: result, message, goTo: path })
 
     if (result === 'success') {
@@ -82,7 +81,7 @@ const LoginPage = () => {
       const { result, data } = showMemberResult as ResultWithData
 
       if (result === 'success') {
-        dispatch(loginUser(data))
+        dispatch(setLogin(data))
       }
     }
   }

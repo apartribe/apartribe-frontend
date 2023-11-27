@@ -9,7 +9,7 @@ import { PAGE_SETTING } from 'constants/setting/path'
 import { userService } from 'services/auth/userService'
 import MessageModal from 'components/common/MessageModal'
 import { Message } from 'types/authType'
-import { updateLoginUser } from 'redux/store/userSlice'
+import { setLoginUser } from 'redux/store/userSlice'
 import { useDispatch } from 'react-redux'
 
 const ChangeNicknamePage = () => {
@@ -48,7 +48,7 @@ const ChangeNicknamePage = () => {
     openModal({ status: result, message, goTo: PAGE_SETTING })
 
     if (result === 'success') {
-      dispatch(updateLoginUser({ nickname: newNickname }))
+      dispatch(setLoginUser({ nickname: newNickname }))
     }
   }
 

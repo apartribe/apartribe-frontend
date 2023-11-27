@@ -11,7 +11,7 @@ import { aptService } from 'services/apt/aptService'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { updateLoginUser } from 'redux/store/userSlice'
+import { setLoginUser } from 'redux/store/userSlice'
 
 const VerifyAptPage = () => {
   const navigate = useNavigate()
@@ -44,7 +44,7 @@ const VerifyAptPage = () => {
       })
       if (statusCode === 200) {
         dispatch(
-          updateLoginUser({
+          setLoginUser({
             apartCode: aptId,
             apartName: aptName,
             userType,

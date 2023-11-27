@@ -6,7 +6,7 @@ import { Button, Input, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import { FaCheck } from 'react-icons/fa6'
 import { useDispatch } from 'react-redux'
-import { loginUser } from 'redux/store/userSlice'
+import { setDelete } from 'redux/store/userSlice'
 import { Message } from 'types/settingType'
 import MessageModal from 'components/common/MessageModal'
 
@@ -35,7 +35,7 @@ const DeleteMemberPage = () => {
     const { result, message } = deleteMemberResult
 
     if (result === 'success') {
-      dispatch(loginUser(null))
+      dispatch(setDelete())
     }
     openModal({ status: result, message, goTo: '/' })
   }

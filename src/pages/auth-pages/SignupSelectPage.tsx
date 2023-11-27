@@ -42,9 +42,9 @@ const SignupSelectPage = () => {
 
       <p>
         이미 계정이 있다면
-        <Link to={PAGE_LOGIN}>
+        <StyledNoneStyleLink to={PAGE_LOGIN}>
           <StyledSpan>&nbsp;로그인</StyledSpan>
-        </Link>
+        </StyledNoneStyleLink>
       </p>
     </AuthLayout>
   )
@@ -73,7 +73,15 @@ const StyledLink = styled(Link)`
   grid-column: ${(props) => props.className || 'span 1'};
   justify-self: center;
   align-self: center;
+  text-decoration: none;
+  color: black;
 `
+
+const StyledNoneStyleLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`
+
 const StyledSpan = styled.span`
   font-weight: 900;
   font-size: medium;
