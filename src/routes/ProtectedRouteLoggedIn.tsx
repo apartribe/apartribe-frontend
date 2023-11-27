@@ -10,7 +10,7 @@ interface Props {
 const ProtectedRouteLoggedIn = ({ children }: Props) => {
   const navigate = useNavigate()
 
-  const userInfo = useAppSelector((status) => status.user.userInfo)
+  const { userInfo, isDelete } = useAppSelector((status) => status.user)
 
   const notLoggedInModal = {
     text: `로그인 후 이용할 수 있는 서비스입니다.
@@ -21,7 +21,7 @@ const ProtectedRouteLoggedIn = ({ children }: Props) => {
     ],
   }
 
-  return userInfo.email === '' ? (
+  return userInfo.email === '' && !isDelete ? (
     <FlexibleModal modalProps={notLoggedInModal} />
   ) : (
     <>{children}</>

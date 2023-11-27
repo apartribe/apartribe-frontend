@@ -6,6 +6,8 @@ export type MyInfo = {
   apartCode: string
   apartName: string
   userType: string
+  position: string
+  authStatus: string
 }
 
 export type ChangePwInputValue = {
