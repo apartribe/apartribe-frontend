@@ -198,12 +198,16 @@ export const userService = {
   async resetPw({
     password,
     passwordConfirm,
+    identifier,
   }: ResetPwInputValue): Promise<ResultWithMessage> {
     const response = await instance('api/auth/forgot/password/confirm', {
       method: 'POST',
       data: {
         password,
         passwordConfirm,
+      },
+      params: {
+        identifier,
       },
     })
     console.log('response', response)

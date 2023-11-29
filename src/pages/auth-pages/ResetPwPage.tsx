@@ -3,13 +3,18 @@ import ResetPwForm from 'components/auth/ResetPwForm'
 import MessageModal from 'components/common/MessageModal'
 import { PAGE_LOGIN } from 'constants/auth/path'
 import { MouseEvent, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { userService } from 'services/auth/userService'
 import { Message, ResetPwInputValue } from 'types/authType'
 
 const ResetPwPage = () => {
+  const [searchParams] = useSearchParams()
+  const identifier = searchParams.get('identifier')
+
   const [inputValue, setInputValue] = useState<ResetPwInputValue>({
     password: '',
     passwordConfirm: '',
+    identifier: identifier as string,
   })
   const [modal, setModal] = useState<boolean>(false)
   const [modalMessage, setModalMessage] = useState<Message>({
