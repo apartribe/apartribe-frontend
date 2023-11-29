@@ -80,12 +80,18 @@
 
 # 2. 프로젝트 구성
 
-## 2.1 페이지 구조 및 권한
+## 2.1. 웹 어플리케이션 구조
+![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/93c9d5ad-c35d-4d63-8a0f-2d1f1edb1224)
+
+<br/>
+
+## 2.2. 페이지 구조 및 권한
 ![image](https://github.com/HWAHAEBANG/apartribe-frontend/assets/101491870/4bf7fa8e-5409-4a32-a28e-8db9eb5f4071)
 ![image](https://github.com/HWAHAEBANG/apartribe-frontend/assets/101491870/26913ca5-9473-4bd8-9341-1ba442621b08)
 
+<br/>
 
-## 2.2 페이지 라우팅 경로
+## 2.3. 페이지 라우팅 경로
 | NO | PAGE NAME | PATH |
 | --- | --- | --- |
 | 1 | 랜딩 | / |
@@ -119,7 +125,12 @@
 | 29 | 구인공고 디테일 | /community/:aptId/together/:postId/detail |
 | 30 | 구인공고 수정 | /community/:aptId/together/:postId/edit |
 
-## 2.3 디렉터리 구조
+<br/>
+
+## 2.4. 디렉터리 구조
+<details>
+<summary>토글하여 확인하기</summary>
+<div markdown="1">
 ```
 📦src
  ┣ 📂assets
@@ -334,7 +345,12 @@
  ┣ 📜markdown.d.ts
  ┗ 📜react-app-env.d.ts
 ```
-## 2.4. 주요 종속성
+</div>
+</details>
+
+<br/>
+ 
+## 2.5. 주요 종속성
 ```
     "typescript": "^4.9.5",
     "redux": "^4.2.1",
@@ -360,8 +376,9 @@
     "react-content-loader": "^6.2.1", // 로딩 효과
     "react-spinners": "^0.13.8", // 로딩 효과
 ```
+<br/>
 
-## 2.5. 기술 스택
+## 2.6. 기술 스택
 
 <br/>
 <div align="center">
