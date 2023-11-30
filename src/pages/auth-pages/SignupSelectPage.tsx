@@ -22,13 +22,13 @@ const SignupSelectPage = () => {
     <AuthLayout>
       <StyledH>회원가입</StyledH>
       <StyledDiv>
-        <StyledLink href={KAKAO_AUTH_URL} className="span 3">
+        {/* <StyledLink href={KAKAO_AUTH_URL} className="span 3">
           <KakaoLogin />
-        </StyledLink>
-        {/* <StyledLink to={NAVER_AUTH_URL}>
+        </StyledLink> */}
+        <StyledLink to={NAVER_AUTH_URL} className="span 3">
           <NaverLogin />
         </StyledLink>
-        <StyledLink to={GOOGLE_AUTH_URL}>
+        {/* <StyledLink to={GOOGLE_AUTH_URL}>
           <GoogleLogin />
         </StyledLink> */}
         <Button
@@ -67,7 +67,7 @@ const StyledDiv = styled.div`
   margin-bottom: 10px;
 `
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   width: 100%;
   height: 50px;
   grid-column: ${(props) => props.className || 'span 1'};
