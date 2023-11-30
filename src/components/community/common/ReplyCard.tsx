@@ -104,7 +104,8 @@ const ReplyCard: FC<Props> = ({
           src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
-          height="40px"
+          $height="40px"
+          $borderRadius="50%"
         />
         <StyledDiv className="column">
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
