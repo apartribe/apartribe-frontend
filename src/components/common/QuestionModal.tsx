@@ -29,11 +29,11 @@ const QuestionModal = ({ modal, setModal, modalMessage }: QuestionModalProps) =>
     navigate('/')
   }
 
-  const convertedMessage = message.split('\n').map((item) => (
-    <>
+  const convertedMessage = message.split('\n').map((item, index) => (
+    <div key={index}>
       {item}
       <br />
-    </>
+    </div>
   ))
 
   return (
