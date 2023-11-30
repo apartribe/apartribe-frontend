@@ -172,7 +172,8 @@ const DetailHeaderSection = <
           src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
-          height="40px"
+          $height="40px"
+          $borderRadius="50%"
         />
         {position ? (
           <p>

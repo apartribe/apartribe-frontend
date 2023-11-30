@@ -94,6 +94,7 @@ const DetailCommentSection = () => {
             alt="로그인 회원 아바타"
             $width="50px"
             $height="50px"
+            $borderRadius="50%"
           />
           <p>{userInfo?.nickname}</p>
         </StyledDiv>
