@@ -35,6 +35,7 @@ const SignupSelectPage = () => {
           onClick={GoToLocalSignupPage}
           $letterSpacing="normal"
           $fontWeight="normal"
+          $width="100%"
         >
           이메일로 시작하기
         </Button>
@@ -60,9 +61,8 @@ const StyledH = styled.h1`
 
 const StyledDiv = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 10px;
 `

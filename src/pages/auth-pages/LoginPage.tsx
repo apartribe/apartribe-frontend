@@ -133,12 +133,12 @@ const LoginPage = () => {
         <StyledLink to={KAKAO_AUTH_URL} className="span 2">
           <KakaoLogin />
         </StyledLink>
-        <StyledLink to={NAVER_AUTH_URL}>
+        {/* <StyledLink to={NAVER_AUTH_URL}>
           <NaverLogin />
         </StyledLink>
         <StyledLink to={GOOGLE_AUTH_URL}>
           <GoogleLogin />
-        </StyledLink>
+        </StyledLink> */}
       </StyledDiv>
 
       <p>
