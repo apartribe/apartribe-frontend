@@ -123,11 +123,11 @@ const LoginPage = () => {
         <StyledNoneStyleLink to={PAGE_FIND_PW}>비밀번호 찾기</StyledNoneStyleLink>
       </div>
 
-      <p className="span 2">
+      <div className="span 2" style={{ margin: '15px 0' }}>
         <StyledHr />
         간편 로그인/회원가입
         <StyledHr />
-      </p>
+      </div>
 
       <StyledDiv>
         {/* <StyledLink to={KAKAO_AUTH_URL} className="span 2">
