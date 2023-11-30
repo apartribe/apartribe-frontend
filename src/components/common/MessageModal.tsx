@@ -24,11 +24,11 @@ const MessageModal = ({ modal, setModal, modalMessage }: MessageModalProps) => {
     }
   }
 
-  const convertedMessage = message.split('\n').map((item) => (
-    <>
+  const convertedMessage = message.split('\n').map((item, index) => (
+    <div key={index}>
       {item}
       <br />
-    </>
+    </div>
   ))
 
   return (
