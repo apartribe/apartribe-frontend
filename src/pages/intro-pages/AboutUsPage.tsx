@@ -15,7 +15,7 @@ const AboutUsPage = () => {
   return (
     <>
       <Container $background="#FFFFFF">
-        <Inner>
+        <Inner $background="#FFFFFF">
           <StyledWrapper className="column">
             <StyledDiv className="row">
               <StyledParagraph className="word">{meaning.word[0]}</StyledParagraph>
@@ -29,7 +29,7 @@ const AboutUsPage = () => {
         </Inner>
       </Container>
       <Container $background="#EAF6F4">
-        <Inner>
+        <Inner $background="#EAF6F4">
           <StyledWrapper className="row">
             <Img src={outsider} $width="400px" $height="400px" />
             <StyledDiv className="column">
@@ -46,7 +46,7 @@ const AboutUsPage = () => {
         </Inner>
       </Container>
       <Container $background="#FFFFFF">
-        <Inner>
+        <Inner $background="#FFFFFF">
           <StyledWrapper className="row">
             <StyledDiv className="column">
               <StyledParagraph className="title">
@@ -65,7 +65,7 @@ const AboutUsPage = () => {
         </Inner>
       </Container>
       <Container>
-        <Inner>
+        <Inner $background="#FFFFFF">
           <StyledWrapper className="row">
             <Img src={disappointed} $width="400px" $height="400px" />
             <StyledDiv className="column">
