@@ -46,7 +46,7 @@ const StyledWrapper = styled.div`
   height: 450px;
   border-radius: 20px;
   display: flex;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   color: #ffffff;
 `
 

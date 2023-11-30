@@ -6,10 +6,10 @@ import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 
 const Footer = () => {
   return (
-    <Container $background="linear-gradient(350deg, rgba(26,42,58,1) 0%, rgba(56,71,81,1) 65%, rgba(75,89,99,1) 74%, rgba(61,75,85,1) 82%, rgba(26,42,58,1) 100%);">
+    <Container $background="#233341">
       <Inner
         $height="250px"
-        $background="none"
+        $background="#233341"
         $display="flex"
         $justifyContent="space-between"
         $alignItems="center"
