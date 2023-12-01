@@ -57,7 +57,7 @@ const DetailAnnouncePage = () => {
         postData={postData}
         setPostData={setPostData}
       />
-      <DetailHtmlSection>{parse(postData.content)}</DetailHtmlSection>
+      <DetailHtmlSection>{parse(postData?.content || '')}</DetailHtmlSection>
       <DetailCommentSection />
     </ShadowBox>
   )
