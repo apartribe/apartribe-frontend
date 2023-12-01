@@ -50,6 +50,15 @@ a {
   background: #fff;
 }
 
+#secret:checked ~ .toggleSwitch {
+  background: #2B7F75;
+}
+
+#secret:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 20px);
+  background: #fff;
+}
+
 .toggleSwitch, .toggleButton {
   transition: all 0.2s ease-in;
 }
