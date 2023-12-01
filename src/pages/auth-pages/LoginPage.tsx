@@ -1,14 +1,14 @@
 import { useState, useEffect, ChangeEvent, MouseEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { BsCircle, BsCheckCircle } from 'react-icons/bs'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import AuthLayout from 'components/auth/AuthLayout'
 import { Button, Input } from 'styles/reusable-style/elementStyle'
-import { KakaoLogin, NaverLogin, GoogleLogin } from 'components/auth/OauthLoginButton'
+import { NaverLogin } from 'components/auth/OauthLoginButton'
 import {
-  GOOGLE_AUTH_URL,
-  KAKAO_AUTH_URL,
+  // GOOGLE_AUTH_URL,
+  // KAKAO_AUTH_URL,
   NAVER_AUTH_URL,
   PAGE_FIND_PW,
   PAGE_SIGNUP_SELECT,
@@ -36,7 +36,6 @@ const LoginPage = () => {
   })
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   useEffect(() => {
     const inputValueList = Object.values(inputValue)

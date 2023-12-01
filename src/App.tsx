@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
+import { Outlet, useSearchParams } from 'react-router-dom'
 import HeaderLanding from 'components/common/HeaderLanding'
 import Footer from 'components/common/Footer'
 import { ToastContainer } from 'react-toastify'
@@ -12,7 +12,6 @@ import { ResultWithData } from 'types/authType'
 import { useAppSelector } from 'hooks/useRedux'
 
 function App() {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const userInfo = useAppSelector((state) => state.user.userInfo)
   const [searchParams, setSearchParams] = useSearchParams()

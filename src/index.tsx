@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import Router from 'routes/Router'
 import { Provider } from 'react-redux'
 import { authService } from 'services/auth/authService'
-import {
-  getRefreshToken,
-  removeAccessToken,
-  removeRefreshToken,
-} from 'utils/localStorage'
+import { getRefreshToken } from 'utils/localStorage'
 import { store, persistor } from 'redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
 
