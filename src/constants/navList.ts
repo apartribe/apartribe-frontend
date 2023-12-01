@@ -1,4 +1,5 @@
 export const LANDING_NAV_LIST = [
+  // eslint-disable-next-line
   { title: '아파트라이브 소개', path: (aptId: string) => '/about' },
   {
     title: '우리 아파트 바로가기',

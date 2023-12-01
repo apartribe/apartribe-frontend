@@ -58,7 +58,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     }
 
     getNewPage()
-  }, [boardType, selectedSort, selectedCategory, aptId])
+  }, [boardType, selectedSort, selectedCategory, aptId, isNotVerifiedAptUser])
 
   useEffect(() => {
     // 아파트 인증자 대상으로 실행됨
@@ -103,7 +103,7 @@ const PostListSection: FC<Props> = ({ boardType, selectedCategory, selectedSort 
     return () => {
       observer.disconnect()
     }
-  }, [loading, boardType, selectedSort, selectedCategory, aptId])
+  }, [loading, boardType, selectedSort, selectedCategory, aptId, isNotVerifiedAptUser])
 
   return (
     <StyledDiv>

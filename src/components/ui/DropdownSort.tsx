@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, MouseEvent, useState } from 'react'
+import React, { Dispatch, FC, useState } from 'react'
 import { styled } from 'styled-components'
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
 import { SORT_DROPDOWN_LIST } from 'constants/sortList'

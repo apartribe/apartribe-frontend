@@ -2,7 +2,9 @@ import React, { Dispatch, SetStateAction } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { styled } from 'styled-components'
+// eslint-disable-next-line
 import addMonths from 'date-fns/addMonths'
+// eslint-disable-next-line
 import ko from 'date-fns/locale/ko' // 한국어로
 import { AddAnnounceType } from 'types/community-type/announceType'
 

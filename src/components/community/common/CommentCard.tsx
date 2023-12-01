@@ -18,7 +18,7 @@ import { Comment, Reply } from 'types/community-type/commentType'
 import defaultAvatar from 'assets/users/defaultAvatar.png'
 import { useParams } from 'react-router-dom'
 import { likeService } from 'services/community/likeService'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useAppSelector } from 'hooks/useRedux'
 

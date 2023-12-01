@@ -2,14 +2,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
-import { KakaoLogin, NaverLogin, GoogleLogin } from 'components/auth/OauthLoginButton'
-import {
-  GOOGLE_AUTH_URL,
-  KAKAO_AUTH_URL,
-  NAVER_AUTH_URL,
-  PAGE_LOCAL_SIGNUP,
-  PAGE_LOGIN,
-} from 'constants/auth/path'
+import { NaverLogin } from 'components/auth/OauthLoginButton'
+import { NAVER_AUTH_URL, PAGE_LOCAL_SIGNUP, PAGE_LOGIN } from 'constants/auth/path'
 
 const SignupSelectPage = () => {
   const navigate = useNavigate()

@@ -28,7 +28,7 @@ const ProtectedRouteExistentApt = ({ children }: Props) => {
     }
 
     checkAptExistence()
-  }, [])
+  }, [aptId])
 
   const notLoggedInModal = {
     text: `로그인 후 사용할 수 있는 서비스입니다.

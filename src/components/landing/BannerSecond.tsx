@@ -1,11 +1,10 @@
 import React from 'react'
 import { styled } from 'styled-components'
-import { LogoMainWhite, LogoOnlyIconWhite } from 'assets/logos'
-import AptSearchBar from 'components/common/apt-sugget-search-bar/AptSearchBar'
+import { LogoOnlyIconWhite } from 'assets/logos'
 import { BANNER_TEXT } from 'constants/landing/banner'
 
 const BannerSecond = () => {
-  const { title, question, explain, doIt } = BANNER_TEXT[1]
+  const { title, question, explain } = BANNER_TEXT[1]
 
   return (
     <StyledWrapper>

@@ -1,7 +1,6 @@
-import FlexibleModal from 'components/common/FlexibleModal'
 import { useAppSelector } from 'hooks/useRedux'
 import React, { ReactNode } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 interface Props {
   children: ReactNode

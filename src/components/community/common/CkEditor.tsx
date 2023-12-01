@@ -25,6 +25,7 @@ const CkEditor = <
 }: Props<T>) => {
   const { aptId } = useParams()
 
+  // eslint-disable-next-line
   const customUploadAdapter = (loader: any) => {
     return {
       upload: () => {
@@ -56,7 +57,9 @@ const CkEditor = <
     }
   }
 
+  // eslint-disable-next-line
   function uploadPlugin(editor: any) {
+    // eslint-disable-next-line
     editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
       return customUploadAdapter(loader)
     }
