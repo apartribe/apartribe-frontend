@@ -21,6 +21,7 @@ function App() {
   if (thirdPartyRefreshToken) setRefreshToken(thirdPartyRefreshToken)
 
   const showMember = async () => {
+    if (!thirdPartyAccessToken || !thirdPartyRefreshToken) return
     const showMemberResult = await userService.showMember()
     const { result, data } = showMemberResult as ResultWithData
 
