@@ -20,6 +20,7 @@ import { useParams } from 'react-router-dom'
 import { likeService } from 'services/community/likeService'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useAppSelector } from 'hooks/useRedux'
 
 interface Props {
   comment: Comment
@@ -42,6 +43,9 @@ const CommentCard: FC<Props> = ({
   setComments,
 }) => {
   const { aptId, postId } = useParams()
+
+  const userInfo = useAppSelector((state) => state.user.userInfo)
+  const notVerifiedUser = userInfo.apartCode === 'EMPTY' ? true : false
 
   const [repliseVisible, setRepliseVisible] = useState(false)
   const [like, setLike] = useState(memberLiked)
@@ -146,7 +150,8 @@ const CommentCard: FC<Props> = ({
           src={profileImage || defaultAvatar}
           alt="댓글 아바타"
           $width="40px"
-          height="40px"
+          $height="40px"
+          $borderRadius="50%"
         />
         <StyledDiv className="column">
           <StyledParagraph className="bold">{createdBy}</StyledParagraph>
@@ -201,9 +206,14 @@ const CommentCard: FC<Props> = ({
             <StyledForm onSubmit={submitReply}>
               <Input
                 type="text"
-                placeholder="답글을 입력하세요."
+                placeholder={
+                  notVerifiedUser
+                    ? '본인 아파트 인증 후 이용 가능합니다.'
+                    : '댓글을 입력하세요.'
+                }
                 value={inputValue}
                 onChange={changeInputValuse}
+                disabled={notVerifiedUser}
               />
               <StyledButton type="submit">등록</StyledButton>
             </StyledForm>

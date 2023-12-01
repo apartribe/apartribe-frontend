@@ -177,7 +177,10 @@ const SignupInputArea = <T extends SignupInputValue>({
         placeholder="인증번호를 입력하세요"
         isValid={isEmailAuthCodeValid}
       >
-        <StyledButton onClick={confirmEmailAuth} disabled={!isEmailAuthCodeValid}>
+        <StyledButton
+          onClick={confirmEmailAuth}
+          disabled={!isEmailAuthCodeValid || responseSuccessValues.code}
+        >
           인증
         </StyledButton>
         <StyledP className={confirmEmailResponseMessage.status}>

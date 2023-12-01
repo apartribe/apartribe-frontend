@@ -7,6 +7,10 @@ export const PAGE_MY_ARTICLE = '/setting/my-article'
 export const PAGE_MY_COMMENT = '/setting/my-comment'
 export const PAGE_DELETE_MEMBER = '/setting/member/delete'
 
-export const PAGE_ARTICLE_DETAIL = (apartCode: string, boardId: number) => {
-  return `/community/${apartCode}/article/${boardId}/detail`
+export const PAGE_ARTICLE_DETAIL = (
+  apartCode: string,
+  boardType: string,
+  postId: number,
+) => {
+  return `/community/${apartCode}/${boardType}/${postId}/detail`
 }

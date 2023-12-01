@@ -22,19 +22,20 @@ const SignupSelectPage = () => {
     <AuthLayout>
       <StyledH>회원가입</StyledH>
       <StyledDiv>
-        <StyledLink to={KAKAO_AUTH_URL} className="span 3">
+        {/* <StyledLink href={KAKAO_AUTH_URL} className="span 3">
           <KakaoLogin />
-        </StyledLink>
-        <StyledLink to={NAVER_AUTH_URL}>
+        </StyledLink> */}
+        <StyledLink to={NAVER_AUTH_URL} className="span 3">
           <NaverLogin />
         </StyledLink>
-        <StyledLink to={GOOGLE_AUTH_URL}>
+        {/* <StyledLink to={GOOGLE_AUTH_URL}>
           <GoogleLogin />
-        </StyledLink>
+        </StyledLink> */}
         <Button
           onClick={GoToLocalSignupPage}
           $letterSpacing="normal"
           $fontWeight="normal"
+          $width="100%"
         >
           이메일로 시작하기
         </Button>
@@ -60,9 +61,8 @@ const StyledH = styled.h1`
 
 const StyledDiv = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 10px;
 `

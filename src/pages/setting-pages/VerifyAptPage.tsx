@@ -49,6 +49,7 @@ const VerifyAptPage = () => {
             apartName: aptName,
             userType,
             position,
+            authStatus: '인증 완료',
           }),
         )
         toast.success('아파트 인증이 완료되었습니다.')
@@ -56,8 +57,6 @@ const VerifyAptPage = () => {
       }
     }
   }
-
-  console.log(formValue)
 
   return (
     <Container $padding="30px">

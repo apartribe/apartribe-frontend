@@ -5,7 +5,7 @@ import { setLogout } from 'redux/store/userSlice'
 import { store } from 'redux/store'
 
 export const instance = axios.create({
-  baseURL: 'http://ec2-15-165-196-198.ap-northeast-2.compute.amazonaws.com:8080',
+  baseURL: 'https://apartribe.revi1337.com',
   timeout: 4000,
 })
 

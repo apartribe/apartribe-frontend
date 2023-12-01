@@ -58,7 +58,7 @@ const ResetPwForm = ({ resetPw, inputValue, setInputValue }: ResetPwFormProps) =
   }
 
   const cancelResetPw = () => {
-    setInputValue({ password: '', passwordConfirm: '' })
+    setInputValue({ password: '', passwordConfirm: '', identifier: '' })
     navigate(PAGE_LOGIN)
   }
 

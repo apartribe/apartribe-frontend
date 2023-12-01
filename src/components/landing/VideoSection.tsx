@@ -7,7 +7,7 @@ import { BiSolidQuoteAltLeft, BiSolidQuoteAltRight } from 'react-icons/bi'
 const VideoSection = () => {
   return (
     <Container $background="#FFFFFF">
-      <Inner $background="none" $padding="40px 0">
+      <Inner $background="#FFFFFF" $padding="40px 0">
         <StyledWrapper>
           <StyledDiv className="left">
             <YouTube

@@ -27,7 +27,7 @@ const DetailInfoSection: FC<Props> = ({
         <StyledDiv>
           <StyledParagraph className="title">모집 기간 : </StyledParagraph>
           <StyledParagraph>
-            {`${recruitFrom.slice(0, 10)} ~ ${recruitTo.slice(0, 10)}`}&nbsp;&nbsp;(
+            {`${recruitFrom?.slice(0, 10)} ~ ${recruitTo?.slice(0, 10)}`}&nbsp;&nbsp;(
             {recruitStatus})
           </StyledParagraph>
         </StyledDiv>
