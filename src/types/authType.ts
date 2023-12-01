@@ -50,4 +50,5 @@ export type FindPwInputValue = {
 export type ResetPwInputValue = {
   password: string
   passwordConfirm: string
+  identifier: string
 }

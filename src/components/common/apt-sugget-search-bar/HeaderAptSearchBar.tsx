@@ -10,7 +10,6 @@ import React, {
   SetStateAction,
   Dispatch,
 } from 'react'
-import axios from 'axios'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { AptSearch } from 'types/community-type/aptType'
@@ -222,7 +221,7 @@ const StyledForm = styled.form`
   position: relative;
   color: #303030;
   &.stretch {
-    width: 750px;
+    width: 950px;
   }
 
   &.shorten {
@@ -303,7 +302,7 @@ const StyledInput = styled.input`
   transition: 0.3s ease-in-out;
 
   &.stretch {
-    width: 750px;
+    width: 950px;
   }
 
   &.shorten {

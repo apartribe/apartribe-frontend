@@ -42,7 +42,12 @@ const CommentRankWidget = () => {
           {rankList.map(({ id, nickname, commentCount, profileImage }, index) => (
             <StyledWrapper key={id}>
               <StyledDiv className="rank">{decideIcon(index)}</StyledDiv>
-              <Img src={profileImage || defaultAvatar} $width="40px" $height="40px" />
+              <Img
+                src={profileImage || defaultAvatar}
+                $width="40px"
+                $height="40px"
+                $borderRadius="50%"
+              />
               <StyledDiv>
                 <P $fontWeight="700" $lineHeight="25px">
                   {nickname}

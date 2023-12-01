@@ -21,8 +21,8 @@ const BannerSection = () => {
   }
 
   return (
-    <Container $background="#FFFFFF" $height="480px">
-      <Inner>
+    <Container $background="#FFFFFF">
+      <Inner $background="#FFFFFF" $height="480px">
         <StyledWrapper>
           <StyledSlider {...settings}>
             <div>

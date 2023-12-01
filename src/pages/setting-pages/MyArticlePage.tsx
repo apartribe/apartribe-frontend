@@ -60,8 +60,8 @@ const MyArticlePage = () => {
     setPage(1)
   }
 
-  const viewArticle = (apartCode: string, boardId: number) => {
-    navigate(PAGE_ARTICLE_DETAIL(apartCode, boardId))
+  const viewArticle = (apartCode: string, boardType: string, boardId: number) => {
+    navigate(PAGE_ARTICLE_DETAIL(apartCode, boardType, boardId))
   }
 
   return (
@@ -100,7 +100,10 @@ const MyArticlePage = () => {
                       },
                       index,
                     ) => (
-                      <StyledLi key={id} onClick={() => viewArticle(apartCode, id)}>
+                      <StyledLi
+                        key={id}
+                        onClick={() => viewArticle(apartCode, boardType, id)}
+                      >
                         <StyledSpan className="1">
                           {indexList && indexList[page - 1][index]}
                         </StyledSpan>

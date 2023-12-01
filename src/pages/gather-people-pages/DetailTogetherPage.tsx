@@ -65,7 +65,7 @@ const DetailTogetherPage = () => {
         setPostData={setPostData}
       />
       <DetailInfoSection data={postData} />
-      <DetailHtmlSection>{parse(postData.content)}</DetailHtmlSection>
+      <DetailHtmlSection>{parse(postData?.content || '')}</DetailHtmlSection>
       <DetailCommentSection />
     </ShadowBox>
   )

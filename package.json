@@ -54,7 +54,7 @@
     "format": "npx prettier --write --cache .",
     "lint": "npx eslint --fix --cache .",
     "postinstall": "husky install",
-    "deploy": "npm run build && aws s3 sync build/ s3://apartribe-frontend --delete"
+    "deploy": "npm run build && aws s3 sync build/ s3://apartribe.com --delete"
   },
   "eslintConfig": {
     "extends": [

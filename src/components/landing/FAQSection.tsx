@@ -9,7 +9,7 @@ const FAQSection = () => {
 
   return (
     <Container $background="#FFFFFF">
-      <Inner $padding="40px 0">
+      <Inner $background="#FFFFFF" $padding="40px 0">
         <StyledWrapper>
           <StyledParagraph className="md">{eng}</StyledParagraph>
           <StyledParagraph className="lg">{title}</StyledParagraph>

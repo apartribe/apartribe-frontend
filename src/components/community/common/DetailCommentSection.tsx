@@ -16,6 +16,7 @@ const DetailCommentSection = () => {
   const [loading, setLoading] = useState(false)
 
   const userInfo = useAppSelector((state) => state.user.userInfo)
+  const notVerifiedUser = userInfo.apartCode === 'EMPTY' ? true : false
 
   const param = useParams()
   const { aptId, postId } = param
@@ -93,15 +94,21 @@ const DetailCommentSection = () => {
             alt="로그인 회원 아바타"
             $width="50px"
             $height="50px"
+            $borderRadius="50%"
           />
           <p>{userInfo?.nickname}</p>
         </StyledDiv>
         <StyledForm onSubmit={submitComment}>
           <Input
             type="text"
-            placeholder="댓글을 입력하세요."
+            placeholder={
+              notVerifiedUser
+                ? '본인 아파트 인증 후 이용 가능합니다.'
+                : '댓글을 입력하세요.'
+            }
             value={inputValue}
             onChange={changeInputValuse}
+            disabled={notVerifiedUser}
           />
           <StyledButton type="submit">등록</StyledButton>
         </StyledForm>
