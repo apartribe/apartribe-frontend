@@ -16,25 +16,25 @@ function App() {
   const userInfo = useAppSelector((state) => state.user.userInfo)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const thirdPartyAccessToken = searchParams?.get('accessToken')
-  const thirdPartyRefreshToken = searchParams?.get('refreshToken')
+  const detectThirdPartyLogin = async () => {
+    const thirdPartyAccessToken = searchParams?.get('accessToken')
+    const thirdPartyRefreshToken = searchParams?.get('refreshToken')
 
-  if (thirdPartyAccessToken) setAccessToken(thirdPartyAccessToken)
-  if (thirdPartyRefreshToken) setRefreshToken(thirdPartyRefreshToken)
-
-  const showMember = async () => {
     if (!thirdPartyAccessToken || !thirdPartyRefreshToken) return
-    if (userInfo.email) return
+    setAccessToken(thirdPartyAccessToken)
+    setRefreshToken(thirdPartyRefreshToken)
+
+    if (userInfo.email) setSearchParams({}) // 토큰이 param에 노출되어 있지 않도록, 사용 후 비워줌.
     const showMemberResult = await userService.showMember()
     const { result, data } = showMemberResult as ResultWithData
 
     if (result === 'success') {
       dispatch(setLogin(data))
+      return setSearchParams({})
     }
-    setSearchParams({}) // 토큰이 param에 노출되어 있지 않도록, 사용 후 비워줌.
   }
 
-  showMember()
+  detectThirdPartyLogin()
 
   return (
     <>
