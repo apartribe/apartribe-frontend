@@ -24,6 +24,7 @@ const TermsAndConditionArea = <T extends TermsAndConditionsValue>({
       setCheckList([])
     }
 
+    // eslint-disable-next-line
     const newArray: any = []
     TERMS_AND_CONDITIONS_LIST.map(({ name }) => (newArray[name] = e.target.checked))
 

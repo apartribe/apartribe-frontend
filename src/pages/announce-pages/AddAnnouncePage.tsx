@@ -40,7 +40,7 @@ const AddAnnouncePage = () => {
     }
 
     getCategory()
-  }, [])
+  }, [aptId])
 
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue((prevState) => ({ ...prevState, [e.target.name]: e.target.value }))

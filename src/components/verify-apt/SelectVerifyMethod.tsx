@@ -1,4 +1,4 @@
-import React, { FC, Dispatch, SetStateAction } from 'react'
+import React, { FC } from 'react'
 import { styled } from 'styled-components'
 import { Verification } from 'types/VerifyAptType'
 

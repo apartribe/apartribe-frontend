@@ -1,4 +1,4 @@
-import { useState, useEffect, MouseEvent, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { userService } from 'services/auth/userService'
 import { styled } from 'styled-components'
 import { ShadowBox } from 'styles/reusable-style/elementStyle'

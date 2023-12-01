@@ -1,7 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent, MouseEvent } from 'react'
 import { styled } from 'styled-components'
 import ReactMarkdown from 'react-markdown'
-import { signupValidation } from 'constants/auth/signupValidation'
 import { useTimer } from 'hooks/useTimer'
 import { Button, Input, ShadowBox } from 'styles/reusable-style/elementStyle'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
@@ -29,14 +28,15 @@ const ContactPage = () => {
       message: '',
     },
   )
-
+  // eslint-disable-next-line
   const [modal, setModal] = useState<boolean>(false)
+  // eslint-disable-next-line
   const [modalMessage, setModalMessage] = useState<Message>({
     status: 'waiting',
     message: '',
   })
 
-  const { dataCollectAgree, name, nonAuth, email, code, title, content } = inputValue
+  const { dataCollectAgree, name, nonAuth, email, code, title } = inputValue
 
   const [responseSuccessValues, setResponseSuccessValues] = useState({
     email: false,

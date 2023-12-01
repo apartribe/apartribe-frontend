@@ -11,8 +11,7 @@ import { commentService } from 'services/community/commentService'
 import { styled } from 'styled-components'
 import { Input } from 'styles/reusable-style/elementStyle'
 import { Comment } from 'types/community-type/commentType'
-import { toast, ToastContainer } from 'react-toastify'
-// import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify'
 
 interface Props {
   commentId: number

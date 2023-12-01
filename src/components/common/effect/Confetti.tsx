@@ -18,6 +18,7 @@ interface Opts {
 export default function Confetti() {
   const refAnimationInstance = useRef<CreateConfetti | null>(null)
 
+  // eslint-disable-next-line
   const getInstance = useCallback((instance: any) => {
     refAnimationInstance.current = instance
   }, [])
@@ -30,8 +31,6 @@ export default function Confetti() {
         particleCount: Math.floor(200 * particleRatio),
       })
   }, [])
-
-  useEffect(() => fire(), [])
 
   const fire = useCallback(() => {
     makeShot(0.25, {
@@ -61,6 +60,8 @@ export default function Confetti() {
       startVelocity: 45,
     })
   }, [makeShot])
+
+  useEffect(() => fire(), [fire])
 
   return (
     <ReactCanvasConfetti

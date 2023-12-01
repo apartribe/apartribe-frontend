@@ -7,7 +7,6 @@ import React, {
   FormEvent,
   FocusEvent,
 } from 'react'
-import axios from 'axios'
 import SearchBar from 'components/ui/SearchBar'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { styled } from 'styled-components'
 import { timeAgo } from 'utils/timeAgo'
 import { AiOutlineEye, AiOutlineLike, AiOutlineDelete } from 'react-icons/ai'
@@ -108,7 +108,7 @@ const DetailHeaderSection = <
     }
 
     getCommentCount()
-  }, [])
+  }, [aptId, postId])
 
   return (
     <StyledWrapper>

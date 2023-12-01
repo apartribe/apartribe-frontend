@@ -1,6 +1,6 @@
 import { APT_RANK_MOCK } from 'mock/aptRankData'
 import React from 'react'
-import { styled, keyframes } from 'styled-components'
+import { styled } from 'styled-components'
 import { Container, Inner } from 'styles/reusable-style/layoutStyle'
 import AptRankCard from './AptRankCard'
 import Slider from 'react-slick'

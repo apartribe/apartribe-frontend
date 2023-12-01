@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { AiOutlineCheckCircle } from 'react-icons/ai'
 import { styled } from 'styled-components'
 import { ModalBackground } from 'styles/reusable-style/elementStyle'
 

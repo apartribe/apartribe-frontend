@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { instance } from 'configs/axios'
 import { ResultWithMessage, ContactInputValue } from 'types/advertiseType'
 
