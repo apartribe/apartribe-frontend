@@ -77,7 +77,7 @@ const LoginPage = () => {
     openModal({ status: result, message, goTo: path })
 
     if (result === 'success') {
-      const showMemberResult = await userService.showMember(email)
+      const showMemberResult = await userService.showMember()
       const { result, data } = showMemberResult as ResultWithData
 
       if (result === 'success') {
