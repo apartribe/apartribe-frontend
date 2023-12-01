@@ -1,0 +1,41 @@
+export interface ArticleCardType {
+  id: number
+  category: string
+  title: string
+  content: string
+  createdAt: string
+  createdBy: string
+  saw: number
+  liked: number
+  commentCounts: number
+  thumbnail: string
+  profileImage: string
+  onlyApartUser: boolean
+}
+
+export interface ArticleDetailType {
+  id: number
+  category?: string
+  level?: string
+  title: string
+  content: string
+  createdAt: string
+  createdBy: string
+  liked: number
+  saw: number
+  commentCounts: number
+  thumbnail: string
+  memberLiked: boolean
+  profileImage: string
+  memberCreated: boolean
+  onlyApartUser: boolean
+  position?: string
+}
+
+export interface AddArticleType {
+  category: string
+  title: string
+  content: string
+  thumbnail: string
+  onlyApartUser: boolean
+}

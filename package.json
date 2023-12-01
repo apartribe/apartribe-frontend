@@ -3,16 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^40.0.0",
+    "@ckeditor/ckeditor5-react": "^6.1.0",
+    "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/canvas-confetti": "^1.6.2",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.50",
     "@types/react": "^18.2.21",
+    "@types/react-datepicker": "^4.15.0",
     "@types/react-dom": "^18.2.7",
+    "@types/react-slick": "^0.23.11",
+    "@types/redux-logger": "^3.0.10",
+    "aws-sdk": "^2.1473.0",
+    "axios": "^1.5.0",
+    "html-react-parser": "^4.2.2",
     "react": "^18.2.0",
+    "react-canvas-confetti": "^1.4.0",
+    "react-content-loader": "^6.2.1",
+    "react-datepicker": "^4.18.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
+    "react-intersection-observer": "^9.5.2",
+    "react-markdown": "^8.0.7",
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
+    "react-spinners": "^0.13.8",
+    "react-toastify": "^9.1.3",
+    "react-youtube": "^10.1.0",
+    "redux": "^4.2.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.0.8",
+    "timeago.js": "^4.0.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -20,7 +50,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "npx prettier --write --cache .",
+    "lint": "npx eslint --fix --cache .",
+    "postinstall": "husky install",
+    "deploy": "npm run build && aws s3 sync build/ s3://apartribe.com --delete"
   },
   "eslintConfig": {
     "extends": [
@@ -38,6 +72,20 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   }
 }

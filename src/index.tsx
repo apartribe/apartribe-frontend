@@ -1,19 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import { RouterProvider } from 'react-router-dom'
+import Router from 'routes/Router'
+import { Provider } from 'react-redux'
+import { authService } from 'services/auth/authService'
+import { getRefreshToken } from 'utils/localStorage'
+import { store, persistor } from 'redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = createRoot(document.getElementById('root') as HTMLElement)
+
+const reIssue = async () => {
+  const timer = setInterval(() => {
+    if (!getRefreshToken()) return
+    authService.reissueToken()
+  }, 1000000) // 16 분 40초 (안전하게 20분 되기 이전에 미리 수행)
+  return () => {
+    clearInterval(timer)
+  }
+}
+
+reIssue()
+
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={Router} />
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>,
+)
