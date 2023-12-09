@@ -81,7 +81,8 @@
 # 2. 프로젝트 구성
 
 ## 2.1. 웹 어플리케이션 구조
-![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/93c9d5ad-c35d-4d63-8a0f-2d1f1edb1224)
+![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/d27d677e-976a-4565-8f94-02e15a12f970)
+
 
 <br/>
 
@@ -454,7 +455,7 @@ $ npm start
   <br/>
 
 # 8. 버전 (업데이트 소식)
-- 1.0.0 - 개발단계 테스트 릴리즈 ( 2023.11.30. )
+- 1.0.0 - 최초 배포 릴리즈 ( 2023.12.01. )
 
   <br/>
   <br/>
