@@ -92,7 +92,12 @@
 
 <br/>
 
-## 2.3. 페이지 라우팅 경로
+## 2.3. UI 설계
+<a href='https://www.figma.com/file/Hpu9eW6gNf1oExLzYjUBTb/%EC%95%84%ED%8C%8C%ED%8A%B8-%EB%9D%BC%EC%9D%B4%EB%B8%8C-UI-%EC%84%A4%EA%B3%84?type=design&node-id=0-1&mode=design&t=5XOaSc9caNgiXg6D-0'>🔗피그마 바로가기</a>
+
+<br/>
+
+## 2.4. 페이지 라우팅 경로
 | NO | PAGE NAME | PATH |
 | --- | --- | --- |
 | 1 | 랜딩 | / |
@@ -128,7 +133,7 @@
 
 <br/>
 
-## 2.4. 디렉터리 구조
+## 2.5. 디렉터리 구조
 <details>
 <summary>토글하여 확인하기</summary>
 <div markdown="1">
@@ -352,7 +357,7 @@
 
 <br/>
  
-## 2.5. 주요 종속성
+## 2.6. 주요 종속성
 ```
     "typescript": "^4.9.5",
     "redux": "^4.2.1",
@@ -380,7 +385,7 @@
 ```
 <br/>
 
-## 2.6. 기술 스택
+## 2.7. 기술 스택
 
 <br/>
 <div align="center">
