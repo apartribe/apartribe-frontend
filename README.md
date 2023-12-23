@@ -1,5 +1,19 @@
 ![image](https://github.com/apartribe/apartribe-frontend/assets/101491870/cfc0b00a-beb2-43e9-8dae-bec7f5375d8f)
 
+```
+<참고 사항>
+
+현재 v2.0.0 릴리즈 개발 진행 중입니다.
+
+[예정된 변경 사항]
+
+- NEXT.js 마이그레이션
+
+- React-Query 도입
+
+- 웹 소켓을 통한 채팅, 알림 기능 구현
+```
+
 # 1. 프로젝트 개요 (Desciption)
 
 ## 1.1. 서비스 소개
@@ -460,7 +474,11 @@ $ npm start
   <br/>
 
 # 8. 버전 (업데이트 소식)
-- 1.0.0 - 최초 배포 릴리즈 ( 2023.12.01. )
+- v2.0.0 - 예정
+  - NEXT.js 마이그레이션
+  - React-Query 도입
+  - 웹 소켓을 통한 채팅, 알림 기능 구현
+- v1.0.0 - 최초 배포 릴리즈 ( 2023.12.01. )
 
   <br/>
   <br/>
