@@ -9,7 +9,7 @@ import { NaverLogin } from 'components/auth/OauthLoginButton'
 import {
   // GOOGLE_AUTH_URL,
   // KAKAO_AUTH_URL,
-  NAVER_AUTH_URL,
+  // NAVER_AUTH_URL,
   PAGE_FIND_PW,
   PAGE_SIGNUP_SELECT,
 } from 'constants/auth/path'
@@ -132,7 +132,10 @@ const LoginPage = () => {
         {/* <StyledLink to={KAKAO_AUTH_URL} className="span 2">
           <KakaoLogin />
         </StyledLink> */}
-        <StyledLink to={NAVER_AUTH_URL} className="span 2">
+        <StyledLink
+          onClick={() => alert('네이버 로그인 점검중입니다.')}
+          className="span 2"
+        >
           <NaverLogin />
         </StyledLink>
         {/* <StyledLink to={GOOGLE_AUTH_URL}>
@@ -214,7 +217,7 @@ const StyledDiv = styled.div`
   margin-bottom: 10px;
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.div`
   width: 100%;
   height: 50px;
   grid-column: ${(props) => props.className || 'span 1'};

@@ -14,7 +14,7 @@ export const NaverLogin = () => {
   return (
     <StyledNaver>
       <SymbolNaver />
-      로그인
+      로그인 점검 중
     </StyledNaver>
   )
 }

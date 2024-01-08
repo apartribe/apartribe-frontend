@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import { Button } from 'styles/reusable-style/elementStyle'
 import AuthLayout from 'components/auth/AuthLayout'
 import { NaverLogin } from 'components/auth/OauthLoginButton'
-import { NAVER_AUTH_URL, PAGE_LOCAL_SIGNUP, PAGE_LOGIN } from 'constants/auth/path'
+import { /*  NAVER_AUTH_URL, */ PAGE_LOCAL_SIGNUP, PAGE_LOGIN } from 'constants/auth/path'
 
 const SignupSelectPage = () => {
   const navigate = useNavigate()
@@ -19,7 +19,10 @@ const SignupSelectPage = () => {
         {/* <StyledLink href={KAKAO_AUTH_URL} className="span 3">
           <KakaoLogin />
         </StyledLink> */}
-        <StyledLink to={NAVER_AUTH_URL} className="span 3">
+        <StyledLink
+          onClick={() => alert('네이버 로그인 점검중입니다.')}
+          className="span 3"
+        >
           <NaverLogin />
         </StyledLink>
         {/* <StyledLink to={GOOGLE_AUTH_URL}>
@@ -61,7 +64,7 @@ const StyledDiv = styled.div`
   margin-bottom: 10px;
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.div`
   width: 100%;
   height: 50px;
   grid-column: ${(props) => props.className || 'span 1'};
